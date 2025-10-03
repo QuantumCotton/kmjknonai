@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, Mail, Check, Star, Calendar, MessageSquare } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button.jsx'
 import bathroomLuxurySpa from '../assets/bathroom_luxury_spa.jpg'
 import bathroomMarble from '../assets/bathroom_marble.jpg'
 
