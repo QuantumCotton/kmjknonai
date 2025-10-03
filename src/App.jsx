@@ -10,6 +10,11 @@ import bathroomLuxurySpa from './assets/bathroom_luxury_spa.jpg'
 import bathroomMarble from './assets/bathroom_marble.jpg'
 import customEntertainment from './assets/custom_entertainment.jpg'
 
+// Import landing pages
+import BathroomLanding from './pages/BathroomLanding.jsx'
+import KitchenLanding from './pages/KitchenLanding.jsx'
+import HandymanLanding from './pages/HandymanLanding.jsx'
+
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
@@ -566,6 +571,10 @@ function App() {
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          {/* Landing Pages */}
+          <Route path="/bathroom-remodel" element={<BathroomLanding />} />
+          <Route path="/kitchen-remodel" element={<KitchenLanding />} />
+          <Route path="/handyman-services" element={<HandymanLanding />} />
         </Routes>
         <Footer />
       </div>
