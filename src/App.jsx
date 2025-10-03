@@ -12,7 +12,9 @@ import customEntertainment from './assets/custom_entertainment.jpg'
 
 // Import landing pages
 import BathroomLanding from './pages/BathroomLanding.jsx'
+import BathroomLandingImproved from './pages/BathroomLandingImproved.jsx'
 import KitchenLanding from './pages/KitchenLanding.jsx'
+import KitchenLandingImproved from './pages/KitchenLandingImproved.jsx'
 import HandymanLanding from './pages/HandymanLanding.jsx'
 import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
 import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
@@ -573,12 +575,15 @@ function App() {
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          {/* Landing Pages */}
-          <Route path="/bathroom-remodel" element={<BathroomLanding />} />
-          <Route path="/kitchen-remodel" element={<KitchenLanding />} />
+          {/* Landing Pages - Improved Versions with Popup Forms */}
+          <Route path="/bathroom-remodel" element={<BathroomLandingImproved />} />
+          <Route path="/kitchen-remodel" element={<KitchenLandingImproved />} />
           <Route path="/handyman-services" element={<HandymanLandingImproved />} />
-          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
+          {/* Old Versions for Reference */}
+          <Route path="/bathroom-remodel-old" element={<BathroomLanding />} />
+          <Route path="/kitchen-remodel-old" element={<KitchenLanding />} />
           <Route path="/handyman-services-old" element={<HandymanLanding />} />
+          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
         </Routes>
         <Footer />
       </div>
