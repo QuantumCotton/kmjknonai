@@ -6,6 +6,9 @@ import './App.css'
 
 // Import images
 import kitchenModern from './assets/kitchen_modern.jpg'
+import bathroomLuxurySpa from './assets/bathroom_luxury_spa.jpg'
+import bathroomMarble from './assets/bathroom_marble.jpg'
+import customEntertainment from './assets/custom_entertainment.jpg'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -192,8 +195,8 @@ function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
               { title: 'Kitchens', image: kitchenModern, description: 'Transform your kitchen into a culinary masterpiece' },
-              { title: 'Bathrooms', image: kitchenModern, description: 'Create your personal spa retreat' },
-              { title: 'Custom Projects', image: kitchenModern, description: 'Bring your unique vision to life' },
+              { title: 'Bathrooms', image: bathroomLuxurySpa, description: 'Create your personal spa retreat' },
+              { title: 'Custom Projects', image: customEntertainment, description: 'Bring your unique vision to life' },
             ].map((service, index) => (
               <Link key={index} to="/portfolio">
                 <div className="service-card bg-white rounded-lg overflow-hidden shadow-lg">
@@ -221,12 +224,12 @@ function PortfolioPage() {
     },
     {
       title: 'Luxury Master Bath - Treasure Coast',
-      image: kitchenModern,
+      image: bathroomMarble,
       description: 'Transforming a dated bathroom into a spa-like retreat, we incorporated marble finishes, a freestanding tub, and custom lighting to create an elegant sanctuary.',
     },
     {
       title: 'Custom Built-Ins & Millwork',
-      image: kitchenModern,
+      image: customEntertainment,
       description: 'The homeowner wanted functional yet beautiful storage solutions. Our custom millwork seamlessly integrated with the home\'s architecture, adding both value and character.',
     },
   ]
