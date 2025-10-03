@@ -170,8 +170,8 @@ function HomePage() {
               </Button>
             </a>
             <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[var(--deep-charcoal)]">
-                Get Started
+              <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] hover:text-white border-2 border-white">
+                Schedule Consultation
               </Button>
             </Link>
           </div>
