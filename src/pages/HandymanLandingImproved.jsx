@@ -55,17 +55,24 @@ function HandymanLandingImproved() {
       })
 
       const data = await response.json()
+      
+      console.log('Web3Forms Response:', data)
 
       if (data.success) {
+        console.log('✅ Form submitted successfully! Email sent to chris@theeliteservicehub.com')
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {
           setIsModalOpen(false)
           setSubmitSuccess(false)
         }, 3000)
+      } else {
+        console.error('❌ Web3Forms error:', data.message)
+        alert('Error: ' + (data.message || 'Failed to submit form'))
       }
     } catch (error) {
       console.error('Form submission error:', error)
+      alert('Network error - please check your connection')
     } finally {
       setIsSubmitting(false)
     }
