@@ -15,6 +15,7 @@ import BathroomLanding from './pages/BathroomLanding.jsx'
 import KitchenLanding from './pages/KitchenLanding.jsx'
 import HandymanLanding from './pages/HandymanLanding.jsx'
 import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
+import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -575,8 +576,9 @@ function App() {
           {/* Landing Pages */}
           <Route path="/bathroom-remodel" element={<BathroomLanding />} />
           <Route path="/kitchen-remodel" element={<KitchenLanding />} />
-          <Route path="/handyman-services" element={<HandymanLanding />} />
+          <Route path="/handyman-services" element={<HandymanLandingImproved />} />
           <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
+          <Route path="/handyman-services-old" element={<HandymanLanding />} />
         </Routes>
         <Footer />
       </div>
