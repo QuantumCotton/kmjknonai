@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, MessageSquare, Check, Star, Shield, MapPin, Award, Sparkles, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
@@ -48,7 +48,7 @@ function TVMountingLanding() {
       console.log('Web3Forms Response:', data)
 
       if (data.success) {
-        console.log('✅ Form submitted successfully!')
+        console.log('Γ£à Form submitted successfully!')
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {
@@ -56,7 +56,7 @@ function TVMountingLanding() {
           setSubmitSuccess(false)
         }, 3000)
       } else {
-        console.error('❌ Web3Forms error:', data.message)
+        console.error('Γ¥î Web3Forms error:', data.message)
         alert('Error: ' + (data.message || 'Failed to submit form'))
       }
     } catch (error) {
@@ -112,7 +112,7 @@ function TVMountingLanding() {
 
           {submitSuccess ? (
             <div className="py-8 text-center">
-              <div className="text-green-600 text-6xl mb-4">✓</div>
+              <div className="text-green-600 text-6xl mb-4">Γ£ô</div>
               <h3 className="text-2xl font-bold text-green-600 mb-2">Request Sent!</h3>
               <p className="text-gray-600">We'll get back to you within the hour.</p>
             </div>
@@ -190,7 +190,7 @@ function TVMountingLanding() {
                   </label>
                   {formData.images.length > 0 && (
                     <p className="text-sm text-green-600 mt-3">
-                      ✓ {formData.images.length} file(s) selected
+                      Γ£ô {formData.images.length} file(s) selected
                     </p>
                   )}
                 </div>
@@ -353,7 +353,7 @@ function TVMountingLanding() {
 
           <div className="text-center mt-12">
             <p className="text-gray-600 text-lg">
-              💡 <span className="font-semibold">Not sure which package?</span> Get a free quote and we'll recommend the best option for your space!
+              ≡ƒÆí <span className="font-semibold">Not sure which package?</span> Get a free quote and we'll recommend the best option for your space!
             </p>
           </div>
         </div>
