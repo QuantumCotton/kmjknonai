@@ -17,6 +17,29 @@ function KitchenRenovationElite() {
     message: '',
     images: []
   })
+  
+  // Financing calculator state
+  const [loanAmount, setLoanAmount] = useState(47500)
+  const [apr, setApr] = useState(7.99)
+  const [loanTerm, setLoanTerm] = useState(60)
+  
+  const calculateMonthlyPayment = () => {
+    const principal = parseFloat(loanAmount)
+    const monthlyRate = parseFloat(apr) / 100 / 12
+    const numPayments = parseInt(loanTerm)
+    
+    if (monthlyRate === 0) return (principal / numPayments).toFixed(2)
+    
+    const monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1)
+    return monthlyPayment.toFixed(2)
+  }
+  
+  const calculateTotalInterest = () => {
+    const monthly = parseFloat(calculateMonthlyPayment())
+    const total = monthly * parseInt(loanTerm)
+    const interest = total - parseFloat(loanAmount)
+    return interest.toFixed(2)
+  }
 
   const openModalWithContext = (context) => {
     setButtonContext(context)
@@ -421,6 +444,124 @@ function KitchenRenovationElite() {
               <Upload className="mr-2" size={24} />
               Get My Custom Quote
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Financing Calculator */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-[var(--deep-charcoal)]">
+              💰 Calculate Your Own Financing
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We don't offer financing, but you can use this calculator to see what a loan from your bank or credit union might cost. 
+              <strong> Current average APR for good credit: 7.99% - 10.99%</strong>
+            </p>
+          </div>
+          
+          <div className="bg-gradient-to-br from-[var(--warm-off-white)] to-white rounded-2xl shadow-2xl p-8 md:p-12 border-2 border-[var(--brushed-gold)]/20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              {/* Left side - Inputs */}
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Project Cost
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg">$</span>
+                    <input
+                      type="number"
+                      value={loanAmount}
+                      onChange={(e) => setLoanAmount(e.target.value)}
+                      className="w-full pl-10 pr-4 py-4 text-lg font-semibold border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--brushed-gold)] focus:border-transparent"
+                      min="1000"
+                      step="1000"
+                    />
+                  </div>
+                  <div className="flex gap-2 mt-3">
+                    <button onClick={() => setLoanAmount(20000)} className="px-4 py-2 bg-gray-100 hover:bg-[var(--brushed-gold)]/10 rounded-lg text-sm font-medium transition-all">$20K</button>
+                    <button onClick={() => setLoanAmount(47500)} className="px-4 py-2 bg-gray-100 hover:bg-[var(--brushed-gold)]/10 rounded-lg text-sm font-medium transition-all">$47.5K</button>
+                    <button onClick={() => setLoanAmount(97500)} className="px-4 py-2 bg-gray-100 hover:bg-[var(--brushed-gold)]/10 rounded-lg text-sm font-medium transition-all">$97.5K</button>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Interest Rate (APR)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      value={apr}
+                      onChange={(e) => setApr(e.target.value)}
+                      className="w-full pl-4 pr-12 py-4 text-lg font-semibold border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--brushed-gold)] focus:border-transparent"
+                      min="0"
+                      max="30"
+                      step="0.1"
+                    />
+                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-lg">%</span>
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">💡 Good credit: 7.99% | Excellent: 6.99% | Fair: 10.99%</p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Loan Term
+                  </label>
+                  <select
+                    value={loanTerm}
+                    onChange={(e) => setLoanTerm(e.target.value)}
+                    className="w-full px-4 py-4 text-lg font-semibold border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-[var(--brushed-gold)] focus:border-transparent appearance-none bg-white"
+                  >
+                    <option value="12">12 months (1 year)</option>
+                    <option value="24">24 months (2 years)</option>
+                    <option value="36">36 months (3 years)</option>
+                    <option value="48">48 months (4 years)</option>
+                    <option value="60">60 months (5 years)</option>
+                    <option value="72">72 months (6 years)</option>
+                    <option value="84">84 months (7 years)</option>
+                  </select>
+                </div>
+              </div>
+              
+              {/* Right side - Results */}
+              <div className="bg-gradient-to-br from-[var(--brushed-gold)] to-[var(--brushed-bronze)] rounded-2xl p-8 text-white shadow-xl">
+                <h3 className="text-2xl font-bold mb-6">Your Estimated Payment</h3>
+                
+                <div className="space-y-6">
+                  <div className="bg-white/10 rounded-xl p-6 backdrop-blur-sm">
+                    <div className="text-sm opacity-90 mb-2">Monthly Payment</div>
+                    <div className="text-5xl font-extrabold">${calculateMonthlyPayment()}</div>
+                    <div className="text-sm opacity-75 mt-2">per month for {loanTerm} months</div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                      <div className="text-xs opacity-90 mb-1">Total Interest</div>
+                      <div className="text-2xl font-bold">${calculateTotalInterest()}</div>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                      <div className="text-xs opacity-90 mb-1">Total Cost</div>
+                      <div className="text-2xl font-bold">${(parseFloat(loanAmount) + parseFloat(calculateTotalInterest())).toFixed(2)}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-white/20 pt-4 text-sm opacity-90">
+                    <p className="mb-2">💡 <strong>Pro Tip:</strong> Check with your bank, credit union, or online lenders for the best rates.</p>
+                    <p>Many credit unions offer lower APRs for home improvement loans!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6">
+              <p className="text-gray-700">
+                <strong>⚠️ Disclaimer:</strong> This calculator provides estimates only. Actual loan terms, rates, and payments will vary based on your credit score, lender, and loan terms. 
+                We recommend speaking with multiple lenders to compare offers. KMJK does not provide financing services.
+              </p>
+            </div>
           </div>
         </div>
       </section>
