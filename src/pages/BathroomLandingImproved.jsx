@@ -64,6 +64,19 @@ function BathroomLandingImproved() {
 
       if (data.success) {
         console.log('✅ Form submitted successfully!')
+        
+        // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            service: 'Bathroom Renovation',
+            button_context: buttonContext || 'Not specified',
+            estimated_budget: estimatedTotal,
+            value: estimatedTotal * 0.15, // 15% commission
+            currency: 'USD'
+          })
+          console.log('📊 GA4 Event Sent: generate_lead (Bathroom)')
+        }
+        
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {

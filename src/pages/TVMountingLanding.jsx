@@ -60,6 +60,24 @@ function TVMountingLanding() {
 
       if (data.success) {
         console.log('✅ Form submitted successfully!')
+        
+        // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
+        if (window.gtag) {
+          // Estimate package value based on selectedPackage string
+          let packageValue = 399 // Default to "The Clean Look"
+          if (selectedPackage.includes('$199')) packageValue = 199
+          else if (selectedPackage.includes('$399')) packageValue = 399
+          else if (selectedPackage.includes('$699')) packageValue = 699
+          
+          window.gtag('event', 'generate_lead', {
+            service: 'TV Mounting',
+            selected_package: selectedPackage || 'Not specified',
+            value: packageValue * 0.15, // 15% commission
+            currency: 'USD'
+          })
+          console.log('📊 GA4 Event Sent: generate_lead (TV Mounting)')
+        }
+        
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {

@@ -69,6 +69,18 @@ function BathroomRepairsLanding() {
 
       if (data.success) {
         console.log('✅ Form submitted successfully!')
+        
+        // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            service: 'Bathroom Repairs',
+            button_context: buttonContext || 'Not specified',
+            value: 300 * 0.15, // Average repair value * 15% commission
+            currency: 'USD'
+          })
+          console.log('📊 GA4 Event Sent: generate_lead (Bathroom Repairs)')
+        }
+        
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {

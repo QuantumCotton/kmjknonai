@@ -71,6 +71,18 @@ function HandymanLandingImproved() {
 
       if (data.success) {
         console.log('✅ Form submitted successfully! Email sent to chris@theeliteservicehub.com')
+        
+        // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            service: 'Handyman Services',
+            button_context: buttonContext || 'Not specified',
+            value: 375, // Minimum service value
+            currency: 'USD'
+          })
+          console.log('📊 GA4 Event Sent: generate_lead (Handyman)')
+        }
+        
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {

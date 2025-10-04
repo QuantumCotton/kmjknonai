@@ -68,6 +68,22 @@ function KitchenLandingImproved() {
 
       if (data.success) {
         console.log('✅ Form submitted successfully!')
+        
+        // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
+        if (window.gtag) {
+          const packageValues = { 'refresh': 20000, 'full': 47500, 'luxury': 87500 }
+          const estimatedValue = packageValues[projectSize] || 47500
+          window.gtag('event', 'generate_lead', {
+            service: 'Kitchen Renovation',
+            button_context: buttonContext || 'Not specified',
+            project_size: projectSize,
+            estimated_budget: estimatedValue,
+            value: estimatedValue * 0.15, // 15% commission
+            currency: 'USD'
+          })
+          console.log('📊 GA4 Event Sent: generate_lead (Kitchen)')
+        }
+        
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {
