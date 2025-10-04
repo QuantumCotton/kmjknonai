@@ -288,11 +288,11 @@ function TVMountingLanding() {
             From basic mounting to cinema-quality installations, we have the perfect solution for your home.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
             {/* Package 1: Pro Mount */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all">
-              <h3 className="text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">Pro Mount</h3>
-              <div className="text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $199</div>
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all h-full flex flex-col">
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">Pro Mount</h3>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $199</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
                   <Check className="text-green-600 flex-shrink-0 mt-1" size={20} />
@@ -313,20 +313,20 @@ function TVMountingLanding() {
               </ul>
               <Button 
                 onClick={() => openModalWithPackage('Pro Mount - Starting at $199')}
-                className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
+                className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white mt-auto"
               >
                 Get Quote
               </Button>
             </div>
 
             {/* Package 2: The Clean Look - MOST POPULAR */}
-            <div className="bg-white rounded-lg shadow-2xl p-8 border-4 border-[var(--brushed-gold)] hover:scale-105 transition-all relative">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--brushed-gold)] text-white px-6 py-2 rounded-full font-bold text-sm">
+            <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8 border-4 border-[var(--brushed-gold)] transition-all relative h-full flex flex-col">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[var(--brushed-gold)] text-white px-4 md:px-6 py-2 rounded-full font-bold text-xs md:text-sm whitespace-nowrap">
                 <Sparkles className="inline mr-1" size={16} />
                 MOST POPULAR
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-[var(--deep-charcoal)] mt-2">The Clean Look</h3>
-              <div className="text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $399</div>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)] mt-2">The Clean Look</h3>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $399</div>
               <div className="text-sm text-gray-600 mb-4 font-semibold">Everything in Pro Mount PLUS:</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -348,16 +348,16 @@ function TVMountingLanding() {
               </ul>
               <Button 
                 onClick={() => openModalWithPackage('The Clean Look - Starting at $399 (MOST POPULAR)')}
-                className="w-full bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white text-lg py-6"
+                className="w-full bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white text-lg py-6 mt-auto"
               >
                 Get Quote (Recommended)
               </Button>
             </div>
 
             {/* Package 3: Ultimate Experience */}
-            <div className="bg-white rounded-lg shadow-lg p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all">
-              <h3 className="text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">The Ultimate Experience</h3>
-              <div className="text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $699</div>
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all h-full flex flex-col">
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">The Ultimate Experience</h3>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $699</div>
               <div className="text-sm text-gray-600 mb-4 font-semibold">Everything in The Clean Look PLUS:</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -379,7 +379,7 @@ function TVMountingLanding() {
               </ul>
               <Button 
                 onClick={() => openModalWithPackage('The Ultimate Experience - Starting at $699')}
-                className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
+                className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white mt-auto"
               >
                 Get Quote
               </Button>
