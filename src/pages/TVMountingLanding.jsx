@@ -4,10 +4,6 @@ import { Phone, MessageSquare, Check, Star, Shield, MapPin, Award, Sparkles, Upl
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
-import customBuiltin from '../assets/custom_builtin.jpg'
-import customCabinetry from '../assets/custom_cabinetry.jpg'
-import bathroomLuxury from '../assets/bathroom_luxury_spa.jpg'
-import kitchenModern from '../assets/kitchen_modern.jpg'
 
 function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -82,7 +78,7 @@ function TVMountingLanding() {
         <div className="relative z-2 max-w-5xl mx-auto px-4 text-center text-white py-20">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             Flawless TV Mounting<br />
-            in Stuart & the Treasure Coast
+            in Daly City & the Peninsula
           </h1>
           <p className="text-2xl md:text-3xl mb-8 text-gray-200 max-w-3xl mx-auto">
             From Messy Wires to a Clean, Cinematic Look.<br />
@@ -241,7 +237,7 @@ function TVMountingLanding() {
             </div>
             <div className="flex flex-col items-center">
               <Shield className="text-[var(--brushed-gold)] mb-2" size={32} />
-              <div className="font-semibold text-[var(--deep-charcoal)]">Servicing All of South Florida</div>
+              <div className="font-semibold text-[var(--deep-charcoal)]">Servicing the Entire Bay Area</div>
             </div>
           </div>
         </div>
@@ -370,22 +366,22 @@ function TVMountingLanding() {
             See Our Work in Your Neighbors' Homes
           </h2>
           <p className="text-center text-gray-600 mb-12 text-lg">
-            Real installations from real customers across the Treasure Coast
+            Real installations from real customers in Daly City & the Peninsula
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { title: "Custom Entertainment Center - Stuart", desc: "Built-in cabinetry with hidden wire concealment", img: customEntertainment },
-              { title: "Wall-Mounted TV - Port St. Lucie", desc: "Clean installation with professional cable management", img: customBuiltin },
-              { title: "Modern Living Room Setup - Jupiter", desc: "Premium TV mounting with floating shelves", img: customCabinetry },
-              { title: "Contemporary Installation - Palm City", desc: "Sleek wall mount with concealed wiring", img: bathroomLuxury },
-              { title: "Entertainment Wall - Jensen Beach", desc: "Full media center with integrated components", img: customBuiltin },
-              { title: "Kitchen TV Installation - Hobe Sound", desc: "Space-saving mount for family gathering area", img: kitchenModern }
+              { title: "Clean Wire Concealment - Pacifica", desc: "75\" Frame TV with completely hidden wires" },
+              { title: "Soundbar & TV Setup - Daly City", desc: "85\" TV with integrated soundbar mounting" },
+              { title: "Floating Shelf Installation - San Mateo", desc: "Modern entertainment center with hidden cables" },
+              { title: "Brick Wall Mount - South San Francisco", desc: "65\" TV securely mounted on brick fireplace" },
+              { title: "Corner TV Mount - Burlingame", desc: "Swivel mount with wire concealment" },
+              { title: "Complete Theater - Millbrae", desc: "TV, soundbar, and smart home integration" }
             ].map((item, idx) => (
               <div key={idx} className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                 <div 
                   className="h-64 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${item.img})` }}
+                  style={{ backgroundImage: `url(${customEntertainment})` }}
                 ></div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-[var(--deep-charcoal)]">{item.title}</h3>
