@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, MessageSquare, Check, Star, Calendar, X, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
@@ -12,6 +12,7 @@ function BathroomLandingImproved() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [buttonContext, setButtonContext] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,6 +20,11 @@ function BathroomLandingImproved() {
     message: '',
     images: []
   })
+
+  const openModalWithContext = (context) => {
+    setButtonContext(context)
+    setIsModalOpen(true)
+  }
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files)
@@ -37,6 +43,12 @@ function BathroomLandingImproved() {
     formDataToSend.append('message', formData.message)
     formDataToSend.append('subject', 'New Bathroom Renovation Request from KMJK Website')
     
+    // Hidden tracking fields
+    formDataToSend.append('Landing Page', 'Bathroom Renovation')
+    formDataToSend.append('Button Clicked', buttonContext || 'Not specified')
+    formDataToSend.append('Estimated Budget', `$${estimatedTotal.toLocaleString()} ($${monthlyBudget}/month)`)
+    formDataToSend.append('Source URL', window.location.href)
+    
     formData.images.forEach((image, index) => {
       formDataToSend.append(`attachment_${index}`, image)
     })
@@ -51,7 +63,7 @@ function BathroomLandingImproved() {
       console.log('Web3Forms Response:', data)
 
       if (data.success) {
-        console.log('✅ Form submitted successfully!')
+        console.log('Γ£à Form submitted successfully!')
         setSubmitSuccess(true)
         setFormData({ name: '', email: '', phone: '', message: '', images: [] })
         setTimeout(() => {
@@ -59,7 +71,7 @@ function BathroomLandingImproved() {
           setSubmitSuccess(false)
         }, 3000)
       } else {
-        console.error('❌ Web3Forms error:', data.message)
+        console.error('Γ¥î Web3Forms error:', data.message)
         alert('Error: ' + (data.message || 'Failed to submit form'))
       }
     } catch (error) {
@@ -80,7 +92,7 @@ function BathroomLandingImproved() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/65 to-black/55 z-1"></div>
         <div className="relative z-2 max-w-4xl mx-auto px-4 text-center text-white">
           <div className="inline-block bg-[var(--brushed-gold)] text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            ⭐ Stuart & Treasure Coast's Most Trusted Bathroom Experts
+            Γ¡É Stuart & Treasure Coast's Most Trusted Bathroom Experts
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
             What If Your Morning Routine<br />
@@ -102,12 +114,12 @@ function BathroomLandingImproved() {
                 Text Us Now
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
+            <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
               <Upload className="mr-2" size={24} />
               Get Free Quote
             </Button>
           </div>
-          <p className="mt-6 text-sm">📅 Next Available Start Date: This Week! • ⚡ Same-Day Estimates Available</p>
+          <p className="mt-6 text-sm">≡ƒôà Next Available Start Date: This Week! ΓÇó ΓÜí Same-Day Estimates Available</p>
         </div>
       </section>
 
@@ -123,7 +135,7 @@ function BathroomLandingImproved() {
 
           {submitSuccess ? (
             <div className="py-8 text-center">
-              <div className="text-green-600 text-6xl mb-4">✓</div>
+              <div className="text-green-600 text-6xl mb-4">Γ£ô</div>
               <h3 className="text-2xl font-bold text-green-600 mb-2">Request Sent!</h3>
               <p className="text-gray-600">We'll get back to you within 1 hour during business hours.</p>
             </div>
@@ -201,7 +213,7 @@ function BathroomLandingImproved() {
                   </label>
                   {formData.images.length > 0 && (
                     <p className="text-sm text-green-600 mt-3">
-                      ✓ {formData.images.length} file(s) selected
+                      Γ£ô {formData.images.length} file(s) selected
                     </p>
                   )}
                 </div>
@@ -281,7 +293,7 @@ function BathroomLandingImproved() {
                 ${monthlyBudget}/month
               </div>
               <div className="text-gray-600 mb-4">
-                Based on 24-month financing • Estimated Project Budget: ${estimatedTotal.toLocaleString()}
+                Based on 24-month financing ΓÇó Estimated Project Budget: ${estimatedTotal.toLocaleString()}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-6">
                 <div className="flex items-center justify-center gap-2">
@@ -297,7 +309,7 @@ function BathroomLandingImproved() {
                   <span>Professional Installation</span>
                 </div>
               </div>
-              <Button onClick={() => setIsModalOpen(true)} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
+              <Button onClick={() => openModalWithContext(`Payment Calculator - Monthly Budget $${monthlyBudget}`)} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
                 Get My Detailed Quote
               </Button>
             </div>
@@ -324,12 +336,12 @@ function BathroomLandingImproved() {
                       <Star key={i} className="fill-[var(--brushed-gold)] text-[var(--brushed-gold)]" size={20} />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">• Completed in 6 Days</span>
+                  <span className="text-sm text-gray-600">ΓÇó Completed in 6 Days</span>
                 </div>
                 <p className="text-gray-700 italic mb-3">
                   "KMJK turned our cramped, outdated bathroom into a stunning spa-like retreat. Chris and his team were professional, clean, and finished exactly when promised. I actually look forward to my morning routine now!"
                 </p>
-                <p className="text-sm font-semibold">— Jennifer M., Stuart, FL</p>
+                <p className="text-sm font-semibold">ΓÇö Jennifer M., Stuart, FL</p>
               </div>
             </div>
             <div className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg">
@@ -341,12 +353,12 @@ function BathroomLandingImproved() {
                       <Star key={i} className="fill-[var(--brushed-gold)] text-[var(--brushed-gold)]" size={20} />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">• Completed in 7 Days</span>
+                  <span className="text-sm text-gray-600">ΓÇó Completed in 7 Days</span>
                 </div>
                 <p className="text-gray-700 italic mb-3">
                   "We were worried about the mess and disruption, but KMJK's team cleaned up every single day and worked around our schedule. The final result is beyond our wildest dreams. Worth every penny!"
                 </p>
-                <p className="text-sm font-semibold">— Robert & Lisa T., Port St. Lucie, FL</p>
+                <p className="text-sm font-semibold">ΓÇö Robert & Lisa T., Port St. Lucie, FL</p>
               </div>
             </div>
           </div>
@@ -369,13 +381,13 @@ function BathroomLandingImproved() {
                 Call: 650-501-7659
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+            <Button onClick(() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
               <Upload className="mr-2" size={24} />
               Send Photos & Get Quote
             </Button>
           </div>
           <p className="mt-6 text-sm">
-            ✓ Licensed & Insured • ✓ A+ BBB Rating • ✓ 100% Satisfaction Guarantee
+            Γ£ô Licensed & Insured ΓÇó Γ£ô A+ BBB Rating ΓÇó Γ£ô 100% Satisfaction Guarantee
           </p>
         </div>
       </section>
