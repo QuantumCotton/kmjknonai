@@ -18,6 +18,7 @@ import KitchenLandingImproved from './pages/KitchenLandingImproved.jsx'
 import HandymanLanding from './pages/HandymanLanding.jsx'
 import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
 import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
+import TVMountingLanding from './pages/TVMountingLanding.jsx'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -579,6 +580,7 @@ function App() {
           <Route path="/bathroom-remodel" element={<BathroomLandingImproved />} />
           <Route path="/kitchen-remodel" element={<KitchenLandingImproved />} />
           <Route path="/handyman-services" element={<HandymanLandingImproved />} />
+          <Route path="/tv-mounting" element={<TVMountingLanding />} />
           {/* Old Versions for Reference */}
           <Route path="/bathroom-remodel-old" element={<BathroomLanding />} />
           <Route path="/kitchen-remodel-old" element={<KitchenLanding />} />
