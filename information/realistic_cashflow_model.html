@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Cash Flow Model - $500 Budget with Payment Delays</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border-left: 6px solid #f39c12;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box h2 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .warning-box p {
+            color: #856404;
+            line-height: 1.8;
+            margin: 8px 0;
+        }
+        
+        .alert-box {
+            background: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .alert-box h2 {
+            color: #721c24;
+            margin-bottom: 15px;
+        }
+        
+        .alert-box p {
+            color: #721c24;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        th {
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .week-alive {
+            background: #d4edda;
+        }
+        
+        .week-struggling {
+            background: #fff3cd;
+        }
+        
+        .week-dead {
+            background: #f8d7da;
+            font-weight: bold;
+            color: #721c24;
+        }
+        
+        .profit {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .loss {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .pending {
+            color: #f39c12;
+            font-style: italic;
+        }
+        
+        .service-selector {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .service-selector h3 {
+            margin-bottom: 15px;
+            color: #1e3c72;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .service-button {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .service-button:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+        
+        .service-button.selected {
+            border-color: #667eea;
+            background: #e3f2fd;
+            font-weight: bold;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Realistic Cash Flow Model</h1>
+            <p style="font-size: 1.2em; color: #666; margin-top: 10px;">$500 Starting Budget | Payment Delays Included</p>
+        </div>
+        
+        <div class="alert-box">
+            <h2>⚠️ THE BRUTAL REALITY OF CASH FLOW</h2>
+            <p><strong>Starting Budget:</strong> $500 total (you can't spend money you don't have!)</p>
+            <p><strong>Week 1:</strong> Spend $100 (conservative, save $400 for later weeks)</p>
+            <p><strong>Week 2:</strong> Can spend $100 + Week 1 revenue (IF you made money AND got paid already)</p>
+            <p><strong>Payment Delays:</strong> Kitchen = 20 days, Handyman = 3 days, etc. You must WAIT to get paid!</p>
+            <p><strong>Death Scenario:</strong> If you spend $500 and haven't been paid yet, you're DEAD (no more cash)</p>
+        </div>
+        
+        <div class="warning-box">
+            <h2>💡 How "Ad Cost Per Job" Works:</h2>
+            <p><strong>What it means:</strong> The average amount you spend on ads to book ONE job</p>
+            <p><strong>Example:</strong> Kitchen costs $730 in ads per job. When you book a kitchen, contractor reimburses you $730 + pays $2,250 commission.</p>
+            <p><strong>The Formula:</strong> Clicks Needed ÷ (CVR × Close Rate) × CPC = Ad Cost Per Job</p>
+            <p><strong>Your Advantage:</strong> You close at 40% vs typical 25-30%, so YOUR ad cost per job is LOWER than if contractor did it themselves!</p>
+        </div>
+        
+        <div class="warning-box" style="background: #e3f2fd; border-color: #2196f3;">
+            <h2 style="color: #1976d2;">📅 Payment Timing by Service:</h2>
+            <p style="color: #1976d2;"><strong>Same Day (1 day):</strong> TV Installation, House Cleaning</p>
+            <p style="color: #1976d2;"><strong>Fast (3 days):</strong> Handyman, Pressure Washing, Carpet/Air Duct Cleaning</p>
+            <p style="color: #1976d2;"><strong>Medium (10-14 days):</strong> Interior Painting, Tile, HVAC, Patio</p>
+            <p style="color: #1976d2;"><strong>Slow (20-21 days):</strong> Kitchen, Bathroom, Deck Building</p>
+        </div>
+        
+        <div class="service-selector">
+            <h3>Select Service to Analyze:</h3>
+            <div class="service-grid" id="service-buttons">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box week-alive" style="background: #d4edda;"></div>
+                <span><strong>Alive:</strong> Cash available</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box week-struggling" style="background: #fff3cd;"></div>
+                <span><strong>Struggling:</strong> Low cash</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box week-dead" style="background: #f8d7da;"></div>
+                <span><strong>Dead:</strong> Out of money</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <h2 style="margin-bottom: 15px; color: #1e3c72;">📊 Week-by-Week Cash Flow: <span id="selected-service-name">-</span></h2>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div>
+                        <div style="color: #666; font-size: 0.85em;">💰 AD COST PER JOB</div>
+                        <div style="font-size: 1.8em; font-weight: bold; color: #667eea;" id="ad-cost-display">$0</div>
+                        <div style="color: #666; font-size: 0.8em; margin-top: 3px;">(Contractor reimburses this)</div>
+                    </div>
+                    <div>
+                        <div style="color: #666; font-size: 0.85em;">📊 CLICKS PER JOB</div>
+                        <div style="font-size: 1.8em; font-weight: bold; color: #667eea;" id="clicks-display">0</div>
+                        <div style="color: #666; font-size: 0.8em; margin-top: 3px;">(Avg to book 1 job)</div>
+                    </div>
+                    <div>
+                        <div style="color: #666; font-size: 0.85em;">💵 YOUR 15% COMMISSION</div>
+                        <div style="font-size: 1.8em; font-weight: bold; color: #27ae60;" id="commission-display">$0</div>
+                        <div style="color: #666; font-size: 0.8em; margin-top: 3px;">(Your profit per job)</div>
+                    </div>
+                    <div>
+                        <div style="color: #666; font-size: 0.85em;">⏱️ PAYMENT DELAY</div>
+                        <div style="font-size: 1.8em; font-weight: bold; color: #f39c12;" id="payment-delay-display">0 days</div>
+                        <div style="color: #666; font-size: 0.8em; margin-top: 3px;">(When you get paid)</div>
+                    </div>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Starting Cash</th>
+                        <th>Can Spend</th>
+                        <th>Actual Spend</th>
+                        <th>Jobs Booked</th>
+                        <th>Revenue (Future)</th>
+                        <th>Payment Due In</th>
+                        <th>Cash Received</th>
+                        <th>Ending Cash</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="cashflow-table">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        const services = [
+            { name: "Kitchen Remodeling", cpc: 8.76, cvr: 0.0261, closeRate: 0.25, avgSale: 15000, paymentDays: 20 },
+            { name: "Bathroom Remodeling", cpc: 8.76, cvr: 0.0261, closeRate: 0.25, avgSale: 8000, paymentDays: 20 },
+            { name: "Patio Installation", cpc: 5.31, cvr: 0.06, closeRate: 0.30, avgSale: 3500, paymentDays: 14 },
+            { name: "Deck Building", cpc: 6.55, cvr: 0.05, closeRate: 0.30, avgSale: 3500, paymentDays: 21 },
+            { name: "HVAC Installation", cpc: 20.00, cvr: 0.05, closeRate: 0.25, avgSale: 4500, paymentDays: 14 },
+            { name: "Interior Painting", cpc: 13.74, cvr: 0.108, closeRate: 0.25, avgSale: 1100, paymentDays: 10 },
+            { name: "Tile Installation", cpc: 6.55, cvr: 0.08, closeRate: 0.30, avgSale: 1250, paymentDays: 10 },
+            { name: "Handyman Services", cpc: 7.10, cvr: 0.1345, closeRate: 0.25, avgSale: 375, paymentDays: 3 },
+            { name: "TV Installation", cpc: 6.29, cvr: 0.10, closeRate: 0.35, avgSale: 350, paymentDays: 1 },
+            { name: "Pressure Washing", cpc: 5.81, cvr: 0.10, closeRate: 0.28, avgSale: 250, paymentDays: 3 },
+            { name: "Carpet Cleaning", cpc: 6.55, cvr: 0.1765, closeRate: 0.30, avgSale: 500, paymentDays: 3 },
+            { name: "Air Duct Cleaning", cpc: 6.55, cvr: 0.10, closeRate: 0.28, avgSale: 400, paymentDays: 3 },
+            { name: "House Cleaning", cpc: 6.55, cvr: 0.1765, closeRate: 0.30, avgSale: 180, paymentDays: 1 }
+        ];
+        
+        // Calculate ad cost per job for each service
+        services.forEach(service => {
+            const clicksPerJob = 1 / (service.cvr * service.closeRate);
+            service.adCostPerJob = clicksPerJob * service.cpc;
+            service.clicksPerJob = clicksPerJob;
+        });
+        
+        const STARTING_BUDGET = 500;
+        const BASE_WEEKLY_SPEND = 100;
+        const COMMISSION_RATE = 0.15;
+        const MAX_WEEKS = 20;
+        
+        let selectedService = services[0];
+        
+        function calculateWeekMetrics(service, spend) {
+            const clicks = spend / service.cpc;
+            const leads = clicks * service.cvr;
+            const jobs = leads * service.closeRate;
+            const commission = service.avgSale * COMMISSION_RATE;
+            const revenue = jobs * commission;
+            
+            return {
+                jobs: jobs,
+                revenue: revenue
+            };
+        }
+        
+        function simulateCashFlow(service) {
+            let cash = STARTING_BUDGET;
+            const weeks = [];
+            const pendingPayments = []; // Track payments we're waiting on
+            
+            for (let week = 1; week <= MAX_WEEKS; week++) {
+                const startingCash = cash;
+                
+                // Check for incoming payments from previous weeks
+                let cashReceived = 0;
+                const remainingPayments = [];
+                
+                for (const payment of pendingPayments) {
+                    if (payment.dueWeek <= week) {
+                        cashReceived += payment.amount;
+                    } else {
+                        remainingPayments.push(payment);
+                    }
+                }
+                
+                cash += cashReceived;
+                pendingPayments.length = 0;
+                pendingPayments.push(...remainingPayments);
+                
+                // Determine how much we can spend
+                const canSpend = Math.min(BASE_WEEKLY_SPEND, cash);
+                
+                // If can't afford base spend, we're dead
+                if (canSpend < BASE_WEEKLY_SPEND) {
+                    weeks.push({
+                        week: week,
+                        startingCash: startingCash,
+                        canSpend: canSpend,
+                        actualSpend: 0,
+                        jobs: 0,
+                        revenueBooked: 0,
+                        paymentDueIn: 0,
+                        cashReceived: cashReceived,
+                        endingCash: cash,
+                        status: 'DEAD',
+                        isDead: true
+                    });
+                    break;
+                }
+                
+                // Spend and calculate results
+                const actualSpend = canSpend;
+                const metrics = calculateWeekMetrics(service, actualSpend);
+                
+                // Deduct spend from cash
+                cash -= actualSpend;
+                
+                // Schedule payment for future week
+                if (metrics.revenue > 0) {
+                    const weeksUntilPayment = Math.ceil(service.paymentDays / 7);
+                    pendingPayments.push({
+                        amount: metrics.revenue,
+                        dueWeek: week + weeksUntilPayment
+                    });
+                }
+                
+                // Determine status
+                let status = 'Alive';
+                if (cash < 100) status = 'Struggling';
+                if (cash >= 200) status = 'Healthy';
+                
+                weeks.push({
+                    week: week,
+                    startingCash: startingCash.toFixed(0),
+                    canSpend: canSpend.toFixed(0),
+                    actualSpend: actualSpend.toFixed(0),
+                    jobs: metrics.jobs.toFixed(2),
+                    revenueBooked: metrics.revenue.toFixed(0),
+                    paymentDueIn: service.paymentDays + ' days',
+                    cashReceived: cashReceived.toFixed(0),
+                    endingCash: cash.toFixed(0),
+                    status: status,
+                    isDead: false
+                });
+                
+                // Safety: if we've been running for a while and have good cash, stop
+                if (week >= 15 && cash > STARTING_BUDGET) break;
+            }
+            
+            return weeks;
+        }
+        
+        function renderCashFlow(service) {
+            document.getElementById('selected-service-name').textContent = service.name;
+            
+            // Update metrics display
+            document.getElementById('ad-cost-display').textContent = '$' + service.adCostPerJob.toFixed(0);
+            document.getElementById('clicks-display').textContent = service.clicksPerJob.toFixed(0);
+            document.getElementById('commission-display').textContent = '$' + (service.avgSale * COMMISSION_RATE).toFixed(0);
+            document.getElementById('payment-delay-display').textContent = service.paymentDays + ' days';
+            
+            const weeks = simulateCashFlow(service);
+            const tbody = document.getElementById('cashflow-table');
+            tbody.innerHTML = '';
+            
+            weeks.forEach(week => {
+                const rowClass = week.isDead ? 'week-dead' : 
+                               week.status === 'Struggling' ? 'week-struggling' : 'week-alive';
+                
+                const revenueClass = parseFloat(week.revenueBooked) > 0 ? 'profit' : '';
+                const cashClass = parseFloat(week.cashReceived) > 0 ? 'profit' : '';
+                
+                if (week.isDead) {
+                    const row = `
+                        <tr class="${rowClass}">
+                            <td colspan="10"><strong>❌ WEEK ${week.week}: BUSINESS DEAD - Ran out of cash! Starting: $${week.startingCash}, Can't afford $100 spend.</strong></td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                } else {
+                    const row = `
+                        <tr class="${rowClass}">
+                            <td><strong>Week ${week.week}</strong></td>
+                            <td>$${week.startingCash}</td>
+                            <td>$${week.canSpend}</td>
+                            <td class="loss">-$${week.actualSpend}</td>
+                            <td>${week.jobs}</td>
+                            <td class="${revenueClass}">$${week.revenueBooked}</td>
+                            <td class="pending">${week.paymentDueIn}</td>
+                            <td class="${cashClass}">+$${week.cashReceived}</td>
+                            <td><strong>$${week.endingCash}</strong></td>
+                            <td><strong>${week.status}</strong></td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                }
+            });
+        }
+        
+        function renderServiceButtons() {
+            const container = document.getElementById('service-buttons');
+            services.forEach((service, index) => {
+                const button = document.createElement('div');
+                button.className = 'service-button' + (index === 0 ? ' selected' : '');
+                
+                // Show service name + key metrics
+                const commission = (service.avgSale * COMMISSION_RATE).toFixed(0);
+                button.innerHTML = `
+                    <div style="font-weight: bold; margin-bottom: 5px;">${service.name}</div>
+                    <div style="font-size: 0.85em; color: #666;">Ad Cost/Job: <strong style="color: #667eea;">$${service.adCostPerJob.toFixed(0)}</strong></div>
+                    <div style="font-size: 0.85em; color: #666;">Your Profit: <strong style="color: #27ae60;">$${commission}</strong></div>
+                    <div style="font-size: 0.8em; color: #f39c12; margin-top: 3px;">Paid in ${service.paymentDays} days</div>
+                `;
+                
+                button.onclick = () => {
+                    document.querySelectorAll('.service-button').forEach(b => b.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedService = service;
+                    renderCashFlow(service);
+                };
+                container.appendChild(button);
+            });
+        }
+        
+        // Initialize
+        renderServiceButtons();
+        renderCashFlow(selectedService);
+    </script>
+</body>
+</html>

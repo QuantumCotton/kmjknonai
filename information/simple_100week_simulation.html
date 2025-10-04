@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple 100-Week Simulation - Unlimited Budget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .explanation {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .explanation h2 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+        
+        .explanation code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #d32f2f;
+            font-family: monospace;
+        }
+        
+        .table-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        th {
+            padding: 12px 10px;
+            text-align: center;
+            font-weight: 600;
+            border-right: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        th.week-col {
+            background: #2c3e50;
+            position: sticky;
+            left: 0;
+            z-index: 101;
+        }
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        td.week-col {
+            font-weight: bold;
+            background: #f8f9fa;
+            position: sticky;
+            left: 0;
+            z-index: 50;
+            border-right: 2px solid #2c3e50;
+        }
+        
+        tbody tr:hover {
+            background: #e3f2fd;
+        }
+        
+        .milestone-row {
+            background: #fff3cd !important;
+            font-weight: bold;
+        }
+        
+        .profit {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .loss {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .final-summary {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 25px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .summary-card h3 {
+            color: #666;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .summary-card.green {
+            border-color: #27ae60;
+        }
+        
+        .summary-card.green .value {
+            color: #27ae60;
+        }
+        
+        .summary-card.red {
+            border-color: #e74c3c;
+        }
+        
+        .summary-card.red .value {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📈 SIMPLE 100-WEEK SIMULATION</h1>
+            <p style="font-size: 1.1em; color: #666; margin-top: 10px;">Unlimited Budget | $100 Base/Week | All Revenue Reinvested</p>
+        </div>
+        
+        <div class="explanation">
+            <h2>🧠 THE LOGIC (SIMPLIFIED):</h2>
+            <p><strong>Week 1:</strong> Spend <code>$100</code>, earn revenue, add to pot</p>
+            <p><strong>Week 2:</strong> Spend <code>$100 + Week1 Revenue</code>, earn more, add to pot</p>
+            <p><strong>Week 3:</strong> Spend <code>$100 + Week1 + Week2 Revenue</code>, earn more, add to pot</p>
+            <p><strong>...</strong></p>
+            <p><strong>Week 100:</strong> See total spent, total earned, net profit</p>
+            <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #f39c12;">
+                <strong>🚀 KEY DIFFERENCE:</strong> No budget limit! We assume you have infinite money to keep spending.
+                Every dollar earned goes back into next week's ad spend. We just want to see if it's profitable by Week 100.
+            </p>
+        </div>
+        
+        <div class="final-summary">
+            <h2 style="margin-bottom: 20px; color: #1e3c72; text-align: center;">🏁 WEEK 100 FINAL RESULTS</h2>
+            <div class="summary-grid" id="final-summary">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #1e3c72;">📊 Week-by-Week Breakdown (All Services)</h2>
+            <p style="margin-bottom: 20px; color: #666;">Each cell shows: <strong>Spend → Revenue (Profit)</strong></p>
+            <table id="simulation-table">
+                <thead>
+                    <tr id="header-row">
+                        <th class="week-col">Week</th>
+                        <!-- Service headers added by JS -->
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Rows added by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        const services = [
+            { name: "TV Mount PSL", cpc: 6.29, cvr: 0.10, closeRate: 0.35, avgSale: 350 },
+            { name: "Handyman JB", cpc: 5.63, cvr: 0.1345, closeRate: 0.30, avgSale: 400 },
+            { name: "Handyman Stuart", cpc: 8.00, cvr: 0.1345, closeRate: 0.30, avgSale: 400 },
+            { name: "Handyman PSL", cpc: 9.60, cvr: 0.1345, closeRate: 0.30, avgSale: 400 },
+            { name: "Pressure Wash", cpc: 9.74, cvr: 0.11, closeRate: 0.28, avgSale: 350 },
+            { name: "Drywall", cpc: 10.80, cvr: 0.12, closeRate: 0.35, avgSale: 450 },
+            { name: "Bath Remodel", cpc: 16.08, cvr: 0.0261, closeRate: 0.25, avgSale: 15000 },
+            { name: "Kitchen Remodel", cpc: 18.65, cvr: 0.0261, closeRate: 0.25, avgSale: 22000 },
+            { name: "Garage Floor", cpc: 18.08, cvr: 0.05, closeRate: 0.30, avgSale: 3500 }
+        ];
+        
+        const BASE_WEEKLY = 100;
+        const COMMISSION_RATE = 0.15;
+        const WEEKS = 100;
+        
+        function simulateService(service) {
+            let cumulativeRevenue = 0; // All revenue earned so far
+            const weeks = [];
+            
+            for (let week = 1; week <= WEEKS; week++) {
+                // This week's spend = base + ALL revenue earned so far
+                const thisWeekSpend = BASE_WEEKLY + cumulativeRevenue;
+                
+                // Calculate results
+                const clicks = thisWeekSpend / service.cpc;
+                const leads = clicks * service.cvr;
+                const jobs = leads * service.closeRate;
+                const commission = service.avgSale * COMMISSION_RATE;
+                const revenue = jobs * commission;
+                
+                // Add to cumulative pot
+                cumulativeRevenue += revenue;
+                
+                weeks.push({
+                    spend: thisWeekSpend,
+                    revenue: revenue,
+                    profit: revenue - thisWeekSpend,
+                    cumulativeRevenue: cumulativeRevenue
+                });
+            }
+            
+            // Calculate totals
+            const totalSpent = weeks.reduce((sum, w) => sum + w.spend, 0);
+            const totalRevenue = cumulativeRevenue;
+            const netProfit = totalRevenue - totalSpent;
+            
+            return {
+                weeks,
+                totalSpent,
+                totalRevenue,
+                netProfit
+            };
+        }
+        
+        function renderTable() {
+            // Simulate all services
+            const results = services.map(service => ({
+                service,
+                simulation: simulateService(service)
+            }));
+            
+            // Build header
+            const headerRow = document.getElementById('header-row');
+            headerRow.innerHTML = '<th class="week-col">Week</th>';
+            services.forEach(service => {
+                headerRow.innerHTML += `<th>${service.name}<br><small>($${service.cpc})</small></th>`;
+            });
+            
+            // Build rows
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            for (let week = 1; week <= WEEKS; week++) {
+                const rowClass = (week % 10 === 0) ? 'milestone-row' : '';
+                let row = `<tr class="${rowClass}">`;
+                row += `<td class="week-col">Week ${week}</td>`;
+                
+                results.forEach(result => {
+                    const weekData = result.simulation.weeks[week - 1];
+                    const profitClass = weekData.profit >= 0 ? 'profit' : 'loss';
+                    
+                    row += `<td>
+                        <div>$${weekData.spend.toFixed(0)} →</div>
+                        <div>$${weekData.revenue.toFixed(0)}</div>
+                        <div class="${profitClass}">(${weekData.profit >= 0 ? '+' : ''}${weekData.profit.toFixed(0)})</div>
+                    </td>`;
+                });
+                
+                row += '</tr>';
+                tbody.innerHTML += row;
+            }
+            
+            // Build final summary
+            const summaryDiv = document.getElementById('final-summary');
+            summaryDiv.innerHTML = '';
+            
+            results.forEach(result => {
+                const { service, simulation } = result;
+                const profitClass = simulation.netProfit >= 0 ? 'green' : 'red';
+                
+                const card = `
+                    <div class="summary-card ${profitClass}">
+                        <h3>${service.name}</h3>
+                        <div style="margin: 10px 0;">
+                            <div style="font-size: 0.8em; color: #666;">Total Spent</div>
+                            <div style="font-size: 1.2em; font-weight: bold;">$${simulation.totalSpent.toFixed(0)}</div>
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <div style="font-size: 0.8em; color: #666;">Total Revenue</div>
+                            <div style="font-size: 1.2em; font-weight: bold;">$${simulation.totalRevenue.toFixed(0)}</div>
+                        </div>
+                        <div style="margin: 10px 0; padding-top: 10px; border-top: 2px solid #ddd;">
+                            <div style="font-size: 0.9em; color: #666;">NET PROFIT</div>
+                            <div class="value">$${simulation.netProfit.toFixed(0)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                summaryDiv.innerHTML += card;
+            });
+        }
+        
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>

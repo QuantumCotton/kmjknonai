@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyword Profitability Calculator - $500 Bootstrap Budget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .constraint-box {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .constraint-box h2 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .constraint-box p {
+            color: #856404;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .profit-positive {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .profit-negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .viable {
+            background: #d4edda !important;
+        }
+        
+        .risky {
+            background: #fff3cd !important;
+        }
+        
+        .dead {
+            background: #f8d7da !important;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-box {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .card h3 {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .card.green .value {
+            color: #27ae60;
+        }
+        
+        .card.red .value {
+            color: #e74c3c;
+        }
+        
+        .formula-box {
+            background: #e3f2fd;
+            border-left: 6px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .formula-box h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .formula-box code {
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Keyword Profitability Calculator</h1>
+            <p style="font-size: 1.2em; color: #666; margin-top: 10px;">$500 Bootstrap Budget - Week-by-Week Cash Flow Analysis</p>
+        </div>
+        
+        <div class="constraint-box">
+            <h2>⚠️ CRITICAL CONSTRAINTS</h2>
+            <p><strong>Total Budget:</strong> $500 (NOT per month - TOTAL starting capital)</p>
+            <p><strong>Week 1:</strong> Can spend $100</p>
+            <p><strong>Week 2:</strong> Can only spend if Week 1 generates revenue</p>
+            <p><strong>Rule:</strong> Revenue from jobs goes back into ad budget immediately</p>
+            <p><strong>Failure Condition:</strong> If no sales = no money = business dies</p>
+        </div>
+        
+        <div class="summary-cards">
+            <div class="card">
+                <h3>Total Budget</h3>
+                <div class="value">$500</div>
+            </div>
+            <div class="card green">
+                <h3>Viable Services</h3>
+                <div class="value" id="viable-count">-</div>
+            </div>
+            <div class="card red">
+                <h3>Dead-End Services</h3>
+                <div class="value" id="dead-count">-</div>
+            </div>
+            <div class="card">
+                <h3>Best ROI Service</h3>
+                <div class="value" style="font-size: 1.5em;" id="best-service">-</div>
+            </div>
+        </div>
+        
+        <div class="formula-box">
+            <h3>📐 The Math:</h3>
+            <p style="line-height: 2; color: #555;">
+                <strong>Clicks:</strong> <code>Budget ÷ CPC</code><br>
+                <strong>Leads:</strong> <code>Clicks × CVR</code><br>
+                <strong>Jobs:</strong> <code>Leads × Close Rate</code><br>
+                <strong>Revenue:</strong> <code>Jobs × Avg Sale × 15%</code><br>
+                <strong>Net Profit:</strong> <code>Revenue - Budget</code><br>
+                <strong>ROI:</strong> <code>(Revenue - Budget) ÷ Budget × 100%</code><br>
+                <strong>Payback Days:</strong> <code>Days until customer pays (turnaround time)</code><br>
+                <strong>Week 2 Budget:</strong> <code>$100 + Net Profit (if positive)</code>
+            </p>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box viable"></div>
+                <span><strong>Viable:</strong> Positive ROI, fast payback</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box risky"></div>
+                <span><strong>Risky:</strong> Breakeven or small profit</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box dead"></div>
+                <span><strong>Dead:</strong> Loses money, kills business</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #1e3c72;">Service Profitability Analysis (Week 1 @ $100 Spend)</h2>
+            <table id="profitability-table">
+                <thead>
+                    <tr>
+                        <th>Service/Keyword</th>
+                        <th>CPC</th>
+                        <th>CVR</th>
+                        <th>Close Rate</th>
+                        <th>Clicks</th>
+                        <th>Leads</th>
+                        <th>Jobs</th>
+                        <th>Avg Sale</th>
+                        <th>Commission (15%)</th>
+                        <th>Revenue</th>
+                        <th>Net Profit</th>
+                        <th>ROI</th>
+                        <th>Payback Days</th>
+                        <th>Week 2 Budget</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be inserted here via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #1e3c72;">4-Week Cash Flow Projection (Best Service)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Starting Budget</th>
+                        <th>Ad Spend</th>
+                        <th>Jobs Closed</th>
+                        <th>Revenue Generated</th>
+                        <th>Net Profit</th>
+                        <th>Ending Budget</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="cashflow-body">
+                    <!-- Cash flow will be calculated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        // Sample data structure - REPLACE THIS WITH YOUR ACTUAL KEYWORD RESEARCH DATA
+        const services = [
+            {
+                name: "Handyman Stuart FL",
+                cpc: 7.10,
+                cvr: 0.1345,  // 13.45%
+                closeRate: 0.30,  // 30%
+                avgSale: 400,
+                paybackDays: 3  // Fast payment
+            },
+            {
+                name: "TV Mounting Stuart FL",
+                cpc: 8.50,
+                cvr: 0.10,  // 10% (estimated)
+                closeRate: 0.35,  // 35% (higher urgency)
+                avgSale: 350,
+                paybackDays: 1  // Same day payment
+            },
+            {
+                name: "Drywall Repair Stuart FL",
+                cpc: 7.90,
+                cvr: 0.12,
+                closeRate: 0.35,
+                avgSale: 450,
+                paybackDays: 5
+            },
+            {
+                name: "Kitchen Remodel Stuart FL",
+                cpc: 5.80,
+                cvr: 0.0261,  // 2.61%
+                closeRate: 0.25,
+                avgSale: 15000,
+                paybackDays: 45  // SLOW payment
+            },
+            {
+                name: "Bathroom Repair Stuart FL",
+                cpc: 6.80,
+                cvr: 0.08,
+                closeRate: 0.30,
+                avgSale: 600,
+                paybackDays: 7
+            },
+            {
+                name: "Pressure Washing Stuart FL",
+                cpc: 6.50,
+                cvr: 0.11,
+                closeRate: 0.28,
+                avgSale: 350,
+                paybackDays: 2
+            }
+        ];
+        
+        const WEEK1_BUDGET = 100;
+        const COMMISSION_RATE = 0.15;
+        
+        function calculateMetrics(service, budget) {
+            const clicks = budget / service.cpc;
+            const leads = clicks * service.cvr;
+            const jobs = leads * service.closeRate;
+            const commission = service.avgSale * COMMISSION_RATE;
+            const revenue = jobs * commission;
+            const netProfit = revenue - budget;
+            const roi = (netProfit / budget) * 100;
+            const week2Budget = budget + netProfit;
+            
+            let status = 'dead';
+            if (netProfit > 20) status = 'viable';
+            else if (netProfit >= -10) status = 'risky';
+            
+            return {
+                clicks: clicks.toFixed(1),
+                leads: leads.toFixed(2),
+                jobs: jobs.toFixed(2),
+                commission: commission.toFixed(2),
+                revenue: revenue.toFixed(2),
+                netProfit: netProfit.toFixed(2),
+                roi: roi.toFixed(1),
+                week2Budget: Math.max(0, week2Budget).toFixed(2),
+                status
+            };
+        }
+        
+        function populateTable() {
+            const tbody = document.getElementById('table-body');
+            let viableCount = 0;
+            let deadCount = 0;
+            let bestROI = -Infinity;
+            let bestService = '';
+            
+            services.forEach(service => {
+                const metrics = calculateMetrics(service, WEEK1_BUDGET);
+                
+                if (metrics.status === 'viable') viableCount++;
+                if (metrics.status === 'dead') deadCount++;
+                
+                if (parseFloat(metrics.roi) > bestROI) {
+                    bestROI = parseFloat(metrics.roi);
+                    bestService = service.name;
+                }
+                
+                const profitClass = parseFloat(metrics.netProfit) >= 0 ? 'profit-positive' : 'profit-negative';
+                
+                const row = `
+                    <tr class="${metrics.status}">
+                        <td><strong>${service.name}</strong></td>
+                        <td>$${service.cpc.toFixed(2)}</td>
+                        <td>${(service.cvr * 100).toFixed(1)}%</td>
+                        <td>${(service.closeRate * 100).toFixed(0)}%</td>
+                        <td>${metrics.clicks}</td>
+                        <td>${metrics.leads}</td>
+                        <td>${metrics.jobs}</td>
+                        <td>$${service.avgSale.toLocaleString()}</td>
+                        <td>$${metrics.commission}</td>
+                        <td>$${metrics.revenue}</td>
+                        <td class="${profitClass}">$${metrics.netProfit}</td>
+                        <td class="${profitClass}">${metrics.roi}%</td>
+                        <td>${service.paybackDays} days</td>
+                        <td>$${metrics.week2Budget}</td>
+                        <td><strong>${metrics.status.toUpperCase()}</strong></td>
+                    </tr>
+                `;
+                
+                tbody.innerHTML += row;
+            });
+            
+            document.getElementById('viable-count').textContent = viableCount;
+            document.getElementById('dead-count').textContent = deadCount;
+            document.getElementById('best-service').textContent = bestService.split(' ')[0];
+        }
+        
+        function projectCashFlow() {
+            // Find best service
+            let bestService = services[0];
+            let bestMetrics = calculateMetrics(bestService, WEEK1_BUDGET);
+            
+            services.forEach(service => {
+                const metrics = calculateMetrics(service, WEEK1_BUDGET);
+                if (parseFloat(metrics.netProfit) > parseFloat(bestMetrics.netProfit)) {
+                    bestService = service;
+                    bestMetrics = metrics;
+                }
+            });
+            
+            const tbody = document.getElementById('cashflow-body');
+            let budget = 500;  // Total starting budget
+            
+            for (let week = 1; week <= 4; week++) {
+                const spend = Math.min(100, budget);  // Can't spend more than we have
+                const metrics = calculateMetrics(bestService, spend);
+                
+                const startingBudget = budget;
+                const revenue = parseFloat(metrics.revenue);
+                const netProfit = parseFloat(metrics.netProfit);
+                const endingBudget = budget - spend + revenue;
+                
+                let status = '✅ Alive';
+                if (endingBudget < 100) status = '⚠️ Low Cash';
+                if (endingBudget <= 0) status = '❌ DEAD';
+                
+                const row = `
+                    <tr class="${endingBudget > 100 ? 'viable' : endingBudget > 0 ? 'risky' : 'dead'}">
+                        <td><strong>Week ${week}</strong></td>
+                        <td>$${startingBudget.toFixed(2)}</td>
+                        <td>$${spend.toFixed(2)}</td>
+                        <td>${metrics.jobs}</td>
+                        <td>$${revenue.toFixed(2)}</td>
+                        <td class="${netProfit >= 0 ? 'profit-positive' : 'profit-negative'}">$${netProfit.toFixed(2)}</td>
+                        <td>$${endingBudget.toFixed(2)}</td>
+                        <td><strong>${status}</strong></td>
+                    </tr>
+                `;
+                
+                tbody.innerHTML += row;
+                budget = endingBudget;
+                
+                if (budget <= 0) break;  // Business died
+            }
+        }
+        
+        // Initialize
+        populateTable();
+        projectCashFlow();
+    </script>
+</body>
+</html>

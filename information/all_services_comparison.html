@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Services Comparison - One Page View</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .controls h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .input-group {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2em;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .input-group .helper {
+            color: #7f8c8d;
+            font-size: 0.85em;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .service-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .service-header.rank-1 {
+            background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
+        }
+        
+        .service-header.rank-2 {
+            background: linear-gradient(135deg, #95a5a6 0%, #bdc3c7 100%);
+        }
+        
+        .service-header.rank-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #d4a574 100%);
+        }
+        
+        .service-header h3 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+        
+        .service-header .rank {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .service-stats {
+            padding: 20px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1em;
+        }
+        
+        .stat-value.positive {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .stat-value.negative {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .service-summary {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 15px 0 0 0;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .service-summary h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .summary-item {
+            font-size: 0.9em;
+        }
+        
+        .summary-item strong {
+            color: #1e3c72;
+        }
+        
+        .overall-summary {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .summary-card h3 {
+            color: #666;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        .summary-card.green .value {
+            color: #27ae60;
+        }
+        
+        .summary-card.red .value {
+            color: #e74c3c;
+        }
+        
+        .legend {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .legend p {
+            color: #856404;
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 ALL SERVICES COMPARISON</h1>
+            <p style="font-size: 1.2em; color: #666; margin-top: 10px;">See Every Service Side-by-Side - No Dropdown Required</p>
+        </div>
+        
+        <div class="controls">
+            <h2>💰 Set Your Budget Parameters</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Starting Budget ($)</label>
+                    <input type="number" id="starting-budget" value="500" min="100" step="100">
+                    <div class="helper">Total capital available</div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Weekly Ad Spend ($)</label>
+                    <input type="number" id="weekly-spend" value="100" min="50" step="50">
+                    <div class="helper">Spend per week on ads</div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Commission Rate (%)</label>
+                    <input type="number" id="commission-rate" value="15" min="1" max="100" step="1">
+                    <div class="helper">Your % of each sale</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <p><strong>🏆 Gold = #1 Best ROI</strong> | 🥈 Silver = #2 | 🥉 Bronze = #3</p>
+                <p><strong>Green Numbers = Profit</strong> | <strong>Red Numbers = Loss</strong></p>
+                <p style="margin-top: 10px; padding-top: 10px; border-top: 2px solid #f39c12;"><strong>💰 COMPOUNDING MODEL:</strong> Week 1 = $100. Week 2 = $100 + Week1 revenue. Week 3 = $100 + Week1 + Week2 revenue. This snowballs!</p>
+            </div>
+        </div>
+        
+        <div class="overall-summary">
+            <h2 style="margin-bottom: 20px; color: #1e3c72; text-align: center;">📊 Overall Summary</h2>
+            <div class="summary-cards" id="overall-cards">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="services-grid" id="services-grid">
+            <!-- Service cards populated by JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        const services = [
+            {
+                name: "TV Mounting Port St Lucie",
+                cpc: 6.29,
+                cvr: 0.10,
+                closeRate: 0.35,
+                avgSale: 350,
+                paybackDays: 1,
+                category: "Specialized"
+            },
+            {
+                name: "Handyman Jensen Beach",
+                cpc: 5.63,
+                cvr: 0.1345,
+                closeRate: 0.30,
+                avgSale: 400,
+                paybackDays: 3,
+                category: "Handyman"
+            },
+            {
+                name: "Handyman Stuart FL",
+                cpc: 8.00,
+                cvr: 0.1345,
+                closeRate: 0.30,
+                avgSale: 400,
+                paybackDays: 3,
+                category: "Handyman"
+            },
+            {
+                name: "Handyman Port St Lucie",
+                cpc: 9.60,
+                cvr: 0.1345,
+                closeRate: 0.30,
+                avgSale: 400,
+                paybackDays: 3,
+                category: "Handyman"
+            },
+            {
+                name: "Pressure Washing Stuart FL",
+                cpc: 9.74,
+                cvr: 0.11,
+                closeRate: 0.28,
+                avgSale: 350,
+                paybackDays: 2,
+                category: "Specialized"
+            },
+            {
+                name: "Drywall Repair Stuart FL",
+                cpc: 10.80,
+                cvr: 0.12,
+                closeRate: 0.35,
+                avgSale: 450,
+                paybackDays: 5,
+                category: "Specialized"
+            },
+            {
+                name: "Bathroom Remodel Stuart FL",
+                cpc: 16.08,
+                cvr: 0.0261,
+                closeRate: 0.25,
+                avgSale: 15000,
+                paybackDays: 45,
+                category: "Remodeling"
+            },
+            {
+                name: "Kitchen Remodel Stuart FL",
+                cpc: 18.65,
+                cvr: 0.0261,
+                closeRate: 0.25,
+                avgSale: 22000,
+                paybackDays: 60,
+                category: "Remodeling"
+            },
+            {
+                name: "Garage Floor Coating",
+                cpc: 18.08,
+                cvr: 0.05,
+                closeRate: 0.30,
+                avgSale: 3500,
+                paybackDays: 14,
+                category: "Specialized"
+            }
+        ];
+        
+        function calculateProjection(service, startingBudget, weeklySpend, commissionRate) {
+            let budget = startingBudget;
+            let totalRevenue = 0;
+            let totalJobs = 0;
+            let totalSpent = 0;
+            let weeks = 0;
+            const maxWeeks = 100;
+            
+            while (budget >= weeklySpend && weeks < maxWeeks) {
+                // Reinvestment = whatever cash we have beyond base weekly spend
+                const availableCash = budget - weeklySpend;
+                const reinvestment = Math.max(0, availableCash);
+                const thisWeekSpend = weeklySpend + reinvestment;
+                
+                // Can't spend more than we have
+                const actualSpend = Math.min(thisWeekSpend, budget);
+                
+                const clicks = actualSpend / service.cpc;
+                const leads = clicks * service.cvr;
+                const jobs = leads * service.closeRate;
+                const commission = service.avgSale * commissionRate;
+                const revenue = jobs * commission;
+                
+                totalRevenue += revenue;
+                totalJobs += jobs;
+                totalSpent += actualSpend;
+                budget = budget - actualSpend + revenue;
+                weeks++;
+                
+                // Safety check: if budget is skyrocketing, cap it
+                if (budget > startingBudget * 1000) break;
+            }
+            
+            const totalProfit = totalRevenue - totalSpent;
+            const roi = totalSpent > 0 ? ((totalProfit / totalSpent) * 100) : 0;
+            const weeklyAvgJobs = weeks > 0 ? totalJobs / weeks : 0;
+            const weeklyAvgRevenue = weeks > 0 ? totalRevenue / weeks : 0;
+            
+            return {
+                weeks,
+                totalRevenue,
+                totalJobs,
+                totalSpent,
+                totalProfit,
+                roi,
+                weeklyAvgJobs,
+                weeklyAvgRevenue,
+                finalBudget: budget
+            };
+        }
+        
+        function renderServices() {
+            const startingBudget = parseFloat(document.getElementById('starting-budget').value) || 500;
+            const weeklySpend = parseFloat(document.getElementById('weekly-spend').value) || 100;
+            const commissionRate = parseFloat(document.getElementById('commission-rate').value) / 100 || 0.15;
+            
+            // Calculate all projections
+            const results = services.map(service => ({
+                service,
+                projection: calculateProjection(service, startingBudget, weeklySpend, commissionRate)
+            }));
+            
+            // Sort by ROI (best first)
+            results.sort((a, b) => b.projection.roi - a.projection.roi);
+            
+            // Render service cards
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = '';
+            
+            results.forEach((result, index) => {
+                const { service, projection } = result;
+                const rank = index + 1;
+                let rankClass = '';
+                let rankEmoji = '';
+                
+                if (rank === 1) {
+                    rankClass = 'rank-1';
+                    rankEmoji = '🏆';
+                } else if (rank === 2) {
+                    rankClass = 'rank-2';
+                    rankEmoji = '🥈';
+                } else if (rank === 3) {
+                    rankClass = 'rank-3';
+                    rankEmoji = '🥉';
+                }
+                
+                const profitClass = projection.totalProfit >= 0 ? 'positive' : 'negative';
+                const roiClass = projection.roi >= 0 ? 'positive' : 'negative';
+                
+                const card = `
+                    <div class="service-card">
+                        <div class="service-header ${rankClass}">
+                            <div class="rank">Rank #${rank} ${rankEmoji}</div>
+                            <h3>${service.name}</h3>
+                        </div>
+                        <div class="service-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">CPC</span>
+                                <span class="stat-value">$${service.cpc.toFixed(2)}</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Conversion Rate</span>
+                                <span class="stat-value">${(service.cvr * 100).toFixed(1)}%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Close Rate</span>
+                                <span class="stat-value">${(service.closeRate * 100).toFixed(0)}%</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Avg Sale</span>
+                                <span class="stat-value">$${service.avgSale.toLocaleString()}</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Commission (${(commissionRate * 100).toFixed(0)}%)</span>
+                                <span class="stat-value">$${(service.avgSale * commissionRate).toFixed(0)}</span>
+                            </div>
+                            
+                            <div class="service-summary">
+                                <h4>📊 ${projection.weeks} Week Projection</h4>
+                                <div class="summary-grid">
+                                    <div class="summary-item">
+                                        <strong>Total Jobs:</strong> ${projection.totalJobs.toFixed(1)}
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Avg/Week:</strong> ${projection.weeklyAvgJobs.toFixed(2)}
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Total Rev:</strong> <span class="${profitClass}">$${projection.totalRevenue.toFixed(0)}</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Total Spent:</strong> $${projection.totalSpent.toFixed(0)}
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>Net Profit:</strong> <span class="${profitClass}">$${projection.totalProfit.toFixed(0)}</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <strong>ROI:</strong> <span class="${roiClass}">${projection.roi.toFixed(1)}%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                grid.innerHTML += card;
+            });
+            
+            // Update overall summary
+            const bestService = results[0];
+            const worstService = results[results.length - 1];
+            const avgROI = results.reduce((sum, r) => sum + r.projection.roi, 0) / results.length;
+            const profitableCount = results.filter(r => r.projection.totalProfit > 0).length;
+            
+            const overallCards = document.getElementById('overall-cards');
+            overallCards.innerHTML = `
+                <div class="summary-card">
+                    <h3>Best Service</h3>
+                    <div class="value" style="font-size: 1.2em;">${bestService.service.name.split(' ')[0]}</div>
+                    <div style="color: #27ae60; font-weight: bold; margin-top: 5px;">ROI: ${bestService.projection.roi.toFixed(1)}%</div>
+                </div>
+                <div class="summary-card ${profitableCount > 0 ? 'green' : 'red'}">
+                    <h3>Profitable Services</h3>
+                    <div class="value">${profitableCount} / ${services.length}</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Avg ROI</h3>
+                    <div class="value ${avgROI >= 0 ? 'green' : 'red'}">${avgROI.toFixed(1)}%</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Budget</h3>
+                    <div class="value">$${startingBudget.toLocaleString()}</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Weekly Spend</h3>
+                    <div class="value">$${weeklySpend.toLocaleString()}</div>
+                </div>
+            `;
+        }
+        
+        // Event listeners
+        document.getElementById('starting-budget').addEventListener('input', renderServices);
+        document.getElementById('weekly-spend').addEventListener('input', renderServices);
+        document.getElementById('commission-rate').addEventListener('input', renderServices);
+        
+        // Initial render
+        renderServices();
+    </script>
+</body>
+</html>

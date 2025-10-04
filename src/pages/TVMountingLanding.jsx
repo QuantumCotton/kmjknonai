@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
 import customBuiltin from '../assets/custom_builtin.jpg'
-import customCabinetry from '../assets/custom_cabinetry.jpg'
 
 function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -406,22 +405,17 @@ function TVMountingLanding() {
             Real installations from real customers across South Florida
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {[
               { 
                 title: "Clean Wire Concealment - Stuart", 
-                desc: "75\" Frame TV with completely hidden wires",
+                desc: "75\" Frame TV with completely hidden wires in custom entertainment center",
                 image: customEntertainment
               },
               { 
                 title: "Custom Built-In Entertainment Center - Port St. Lucie", 
-                desc: "Seamless integration with custom cabinetry",
+                desc: "Professional TV mounting with seamless cabinetry integration",
                 image: customBuiltin
-              },
-              { 
-                title: "Floating Shelf Installation - Jensen Beach", 
-                desc: "Modern entertainment center with hidden cables",
-                image: customCabinetry
               }
             ].map((item, idx) => (
               <div key={idx} className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">

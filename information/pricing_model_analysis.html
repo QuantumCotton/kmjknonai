@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15% + CPC Pass-Through Model Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .model-explanation {
+            background: #fff3cd;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 6px solid #f39c12;
+        }
+        
+        .model-explanation h2 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .model-explanation p {
+            color: #856404;
+            line-height: 1.8;
+            margin: 10px 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .service-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .service-header.profitable {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+        
+        .service-header.break-even {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+        
+        .service-header.unprofitable {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .service-header h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+        
+        .service-body {
+            padding: 25px;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .big-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .big-box h4 {
+            color: #666;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .big-box .value {
+            font-size: 2.2em;
+            font-weight: bold;
+        }
+        
+        .big-box.profit {
+            background: #d4edda;
+            border: 2px solid #28a745;
+        }
+        
+        .big-box.profit .value {
+            color: #28a745;
+        }
+        
+        .big-box.loss {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+        }
+        
+        .big-box.loss .value {
+            color: #dc3545;
+        }
+        
+        .contractor-view {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .contractor-view h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 "15% + Pass-Through CPC" Model Analysis</h1>
+            <p style="font-size: 1.2em; color: #666; margin-top: 10px;">Transparent Pricing That Contractors Actually Accept</p>
+        </div>
+        
+        <div class="model-explanation">
+            <h2>🎯 How Your Pricing Model Works:</h2>
+            <p><strong>What you charge contractors:</strong></p>
+            <ul style="margin-left: 30px; margin-top: 10px; line-height: 2;">
+                <li><strong>15% commission</strong> on the job value (your service fee)</li>
+                <li><strong>+ Actual ad cost</strong> to acquire that job (pass-through, no markup)</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>Example: $400 Handyman Job</strong></p>
+            <ul style="margin-left: 30px; margin-top: 10px; line-height: 2;">
+                <li>Ad cost to get 1 job: $198</li>
+                <li>Your 15% fee: $60</li>
+                <li><strong>Total contractor pays you:</strong> $258</li>
+                <li><strong>Contractor keeps:</strong> $142 profit (35% margin)</li>
+            </ul>
+            <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #f39c12;">
+                <strong>💡 Why this works:</strong> Contractor sees the breakdown. It's transparent. 
+                If you get better at ads and lower CPC, YOU make more profit (the $60 stays the same, but your cost drops).
+                Contractor's cost stays predictable.
+            </p>
+        </div>
+        
+        <div class="services-grid" id="services-grid">
+            <!-- Populated by JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        // REAL DATA FROM STUART, FL MARKET
+        const services = [
+            { name: "Kitchen Remodeling", cpc: 8.76, cvr: 0.03, avgSale: 15000 },
+            { name: "Bathroom Remodeling", cpc: 8.76, cvr: 0.04, avgSale: 8000 },
+            { name: "Patio Installation", cpc: 5.31, cvr: 0.06, avgSale: 3500 },
+            { name: "Siding Installation", cpc: 6.55, cvr: 0.05, avgSale: 5000 },
+            { name: "Deck Building", cpc: 6.55, cvr: 0.05, avgSale: 3500 },
+            { name: "Fence Installation", cpc: 6.55, cvr: 0.06, avgSale: 2800 },
+            { name: "Landscaping", cpc: 5.31, cvr: 0.07, avgSale: 2000 },
+            { name: "Epoxy Flooring", cpc: 6.55, cvr: 0.07, avgSale: 1800 },
+            { name: "Countertop Installation", cpc: 6.55, cvr: 0.06, avgSale: 2500 },
+            { name: "Tile Installation", cpc: 6.55, cvr: 0.08, avgSale: 1250 },
+            { name: "Handyman Services", cpc: 6.55, cvr: 0.1345, avgSale: 375 },
+            { name: "HVAC Installation", cpc: 20.00, cvr: 0.05, avgSale: 4500 },
+            { name: "Interior Painting", cpc: 13.74, cvr: 0.108, avgSale: 1100 },
+            { name: "Smart Home Installation", cpc: 6.55, cvr: 0.09, avgSale: 600 },
+            { name: "Pressure Washing", cpc: 5.81, cvr: 0.10, avgSale: 250 },
+            { name: "Carpet Cleaning", cpc: 6.55, cvr: 0.1765, avgSale: 500 },
+            { name: "Tree Trimming", cpc: 6.55, cvr: 0.08, avgSale: 535 },
+            { name: "Air Duct Cleaning", cpc: 6.55, cvr: 0.10, avgSale: 400 },
+            { name: "House Cleaning", cpc: 6.55, cvr: 0.1765, avgSale: 180 },
+            { name: "Window Cleaning", cpc: 6.55, cvr: 0.1358, avgSale: 220 }
+        ];
+        
+        const COMMISSION_RATE = 0.15;
+        const YOUR_CLOSE_RATE = 0.40; // You close at 40% vs contractor's typical 25-30%
+        
+        function analyzeService(service) {
+            // Calculate leads needed (with YOUR 40% close rate)
+            const leadsNeeded = 1 / YOUR_CLOSE_RATE;
+            
+            // Calculate clicks needed
+            const clicksNeeded = leadsNeeded / service.cvr;
+            
+            // Calculate ad cost
+            const adCost = clicksNeeded * service.cpc;
+            
+            // Calculate your commission
+            const yourCommission = service.avgSale * COMMISSION_RATE;
+            
+            // Total you charge contractor
+            const totalCharge = adCost + yourCommission;
+            
+            // Your gross profit (commission - ad cost if you want to see margin)
+            const yourProfit = yourCommission;
+            
+            // Your net profit (after ad costs)
+            const yourNetProfit = yourCommission - adCost;
+            
+            // Contractor's profit
+            const contractorProfit = service.avgSale - totalCharge;
+            const contractorMargin = (contractorProfit / service.avgSale) * 100;
+            
+            // Determine if profitable
+            let status = 'unprofitable';
+            if (yourNetProfit > 50) status = 'profitable';
+            else if (yourNetProfit >= -20) status = 'break-even';
+            
+            return {
+                leadsNeeded,
+                clicksNeeded,
+                adCost,
+                yourCommission,
+                totalCharge,
+                yourProfit,
+                yourNetProfit,
+                contractorProfit,
+                contractorMargin,
+                status
+            };
+        }
+        
+        function renderServices() {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = '';
+            
+            services.forEach(service => {
+                const result = analyzeService(service);
+                
+                const card = `
+                    <div class="service-card">
+                        <div class="service-header ${result.status}">
+                            <h3>${service.name}</h3>
+                            <div style="font-size: 0.9em; opacity: 0.9; margin-top: 5px;">
+                                CPC: $${service.cpc} • Avg Sale: $${service.avgSale.toLocaleString()}
+                            </div>
+                        </div>
+                        <div class="service-body">
+                            <h4 style="margin-bottom: 15px; color: #667eea;">📊 Cost Per Job Breakdown:</h4>
+                            
+                            <div class="metric">
+                                <span class="metric-label">Leads Needed (at 40% close)</span>
+                                <span class="metric-value">${result.leadsNeeded.toFixed(1)}</span>
+                            </div>
+                            
+                            <div class="metric">
+                                <span class="metric-label">Clicks Required</span>
+                                <span class="metric-value">${result.clicksNeeded.toFixed(0)}</span>
+                            </div>
+                            
+                            <div class="metric">
+                                <span class="metric-label">Ad Cost (Pass-Through)</span>
+                                <span class="metric-value">$${result.adCost.toFixed(0)}</span>
+                            </div>
+                            
+                            <div class="metric">
+                                <span class="metric-label">Your 15% Commission</span>
+                                <span class="metric-value">$${result.yourCommission.toFixed(0)}</span>
+                            </div>
+                            
+                            <div class="metric" style="background: #f8f9fa; padding: 15px; margin: 15px -10px; border-radius: 8px;">
+                                <span class="metric-label" style="font-size: 1.1em;"><strong>Total You Charge</strong></span>
+                                <span class="metric-value" style="font-size: 1.3em; color: #667eea;"><strong>$${result.totalCharge.toFixed(0)}</strong></span>
+                            </div>
+                            
+                            <div class="big-box ${result.yourNetProfit > 0 ? 'profit' : 'loss'}">
+                                <h4>Your Net Profit Per Job</h4>
+                                <div class="value">${result.yourNetProfit >= 0 ? '+' : ''}$${result.yourNetProfit.toFixed(0)}</div>
+                                <div style="font-size: 0.85em; color: #666; margin-top: 8px;">
+                                    ($${result.yourCommission.toFixed(0)} commission - $${result.adCost.toFixed(0)} ad cost)
+                                </div>
+                            </div>
+                            
+                            <div class="contractor-view">
+                                <h4>👷 Contractor's View:</h4>
+                                <div class="metric">
+                                    <span class="metric-label">Job Value</span>
+                                    <span class="metric-value">$${service.avgSale.toLocaleString()}</span>
+                                </div>
+                                <div class="metric">
+                                    <span class="metric-label">Pays You</span>
+                                    <span class="metric-value">-$${result.totalCharge.toFixed(0)}</span>
+                                </div>
+                                <div class="metric" style="border-top: 2px solid #1976d2; padding-top: 10px; margin-top: 10px;">
+                                    <span class="metric-label"><strong>They Keep</strong></span>
+                                    <span class="metric-value" style="color: #27ae60; font-size: 1.2em;">
+                                        $${result.contractorProfit.toFixed(0)} (${result.contractorMargin.toFixed(0)}%)
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            ${result.yourNetProfit > 0 ? `
+                                <div style="background: #d4edda; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: center; color: #155724;">
+                                    <strong>✅ PROFITABLE!</strong> You make $${result.yourNetProfit.toFixed(0)} per job.
+                                </div>
+                            ` : `
+                                <div style="background: #f8d7da; padding: 12px; border-radius: 8px; margin-top: 15px; text-align: center; color: #721c24;">
+                                    <strong>❌ UNPROFITABLE</strong> Ad costs exceed commission by $${Math.abs(result.yourNetProfit).toFixed(0)}.
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+                
+                grid.innerHTML += card;
+            });
+        }
+        
+        // Initial render
+        renderServices();
+    </script>
+</body>
+</html>
