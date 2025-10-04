@@ -12,6 +12,7 @@ function BathroomLandingImproved() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [buttonContext, setButtonContext] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,6 +20,11 @@ function BathroomLandingImproved() {
     message: '',
     images: []
   })
+
+  const openModalWithContext = (context) => {
+    setButtonContext(context)
+    setIsModalOpen(true)
+  }
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files)
@@ -36,6 +42,12 @@ function BathroomLandingImproved() {
     formDataToSend.append('phone', formData.phone)
     formDataToSend.append('message', formData.message)
     formDataToSend.append('subject', 'New Bathroom Renovation Request from KMJK Website')
+    
+    // Hidden tracking fields
+    formDataToSend.append('Landing Page', 'Bathroom Renovation')
+    formDataToSend.append('Button Clicked', buttonContext || 'Not specified')
+    formDataToSend.append('Estimated Budget', `$${estimatedTotal.toLocaleString()} ($${monthlyBudget}/month)`)
+    formDataToSend.append('Source URL', window.location.href)
     
     formData.images.forEach((image, index) => {
       formDataToSend.append(`attachment_${index}`, image)
@@ -102,7 +114,7 @@ function BathroomLandingImproved() {
                 Text Us Now
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
+            <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
               <Upload className="mr-2" size={24} />
               Get Free Quote
             </Button>
@@ -297,7 +309,7 @@ function BathroomLandingImproved() {
                   <span>Professional Installation</span>
                 </div>
               </div>
-              <Button onClick={() => setIsModalOpen(true)} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
+              <Button onClick={() => openModalWithContext(`Payment Calculator - Monthly Budget $${monthlyBudget}`)} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
                 Get My Detailed Quote
               </Button>
             </div>
@@ -369,7 +381,7 @@ function BathroomLandingImproved() {
                 Call: 650-501-7659
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+            <Button onClick(() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
               <Upload className="mr-2" size={24} />
               Send Photos & Get Quote
             </Button>
