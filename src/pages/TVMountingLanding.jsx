@@ -9,6 +9,7 @@ function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +17,11 @@ function TVMountingLanding() {
     message: '',
     images: []
   })
+
+  const openModalWithPackage = (packageName) => {
+    setSelectedPackage(packageName)
+    setIsModalOpen(true)
+  }
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files)
@@ -33,6 +39,11 @@ function TVMountingLanding() {
     formDataToSend.append('phone', formData.phone)
     formDataToSend.append('message', formData.message)
     formDataToSend.append('subject', 'New TV Mounting Request from KMJK Website')
+    
+    // Hidden fields that you'll see in the email but customer doesn't see
+    formDataToSend.append('Landing Page', 'TV Mounting & Wire Concealment')
+    formDataToSend.append('Selected Package', selectedPackage || 'Not specified')
+    formDataToSend.append('Source URL', window.location.href)
     
     formData.images.forEach((image, index) => {
       formDataToSend.append(`attachment_${index}`, image)
@@ -86,7 +97,7 @@ function TVMountingLanding() {
           </p>
           
           <Button 
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => openModalWithPackage('General Inquiry - Hero Section')}
             size="lg" 
             className="text-xl px-12 py-8 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white mb-6 shadow-2xl"
           >
@@ -106,6 +117,12 @@ function TVMountingLanding() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-[var(--deep-charcoal)]">Ready for a Flawless TV Setup?</DialogTitle>
             <DialogDescription>
+              {selectedPackage && (
+                <div className="mb-2 p-3 bg-[var(--brushed-gold)]/10 rounded-md border border-[var(--brushed-gold)]/30">
+                  <span className="font-semibold text-[var(--deep-charcoal)]">Selected: </span>
+                  <span className="text-[var(--deep-charcoal)]">{selectedPackage}</span>
+                </div>
+              )}
               Tell us about your project and we'll respond within the hour!
             </DialogDescription>
           </DialogHeader>
@@ -277,7 +294,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => openModalWithPackage('Pro Mount - Starting at $199')}
                 className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
               >
                 Get Quote
@@ -312,7 +329,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => openModalWithPackage('The Clean Look - Starting at $399 (MOST POPULAR)')}
                 className="w-full bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white text-lg py-6"
               >
                 Get Quote (Recommended)
@@ -343,7 +360,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => openModalWithPackage('The Ultimate Experience - Starting at $699')}
                 className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
               >
                 Get Quote
@@ -416,7 +433,7 @@ function TVMountingLanding() {
               </Button>
             </a>
             <Button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => openModalWithPackage('General Inquiry - Final CTA')}
               size="lg" 
               className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white"
             >
