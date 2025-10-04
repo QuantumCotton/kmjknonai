@@ -4,6 +4,8 @@ import { Phone, MessageSquare, Check, Star, Shield, MapPin, Award, Sparkles, Upl
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
+import customBuiltin from '../assets/custom_builtin.jpg'
+import customCabinetry from '../assets/custom_cabinetry.jpg'
 
 function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -404,19 +406,28 @@ function TVMountingLanding() {
             Real installations from real customers across South Florida
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Clean Wire Concealment - Stuart", desc: "75\" Frame TV with completely hidden wires" },
-              { title: "Soundbar & TV Setup - Port St. Lucie", desc: "85\" TV with integrated soundbar mounting" },
-              { title: "Floating Shelf Installation - Jensen Beach", desc: "Modern entertainment center with hidden cables" },
-              { title: "Brick Wall Mount - Palm City", desc: "65\" TV securely mounted on brick fireplace" },
-              { title: "Corner TV Mount - Hobe Sound", desc: "Swivel mount with wire concealment" },
-              { title: "Complete Theater - Jupiter", desc: "TV, soundbar, and smart home integration" }
+              { 
+                title: "Clean Wire Concealment - Stuart", 
+                desc: "75\" Frame TV with completely hidden wires",
+                image: customEntertainment
+              },
+              { 
+                title: "Custom Built-In Entertainment Center - Port St. Lucie", 
+                desc: "Seamless integration with custom cabinetry",
+                image: customBuiltin
+              },
+              { 
+                title: "Floating Shelf Installation - Jensen Beach", 
+                desc: "Modern entertainment center with hidden cables",
+                image: customCabinetry
+              }
             ].map((item, idx) => (
               <div key={idx} className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
                 <div 
                   className="h-64 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${customEntertainment})` }}
+                  style={{ backgroundImage: `url(${item.image})` }}
                 ></div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2 text-[var(--deep-charcoal)]">{item.title}</h3>
