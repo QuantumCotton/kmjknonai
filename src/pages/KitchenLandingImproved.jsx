@@ -10,6 +10,7 @@ function KitchenLandingImproved() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [buttonContext, setButtonContext] = useState('') // Track which button was clicked
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +18,11 @@ function KitchenLandingImproved() {
     message: '',
     images: []
   })
+
+  const openModalWithContext = (context) => {
+    setButtonContext(context)
+    setIsModalOpen(true)
+  }
   
   const pricing = {
     'refresh': { range: '$15,000 - $25,000', monthly: '$625/mo', features: ['New Countertops & Backsplash', 'Cabinet Refacing', 'New Fixtures & Hardware', 'Updated Lighting'] },
@@ -38,8 +44,14 @@ function KitchenLandingImproved() {
     formDataToSend.append('name', formData.name)
     formDataToSend.append('email', formData.email)
     formDataToSend.append('phone', formData.phone)
-    formDataToSend.append('message', `${formData.message}\n\nSelected Package: ${projectSize}`)
+    formDataToSend.append('message', formData.message)
     formDataToSend.append('subject', 'New Kitchen Remodel Request from KMJK Website')
+    
+    // Hidden fields that you'll see in the email but customer doesn't see
+    formDataToSend.append('Landing Page', 'Kitchen Renovation')
+    formDataToSend.append('Button Clicked', buttonContext || 'Not specified')
+    formDataToSend.append('Selected Package', projectSize)
+    formDataToSend.append('Source URL', window.location.href)
     
     formData.images.forEach((image, index) => {
       formDataToSend.append(`attachment_${index}`, image)
@@ -107,7 +119,7 @@ function KitchenLandingImproved() {
                 Text Us Now
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
+            <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
               <Upload className="mr-2" size={24} />
               Get Free Quote
             </Button>
@@ -122,6 +134,12 @@ function KitchenLandingImproved() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-[var(--deep-charcoal)]">Get Your Free Kitchen Quote</DialogTitle>
             <DialogDescription>
+              {buttonContext && (
+                <div className="mb-2 p-3 bg-[var(--brushed-gold)]/10 rounded-md border border-[var(--brushed-gold)]/30">
+                  <span className="font-semibold text-[var(--deep-charcoal)]">Selected: </span>
+                  <span className="text-[var(--deep-charcoal)]">{projectSize} remodel</span>
+                </div>
+              )}
               Tell us about your dream kitchen and upload photos for a fast, accurate quote!
             </DialogDescription>
           </DialogHeader>
@@ -286,7 +304,7 @@ function KitchenLandingImproved() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
+            <Button onClick={() => openModalWithContext('Pricing Calculator - Get Detailed Quote')} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
               Get My Free Detailed Quote
             </Button>
             <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos for accurate pricing</p>
@@ -347,7 +365,7 @@ function KitchenLandingImproved() {
                 Call: 650-501-7659
               </Button>
             </a>
-            <Button onClick={() => setIsModalOpen(true)} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+            <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
               <Upload className="mr-2" size={24} />
               Send Photos & Get Quote
             </Button>
