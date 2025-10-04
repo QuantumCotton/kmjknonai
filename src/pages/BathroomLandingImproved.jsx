@@ -394,7 +394,7 @@ function BathroomLandingImproved() {
                 Call: 650-501-7659
               </Button>
             </a>
-            <Button onClick(() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+            <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
               <Upload className="mr-2" size={24} />
               Send Photos & Get Quote
             </Button>
