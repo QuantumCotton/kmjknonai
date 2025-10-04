@@ -31,7 +31,7 @@ function KitchenLanding() {
             In Your Dream Kitchen
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
-            Transform your kitchen into the heart of your home. Fixed pricing. Zero surprises. Financing available.
+            Transform your kitchen into the heart of your home. See your space in 3D before we start. Fixed pricing. Zero surprises.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:650-501-7659">
@@ -43,7 +43,7 @@ function KitchenLanding() {
             <Link to="/contact">
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                 <MessageSquare className="mr-2" size={24} />
-                Schedule Free Consultation
+                See Your Kitchen in 3D!
               </Button>
             </Link>
           </div>
@@ -108,7 +108,7 @@ function KitchenLanding() {
           <div className="text-center mt-8">
             <a href="tel:650-501-7659">
               <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                Get My Free Detailed Quote
+                Get My Free Detailed Quote & 3D Design
               </Button>
             </a>
             <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: 650-501-7659</p>
@@ -142,7 +142,7 @@ function KitchenLanding() {
                     "We Finally Have the Kitchen We've Dreamed About!"
                   </h3>
                   <p className="text-gray-700 italic mb-4 text-lg">
-                    "Chris and the KMJK team listened to everything we wanted - more counter space, better flow, and a place where our kids could do homework while we cooked. They nailed it! No surprises on cost, no stress, just beautiful results. We've hosted three dinner parties already!"
+                    "Chris and the KMJK team listened to everything we wanted - more counter space, better flow, and a place where our kids could do homework while we cooked. They nailed it! The 3D design they showed us was EXACTLY what we got. No surprises on cost, no stress, just beautiful results. We've hosted three dinner parties already!"
                   </p>
                   <p className="font-semibold">— Michael & Sarah K., Stuart, FL</p>
                   <p className="text-sm text-gray-600">Full Kitchen Remodel • $42,000 • 4 Weeks</p>
@@ -186,10 +186,10 @@ function KitchenLanding() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
-              <div className="text-5xl mb-4">📋</div>
-              <h3 className="text-xl font-semibold mb-3">Detailed Planning & Design</h3>
+              <div className="text-5xl mb-4">👁️</div>
+              <h3 className="text-xl font-semibold mb-3">See It Before We Build It</h3>
               <p className="text-gray-700">
-                We work closely with you to plan every detail of your new kitchen, ensuring it matches your vision perfectly. No guesswork!
+                We create detailed 3D renderings of your new kitchen so you can see exactly what you're getting. No guesswork!
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
@@ -255,7 +255,7 @@ function KitchenLanding() {
             Let's Start Your Kitchen Adventure!
           </h2>
           <p className="text-xl mb-8">
-            Get your free in-home consultation and detailed quote. No pressure, just possibilities!
+            Get your free in-home consultation and see your new kitchen in 3D. No pressure, just possibilities!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:650-501-7659">

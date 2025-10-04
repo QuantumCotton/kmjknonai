@@ -9,6 +9,7 @@ function HandymanLandingImproved() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [buttonContext, setButtonContext] = useState('') // Track which button was clicked
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +17,11 @@ function HandymanLandingImproved() {
     message: '',
     images: []
   })
+
+  const openModalWithContext = (context) => {
+    setButtonContext(context)
+    setIsModalOpen(true)
+  }
 
   const services = [
     { icon: Wrench, title: 'General Repairs', description: 'Doors, locks, drywall, trim' },
@@ -42,6 +48,11 @@ function HandymanLandingImproved() {
     formDataToSend.append('phone', formData.phone)
     formDataToSend.append('message', formData.message)
     formDataToSend.append('subject', 'New Handyman Service Request from KMJK Website')
+    
+    // Hidden fields that you'll see in the email but customer doesn't see
+    formDataToSend.append('Landing Page', 'Handyman Services')
+    formDataToSend.append('Button Clicked', buttonContext || 'Not specified')
+    formDataToSend.append('Source URL', window.location.href)
     
     // Add images
     formData.images.forEach((image, index) => {
@@ -117,7 +128,7 @@ function HandymanLandingImproved() {
                 <div className="text-sm mt-2">Quick text response</div>
               </div>
             </a>
-            <button onClick={() => setIsModalOpen(true)} className="block w-full">
+            <button onClick={() => openModalWithContext('Hero Section - Get Quote / Send Photos')} className="block w-full">
               <div className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105 h-full">
                 <Upload className="mx-auto mb-3" size={40} />
                 <div className="text-2xl font-bold mb-2">Get Quote</div>
@@ -135,6 +146,12 @@ function HandymanLandingImproved() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-[var(--deep-charcoal)]">Get Your Free Quote</DialogTitle>
             <DialogDescription>
+              {buttonContext && (
+                <div className="mb-2 p-3 bg-[var(--brushed-gold)]/10 rounded-md border border-[var(--brushed-gold)]/30">
+                  <span className="font-semibold text-[var(--deep-charcoal)]">From: </span>
+                  <span className="text-[var(--deep-charcoal)]">{buttonContext}</span>
+                </div>
+              )}
               Tell us about your project and upload photos for a fast, accurate quote!
             </DialogDescription>
           </DialogHeader>
@@ -294,7 +311,7 @@ function HandymanLandingImproved() {
           <div className="text-center mt-8">
             <p className="text-lg font-semibold mb-4">Don't see what you need? Ask us!</p>
             <Button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => openModalWithContext('Services Section - Get Custom Quote')}
               size="lg" 
               className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
             >
@@ -381,7 +398,7 @@ function HandymanLandingImproved() {
               </Button>
             </a>
             <Button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')}
               size="lg" 
               className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100"
             >
