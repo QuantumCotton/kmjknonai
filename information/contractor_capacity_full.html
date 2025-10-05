@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Capacity Investment Calculator | KMJK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #666;
+        }
+
+        .controls {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #667eea;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+
+        .control-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .capacity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .capacity-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-left: 6px solid #667eea;
+        }
+
+        .capacity-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .capacity-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .capacity-metric:last-child {
+            border-bottom: none;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 3px solid #eee;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .metric-value.positive {
+            color: #27ae60;
+        }
+
+        .metric-value.negative {
+            color: #e74c3c;
+        }
+
+        .filters {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .profitable {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .unprofitable {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Contractor Capacity Investment Calculator</h1>
+            <p class="subtitle">Calculate ad investment needed to keep each contractor type fully busy</p>
+        </div>
+
+        <div class="controls">
+            <h2 style="margin-bottom: 20px; color: #667eea;">⚙️ Conversion Parameters</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label>CTR (Click-Through Rate %)</label>
+                    <input type="number" id="ctr" value="5.0" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>CVR (Click to Lead %)</label>
+                    <input type="number" id="cvr" value="6.5" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>Close Rate (%)</label>
+                    <input type="number" id="close-rate" value="35.0" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>Your Commission Rate (%)</label>
+                    <input type="number" id="commission-rate" value="15.0" step="0.1" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="capacity-cards" id="capacity-cards">
+            <!-- Capacity cards will be generated here -->
+        </div>
+
+        <div class="filters">
+            <h2 style="margin-bottom: 15px; color: #667eea;">🔍 Keyword Filters</h2>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Profitability</label>
+                    <select id="profit-filter">
+                        <option value="all">All Keywords</option>
+                        <option value="profitable">Profitable Only</option>
+                        <option value="unprofitable">Unprofitable Only</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-by">
+                        <option value="cost-asc">Cost Per Job (Low to High)</option>
+                        <option value="cost-desc">Cost Per Job (High to Low)</option>
+                        <option value="profit-desc">Profit Per Job (High to Low)</option>
+                        <option value="volume-desc">Search Volume (High to Low)</option>
+                        <option value="cpc-asc">CPC (Low to High)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #667eea;">📋 Keyword Investment Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Keyword</th>
+                        <th>Search Vol</th>
+                        <th>CPC</th>
+                        <th>Cost Per Job</th>
+                        <th>Job Value</th>
+                        <th>Your Commission</th>
+                        <th>Profit Per Job</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+const keywordData = [
+  {category:'Concrete',keyword:'concrete crack filler',searchVol:50000,cpc:1.38,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:371538.46,monthlyProfit:-324616.59,roas:-0.87},
+  {category:'Concrete',keyword:'concrete crack repair',searchVol:50000,cpc:1.56,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:420000.0,monthlyProfit:-373078.13,roas:-0.89},
+  {category:'Concrete',keyword:'fix concrete cracks',searchVol:50000,cpc:1.56,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:420000.0,monthlyProfit:-373078.13,roas:-0.89},
+  {category:'Concrete',keyword:'concrete repair',searchVol:50000,cpc:2.34,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:630000.0,monthlyProfit:-583078.13,roas:-0.93},
+  {category:'Concrete',keyword:'concrete patching',searchVol:50000,cpc:2.66,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:716153.85,monthlyProfit:-669231.97,roas:-0.93},
+  {category:'Concrete',keyword:'resurface concrete',searchVol:50000,cpc:3.01,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:810384.62,monthlyProfit:-763462.74,roas:-0.94},
+  {category:'Concrete',keyword:'driveway pressure washing',searchVol:50000,cpc:4.98,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1340769.23,monthlyProfit:-1293847.36,roas:-0.97},
+  {category:'Concrete',keyword:'power wash driveway',searchVol:50000,cpc:4.98,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1340769.23,monthlyProfit:-1293847.36,roas:-0.97},
+  {category:'Concrete',keyword:'driveway pressure cleaning',searchVol:50000,cpc:4.98,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1340769.23,monthlyProfit:-1293847.36,roas:-0.97},
+  {category:'Concrete',keyword:'concrete repair companies near me',searchVol:50000,cpc:6.06,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1631538.46,monthlyProfit:-1584616.59,roas:-0.97},
+  {category:'Concrete',keyword:'concrete driveway repair',searchVol:50000,cpc:6.19,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1666538.46,monthlyProfit:-1619616.59,roas:-0.97},
+  {category:'Concrete',keyword:'fix concrete driveway',searchVol:50000,cpc:6.19,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1666538.46,monthlyProfit:-1619616.59,roas:-0.97},
+  {category:'Concrete',keyword:'concrete foundation repair',searchVol:50000,cpc:7.13,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1919615.38,monthlyProfit:-1872693.51,roas:-0.98},
+  {category:'Concrete',keyword:'concrete and foundation repair',searchVol:50000,cpc:7.13,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:1919615.38,monthlyProfit:-1872693.51,roas:-0.98},
+  {category:'Concrete',keyword:'driveway fix',searchVol:50000,cpc:10.38,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:2794615.38,monthlyProfit:-2747693.51,roas:-0.98},
+  {category:'Concrete',keyword:'repairing driveway',searchVol:50000,cpc:10.38,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:2794615.38,monthlyProfit:-2747693.51,roas:-0.98},
+  {category:'Concrete',keyword:'concrete repair near me',searchVol:50000,cpc:13.1,avgJobValue:5500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:825.0,monthlyRevenue:46921.88,monthlyAdSpend:3526923.08,monthlyProfit:-3480001.2,roas:-0.99},
+  {category:'Concrete',keyword:'quikrete concrete patcher',searchVol:5000,cpc:0.42,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:11307.69,monthlyProfit:-6615.5,roas:-0.59},
+  {category:'Concrete',keyword:'quikrete concrete resurfacer',searchVol:5000,cpc:0.45,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:12115.38,monthlyProfit:-7423.2,roas:-0.61},
+  {category:'Concrete',keyword:'dap concrete crack filler',searchVol:5000,cpc:0.45,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:12115.38,monthlyProfit:-7423.2,roas:-0.61},
+  {category:'Concrete',keyword:'quikrete re cap concrete resurfacer',searchVol:5000,cpc:0.49,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:13192.31,monthlyProfit:-8500.12,roas:-0.64},
+  {category:'Concrete',keyword:'best concrete crack filler',searchVol:5000,cpc:0.5,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:13461.54,monthlyProfit:-8769.35,roas:-0.65},
+  {category:'Concrete',keyword:'sikaflex concrete fix',searchVol:5000,cpc:0.52,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:14000.0,monthlyProfit:-9307.81,roas:-0.66},
+  {category:'Concrete',keyword:'sika concrete fix',searchVol:5000,cpc:0.52,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:14000.0,monthlyProfit:-9307.81,roas:-0.66},
+  {category:'Concrete',keyword:'quikrete concrete crack seal',searchVol:5000,cpc:0.55,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:14807.69,monthlyProfit:-10115.5,roas:-0.68},
+  {category:'Concrete',keyword:'concrete restoration contractors',searchVol:5000,cpc:0.66,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:17769.23,monthlyProfit:-13077.04,roas:-0.74},
+  {category:'Concrete',keyword:'quikrete concrete repair',searchVol:5000,cpc:0.94,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:25307.69,monthlyProfit:-20615.5,roas:-0.81},
+  {category:'Concrete',keyword:'concrete caulking for cracks',searchVol:5000,cpc:1.09,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:29346.15,monthlyProfit:-24653.97,roas:-0.84},
+  {category:'Concrete',keyword:'concrete repair contractors',searchVol:5000,cpc:1.1,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:29615.38,monthlyProfit:-24923.2,roas:-0.84},
+  {category:'Concrete',keyword:'concrete restoration and repair',searchVol:5000,cpc:1.27,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:34192.31,monthlyProfit:-29500.12,roas:-0.86},
+  {category:'Concrete',keyword:'concrete driveway crack filler',searchVol:5000,cpc:1.44,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:38769.23,monthlyProfit:-34077.04,roas:-0.88},
+  {category:'Concrete',keyword:'pressure washer to clean concrete',searchVol:5000,cpc:1.64,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:44153.85,monthlyProfit:-39461.66,roas:-0.89},
+  {category:'Concrete',keyword:'seal cracks in concrete',searchVol:5000,cpc:1.66,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:44692.31,monthlyProfit:-40000.12,roas:-0.9},
+  {category:'Concrete',keyword:'filler for concrete expansion joints',searchVol:5000,cpc:1.86,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:50076.92,monthlyProfit:-45384.74,roas:-0.91},
+  {category:'Concrete',keyword:'concrete to fill holes',searchVol:5000,cpc:1.86,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:50076.92,monthlyProfit:-45384.74,roas:-0.91},
+  {category:'Concrete',keyword:'concrete gap filler',searchVol:5000,cpc:1.94,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:52230.77,monthlyProfit:-47538.58,roas:-0.91},
+  {category:'Concrete',keyword:'filler for concrete gaps',searchVol:5000,cpc:1.94,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:52230.77,monthlyProfit:-47538.58,roas:-0.91},
+  {category:'Concrete',keyword:'concrete repair companies',searchVol:5000,cpc:2.1,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:56538.46,monthlyProfit:-51846.27,roas:-0.92},
+  {category:'Concrete',keyword:'concrete joints filler',searchVol:5000,cpc:2.19,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:58961.54,monthlyProfit:-54269.35,roas:-0.92},
+  {category:'Concrete',keyword:'concrete deck',searchVol:5000,cpc:2.2,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:59230.77,monthlyProfit:-54538.58,roas:-0.92},
+  {category:'Concrete',keyword:'concrete repair services near me',searchVol:5000,cpc:2.28,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:61384.62,monthlyProfit:-56692.43,roas:-0.92},
+  {category:'Concrete',keyword:'patching concrete slab',searchVol:5000,cpc:2.39,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:64346.15,monthlyProfit:-59653.97,roas:-0.93},
+  {category:'Concrete',keyword:'concrete filler',searchVol:5000,cpc:2.48,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:66769.23,monthlyProfit:-62077.04,roas:-0.93},
+  {category:'Concrete',keyword:'pressure washer for driveway cleaning',searchVol:5000,cpc:2.49,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:67038.46,monthlyProfit:-62346.27,roas:-0.93},
+  {category:'Concrete',keyword:'concrete cleaning',searchVol:5000,cpc:2.51,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:67576.92,monthlyProfit:-62884.74,roas:-0.93},
+  {category:'Concrete',keyword:'patching concrete wall',searchVol:5000,cpc:2.62,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:70538.46,monthlyProfit:-65846.27,roas:-0.93},
+  {category:'Concrete',keyword:'patching concrete driveway',searchVol:5000,cpc:2.63,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:70807.69,monthlyProfit:-66115.5,roas:-0.93},
+  {category:'Concrete',keyword:'patio and deck',searchVol:5000,cpc:2.65,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:71346.15,monthlyProfit:-66653.97,roas:-0.93},
+  {category:'Concrete',keyword:'sika concrete crack repair',searchVol:5000,cpc:2.75,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:74038.46,monthlyProfit:-69346.27,roas:-0.94},
+  {category:'Concrete',keyword:'sikaflex concrete crack repair',searchVol:5000,cpc:2.75,avgJobValue:5500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:825.0,monthlyRevenue:4692.19,monthlyAdSpend:74038.46,monthlyProfit:-69346.27,roas:-0.94},
+  {category:'Deck & Outdoor',keyword:'deck above ground pool',searchVol:50000,cpc:1.73,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:465769.23,monthlyProfit:-406050.48,roas:-0.87},
+  {category:'Deck & Outdoor',keyword:'timbertech deck',searchVol:50000,cpc:1.8,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:484615.38,monthlyProfit:-424896.63,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'wooden deck railings',searchVol:50000,cpc:1.94,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:522307.69,monthlyProfit:-462588.94,roas:-0.89},
+  {category:'Deck & Outdoor',keyword:'designing a deck',searchVol:50000,cpc:2.04,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:549230.77,monthlyProfit:-489512.02,roas:-0.89},
+  {category:'Deck & Outdoor',keyword:'trex decking pricing',searchVol:50000,cpc:2.2,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:592307.69,monthlyProfit:-532588.94,roas:-0.9},
+  {category:'Deck & Outdoor',keyword:'floating deck',searchVol:50000,cpc:2.27,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:611153.85,monthlyProfit:-551435.1,roas:-0.9},
+  {category:'Deck & Outdoor',keyword:'decking railings',searchVol:50000,cpc:2.28,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:613846.15,monthlyProfit:-554127.4,roas:-0.9},
+  {category:'Deck & Outdoor',keyword:'decks and railings',searchVol:50000,cpc:2.28,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:613846.15,monthlyProfit:-554127.4,roas:-0.9},
+  {category:'Deck & Outdoor',keyword:'decks with pools',searchVol:50000,cpc:2.77,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:745769.23,monthlyProfit:-686050.48,roas:-0.92},
+  {category:'Deck & Outdoor',keyword:'deck composite',searchVol:50000,cpc:2.78,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:748461.54,monthlyProfit:-688742.79,roas:-0.92},
+  {category:'Deck & Outdoor',keyword:'deck and pergola',searchVol:50000,cpc:3.14,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:845384.62,monthlyProfit:-785665.87,roas:-0.93},
+  {category:'Deck & Outdoor',keyword:'pergola with deck',searchVol:50000,cpc:3.14,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:845384.62,monthlyProfit:-785665.87,roas:-0.93},
+  {category:'Deck & Outdoor',keyword:'steps for a deck',searchVol:50000,cpc:3.27,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:880384.62,monthlyProfit:-820665.87,roas:-0.93},
+  {category:'Deck & Outdoor',keyword:'back decks',searchVol:50000,cpc:4.56,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:1227692.31,monthlyProfit:-1167973.56,roas:-0.95},
+  {category:'Deck & Outdoor',keyword:'decks',searchVol:50000,cpc:4.66,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:1254615.38,monthlyProfit:-1194896.63,roas:-0.95},
+  {category:'Deck & Outdoor',keyword:'deck building',searchVol:50000,cpc:9.36,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:2520000.0,monthlyProfit:-2460281.25,roas:-0.98},
+  {category:'Deck & Outdoor',keyword:'deck builders near me',searchVol:50000,cpc:9.36,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:2520000.0,monthlyProfit:-2460281.25,roas:-0.98},
+  {category:'Deck & Outdoor',keyword:'deck building companies near me',searchVol:50000,cpc:9.36,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:2520000.0,monthlyProfit:-2460281.25,roas:-0.98},
+  {category:'Deck & Outdoor',keyword:'deck near me',searchVol:50000,cpc:9.36,avgJobValue:7000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1050.0,monthlyRevenue:59718.75,monthlyAdSpend:2520000.0,monthlyProfit:-2460281.25,roas:-0.98},
+  {category:'Deck & Outdoor',keyword:'timber decking',searchVol:5000,cpc:0.31,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:8346.15,monthlyProfit:-2374.28,roas:-0.28},
+  {category:'Deck & Outdoor',keyword:'decks and fences',searchVol:5000,cpc:0.31,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:8346.15,monthlyProfit:-2374.28,roas:-0.28},
+  {category:'Deck & Outdoor',keyword:'home depot deck rail',searchVol:5000,cpc:0.5,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:13461.54,monthlyProfit:-7489.66,roas:-0.56},
+  {category:'Deck & Outdoor',keyword:'deck building contractors near me',searchVol:5000,cpc:0.5,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:13461.54,monthlyProfit:-7489.66,roas:-0.56},
+  {category:'Deck & Outdoor',keyword:'deck t',searchVol:5000,cpc:0.92,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:24769.23,monthlyProfit:-18797.36,roas:-0.76},
+  {category:'Deck & Outdoor',keyword:'under deck shed',searchVol:5000,cpc:0.94,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:25307.69,monthlyProfit:-19335.82,roas:-0.76},
+  {category:'Deck & Outdoor',keyword:'home depot decking composite',searchVol:5000,cpc:1.0,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:26923.08,monthlyProfit:-20951.2,roas:-0.78},
+  {category:'Deck & Outdoor',keyword:'home depot trex decking',searchVol:5000,cpc:1.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:28538.46,monthlyProfit:-22566.59,roas:-0.79},
+  {category:'Deck & Outdoor',keyword:'trex composite decking home depot',searchVol:5000,cpc:1.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:28538.46,monthlyProfit:-22566.59,roas:-0.79},
+  {category:'Deck & Outdoor',keyword:'stair stringers for deck',searchVol:5000,cpc:1.1,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:29615.38,monthlyProfit:-23643.51,roas:-0.8},
+  {category:'Deck & Outdoor',keyword:'deck remodeling',searchVol:5000,cpc:1.17,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:31500.0,monthlyProfit:-25528.13,roas:-0.81},
+  {category:'Deck & Outdoor',keyword:'stringers deck',searchVol:5000,cpc:1.2,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:32307.69,monthlyProfit:-26335.82,roas:-0.82},
+  {category:'Deck & Outdoor',keyword:'trex deck rail',searchVol:5000,cpc:1.26,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:33923.08,monthlyProfit:-27951.2,roas:-0.82},
+  {category:'Deck & Outdoor',keyword:'decking house',searchVol:5000,cpc:1.33,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:35807.69,monthlyProfit:-29835.82,roas:-0.83},
+  {category:'Deck & Outdoor',keyword:'attaching stair stringers to deck',searchVol:5000,cpc:1.45,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:39038.46,monthlyProfit:-33066.59,roas:-0.85},
+  {category:'Deck & Outdoor',keyword:'attaching stringers to deck',searchVol:5000,cpc:1.45,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:39038.46,monthlyProfit:-33066.59,roas:-0.85},
+  {category:'Deck & Outdoor',keyword:'decks home depot',searchVol:5000,cpc:1.54,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:41461.54,monthlyProfit:-35489.66,roas:-0.86},
+  {category:'Deck & Outdoor',keyword:'deck gazebos',searchVol:5000,cpc:1.64,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:44153.85,monthlyProfit:-38181.97,roas:-0.86},
+  {category:'Deck & Outdoor',keyword:'building a mtg deck',searchVol:5000,cpc:1.64,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:44153.85,monthlyProfit:-38181.97,roas:-0.86},
+  {category:'Deck & Outdoor',keyword:'mtg building a deck',searchVol:5000,cpc:1.64,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:44153.85,monthlyProfit:-38181.97,roas:-0.86},
+  {category:'Deck & Outdoor',keyword:'building deck railings',searchVol:5000,cpc:1.65,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:44423.08,monthlyProfit:-38451.2,roas:-0.87},
+  {category:'Deck & Outdoor',keyword:'cost of above ground pool with deck',searchVol:5000,cpc:1.74,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:46846.15,monthlyProfit:-40874.28,roas:-0.87},
+  {category:'Deck & Outdoor',keyword:'composite decking handrail',searchVol:5000,cpc:1.79,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:48192.31,monthlyProfit:-42220.43,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'composite deck rails',searchVol:5000,cpc:1.79,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:48192.31,monthlyProfit:-42220.43,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'building above ground pool deck',searchVol:5000,cpc:1.82,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:49000.0,monthlyProfit:-43028.13,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'lowes decks',searchVol:5000,cpc:1.84,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:49538.46,monthlyProfit:-43566.59,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'azek decks',searchVol:5000,cpc:1.92,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:51692.31,monthlyProfit:-45720.43,roas:-0.88},
+  {category:'Deck & Outdoor',keyword:'building deck stairs',searchVol:5000,cpc:2.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:55461.54,monthlyProfit:-49489.66,roas:-0.89},
+  {category:'Deck & Outdoor',keyword:'building steps for a deck',searchVol:5000,cpc:2.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:55461.54,monthlyProfit:-49489.66,roas:-0.89},
+  {category:'Deck & Outdoor',keyword:'deck stair construction',searchVol:5000,cpc:2.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:55461.54,monthlyProfit:-49489.66,roas:-0.89},
+  {category:'Deck & Outdoor',keyword:'building a floating deck',searchVol:5000,cpc:2.06,avgJobValue:7000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1050.0,monthlyRevenue:5971.88,monthlyAdSpend:55461.54,monthlyProfit:-49489.66,roas:-0.89},
+  {category:'Flooring',keyword:'epoxy painting',searchVol:50000,cpc:1.48,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:398461.54,monthlyProfit:-321680.29,roas:-0.81},
+  {category:'Flooring',keyword:'epoxy floor painting',searchVol:50000,cpc:1.58,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:425384.62,monthlyProfit:-348603.37,roas:-0.82},
+  {category:'Flooring',keyword:'painting and flooring',searchVol:50000,cpc:1.88,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:506153.85,monthlyProfit:-429372.6,roas:-0.85},
+  {category:'Flooring',keyword:'basement floor coating',searchVol:50000,cpc:2.13,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:573461.54,monthlyProfit:-496680.29,roas:-0.87},
+  {category:'Flooring',keyword:'basement floor painting',searchVol:50000,cpc:2.13,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:573461.54,monthlyProfit:-496680.29,roas:-0.87},
+  {category:'Flooring',keyword:'epoxy floor coating',searchVol:50000,cpc:3.59,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:966538.46,monthlyProfit:-889757.21,roas:-0.92},
+  {category:'Flooring',keyword:'epoxy flooring',searchVol:50000,cpc:4.2,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1130769.23,monthlyProfit:-1053987.98,roas:-0.93},
+  {category:'Flooring',keyword:'epoxyflooring',searchVol:50000,cpc:4.2,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1130769.23,monthlyProfit:-1053987.98,roas:-0.93},
+  {category:'Flooring',keyword:'garage floor coating',searchVol:50000,cpc:4.26,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1146923.08,monthlyProfit:-1070141.83,roas:-0.93},
+  {category:'Flooring',keyword:'painting garage floor',searchVol:50000,cpc:4.26,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1146923.08,monthlyProfit:-1070141.83,roas:-0.93},
+  {category:'Flooring',keyword:'garage flooring',searchVol:50000,cpc:4.28,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1152307.69,monthlyProfit:-1075526.44,roas:-0.93},
+  {category:'Flooring',keyword:'garage floor flooring',searchVol:50000,cpc:4.28,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1152307.69,monthlyProfit:-1075526.44,roas:-0.93},
+  {category:'Flooring',keyword:'epoxy garage floor cost',searchVol:50000,cpc:5.32,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1432307.69,monthlyProfit:-1355526.44,roas:-0.95},
+  {category:'Flooring',keyword:'epoxy garage floor price',searchVol:50000,cpc:5.32,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1432307.69,monthlyProfit:-1355526.44,roas:-0.95},
+  {category:'Flooring',keyword:'epoxy coating garage floor cost',searchVol:50000,cpc:5.32,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1432307.69,monthlyProfit:-1355526.44,roas:-0.95},
+  {category:'Flooring',keyword:'polyaspartic floor coating',searchVol:50000,cpc:5.64,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1518461.54,monthlyProfit:-1441680.29,roas:-0.95},
+  {category:'Flooring',keyword:'polyaspartic flooring',searchVol:50000,cpc:5.64,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1518461.54,monthlyProfit:-1441680.29,roas:-0.95},
+  {category:'Flooring',keyword:'epoxy coating garage floor',searchVol:50000,cpc:6.71,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1806538.46,monthlyProfit:-1729757.21,roas:-0.96},
+  {category:'Flooring',keyword:'epoxy resin garage floor',searchVol:50000,cpc:6.71,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1806538.46,monthlyProfit:-1729757.21,roas:-0.96},
+  {category:'Flooring',keyword:'garage floor covering epoxy',searchVol:50000,cpc:6.71,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:1806538.46,monthlyProfit:-1729757.21,roas:-0.96},
+  {category:'Flooring',keyword:'epoxy garage floor',searchVol:50000,cpc:7.48,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:2013846.15,monthlyProfit:-1937064.9,roas:-0.96},
+  {category:'Flooring',keyword:'epoxy finish garage floor',searchVol:50000,cpc:7.48,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:2013846.15,monthlyProfit:-1937064.9,roas:-0.96},
+  {category:'Flooring',keyword:'epoxy flooring near me',searchVol:50000,cpc:10.81,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:2910384.62,monthlyProfit:-2833603.37,roas:-0.97},
+  {category:'Flooring',keyword:'epoxy flooring companies near me',searchVol:50000,cpc:10.81,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:2910384.62,monthlyProfit:-2833603.37,roas:-0.97},
+  {category:'Flooring',keyword:'pool recoating',searchVol:50000,cpc:11.11,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:2991153.85,monthlyProfit:-2914372.6,roas:-0.97},
+  {category:'Flooring',keyword:'epoxy garage flooring near me',searchVol:50000,cpc:13.14,avgJobValue:9000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1350.0,monthlyRevenue:76781.25,monthlyAdSpend:3537692.31,monthlyProfit:-3460911.06,roas:-0.98},
+  {category:'Flooring',keyword:'industrial epoxy flooring',searchVol:5000,cpc:0.5,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:13461.54,monthlyProfit:-5783.41,roas:-0.43},
+  {category:'Flooring',keyword:'industrial epoxy floor coating',searchVol:5000,cpc:0.5,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:13461.54,monthlyProfit:-5783.41,roas:-0.43},
+  {category:'Flooring',keyword:'polishing epoxy',searchVol:5000,cpc:0.62,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:16692.31,monthlyProfit:-9014.18,roas:-0.54},
+  {category:'Flooring',keyword:'pourable epoxy concrete repair',searchVol:5000,cpc:0.77,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:20730.77,monthlyProfit:-13052.64,roas:-0.63},
+  {category:'Flooring',keyword:'flooring epoxy price',searchVol:5000,cpc:0.8,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:21538.46,monthlyProfit:-13860.34,roas:-0.64},
+  {category:'Flooring',keyword:'epoxy grouting for tiles',searchVol:5000,cpc:0.83,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:22346.15,monthlyProfit:-14668.03,roas:-0.66},
+  {category:'Flooring',keyword:'best industrial epoxy floor coating',searchVol:5000,cpc:0.91,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:24500.0,monthlyProfit:-16821.88,roas:-0.69},
+  {category:'Flooring',keyword:'epoxy flooring for homes',searchVol:5000,cpc:0.92,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:24769.23,monthlyProfit:-17091.11,roas:-0.69},
+  {category:'Flooring',keyword:'epoxy wood finish',searchVol:5000,cpc:0.93,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:25038.46,monthlyProfit:-17360.34,roas:-0.69},
+  {category:'Flooring',keyword:'epoxy coatings for concrete floors',searchVol:5000,cpc:0.97,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:26115.38,monthlyProfit:-18437.26,roas:-0.71},
+  {category:'Flooring',keyword:'cement floor epoxy coating',searchVol:5000,cpc:0.97,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:26115.38,monthlyProfit:-18437.26,roas:-0.71},
+  {category:'Flooring',keyword:'epoxy coating for concrete',searchVol:5000,cpc:1.01,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:27192.31,monthlyProfit:-19514.18,roas:-0.72},
+  {category:'Flooring',keyword:'best garage floor covering',searchVol:5000,cpc:1.27,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:34192.31,monthlyProfit:-26514.18,roas:-0.78},
+  {category:'Flooring',keyword:'residential epoxy flooring',searchVol:5000,cpc:1.27,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:34192.31,monthlyProfit:-26514.18,roas:-0.78},
+  {category:'Flooring',keyword:'epoxy floor coating for wood',searchVol:5000,cpc:1.3,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:35000.0,monthlyProfit:-27321.88,roas:-0.78},
+  {category:'Flooring',keyword:'commercial epoxy flooring',searchVol:5000,cpc:1.35,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36346.15,monthlyProfit:-28668.03,roas:-0.79},
+  {category:'Flooring',keyword:'rustoleum epoxy',searchVol:5000,cpc:1.35,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36346.15,monthlyProfit:-28668.03,roas:-0.79},
+  {category:'Flooring',keyword:'epoxy rustoleum',searchVol:5000,cpc:1.35,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36346.15,monthlyProfit:-28668.03,roas:-0.79},
+  {category:'Flooring',keyword:'rust oleum garage epoxy',searchVol:5000,cpc:1.37,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36884.62,monthlyProfit:-29206.49,roas:-0.79},
+  {category:'Flooring',keyword:'rust oleum epoxyshield garage',searchVol:5000,cpc:1.37,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36884.62,monthlyProfit:-29206.49,roas:-0.79},
+  {category:'Flooring',keyword:'rustoleum epoxy garage',searchVol:5000,cpc:1.37,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:36884.62,monthlyProfit:-29206.49,roas:-0.79},
+  {category:'Flooring',keyword:'epoxy flooring tiles',searchVol:5000,cpc:1.4,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:37692.31,monthlyProfit:-30014.18,roas:-0.8},
+  {category:'Flooring',keyword:'tiles epoxy',searchVol:5000,cpc:1.4,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:37692.31,monthlyProfit:-30014.18,roas:-0.8},
+  {category:'Flooring',keyword:'epoxy flooring on tiles',searchVol:5000,cpc:1.4,avgJobValue:9000.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1350.0,monthlyRevenue:7678.13,monthlyAdSpend:37692.31,monthlyProfit:-30014.18,roas:-0.8},
+  {category:'General Contracting',keyword:'wash pressure',searchVol:500000,cpc:0.79,avgJobValue:15000.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2250.0,monthlyRevenue:1279687.5,monthlyAdSpend:2126923.08,monthlyProfit:-847235.58,roas:-0.4},
+  {category:'General Contracting',keyword:'pressure cleaning near me',searchVol:500000,cpc:5.1,avgJobValue:15000.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2250.0,monthlyRevenue:1279687.5,monthlyAdSpend:13730769.23,monthlyProfit:-12451081.73,roas:-0.91},
+  {category:'General Contracting',keyword:'abcsupply',searchVol:500000,cpc:6.82,avgJobValue:15000.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2250.0,monthlyRevenue:1279687.5,monthlyAdSpend:18361538.46,monthlyProfit:-17081850.96,roas:-0.93},
+  {category:'General Contracting',keyword:'garage door repairman near me',searchVol:500000,cpc:39.66,avgJobValue:15000.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2250.0,monthlyRevenue:1279687.5,monthlyAdSpend:106776923.08,monthlyProfit:-105497235.58,roas:-0.99},
+  {category:'General Contracting',keyword:'air conditioning companies',searchVol:50000,cpc:0.32,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:86153.85,monthlyProfit:41814.9,roas:0.49},
+  {category:'General Contracting',keyword:'air conditioning contractors near me',searchVol:50000,cpc:0.91,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:245000.0,monthlyProfit:-117031.25,roas:-0.48},
+  {category:'General Contracting',keyword:'ice and water shield',searchVol:50000,cpc:1.01,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:271923.08,monthlyProfit:-143954.33,roas:-0.53},
+  {category:'General Contracting',keyword:'air conditioning contractors',searchVol:50000,cpc:1.35,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:363461.54,monthlyProfit:-235492.79,roas:-0.65},
+  {category:'General Contracting',keyword:'cement filler for cracks',searchVol:50000,cpc:1.38,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:371538.46,monthlyProfit:-243569.71,roas:-0.66},
+  {category:'General Contracting',keyword:'cracked cement repair',searchVol:50000,cpc:1.56,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:420000.0,monthlyProfit:-292031.25,roas:-0.7},
+  {category:'General Contracting',keyword:'cement fix cracks',searchVol:50000,cpc:1.56,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:420000.0,monthlyProfit:-292031.25,roas:-0.7},
+  {category:'General Contracting',keyword:'home repairman near me',searchVol:50000,cpc:2.08,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:560000.0,monthlyProfit:-432031.25,roas:-0.77},
+  {category:'General Contracting',keyword:'powerwasher',searchVol:50000,cpc:2.38,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:640769.23,monthlyProfit:-512800.48,roas:-0.8},
+  {category:'General Contracting',keyword:'commercial pressure cleaning',searchVol:50000,cpc:2.44,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:656923.08,monthlyProfit:-528954.33,roas:-0.81},
+  {category:'General Contracting',keyword:'corrugated metal',searchVol:50000,cpc:2.84,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:764615.38,monthlyProfit:-636646.63,roas:-0.83},
+  {category:'General Contracting',keyword:'split air conditioning units',searchVol:50000,cpc:3.12,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:840000.0,monthlyProfit:-712031.25,roas:-0.85},
+  {category:'General Contracting',keyword:'mitsubishi air cond',searchVol:50000,cpc:3.38,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:910000.0,monthlyProfit:-782031.25,roas:-0.86},
+  {category:'General Contracting',keyword:'soft wash',searchVol:50000,cpc:3.42,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:920769.23,monthlyProfit:-792800.48,roas:-0.86},
+  {category:'General Contracting',keyword:'soft washer',searchVol:50000,cpc:3.42,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:920769.23,monthlyProfit:-792800.48,roas:-0.86},
+  {category:'General Contracting',keyword:'home repairs services',searchVol:50000,cpc:3.76,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1012307.69,monthlyProfit:-884338.94,roas:-0.87},
+  {category:'General Contracting',keyword:'tub remodel',searchVol:50000,cpc:4.4,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1184615.38,monthlyProfit:-1056646.63,roas:-0.89},
+  {category:'General Contracting',keyword:'tub renovation',searchVol:50000,cpc:4.4,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1184615.38,monthlyProfit:-1056646.63,roas:-0.89},
+  {category:'General Contracting',keyword:'pressure cleaning business',searchVol:50000,cpc:4.43,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1192692.31,monthlyProfit:-1064723.56,roas:-0.89},
+  {category:'General Contracting',keyword:'washer house',searchVol:50000,cpc:4.86,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1308461.54,monthlyProfit:-1180492.79,roas:-0.9},
+  {category:'General Contracting',keyword:'air handler unit',searchVol:50000,cpc:5.2,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1400000.0,monthlyProfit:-1272031.25,roas:-0.91},
+  {category:'General Contracting',keyword:'air duct sealing',searchVol:50000,cpc:5.96,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1604615.38,monthlyProfit:-1476646.63,roas:-0.92},
+  {category:'General Contracting',keyword:'central air conditioning unit',searchVol:50000,cpc:6.86,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1846923.08,monthlyProfit:-1718954.33,roas:-0.93},
+  {category:'General Contracting',keyword:'air conditioning',searchVol:50000,cpc:6.98,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1879230.77,monthlyProfit:-1751262.02,roas:-0.93},
+  {category:'General Contracting',keyword:'foundation cement repair',searchVol:50000,cpc:7.13,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:1919615.38,monthlyProfit:-1791646.63,roas:-0.93},
+  {category:'General Contracting',keyword:'air conditioning units for homes',searchVol:50000,cpc:7.72,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2078461.54,monthlyProfit:-1950492.79,roas:-0.94},
+  {category:'General Contracting',keyword:'contractor foundation repair',searchVol:50000,cpc:7.86,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2116153.85,monthlyProfit:-1988185.1,roas:-0.94},
+  {category:'General Contracting',keyword:'cost to install central air',searchVol:50000,cpc:7.96,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2143076.92,monthlyProfit:-2015108.17,roas:-0.94},
+  {category:'General Contracting',keyword:'air handlers',searchVol:50000,cpc:8.1,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2180769.23,monthlyProfit:-2052800.48,roas:-0.94},
+  {category:'General Contracting',keyword:'window washing services near me',searchVol:50000,cpc:8.27,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2226538.46,monthlyProfit:-2098569.71,roas:-0.94},
+  {category:'General Contracting',keyword:'central air conditioning system',searchVol:50000,cpc:8.62,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2320769.23,monthlyProfit:-2192800.48,roas:-0.94},
+  {category:'General Contracting',keyword:'drywall repairman near me',searchVol:50000,cpc:8.75,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2355769.23,monthlyProfit:-2227800.48,roas:-0.95},
+  {category:'General Contracting',keyword:'door repairman near me',searchVol:50000,cpc:9.5,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2557692.31,monthlyProfit:-2429723.56,roas:-0.95},
+  {category:'General Contracting',keyword:'house washing near me',searchVol:50000,cpc:9.56,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2573846.15,monthlyProfit:-2445877.4,roas:-0.95},
+  {category:'General Contracting',keyword:'air conditioning ductwork',searchVol:50000,cpc:9.62,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2590000.0,monthlyProfit:-2462031.25,roas:-0.95},
+  {category:'General Contracting',keyword:'air conditioning ducts',searchVol:50000,cpc:9.62,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2590000.0,monthlyProfit:-2462031.25,roas:-0.95},
+  {category:'General Contracting',keyword:'aircon ducting',searchVol:50000,cpc:9.62,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2590000.0,monthlyProfit:-2462031.25,roas:-0.95},
+  {category:'General Contracting',keyword:'trane ac',searchVol:50000,cpc:9.89,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2662692.31,monthlyProfit:-2534723.56,roas:-0.95},
+  {category:'General Contracting',keyword:'foundation crack repair',searchVol:50000,cpc:10.12,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2724615.38,monthlyProfit:-2596646.63,roas:-0.95},
+  {category:'General Contracting',keyword:'fix foundation crack',searchVol:50000,cpc:10.12,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2724615.38,monthlyProfit:-2596646.63,roas:-0.95},
+  {category:'General Contracting',keyword:'soffits and fascia',searchVol:50000,cpc:10.22,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2751538.46,monthlyProfit:-2623569.71,roas:-0.95},
+  {category:'General Contracting',keyword:'us air conditioning',searchVol:50000,cpc:10.58,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2848461.54,monthlyProfit:-2720492.79,roas:-0.96},
+  {category:'General Contracting',keyword:'carrier air conditioning',searchVol:50000,cpc:10.58,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:2848461.54,monthlyProfit:-2720492.79,roas:-0.96},
+  {category:'General Contracting',keyword:'pressure cleaning companies',searchVol:50000,cpc:11.23,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:3023461.54,monthlyProfit:-2895492.79,roas:-0.96},
+  {category:'General Contracting',keyword:'ductwork',searchVol:50000,cpc:12.08,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:3252307.69,monthlyProfit:-3124338.94,roas:-0.96},
+  {category:'General Contracting',keyword:'window repairman near me',searchVol:50000,cpc:12.31,avgJobValue:15000.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2250.0,monthlyRevenue:127968.75,monthlyAdSpend:3314230.77,monthlyProfit:-3186262.02,roas:-0.96},
+  {category:'HVAC',keyword:'hvac repair',searchVol:500000,cpc:0.36,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:969230.77,monthlyProfit:-350715.14,roas:-0.36},
+  {category:'HVAC',keyword:'ac repair service',searchVol:500000,cpc:0.74,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:1992307.69,monthlyProfit:-1373792.07,roas:-0.69},
+  {category:'HVAC',keyword:'air conditioner repair service',searchVol:500000,cpc:0.74,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:1992307.69,monthlyProfit:-1373792.07,roas:-0.69},
+  {category:'HVAC',keyword:'ac repair and service',searchVol:500000,cpc:0.74,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:1992307.69,monthlyProfit:-1373792.07,roas:-0.69},
+  {category:'HVAC',keyword:'air conditioner installation',searchVol:500000,cpc:1.55,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:4173076.92,monthlyProfit:-3554561.3,roas:-0.85},
+  {category:'HVAC',keyword:'ac installation',searchVol:500000,cpc:1.55,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:4173076.92,monthlyProfit:-3554561.3,roas:-0.85},
+  {category:'HVAC',keyword:'air conditioner service',searchVol:500000,cpc:11.8,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:31769230.77,monthlyProfit:-31150715.14,roas:-0.98},
+  {category:'HVAC',keyword:'furnace repair',searchVol:500000,cpc:12.18,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:32792307.69,monthlyProfit:-32173792.07,roas:-0.98},
+  {category:'HVAC',keyword:'hvac near me',searchVol:500000,cpc:12.68,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:34138461.54,monthlyProfit:-33519945.91,roas:-0.98},
+  {category:'HVAC',keyword:'heating and cooling near me',searchVol:500000,cpc:12.68,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:34138461.54,monthlyProfit:-33519945.91,roas:-0.98},
+  {category:'HVAC',keyword:'hvac contractors near me',searchVol:500000,cpc:18.6,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:50076923.08,monthlyProfit:-49458407.45,roas:-0.99},
+  {category:'HVAC',keyword:'heating and cooling contractors near me',searchVol:500000,cpc:18.6,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:50076923.08,monthlyProfit:-49458407.45,roas:-0.99},
+  {category:'HVAC',keyword:'hvac',searchVol:500000,cpc:18.92,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:50938461.54,monthlyProfit:-50319945.91,roas:-0.99},
+  {category:'HVAC',keyword:'heating ventilation and air conditioning',searchVol:500000,cpc:18.92,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:50938461.54,monthlyProfit:-50319945.91,roas:-0.99},
+  {category:'HVAC',keyword:'hvac repair near me',searchVol:500000,cpc:21.95,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:59096153.85,monthlyProfit:-58477638.22,roas:-0.99},
+  {category:'HVAC',keyword:'heating and air repair near me',searchVol:500000,cpc:21.95,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:59096153.85,monthlyProfit:-58477638.22,roas:-0.99},
+  {category:'HVAC',keyword:'furnace repair near me',searchVol:500000,cpc:28.8,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:77538461.54,monthlyProfit:-76919945.91,roas:-0.99},
+  {category:'HVAC',keyword:'hvac companies near me',searchVol:500000,cpc:29.78,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:80176923.08,monthlyProfit:-79558407.45,roas:-0.99},
+  {category:'HVAC',keyword:'ac repair',searchVol:500000,cpc:30.02,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:80823076.92,monthlyProfit:-80204561.3,roas:-0.99},
+  {category:'HVAC',keyword:'air conditioner repair',searchVol:500000,cpc:30.02,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:80823076.92,monthlyProfit:-80204561.3,roas:-0.99},
+  {category:'HVAC',keyword:'ac repair near me',searchVol:500000,cpc:48.26,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:129930769.23,monthlyProfit:-129312253.61,roas:-1.0},
+  {category:'HVAC',keyword:'air conditioner repair near me',searchVol:500000,cpc:48.26,avgJobValue:7250.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:1087.5,monthlyRevenue:618515.63,monthlyAdSpend:129930769.23,monthlyProfit:-129312253.61,roas:-1.0},
+  {category:'HVAC',keyword:'heating and air service near me',searchVol:50000,cpc:0.26,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:70000.0,monthlyProfit:-8148.44,roas:-0.12},
+  {category:'HVAC',keyword:'heating and cooling systems',searchVol:50000,cpc:0.31,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:83461.54,monthlyProfit:-21609.98,roas:-0.26},
+  {category:'HVAC',keyword:'heating and air units',searchVol:50000,cpc:0.32,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:86153.85,monthlyProfit:-24302.28,roas:-0.28},
+  {category:'HVAC',keyword:'best ac companies near me',searchVol:50000,cpc:0.33,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:88846.15,monthlyProfit:-26994.59,roas:-0.3},
+  {category:'HVAC',keyword:'heating contractor',searchVol:50000,cpc:0.44,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:118461.54,monthlyProfit:-56609.98,roas:-0.48},
+  {category:'HVAC',keyword:'heating cooling',searchVol:50000,cpc:0.45,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:121153.85,monthlyProfit:-59302.28,roas:-0.49},
+  {category:'HVAC',keyword:'hvac contractors',searchVol:50000,cpc:0.59,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:158846.15,monthlyProfit:-96994.59,roas:-0.61},
+  {category:'HVAC',keyword:'heating and ac repair near me',searchVol:50000,cpc:0.62,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:166923.08,monthlyProfit:-105071.51,roas:-0.63},
+  {category:'HVAC',keyword:'ventless air conditioners',searchVol:50000,cpc:0.62,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:166923.08,monthlyProfit:-105071.51,roas:-0.63},
+  {category:'HVAC',keyword:'hvac repair service',searchVol:50000,cpc:0.63,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:169615.38,monthlyProfit:-107763.82,roas:-0.64},
+  {category:'HVAC',keyword:'ac cool',searchVol:50000,cpc:0.68,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:183076.92,monthlyProfit:-121225.36,roas:-0.66},
+  {category:'HVAC',keyword:'cooling air conditioner',searchVol:50000,cpc:0.68,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:183076.92,monthlyProfit:-121225.36,roas:-0.66},
+  {category:'HVAC',keyword:'hvac maintenance service',searchVol:50000,cpc:0.69,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:185769.23,monthlyProfit:-123917.67,roas:-0.67},
+  {category:'HVAC',keyword:'ac repair company',searchVol:50000,cpc:0.74,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:199230.77,monthlyProfit:-137379.21,roas:-0.69},
+  {category:'HVAC',keyword:'hvac service',searchVol:50000,cpc:0.75,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:201923.08,monthlyProfit:-140071.51,roas:-0.69},
+  {category:'HVAC',keyword:'heating repair near me',searchVol:50000,cpc:0.82,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:220769.23,monthlyProfit:-158917.67,roas:-0.72},
+  {category:'HVAC',keyword:'furnace repair services',searchVol:50000,cpc:0.84,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:226153.85,monthlyProfit:-164302.28,roas:-0.73},
+  {category:'HVAC',keyword:'ac maintenance services',searchVol:50000,cpc:0.98,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:263846.15,monthlyProfit:-201994.59,roas:-0.77},
+  {category:'HVAC',keyword:'air conditioner maintenance service',searchVol:50000,cpc:0.98,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:263846.15,monthlyProfit:-201994.59,roas:-0.77},
+  {category:'HVAC',keyword:'daikin ac repair',searchVol:50000,cpc:1.01,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:271923.08,monthlyProfit:-210071.51,roas:-0.77},
+  {category:'HVAC',keyword:'hvac maintenance near me',searchVol:50000,cpc:1.11,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:298846.15,monthlyProfit:-236994.59,roas:-0.79},
+  {category:'HVAC',keyword:'heating and air conditioning companies',searchVol:50000,cpc:1.16,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:312307.69,monthlyProfit:-250456.13,roas:-0.8},
+  {category:'HVAC',keyword:'heating and cooling service',searchVol:50000,cpc:1.22,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:328461.54,monthlyProfit:-266609.98,roas:-0.81},
+  {category:'HVAC',keyword:'ac maintenance',searchVol:50000,cpc:1.32,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:355384.62,monthlyProfit:-293533.05,roas:-0.83},
+  {category:'HVAC',keyword:'ac unit maintenance',searchVol:50000,cpc:1.32,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:355384.62,monthlyProfit:-293533.05,roas:-0.83},
+  {category:'HVAC',keyword:'air conditioner maintenance',searchVol:50000,cpc:1.32,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:355384.62,monthlyProfit:-293533.05,roas:-0.83},
+  {category:'HVAC',keyword:'hvac air conditioner',searchVol:50000,cpc:1.36,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:366153.85,monthlyProfit:-304302.28,roas:-0.83},
+  {category:'HVAC',keyword:'ac hvac',searchVol:50000,cpc:1.36,avgJobValue:7250.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1087.5,monthlyRevenue:61851.56,monthlyAdSpend:366153.85,monthlyProfit:-304302.28,roas:-0.83},
+  {category:'Handyman Services',keyword:'handyman',searchVol:500000,cpc:6.32,avgJobValue:400.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:60.0,monthlyRevenue:34125.0,monthlyAdSpend:17015384.62,monthlyProfit:-16981259.62,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman near me',searchVol:500000,cpc:6.46,avgJobValue:400.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:60.0,monthlyRevenue:34125.0,monthlyAdSpend:17392307.69,monthlyProfit:-17358182.69,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyperson near me',searchVol:500000,cpc:6.46,avgJobValue:400.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:60.0,monthlyRevenue:34125.0,monthlyAdSpend:17392307.69,monthlyProfit:-17358182.69,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman hal',searchVol:50000,cpc:0.26,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:70000.0,monthlyProfit:-66587.5,roas:-0.95},
+  {category:'Handyman Services',keyword:'mister handyman',searchVol:50000,cpc:4.28,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:1152307.69,monthlyProfit:-1148895.19,roas:-1.0},
+  {category:'Handyman Services',keyword:'ace handyman services',searchVol:50000,cpc:4.48,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:1206153.85,monthlyProfit:-1202741.35,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman services',searchVol:50000,cpc:5.46,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:1470000.0,monthlyProfit:-1466587.5,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman services near me',searchVol:50000,cpc:6.04,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:1626153.85,monthlyProfit:-1622741.35,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman contractors near me',searchVol:50000,cpc:6.04,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:1626153.85,monthlyProfit:-1622741.35,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman plumber near me',searchVol:50000,cpc:7.59,avgJobValue:400.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:60.0,monthlyRevenue:3412.5,monthlyAdSpend:2043461.54,monthlyProfit:-2040049.04,roas:-1.0},
+  {category:'Handyman Services',keyword:'hal the handyman',searchVol:5000,cpc:0.13,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:3500.0,monthlyProfit:-3158.75,roas:-0.9},
+  {category:'Handyman Services',keyword:'handyman services for seniors',searchVol:5000,cpc:0.86,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:23153.85,monthlyProfit:-22812.6,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman fence repair near me',searchVol:5000,cpc:1.24,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:33384.62,monthlyProfit:-33043.37,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman services list',searchVol:5000,cpc:1.6,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:43076.92,monthlyProfit:-42735.67,roas:-0.99},
+  {category:'Handyman Services',keyword:'family handyman',searchVol:5000,cpc:1.65,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:44423.08,monthlyProfit:-44081.83,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman cost per hour',searchVol:5000,cpc:2.41,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:64884.62,monthlyProfit:-64543.37,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman price per hour',searchVol:5000,cpc:2.41,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:64884.62,monthlyProfit:-64543.37,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman charges per hour',searchVol:5000,cpc:2.41,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:64884.62,monthlyProfit:-64543.37,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman prices',searchVol:5000,cpc:2.44,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:65692.31,monthlyProfit:-65351.06,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman cost',searchVol:5000,cpc:2.44,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:65692.31,monthlyProfit:-65351.06,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman charges',searchVol:5000,cpc:2.44,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:65692.31,monthlyProfit:-65351.06,roas:-0.99},
+  {category:'Handyman Services',keyword:'handyman gutter installation',searchVol:5000,cpc:2.79,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:75115.38,monthlyProfit:-74774.13,roas:-1.0},
+  {category:'Handyman Services',keyword:'local handyman services',searchVol:5000,cpc:3.2,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:86153.85,monthlyProfit:-85812.6,roas:-1.0},
+  {category:'Handyman Services',keyword:'home repair handyman',searchVol:5000,cpc:3.21,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:86423.08,monthlyProfit:-86081.83,roas:-1.0},
+  {category:'Handyman Services',keyword:'the handyman',searchVol:5000,cpc:3.42,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:92076.92,monthlyProfit:-91735.67,roas:-1.0},
+  {category:'Handyman Services',keyword:'ace hardware handyman services',searchVol:5000,cpc:3.54,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:95307.69,monthlyProfit:-94966.44,roas:-1.0},
+  {category:'Handyman Services',keyword:'licensed handyman',searchVol:5000,cpc:4.0,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:107692.31,monthlyProfit:-107351.06,roas:-1.0},
+  {category:'Handyman Services',keyword:'ace hardware handyman',searchVol:5000,cpc:4.18,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:112538.46,monthlyProfit:-112197.21,roas:-1.0},
+  {category:'Handyman Services',keyword:'honey do handyman',searchVol:5000,cpc:4.43,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:119269.23,monthlyProfit:-118927.98,roas:-1.0},
+  {category:'Handyman Services',keyword:'yelp handyman near me',searchVol:5000,cpc:4.75,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:127884.62,monthlyProfit:-127543.37,roas:-1.0},
+  {category:'Handyman Services',keyword:'ace handyman',searchVol:5000,cpc:4.96,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:133538.46,monthlyProfit:-133197.21,roas:-1.0},
+  {category:'Handyman Services',keyword:'thumbtack handyman',searchVol:5000,cpc:5.11,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:137576.92,monthlyProfit:-137235.67,roas:-1.0},
+  {category:'Handyman Services',keyword:'mr handyman near me',searchVol:5000,cpc:5.15,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:138653.85,monthlyProfit:-138312.6,roas:-1.0},
+  {category:'Handyman Services',keyword:"angie's list handyman near me",searchVol:5000,cpc:5.18,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:139461.54,monthlyProfit:-139120.29,roas:-1.0},
+  {category:'Handyman Services',keyword:'home depot handyman',searchVol:5000,cpc:5.46,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:147000.0,monthlyProfit:-146658.75,roas:-1.0},
+  {category:'Handyman Services',keyword:'local handyman services near me',searchVol:5000,cpc:5.49,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:147807.69,monthlyProfit:-147466.44,roas:-1.0},
+  {category:'Handyman Services',keyword:"angie's list handyman",searchVol:5000,cpc:5.56,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:149692.31,monthlyProfit:-149351.06,roas:-1.0},
+  {category:'Handyman Services',keyword:'taskrabbit handyman',searchVol:5000,cpc:5.6,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:150769.23,monthlyProfit:-150427.98,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman companies',searchVol:5000,cpc:5.64,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:151846.15,monthlyProfit:-151504.9,roas:-1.0},
+  {category:'Handyman Services',keyword:'cheap handyman near me',searchVol:5000,cpc:5.67,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:152653.85,monthlyProfit:-152312.6,roas:-1.0},
+  {category:'Handyman Services',keyword:'affordable handyman near me',searchVol:5000,cpc:5.67,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:152653.85,monthlyProfit:-152312.6,roas:-1.0},
+  {category:'Handyman Services',keyword:'best handyman near me',searchVol:5000,cpc:5.71,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:153730.77,monthlyProfit:-153389.52,roas:-1.0},
+  {category:'Handyman Services',keyword:'good handyman near me',searchVol:5000,cpc:5.71,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:153730.77,monthlyProfit:-153389.52,roas:-1.0},
+  {category:'Handyman Services',keyword:'carpenter handyman',searchVol:5000,cpc:5.8,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:156153.85,monthlyProfit:-155812.6,roas:-1.0},
+  {category:'Handyman Services',keyword:'carpenter handyman near me',searchVol:5000,cpc:5.9,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:158846.15,monthlyProfit:-158504.9,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman fence repair',searchVol:5000,cpc:5.94,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:159923.08,monthlyProfit:-159581.83,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman in my area',searchVol:5000,cpc:5.98,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:161000.0,monthlyProfit:-160658.75,roas:-1.0},
+  {category:'Handyman Services',keyword:'home handyman services',searchVol:5000,cpc:6.14,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:165307.69,monthlyProfit:-164966.44,roas:-1.0},
+  {category:'Handyman Services',keyword:'handyman home services',searchVol:5000,cpc:6.14,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:165307.69,monthlyProfit:-164966.44,roas:-1.0},
+  {category:'Handyman Services',keyword:'local handyman near me',searchVol:5000,cpc:6.18,avgJobValue:400.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:60.0,monthlyRevenue:341.25,monthlyAdSpend:166384.62,monthlyProfit:-166043.37,roas:-1.0},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen remodel contractors',searchVol:500000,cpc:0.69,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:1857692.31,monthlyProfit:573713.94,roas:0.31},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'contractor for kitchen remodel',searchVol:500000,cpc:0.69,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:1857692.31,monthlyProfit:573713.94,roas:0.31},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel contractors',searchVol:500000,cpc:0.82,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2207692.31,monthlyProfit:223713.94,roas:0.1},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovation contractors',searchVol:500000,cpc:0.82,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2207692.31,monthlyProfit:223713.94,roas:0.1},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'remodeling bathroom contractors',searchVol:500000,cpc:0.82,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2207692.31,monthlyProfit:223713.94,roas:0.1},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen renovation',searchVol:500000,cpc:1.03,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2773076.92,monthlyProfit:-341670.67,roas:-0.12},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen reno',searchVol:500000,cpc:1.03,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2773076.92,monthlyProfit:-341670.67,roas:-0.12},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen and remodeling',searchVol:500000,cpc:1.03,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2773076.92,monthlyProfit:-341670.67,roas:-0.12},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'renov kitchen',searchVol:500000,cpc:1.03,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2773076.92,monthlyProfit:-341670.67,roas:-0.12},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen remodel remodeling',searchVol:500000,cpc:1.03,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:2773076.92,monthlyProfit:-341670.67,roas:-0.12},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen cabinet remodel',searchVol:500000,cpc:1.14,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3069230.77,monthlyProfit:-637824.52,roas:-0.21},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen cabinet renovation',searchVol:500000,cpc:1.14,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3069230.77,monthlyProfit:-637824.52,roas:-0.21},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen cupboard renovation',searchVol:500000,cpc:1.14,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3069230.77,monthlyProfit:-637824.52,roas:-0.21},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel companies',searchVol:500000,cpc:1.21,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3257692.31,monthlyProfit:-826286.06,roas:-0.25},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath remodeling companies',searchVol:500000,cpc:1.21,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3257692.31,monthlyProfit:-826286.06,roas:-0.25},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovation companies',searchVol:500000,cpc:1.21,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3257692.31,monthlyProfit:-826286.06,roas:-0.25},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath renovation companies',searchVol:500000,cpc:1.21,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:3257692.31,monthlyProfit:-826286.06,roas:-0.25},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen remodeling',searchVol:500000,cpc:1.75,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:4711538.46,monthlyProfit:-2280132.21,roas:-0.48},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodeling',searchVol:500000,cpc:4.1,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:11038461.54,monthlyProfit:-8607055.29,roas:-0.78},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom reconstruction',searchVol:500000,cpc:4.1,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:11038461.54,monthlyProfit:-8607055.29,roas:-0.78},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel bathtub',searchVol:500000,cpc:4.1,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:11038461.54,monthlyProfit:-8607055.29,roas:-0.78},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen remodel near me',searchVol:500000,cpc:7.7,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:20730769.23,monthlyProfit:-18299362.98,roas:-0.88},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen renovation near me',searchVol:500000,cpc:7.7,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:20730769.23,monthlyProfit:-18299362.98,roas:-0.88},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'remodel kitchen near me',searchVol:500000,cpc:7.7,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:20730769.23,monthlyProfit:-18299362.98,roas:-0.88},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen renos near me',searchVol:500000,cpc:7.7,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:20730769.23,monthlyProfit:-18299362.98,roas:-0.88},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen reno near me',searchVol:500000,cpc:7.7,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:20730769.23,monthlyProfit:-18299362.98,roas:-0.88},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel near me',searchVol:500000,cpc:17.62,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:47438461.54,monthlyProfit:-45007055.29,roas:-0.95},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovations near me',searchVol:500000,cpc:17.62,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:47438461.54,monthlyProfit:-45007055.29,roas:-0.95},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovation contractors near me',searchVol:500000,cpc:17.62,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:47438461.54,monthlyProfit:-45007055.29,roas:-0.95},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath renovation near me',searchVol:500000,cpc:17.62,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:47438461.54,monthlyProfit:-45007055.29,roas:-0.95},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renos near me',searchVol:500000,cpc:17.62,avgJobValue:28500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:4275.0,monthlyRevenue:2431406.25,monthlyAdSpend:47438461.54,monthlyProfit:-45007055.29,roas:-0.95},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom installation contractors',searchVol:50000,cpc:0.34,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:91538.46,monthlyProfit:151602.16,roas:1.66},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom shower remodel',searchVol:50000,cpc:0.42,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:113076.92,monthlyProfit:130063.7,roas:1.15},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath and shower remodel',searchVol:50000,cpc:0.42,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:113076.92,monthlyProfit:130063.7,roas:1.15},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath shower remodel',searchVol:50000,cpc:0.42,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:113076.92,monthlyProfit:130063.7,roas:1.15},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom shower renovation',searchVol:50000,cpc:0.42,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:113076.92,monthlyProfit:130063.7,roas:1.15},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'shower bath remodel',searchVol:50000,cpc:0.42,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:113076.92,monthlyProfit:130063.7,roas:1.15},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen cabinet refacers near me',searchVol:50000,cpc:0.44,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:118461.54,monthlyProfit:124679.09,roas:1.05},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen renovation contractors',searchVol:50000,cpc:0.46,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:123846.15,monthlyProfit:119294.47,roas:0.96},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel service',searchVol:50000,cpc:0.59,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:158846.15,monthlyProfit:84294.47,roas:0.53},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovation services',searchVol:50000,cpc:0.59,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:158846.15,monthlyProfit:84294.47,roas:0.53},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom makeover near me',searchVol:50000,cpc:0.6,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:161538.46,monthlyProfit:81602.16,roas:0.51},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom makeovers near me',searchVol:50000,cpc:0.6,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:161538.46,monthlyProfit:81602.16,roas:0.51},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel contractors near me',searchVol:50000,cpc:0.74,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:199230.77,monthlyProfit:43909.86,roas:0.22},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom remodel companies near me',searchVol:50000,cpc:0.74,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:199230.77,monthlyProfit:43909.86,roas:0.22},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath remodeling companies near me',searchVol:50000,cpc:0.74,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:199230.77,monthlyProfit:43909.86,roas:0.22},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath remodeling contractors near me',searchVol:50000,cpc:0.74,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:199230.77,monthlyProfit:43909.86,roas:0.22},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'kitchen remodel companies',searchVol:50000,cpc:0.84,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:226153.85,monthlyProfit:16986.78,roas:0.08},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bathroom renovations',searchVol:50000,cpc:0.89,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:239615.38,monthlyProfit:3525.24,roas:0.01},
+  {category:'Kitchen & Bathroom Remodeling',keyword:'bath renovation',searchVol:50000,cpc:0.89,avgJobValue:28500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:4275.0,monthlyRevenue:243140.63,monthlyAdSpend:239615.38,monthlyProfit:3525.24,roas:0.01},
+  {category:'Pool Services',keyword:'pool resurfacing',searchVol:50000,cpc:11.11,avgJobValue:10500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1575.0,monthlyRevenue:89578.13,monthlyAdSpend:2991153.85,monthlyProfit:-2901575.72,roas:-0.97},
+  {category:'Pool Services',keyword:'pool refinishing',searchVol:50000,cpc:11.11,avgJobValue:10500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1575.0,monthlyRevenue:89578.13,monthlyAdSpend:2991153.85,monthlyProfit:-2901575.72,roas:-0.97},
+  {category:'Pool Services',keyword:'swimming pool resurfacing',searchVol:50000,cpc:11.11,avgJobValue:10500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1575.0,monthlyRevenue:89578.13,monthlyAdSpend:2991153.85,monthlyProfit:-2901575.72,roas:-0.97},
+  {category:'Pool Services',keyword:'pool re surfacing',searchVol:50000,cpc:11.11,avgJobValue:10500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1575.0,monthlyRevenue:89578.13,monthlyAdSpend:2991153.85,monthlyProfit:-2901575.72,roas:-0.97},
+  {category:'Pool Services',keyword:'pool remodeling near me',searchVol:50000,cpc:14.91,avgJobValue:10500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:1575.0,monthlyRevenue:89578.13,monthlyAdSpend:4014230.77,monthlyProfit:-3924652.64,roas:-0.98},
+  {category:'Pool Services',keyword:'pool resurfacing contractors',searchVol:5000,cpc:0.79,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:21269.23,monthlyProfit:-12311.42,roas:-0.58},
+  {category:'Pool Services',keyword:'pebble finish for pools',searchVol:5000,cpc:3.34,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:89923.08,monthlyProfit:-80965.26,roas:-0.9},
+  {category:'Pool Services',keyword:'pool remodel cost',searchVol:5000,cpc:4.54,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:122230.77,monthlyProfit:-113272.96,roas:-0.93},
+  {category:'Pool Services',keyword:'swimming pool remodel cost',searchVol:5000,cpc:4.54,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:122230.77,monthlyProfit:-113272.96,roas:-0.93},
+  {category:'Pool Services',keyword:'gunite pool resurfacing',searchVol:5000,cpc:4.98,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:134076.92,monthlyProfit:-125119.11,roas:-0.93},
+  {category:'Pool Services',keyword:'refinishing gunite pool',searchVol:5000,cpc:4.98,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:134076.92,monthlyProfit:-125119.11,roas:-0.93},
+  {category:'Pool Services',keyword:'spartan epoxies',searchVol:5000,cpc:5.01,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:134884.62,monthlyProfit:-125926.8,roas:-0.93},
+  {category:'Pool Services',keyword:'fiberglass pool repair',searchVol:5000,cpc:5.74,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:154538.46,monthlyProfit:-145580.65,roas:-0.94},
+  {category:'Pool Services',keyword:'pool restorations',searchVol:5000,cpc:5.99,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:161269.23,monthlyProfit:-152311.42,roas:-0.94},
+  {category:'Pool Services',keyword:'replaster pool cost',searchVol:5000,cpc:6.14,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:165307.69,monthlyProfit:-156349.88,roas:-0.95},
+  {category:'Pool Services',keyword:'swimming pool replastering cost',searchVol:5000,cpc:6.14,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:165307.69,monthlyProfit:-156349.88,roas:-0.95},
+  {category:'Pool Services',keyword:'pool cement repair',searchVol:5000,cpc:6.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:171769.23,monthlyProfit:-162811.42,roas:-0.95},
+  {category:'Pool Services',keyword:'pool resurfacing cost',searchVol:5000,cpc:7.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:198692.31,monthlyProfit:-189734.5,roas:-0.95},
+  {category:'Pool Services',keyword:'pool refinishing cost',searchVol:5000,cpc:7.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:198692.31,monthlyProfit:-189734.5,roas:-0.95},
+  {category:'Pool Services',keyword:'swimming pool resurfacing cost',searchVol:5000,cpc:7.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:198692.31,monthlyProfit:-189734.5,roas:-0.95},
+  {category:'Pool Services',keyword:'price to resurface pool',searchVol:5000,cpc:7.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:198692.31,monthlyProfit:-189734.5,roas:-0.95},
+  {category:'Pool Services',keyword:'price to resurface a pool',searchVol:5000,cpc:7.38,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:198692.31,monthlyProfit:-189734.5,roas:-0.95},
+  {category:'Pool Services',keyword:'pool replastering',searchVol:5000,cpc:8.64,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:232615.38,monthlyProfit:-223657.57,roas:-0.96},
+  {category:'Pool Services',keyword:'swimming pool replastering',searchVol:5000,cpc:8.64,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:232615.38,monthlyProfit:-223657.57,roas:-0.96},
+  {category:'Pool Services',keyword:'pool replastering near me',searchVol:5000,cpc:11.18,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:301000.0,monthlyProfit:-292042.19,roas:-0.97},
+  {category:'Pool Services',keyword:'pool remodel companies near me',searchVol:5000,cpc:13.83,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:372346.15,monthlyProfit:-363388.34,roas:-0.98},
+  {category:'Pool Services',keyword:'pool remodeling companies',searchVol:5000,cpc:14.04,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:378000.0,monthlyProfit:-369042.19,roas:-0.98},
+  {category:'Pool Services',keyword:'pool resurfacing near me',searchVol:5000,cpc:15.42,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:415153.85,monthlyProfit:-406196.03,roas:-0.98},
+  {category:'Pool Services',keyword:'swimming pool resurfacing near me',searchVol:5000,cpc:15.42,avgJobValue:10500.0,monthlyClicks:250.0,monthlyLeads:16.25,monthlyJobs:5.69,commission:1575.0,monthlyRevenue:8957.81,monthlyAdSpend:415153.85,monthlyProfit:-406196.03,roas:-0.98},
+  {category:'Pool Services',keyword:'pool remodeling services',searchVol:500,cpc:1.6,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:4307.69,monthlyProfit:-3411.91,roas:-0.79},
+  {category:'Pool Services',keyword:'hot tub platform',searchVol:500,cpc:1.66,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:4469.23,monthlyProfit:-3573.45,roas:-0.8},
+  {category:'Pool Services',keyword:'swimming pool renovation service',searchVol:500,cpc:2.56,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:6892.31,monthlyProfit:-5996.53,roas:-0.87},
+  {category:'Pool Services',keyword:'simiron polyaspartic',searchVol:500,cpc:2.59,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:6973.08,monthlyProfit:-6077.3,roas:-0.87},
+  {category:'Pool Services',keyword:'inground pool renovation cost',searchVol:500,cpc:2.74,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:7376.92,monthlyProfit:-6481.14,roas:-0.88},
+  {category:'Pool Services',keyword:'pool crack filler',searchVol:500,cpc:3.01,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:8103.85,monthlyProfit:-7208.06,roas:-0.89},
+  {category:'Pool Services',keyword:'cost to resurface pool with pebble tec',searchVol:500,cpc:3.6,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:9692.31,monthlyProfit:-8796.53,roas:-0.91},
+  {category:'Pool Services',keyword:'cost to resurface pebble tec pool',searchVol:500,cpc:3.6,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:9692.31,monthlyProfit:-8796.53,roas:-0.91},
+  {category:'Pool Services',keyword:'repainting a fiberglass pool',searchVol:500,cpc:3.84,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:10338.46,monthlyProfit:-9442.68,roas:-0.91},
+  {category:'Pool Services',keyword:'repair fibreglass pool crack',searchVol:500,cpc:3.87,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:10419.23,monthlyProfit:-9523.45,roas:-0.91},
+  {category:'Pool Services',keyword:'price to replaster pool',searchVol:500,cpc:4.34,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:11684.62,monthlyProfit:-10788.83,roas:-0.92},
+  {category:'Pool Services',keyword:'fiberglass pool resurfacing cost',searchVol:500,cpc:4.36,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:11738.46,monthlyProfit:-10842.68,roas:-0.92},
+  {category:'Pool Services',keyword:'fibreglass pool resurfacing cost',searchVol:500,cpc:4.36,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:11738.46,monthlyProfit:-10842.68,roas:-0.92},
+  {category:'Pool Services',keyword:'gunite pool resurfacing cost',searchVol:500,cpc:4.37,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:11765.38,monthlyProfit:-10869.6,roas:-0.92},
+  {category:'Pool Services',keyword:'pool crack sealant',searchVol:500,cpc:4.46,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:12007.69,monthlyProfit:-11111.91,roas:-0.93},
+  {category:'Pool Services',keyword:'fiberglass pool refinishing',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pool Services',keyword:'recoat fiberglass pool',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pool Services',keyword:'fiberglass swimming pool resurfacing',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pool Services',keyword:'pool resurfacing fibreglass',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pool Services',keyword:'fibreglass swimming pool resurfacing',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pool Services',keyword:'resurface pool with fiberglass',searchVol:500,cpc:4.94,avgJobValue:10500.0,monthlyClicks:25.0,monthlyLeads:1.63,monthlyJobs:0.57,commission:1575.0,monthlyRevenue:895.78,monthlyAdSpend:13300.0,monthlyProfit:-12404.22,roas:-0.93},
+  {category:'Pressure Washing',keyword:'pressure washing',searchVol:500000,cpc:0.79,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:2126923.08,monthlyProfit:-2084266.83,roas:-0.98},
+  {category:'Pressure Washing',keyword:'pressure washer pressure',searchVol:500000,cpc:0.79,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:2126923.08,monthlyProfit:-2084266.83,roas:-0.98},
+  {category:'Pressure Washing',keyword:'power washer',searchVol:500000,cpc:0.88,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:2369230.77,monthlyProfit:-2326574.52,roas:-0.98},
+  {category:'Pressure Washing',keyword:'power pressure washer',searchVol:500000,cpc:0.88,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:2369230.77,monthlyProfit:-2326574.52,roas:-0.98},
+  {category:'Pressure Washing',keyword:'power washing near me',searchVol:500000,cpc:5.1,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:13730769.23,monthlyProfit:-13688112.98,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure washing near me',searchVol:500000,cpc:5.1,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:13730769.23,monthlyProfit:-13688112.98,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure washing services near me',searchVol:500000,cpc:5.1,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:13730769.23,monthlyProfit:-13688112.98,roas:-1.0},
+  {category:'Pressure Washing',keyword:'power washing companies near me',searchVol:500000,cpc:5.1,avgJobValue:500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:75.0,monthlyRevenue:42656.25,monthlyAdSpend:13730769.23,monthlyProfit:-13688112.98,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure washer ryobi',searchVol:50000,cpc:0.42,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:113076.92,monthlyProfit:-108811.3,roas:-0.96},
+  {category:'Pressure Washing',keyword:'home depot pressure washer',searchVol:50000,cpc:0.42,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:113076.92,monthlyProfit:-108811.3,roas:-0.96},
+  {category:'Pressure Washing',keyword:'greenwork pressure washer',searchVol:50000,cpc:0.47,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:126538.46,monthlyProfit:-122272.84,roas:-0.97},
+  {category:'Pressure Washing',keyword:'ryobi power washer',searchVol:50000,cpc:0.5,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:134615.38,monthlyProfit:-130349.76,roas:-0.97},
+  {category:'Pressure Washing',keyword:'milwaukee pressure washer',searchVol:50000,cpc:0.5,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:134615.38,monthlyProfit:-130349.76,roas:-0.97},
+  {category:'Pressure Washing',keyword:'ryobi electric power washer',searchVol:50000,cpc:0.53,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:142692.31,monthlyProfit:-138426.68,roas:-0.97},
+  {category:'Pressure Washing',keyword:'ryobi pressure washer electric',searchVol:50000,cpc:0.53,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:142692.31,monthlyProfit:-138426.68,roas:-0.97},
+  {category:'Pressure Washing',keyword:'karcher pressure washer',searchVol:50000,cpc:0.57,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:153461.54,monthlyProfit:-149195.91,roas:-0.97},
+  {category:'Pressure Washing',keyword:'electric power washer',searchVol:50000,cpc:0.58,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:156153.85,monthlyProfit:-151888.22,roas:-0.97},
+  {category:'Pressure Washing',keyword:'electric pressure washer',searchVol:50000,cpc:0.6,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:161538.46,monthlyProfit:-157272.84,roas:-0.97},
+  {category:'Pressure Washing',keyword:'honda power washer',searchVol:50000,cpc:0.6,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:161538.46,monthlyProfit:-157272.84,roas:-0.97},
+  {category:'Pressure Washing',keyword:'honda powered pressure washer',searchVol:50000,cpc:0.6,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:161538.46,monthlyProfit:-157272.84,roas:-0.97},
+  {category:'Pressure Washing',keyword:'honda water pressure washer',searchVol:50000,cpc:0.6,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:161538.46,monthlyProfit:-157272.84,roas:-0.97},
+  {category:'Pressure Washing',keyword:'power washer for sale',searchVol:50000,cpc:0.63,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:169615.38,monthlyProfit:-165349.76,roas:-0.97},
+  {category:'Pressure Washing',keyword:'honda pressure washer',searchVol:50000,cpc:0.66,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:177692.31,monthlyProfit:-173426.68,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best pressure washer',searchVol:50000,cpc:0.68,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:183076.92,monthlyProfit:-178811.3,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best power washer',searchVol:50000,cpc:0.68,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:183076.92,monthlyProfit:-178811.3,roas:-0.98},
+  {category:'Pressure Washing',keyword:'good pressure washer',searchVol:50000,cpc:0.68,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:183076.92,monthlyProfit:-178811.3,roas:-0.98},
+  {category:'Pressure Washing',keyword:'good power washer',searchVol:50000,cpc:0.68,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:183076.92,monthlyProfit:-178811.3,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best water pressure washer',searchVol:50000,cpc:0.68,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:183076.92,monthlyProfit:-178811.3,roas:-0.98},
+  {category:'Pressure Washing',keyword:'surface cleaners for pressure washers',searchVol:50000,cpc:0.7,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:188461.54,monthlyProfit:-184195.91,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best electric pressure washer',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'top electric pressure washers',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best rated electric pressure washer',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'top rated electric power washers',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'best rated electric power washer',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'good electric pressure washer',searchVol:50000,cpc:0.71,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:191153.85,monthlyProfit:-186888.22,roas:-0.98},
+  {category:'Pressure Washing',keyword:'simpson pressure washer',searchVol:50000,cpc:0.76,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:204615.38,monthlyProfit:-200349.76,roas:-0.98},
+  {category:'Pressure Washing',keyword:'simpson power washer',searchVol:50000,cpc:0.76,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:204615.38,monthlyProfit:-200349.76,roas:-0.98},
+  {category:'Pressure Washing',keyword:'portable pressure washer',searchVol:50000,cpc:0.82,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:220769.23,monthlyProfit:-216503.61,roas:-0.98},
+  {category:'Pressure Washing',keyword:'portable power washer',searchVol:50000,cpc:0.82,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:220769.23,monthlyProfit:-216503.61,roas:-0.98},
+  {category:'Pressure Washing',keyword:'hot water pressure washer',searchVol:50000,cpc:2.08,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:560000.0,monthlyProfit:-555734.38,roas:-0.99},
+  {category:'Pressure Washing',keyword:'hot pressure washer',searchVol:50000,cpc:2.08,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:560000.0,monthlyProfit:-555734.38,roas:-0.99},
+  {category:'Pressure Washing',keyword:'hot water power washer',searchVol:50000,cpc:2.08,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:560000.0,monthlyProfit:-555734.38,roas:-0.99},
+  {category:'Pressure Washing',keyword:'commercial pressure washer',searchVol:50000,cpc:2.44,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:656923.08,monthlyProfit:-652657.45,roas:-0.99},
+  {category:'Pressure Washing',keyword:'pressure washing companies near me',searchVol:50000,cpc:3.92,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:1055384.62,monthlyProfit:-1051118.99,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure washing business',searchVol:50000,cpc:4.43,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:1192692.31,monthlyProfit:-1188426.68,roas:-1.0},
+  {category:'Pressure Washing',keyword:'power washing business',searchVol:50000,cpc:4.43,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:1192692.31,monthlyProfit:-1188426.68,roas:-1.0},
+  {category:'Pressure Washing',keyword:'power wash house',searchVol:50000,cpc:7.7,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:2073076.92,monthlyProfit:-2068811.3,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure wash house',searchVol:50000,cpc:7.7,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:2073076.92,monthlyProfit:-2068811.3,roas:-1.0},
+  {category:'Pressure Washing',keyword:'power wash home',searchVol:50000,cpc:7.7,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:2073076.92,monthlyProfit:-2068811.3,roas:-1.0},
+  {category:'Pressure Washing',keyword:'pressure washing your house',searchVol:50000,cpc:7.7,avgJobValue:500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:75.0,monthlyRevenue:4265.63,monthlyAdSpend:2073076.92,monthlyProfit:-2068811.3,roas:-1.0},
+  {category:'Roofing',keyword:'roofing contractors',searchVol:500000,cpc:0.62,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:1669230.77,monthlyProfit:-176262.02,roas:-0.11},
+  {category:'Roofing',keyword:'roof repair',searchVol:500000,cpc:0.9,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:2423076.92,monthlyProfit:-930108.17,roas:-0.38},
+  {category:'Roofing',keyword:'roof replacement',searchVol:500000,cpc:3.16,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:8507692.31,monthlyProfit:-7014723.56,roas:-0.82},
+  {category:'Roofing',keyword:'metal roofing',searchVol:500000,cpc:7.92,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:21323076.92,monthlyProfit:-19830108.17,roas:-0.93},
+  {category:'Roofing',keyword:'roofing companies',searchVol:500000,cpc:12.56,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:33815384.62,monthlyProfit:-32322415.87,roas:-0.96},
+  {category:'Roofing',keyword:'roofing',searchVol:500000,cpc:15.72,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:42323076.92,monthlyProfit:-40830108.17,roas:-0.96},
+  {category:'Roofing',keyword:'roofing companies near me',searchVol:500000,cpc:27.58,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:74253846.15,monthlyProfit:-72760877.4,roas:-0.98},
+  {category:'Roofing',keyword:'roofing contractors near me',searchVol:500000,cpc:27.58,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:74253846.15,monthlyProfit:-72760877.4,roas:-0.98},
+  {category:'Roofing',keyword:'roofers near me',searchVol:500000,cpc:27.69,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:74550000.0,monthlyProfit:-73057031.25,roas:-0.98},
+  {category:'Roofing',keyword:'roof repair near me',searchVol:500000,cpc:30.66,avgJobValue:17500.0,monthlyClicks:25000.0,monthlyLeads:1625.0,monthlyJobs:568.75,commission:2625.0,monthlyRevenue:1492968.75,monthlyAdSpend:82546153.85,monthlyProfit:-81053185.1,roas:-0.98},
+  {category:'Roofing',keyword:'roofing services',searchVol:50000,cpc:0.28,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:75384.62,monthlyProfit:73912.26,roas:0.98},
+  {category:'Roofing',keyword:'roofing construction',searchVol:50000,cpc:0.37,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:99615.38,monthlyProfit:49681.49,roas:0.5},
+  {category:'Roofing',keyword:'emergency roof repair near me',searchVol:50000,cpc:0.41,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:110384.62,monthlyProfit:38912.26,roas:0.35},
+  {category:'Roofing',keyword:'commercial roofers near me',searchVol:50000,cpc:0.44,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:118461.54,monthlyProfit:30835.34,roas:0.26},
+  {category:'Roofing',keyword:'best roofers near me',searchVol:50000,cpc:0.57,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:153461.54,monthlyProfit:-4164.66,roas:-0.03},
+  {category:'Roofing',keyword:'metal roofing contractors',searchVol:50000,cpc:0.64,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:172307.69,monthlyProfit:-23010.82,roas:-0.13},
+  {category:'Roofing',keyword:'roof repair services',searchVol:50000,cpc:0.91,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:245000.0,monthlyProfit:-95703.12,roas:-0.39},
+  {category:'Roofing',keyword:'steel roofing',searchVol:50000,cpc:1.21,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:325769.23,monthlyProfit:-176472.36,roas:-0.54},
+  {category:'Roofing',keyword:'roof leak repair near me',searchVol:50000,cpc:1.54,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:414615.38,monthlyProfit:-265318.51,roas:-0.64},
+  {category:'Roofing',keyword:'local roofers near me',searchVol:50000,cpc:1.56,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:420000.0,monthlyProfit:-270703.13,roas:-0.64},
+  {category:'Roofing',keyword:'pitched roof',searchVol:50000,cpc:1.62,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:436153.85,monthlyProfit:-286856.97,roas:-0.66},
+  {category:'Roofing',keyword:'roof inspection',searchVol:50000,cpc:2.07,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:557307.69,monthlyProfit:-408010.82,roas:-0.73},
+  {category:'Roofing',keyword:'roofing services near me',searchVol:50000,cpc:2.26,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:608461.54,monthlyProfit:-459164.66,roas:-0.75},
+  {category:'Roofing',keyword:'patio roofing',searchVol:50000,cpc:2.3,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:619230.77,monthlyProfit:-469933.89,roas:-0.76},
+  {category:'Roofing',keyword:'local roofers',searchVol:50000,cpc:2.31,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:621923.08,monthlyProfit:-472626.2,roas:-0.76},
+  {category:'Roofing',keyword:'home depot shingles',searchVol:50000,cpc:2.51,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:675769.23,monthlyProfit:-526472.36,roas:-0.78},
+  {category:'Roofing',keyword:'handyman roofers near me',searchVol:50000,cpc:2.63,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:708076.92,monthlyProfit:-558780.05,roas:-0.79},
+  {category:'Roofing',keyword:'roofing handyman near me',searchVol:50000,cpc:2.63,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:708076.92,monthlyProfit:-558780.05,roas:-0.79},
+  {category:'Roofing',keyword:'roof handyman near me',searchVol:50000,cpc:2.63,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:708076.92,monthlyProfit:-558780.05,roas:-0.79},
+  {category:'Roofing',keyword:'roof underlayment',searchVol:50000,cpc:2.68,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:721538.46,monthlyProfit:-572241.59,roas:-0.79},
+  {category:'Roofing',keyword:'metal roof sheeting',searchVol:50000,cpc:3.15,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:848076.92,monthlyProfit:-698780.05,roas:-0.82},
+  {category:'Roofing',keyword:'thatched roof',searchVol:50000,cpc:3.24,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:872307.69,monthlyProfit:-723010.82,roas:-0.83},
+  {category:'Roofing',keyword:'roof seal',searchVol:50000,cpc:3.39,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:912692.31,monthlyProfit:-763395.43,roas:-0.84},
+  {category:'Roofing',keyword:'owens corning shingles',searchVol:50000,cpc:3.64,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:980000.0,monthlyProfit:-830703.13,roas:-0.85},
+  {category:'Roofing',keyword:'owens corning roofing',searchVol:50000,cpc:3.64,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:980000.0,monthlyProfit:-830703.13,roas:-0.85},
+  {category:'Roofing',keyword:'owens corning roof shingles',searchVol:50000,cpc:3.64,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:980000.0,monthlyProfit:-830703.13,roas:-0.85},
+  {category:'Roofing',keyword:'roof decking',searchVol:50000,cpc:3.65,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:982692.31,monthlyProfit:-833395.43,roas:-0.85},
+  {category:'Roofing',keyword:'roof deck',searchVol:50000,cpc:3.65,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:982692.31,monthlyProfit:-833395.43,roas:-0.85},
+  {category:'Roofing',keyword:'corrugated metal roofing',searchVol:50000,cpc:3.66,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:985384.62,monthlyProfit:-836087.74,roas:-0.85},
+  {category:'Roofing',keyword:'iko shingles',searchVol:50000,cpc:3.73,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1004230.77,monthlyProfit:-854933.89,roas:-0.85},
+  {category:'Roofing',keyword:'iko roof shingles',searchVol:50000,cpc:3.73,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1004230.77,monthlyProfit:-854933.89,roas:-0.85},
+  {category:'Roofing',keyword:'gaf shingles',searchVol:50000,cpc:3.82,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1028461.54,monthlyProfit:-879164.66,roas:-0.85},
+  {category:'Roofing',keyword:'gaf roofing shingles',searchVol:50000,cpc:3.82,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1028461.54,monthlyProfit:-879164.66,roas:-0.85},
+  {category:'Roofing',keyword:'3 tab shingles',searchVol:50000,cpc:4.1,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1103846.15,monthlyProfit:-954549.28,roas:-0.86},
+  {category:'Roofing',keyword:'three tab shingles',searchVol:50000,cpc:4.1,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1103846.15,monthlyProfit:-954549.28,roas:-0.86},
+  {category:'Roofing',keyword:'3 tab roof shingles',searchVol:50000,cpc:4.1,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1103846.15,monthlyProfit:-954549.28,roas:-0.86},
+  {category:'Roofing',keyword:'roof ventilation',searchVol:50000,cpc:4.67,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1257307.69,monthlyProfit:-1108010.82,roas:-0.88},
+  {category:'Roofing',keyword:'metal shingles',searchVol:50000,cpc:4.78,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1286923.08,monthlyProfit:-1137626.2,roas:-0.88},
+  {category:'Roofing',keyword:'metal roof shingles',searchVol:50000,cpc:4.78,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1286923.08,monthlyProfit:-1137626.2,roas:-0.88},
+  {category:'Roofing',keyword:'steel shingles',searchVol:50000,cpc:4.78,avgJobValue:17500.0,monthlyClicks:2500.0,monthlyLeads:162.5,monthlyJobs:56.88,commission:2625.0,monthlyRevenue:149296.88,monthlyAdSpend:1286923.08,monthlyProfit:-1137626.2,roas:-0.88},
+];
+
+const contractorCapacity = {
+  'Roofing': 25,
+  'Kitchen & Bathroom Remodeling': 2,
+  'HVAC': 30,
+  'Concrete': 10,
+  'Handyman Services': 100,
+  'Pool Services': 15,
+  'Deck & Outdoor': 12,
+  'Flooring': 20,
+  'Pressure Washing': 40,
+  'General Contracting': 8,
+};
+
+
+    <script>
+// Contractor capacities (jobs per month)
+        const contractorCapacity = {
+            'Roofing': 25,
+            'Kitchen & Bathroom Remodeling': 4,  // 2 kitchens + 2 bathrooms
+            'HVAC': 30,
+            'Concrete': 10,
+            'Handyman Services': 100,
+            'Pool Services': 15,
+            'Deck & Outdoor': 12,
+            'Flooring': 20,
+            'Pressure Washing': 40,
+            'General Contracting': 8
+        };
+
+        // Average job values
+        const avgJobValues = {
+            'Kitchen & Bathroom Remodeling': 28500,
+            'Roofing': 17500,
+            'HVAC': 7250,
+            'Flooring': 9000,
+            'Concrete': 5500,
+            'Deck & Outdoor': 7000,
+            'Pool Services': 10500,
+            'Pressure Washing': 500,
+            'Handyman Services': 400,
+            'General Contracting': 15000
+        };
+
+        function getParams() {
+            return {
+                ctr: parseFloat(document.getElementById('ctr').value) / 100 || 0.05,
+                cvr: parseFloat(document.getElementById('cvr').value) / 100 || 0.065,
+                closeRate: parseFloat(document.getElementById('close-rate').value) / 100 || 0.35,
+                commissionRate: parseFloat(document.getElementById('commission-rate').value) / 100 || 0.15
+            };
+        }
+
+        function calculateCostPerJob(cpc, params) {
+            const clicksPerLead = 1 / params.cvr;
+            const leadsPerJob = 1 / params.closeRate;
+            const totalClicksPerJob = clicksPerLead * leadsPerJob;
+            return totalClicksPerJob * cpc;
+        }
+
+        function init() {
+            console.log('Initializing calculator...');
+            console.log('Keywords loaded:', keywordData ? keywordData.length : 0);
+            
+            if (!keywordData || keywordData.length === 0) {
+                alert('No keyword data found! Please ensure keyword_data_generated.js is loaded.');
+                return;
+            }
+            
+            populateCategoryFilter();
+            
+            // Add event listeners to parameters
+            ['ctr', 'cvr', 'close-rate', 'commission-rate'].forEach(id => {
+                document.getElementById(id).addEventListener('input', () => {
+                    generateCapacityCards();
+                    renderTable();
+                });
+            });
+            
+            // Add event listeners to filters
+            document.getElementById('category-filter').addEventListener('change', renderTable);
+            document.getElementById('profit-filter').addEventListener('change', renderTable);
+            document.getElementById('sort-by').addEventListener('change', renderTable);
+            
+            console.log('Generating capacity cards...');
+            generateCapacityCards();
+            console.log('Rendering table...');
+            renderTable();
+            console.log('Initialization complete!');
+        }
+
+        function populateCategoryFilter() {
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            const select = document.getElementById('category-filter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function generateCapacityCards() {
+            const params = getParams();
+            const container = document.getElementById('capacity-cards');
+            container.innerHTML = '';
+            
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            
+            categories.forEach(category => {
+                const categoryKeywords = keywordData.filter(k => k.category === category);
+                const capacity = contractorCapacity[category] || 10;
+                const jobValue = avgJobValues[category] || 10000;
+                
+                // Find the BEST (lowest cost) keyword for this category
+                let bestKeyword = null;
+                let lowestCost = Infinity;
+                
+                categoryKeywords.forEach(kw => {
+                    const costPerJob = calculateCostPerJob(kw.cpc, params);
+                    if (costPerJob < lowestCost) {
+                        lowestCost = costPerJob;
+                        bestKeyword = kw;
+                    }
+                });
+                
+                if (!bestKeyword) return;
+                
+                const costPerJob = calculateCostPerJob(bestKeyword.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                // Calculate for full capacity
+                const totalInvestment = costPerJob * capacity;
+                const totalRevenue = commission * capacity;
+                const totalProfit = profitPerJob * capacity;
+                
+                const card = document.createElement('div');
+                card.className = 'capacity-card';
+                card.innerHTML = `
+                    <h3>${category}</h3>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Contractor Capacity:</span>
+                        <span class="metric-value">${capacity} jobs/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Best Keyword:</span>
+                        <span class="metric-value" style="font-size: 0.85em;">${bestKeyword.keyword}</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Cost Per Job:</span>
+                        <span class="metric-value">$${costPerJob.toFixed(0)}</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Profit Per Job:</span>
+                        <span class="metric-value ${profitPerJob > 0 ? 'positive' : 'negative'}">
+                            $${profitPerJob.toFixed(0)}
+                        </span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Investment:</span>
+                        <span class="metric-value">$${totalInvestment.toFixed(0)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Revenue:</span>
+                        <span class="metric-value">$${totalRevenue.toFixed(0)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Profit:</span>
+                        <span class="metric-value ${totalProfit > 0 ? 'positive' : 'negative'}">
+                            $${totalProfit.toFixed(0)}/month
+                        </span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterAndSortData() {
+            const params = getParams();
+            const category = document.getElementById('category-filter').value;
+            const profitFilter = document.getElementById('profit-filter').value;
+            const sortBy = document.getElementById('sort-by').value;
+            
+            // Filter
+            let filtered = keywordData.filter(k => {
+                if (category !== 'all' && k.category !== category) return false;
+                
+                const jobValue = avgJobValues[k.category] || 10000;
+                const costPerJob = calculateCostPerJob(k.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                if (profitFilter === 'profitable' && profitPerJob <= 0) return false;
+                if (profitFilter === 'unprofitable' && profitPerJob > 0) return false;
+                
+                return true;
+            });
+            
+            // Add calculated fields
+            filtered = filtered.map(k => {
+                const jobValue = avgJobValues[k.category] || 10000;
+                const costPerJob = calculateCostPerJob(k.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                return {
+                    ...k,
+                    jobValue,
+                    costPerJob,
+                    commission,
+                    profitPerJob
+                };
+            });
+            
+            // Sort
+            filtered.sort((a, b) => {
+                switch(sortBy) {
+                    case 'cost-asc': return a.costPerJob - b.costPerJob;
+                    case 'cost-desc': return b.costPerJob - a.costPerJob;
+                    case 'profit-desc': return b.profitPerJob - a.profitPerJob;
+                    case 'volume-desc': return b.searchVol - a.searchVol;
+                    case 'cpc-asc': return a.cpc - b.cpc;
+                    default: return 0;
+                }
+            });
+            
+            return filtered;
+        }
+
+        function renderTable() {
+            const data = filterAndSortData();
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.category}</td>
+                    <td><strong>${row.keyword}</strong></td>
+                    <td>${row.searchVol.toLocaleString()}</td>
+                    <td>$${row.cpc.toFixed(2)}</td>
+                    <td><strong>$${row.costPerJob.toFixed(0)}</strong></td>
+                    <td>$${row.jobValue.toLocaleString()}</td>
+                    <td>$${row.commission.toFixed(0)}</td>
+                    <td><span class="${row.profitPerJob > 0 ? 'profitable' : 'unprofitable'}">
+                        $${row.profitPerJob.toFixed(0)}
+                    </span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>

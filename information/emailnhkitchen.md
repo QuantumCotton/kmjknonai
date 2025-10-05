@@ -28,7 +28,7 @@ Your kitchen work is outstanding—that black and white kitchen with epoxy floor
 
 We're doing this with our Florida contractor right now (2-4 jobs/month, $50K-$60K average). LA/OC is next. One contractor per Metropolitan Area only.
 
-**Quick question:** Do you also do epoxy countertops/backsplash? That would be a major differentiator for the premium market we target. I noticed the floor and kitchen counter that was black may have been epoxy.
+**Quick question:** Do you also do epoxy countertops/backsplash? T.
 
 
 **Full details here:** [kmjk.pro/nh-kitchen-partnership](http://kmjk.pro/nh-kitchen-partnership)

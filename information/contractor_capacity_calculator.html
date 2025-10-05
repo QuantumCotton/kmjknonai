@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Capacity Investment Calculator | KMJK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            color: #666;
+        }
+
+        .controls {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #667eea;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        .control-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+
+        .control-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .capacity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .capacity-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-left: 6px solid #667eea;
+        }
+
+        .capacity-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .capacity-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .capacity-metric:last-child {
+            border-bottom: none;
+            padding-top: 15px;
+            margin-top: 10px;
+            border-top: 3px solid #eee;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .metric-value.positive {
+            color: #27ae60;
+        }
+
+        .metric-value.negative {
+            color: #e74c3c;
+        }
+
+        .filters {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .table-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .profitable {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .unprofitable {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Contractor Capacity Investment Calculator</h1>
+            <p class="subtitle">Calculate ad investment needed to keep each contractor type fully busy</p>
+        </div>
+
+        <div class="controls">
+            <h2 style="margin-bottom: 20px; color: #667eea;">⚙️ Conversion Parameters</h2>
+            <div class="control-grid">
+                <div class="control-group">
+                    <label>CTR (Click-Through Rate %)</label>
+                    <input type="number" id="ctr" value="5.0" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>CVR (Click to Lead %)</label>
+                    <input type="number" id="cvr" value="6.5" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>Close Rate (%)</label>
+                    <input type="number" id="close-rate" value="35.0" step="0.1" min="0">
+                </div>
+                <div class="control-group">
+                    <label>Your Commission Rate (%)</label>
+                    <input type="number" id="commission-rate" value="15.0" step="0.1" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="capacity-cards" id="capacity-cards">
+            <!-- Capacity cards will be generated here -->
+        </div>
+
+        <div class="filters">
+            <h2 style="margin-bottom: 15px; color: #667eea;">🔍 Keyword Filters</h2>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Profitability</label>
+                    <select id="profit-filter">
+                        <option value="all">All Keywords</option>
+                        <option value="profitable">Profitable Only</option>
+                        <option value="unprofitable">Unprofitable Only</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-by">
+                        <option value="cost-asc">Cost Per Job (Low to High)</option>
+                        <option value="cost-desc">Cost Per Job (High to Low)</option>
+                        <option value="profit-desc">Profit Per Job (High to Low)</option>
+                        <option value="volume-desc">Search Volume (High to Low)</option>
+                        <option value="cpc-asc">CPC (Low to High)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #667eea;">📋 Keyword Investment Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Keyword</th>
+                        <th>Search Vol</th>
+                        <th>CPC</th>
+                        <th>Cost Per Job</th>
+                        <th>Job Value</th>
+                        <th>Your Commission</th>
+                        <th>Profit Per Job</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="keyword_data_generated.js" onerror="alert('Failed to load keyword data!')"></script>
+    <script>
+        // Check if data loaded
+        if (typeof keywordData === 'undefined') {
+            console.error('keywordData not loaded!');
+            alert('ERROR: Keyword data file not found. Make sure keyword_data_generated.js is in the same folder.');
+        }
+        
+        // Contractor capacities (jobs per month)
+        const contractorCapacity = {
+            'Roofing': 25,
+            'Kitchen & Bathroom Remodeling': 4,  // 2 kitchens + 2 bathrooms
+            'HVAC': 30,
+            'Concrete': 10,
+            'Handyman Services': 100,
+            'Pool Services': 15,
+            'Deck & Outdoor': 12,
+            'Flooring': 20,
+            'Pressure Washing': 40,
+            'General Contracting': 8
+        };
+
+        // Average job values
+        const avgJobValues = {
+            'Kitchen & Bathroom Remodeling': 28500,
+            'Roofing': 17500,
+            'HVAC': 7250,
+            'Flooring': 9000,
+            'Concrete': 5500,
+            'Deck & Outdoor': 7000,
+            'Pool Services': 10500,
+            'Pressure Washing': 500,
+            'Handyman Services': 400,
+            'General Contracting': 15000
+        };
+
+        function getParams() {
+            return {
+                ctr: parseFloat(document.getElementById('ctr').value) / 100 || 0.05,
+                cvr: parseFloat(document.getElementById('cvr').value) / 100 || 0.065,
+                closeRate: parseFloat(document.getElementById('close-rate').value) / 100 || 0.35,
+                commissionRate: parseFloat(document.getElementById('commission-rate').value) / 100 || 0.15
+            };
+        }
+
+        function calculateCostPerJob(cpc, params) {
+            const clicksPerLead = 1 / params.cvr;
+            const leadsPerJob = 1 / params.closeRate;
+            const totalClicksPerJob = clicksPerLead * leadsPerJob;
+            return totalClicksPerJob * cpc;
+        }
+
+        function init() {
+            console.log('Initializing calculator...');
+            console.log('Keywords loaded:', keywordData ? keywordData.length : 0);
+            
+            if (!keywordData || keywordData.length === 0) {
+                alert('No keyword data found! Please ensure keyword_data_generated.js is loaded.');
+                return;
+            }
+            
+            populateCategoryFilter();
+            
+            // Add event listeners to parameters
+            ['ctr', 'cvr', 'close-rate', 'commission-rate'].forEach(id => {
+                document.getElementById(id).addEventListener('input', () => {
+                    generateCapacityCards();
+                    renderTable();
+                });
+            });
+            
+            // Add event listeners to filters
+            document.getElementById('category-filter').addEventListener('change', renderTable);
+            document.getElementById('profit-filter').addEventListener('change', renderTable);
+            document.getElementById('sort-by').addEventListener('change', renderTable);
+            
+            console.log('Generating capacity cards...');
+            generateCapacityCards();
+            console.log('Rendering table...');
+            renderTable();
+            console.log('Initialization complete!');
+        }
+
+        function populateCategoryFilter() {
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            const select = document.getElementById('category-filter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function generateCapacityCards() {
+            const params = getParams();
+            const container = document.getElementById('capacity-cards');
+            container.innerHTML = '';
+            
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            
+            categories.forEach(category => {
+                const categoryKeywords = keywordData.filter(k => k.category === category);
+                const capacity = contractorCapacity[category] || 10;
+                const jobValue = avgJobValues[category] || 10000;
+                
+                // Find the BEST (lowest cost) keyword for this category
+                let bestKeyword = null;
+                let lowestCost = Infinity;
+                
+                categoryKeywords.forEach(kw => {
+                    const costPerJob = calculateCostPerJob(kw.cpc, params);
+                    if (costPerJob < lowestCost) {
+                        lowestCost = costPerJob;
+                        bestKeyword = kw;
+                    }
+                });
+                
+                if (!bestKeyword) return;
+                
+                const costPerJob = calculateCostPerJob(bestKeyword.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                // Calculate for full capacity
+                const totalInvestment = costPerJob * capacity;
+                const totalRevenue = commission * capacity;
+                const totalProfit = profitPerJob * capacity;
+                
+                const card = document.createElement('div');
+                card.className = 'capacity-card';
+                card.innerHTML = `
+                    <h3>${category}</h3>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Contractor Capacity:</span>
+                        <span class="metric-value">${capacity} jobs/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Best Keyword:</span>
+                        <span class="metric-value" style="font-size: 0.85em;">${bestKeyword.keyword}</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Cost Per Job:</span>
+                        <span class="metric-value">$${costPerJob.toFixed(0)}</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Profit Per Job:</span>
+                        <span class="metric-value ${profitPerJob > 0 ? 'positive' : 'negative'}">
+                            $${profitPerJob.toFixed(0)}
+                        </span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Investment:</span>
+                        <span class="metric-value">$${totalInvestment.toFixed(0)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Revenue:</span>
+                        <span class="metric-value">$${totalRevenue.toFixed(0)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Monthly Profit:</span>
+                        <span class="metric-value ${totalProfit > 0 ? 'positive' : 'negative'}">
+                            $${totalProfit.toFixed(0)}/month
+                        </span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterAndSortData() {
+            const params = getParams();
+            const category = document.getElementById('category-filter').value;
+            const profitFilter = document.getElementById('profit-filter').value;
+            const sortBy = document.getElementById('sort-by').value;
+            
+            // Filter
+            let filtered = keywordData.filter(k => {
+                if (category !== 'all' && k.category !== category) return false;
+                
+                const jobValue = avgJobValues[k.category] || 10000;
+                const costPerJob = calculateCostPerJob(k.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                if (profitFilter === 'profitable' && profitPerJob <= 0) return false;
+                if (profitFilter === 'unprofitable' && profitPerJob > 0) return false;
+                
+                return true;
+            });
+            
+            // Add calculated fields
+            filtered = filtered.map(k => {
+                const jobValue = avgJobValues[k.category] || 10000;
+                const costPerJob = calculateCostPerJob(k.cpc, params);
+                const commission = jobValue * params.commissionRate;
+                const profitPerJob = commission - costPerJob;
+                
+                return {
+                    ...k,
+                    jobValue,
+                    costPerJob,
+                    commission,
+                    profitPerJob
+                };
+            });
+            
+            // Sort
+            filtered.sort((a, b) => {
+                switch(sortBy) {
+                    case 'cost-asc': return a.costPerJob - b.costPerJob;
+                    case 'cost-desc': return b.costPerJob - a.costPerJob;
+                    case 'profit-desc': return b.profitPerJob - a.profitPerJob;
+                    case 'volume-desc': return b.searchVol - a.searchVol;
+                    case 'cpc-asc': return a.cpc - b.cpc;
+                    default: return 0;
+                }
+            });
+            
+            return filtered;
+        }
+
+        function renderTable() {
+            const data = filterAndSortData();
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.category}</td>
+                    <td><strong>${row.keyword}</strong></td>
+                    <td>${row.searchVol.toLocaleString()}</td>
+                    <td>$${row.cpc.toFixed(2)}</td>
+                    <td><strong>$${row.costPerJob.toFixed(0)}</strong></td>
+                    <td>$${row.jobValue.toLocaleString()}</td>
+                    <td>$${row.commission.toFixed(0)}</td>
+                    <td><span class="${row.profitPerJob > 0 ? 'profitable' : 'unprofitable'}">
+                        $${row.profitPerJob.toFixed(0)}
+                    </span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        init();
+    </script>
+</body>
+</html>

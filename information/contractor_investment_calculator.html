@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Investment & Capacity Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .capacity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .capacity-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .capacity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .capacity-card h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .capacity-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .capacity-metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .metric-value.positive {
+            color: #28a745;
+        }
+
+        .metric-value.negative {
+            color: #dc3545;
+        }
+
+        .filters {
+            background: white;
+            padding: 25px 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9ff;
+        }
+
+        .roas-good {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .roas-neutral {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .roas-bad {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .stats-summary {
+            background: #f8f9fa;
+            padding: 20px 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-box h4 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-box .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💼 Contractor Investment & Capacity Calculator</h1>
+            <p>Analyze keyword profitability and contractor capacity requirements</p>
+        </div>
+
+        <div class="capacity-cards" id="capacity-cards">
+            <!-- Capacity cards will be dynamically generated -->
+        </div>
+
+        <div class="stats-summary">
+            <h2 style="margin-bottom: 20px; color: #1e3c72;">📊 Current Filter Summary</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h4>Total Keywords</h4>
+                    <div class="value" id="total-keywords">0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Avg ROAS</h4>
+                    <div class="value" id="avg-roas">0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Profitable Keywords</h4>
+                    <div class="value" id="profitable-count">0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Total Monthly Spend</h4>
+                    <div class="value" id="total-spend">$0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Total Monthly Revenue</h4>
+                    <div class="value" id="total-revenue">$0</div>
+                </div>
+                <div class="stat-box">
+                    <h4>Total Monthly Profit</h4>
+                    <div class="value" id="total-profit">$0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters">
+            <h2 style="margin-bottom: 15px; color: #1e3c72;">🔍 Filters</h2>
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Category</label>
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Min Search Volume</label>
+                    <input type="number" id="volume-filter" value="0" min="0">
+                </div>
+                <div class="filter-group">
+                    <label>Profitability</label>
+                    <select id="profit-filter">
+                        <option value="all">All</option>
+                        <option value="profitable">Profitable Only (ROAS > 0)</option>
+                        <option value="unprofitable">Unprofitable Only (ROAS < 0)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-by">
+                        <option value="profit">Monthly Profit (High to Low)</option>
+                        <option value="roas">ROAS (High to Low)</option>
+                        <option value="volume">Search Volume (High to Low)</option>
+                        <option value="cpc">CPC (Low to High)</option>
+                        <option value="revenue">Monthly Revenue (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="margin-bottom: 20px; color: #1e3c72;">📋 All Keywords Analysis</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Keyword</th>
+                        <th>Search Vol</th>
+                        <th>CPC</th>
+                        <th>Monthly Clicks</th>
+                        <th>Monthly Jobs</th>
+                        <th>Commission</th>
+                        <th>Monthly Revenue</th>
+                        <th>Monthly Ad Spend</th>
+                        <th>Monthly Profit</th>
+                        <th>ROAS</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="keyword_data_generated.js"></script>
+    <script>
+        // Initialize
+        function init() {
+            populateCategoryFilter();
+            generateCapacityCards();
+            renderTable();
+        }
+
+        function populateCategoryFilter() {
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            const select = document.getElementById('category-filter');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                select.appendChild(option);
+            });
+        }
+
+        function generateCapacityCards() {
+            const container = document.getElementById('capacity-cards');
+            const categories = [...new Set(keywordData.map(k => k.category))];
+            
+            categories.forEach(category => {
+                const categoryKeywords = keywordData.filter(k => k.category === category);
+                const capacity = contractorCapacity[category] || 10;
+                
+                // Calculate metrics for this category
+                const totalJobs = categoryKeywords.reduce((sum, k) => sum + k.monthlyJobs, 0);
+                const totalRevenue = categoryKeywords.reduce((sum, k) => sum + k.monthlyRevenue, 0);
+                const totalSpend = categoryKeywords.reduce((sum, k) => sum + k.monthlyAdSpend, 0);
+                const totalProfit = categoryKeywords.reduce((sum, k) => sum + k.monthlyProfit, 0);
+                
+                // Investment needed to keep contractor busy
+                const investmentPerJob = totalSpend / totalJobs;
+                const investmentForCapacity = investmentPerJob * capacity;
+                const revenueForCapacity = (totalRevenue / totalJobs) * capacity;
+                const profitForCapacity = revenueForCapacity - investmentForCapacity;
+                
+                const card = document.createElement('div');
+                card.className = 'capacity-card';
+                card.innerHTML = `
+                    <h3>${category}</h3>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Contractor Capacity:</span>
+                        <span class="metric-value">${capacity} jobs/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Investment Needed:</span>
+                        <span class="metric-value">${formatCurrency(investmentForCapacity)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Expected Revenue:</span>
+                        <span class="metric-value">${formatCurrency(revenueForCapacity)}/month</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Your Profit:</span>
+                        <span class="metric-value ${profitForCapacity > 0 ? 'positive' : 'negative'}">
+                            ${formatCurrency(profitForCapacity)}/month
+                        </span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Avg Cost Per Job:</span>
+                        <span class="metric-value">${formatCurrency(investmentPerJob)}</span>
+                    </div>
+                    <div class="capacity-metric">
+                        <span class="metric-label">Total Keywords:</span>
+                        <span class="metric-value">${categoryKeywords.length}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterData() {
+            const category = document.getElementById('category-filter').value;
+            const minVolume = parseInt(document.getElementById('volume-filter').value) || 0;
+            const profitFilter = document.getElementById('profit-filter').value;
+            
+            let filtered = keywordData.filter(k => {
+                if (category !== 'all' && k.category !== category) return false;
+                if (k.searchVol < minVolume) return false;
+                if (profitFilter === 'profitable' && k.roas <= 0) return false;
+                if (profitFilter === 'unprofitable' && k.roas >= 0) return false;
+                return true;
+            });
+            
+            return filtered;
+        }
+
+        function sortData(data) {
+            const sortBy = document.getElementById('sort-by').value;
+            
+            return data.sort((a, b) => {
+                switch(sortBy) {
+                    case 'profit': return b.monthlyProfit - a.monthlyProfit;
+                    case 'roas': return b.roas - a.roas;
+                    case 'volume': return b.searchVol - a.searchVol;
+                    case 'cpc': return a.cpc - b.cpc;
+                    case 'revenue': return b.monthlyRevenue - a.monthlyRevenue;
+                    default: return 0;
+                }
+            });
+        }
+
+        function renderTable() {
+            let data = filterData();
+            data = sortData(data);
+            
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.category}</td>
+                    <td><strong>${row.keyword}</strong></td>
+                    <td>${formatNumber(row.searchVol)}</td>
+                    <td>$${row.cpc.toFixed(2)}</td>
+                    <td>${formatNumber(row.monthlyClicks)}</td>
+                    <td>${row.monthlyJobs.toFixed(2)}</td>
+                    <td>$${formatNumber(row.commission)}</td>
+                    <td>$${formatNumber(row.monthlyRevenue)}</td>
+                    <td>$${formatNumber(row.monthlyAdSpend)}</td>
+                    <td><strong>${formatCurrency(row.monthlyProfit)}</strong></td>
+                    <td><span class="${getRoasClass(row.roas)}">${row.roas.toFixed(2)}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+            
+            updateSummaryStats(data);
+        }
+
+        function updateSummaryStats(data) {
+            document.getElementById('total-keywords').textContent = data.length;
+            
+            const avgRoas = data.reduce((sum, k) => sum + k.roas, 0) / data.length;
+            document.getElementById('avg-roas').textContent = avgRoas.toFixed(2);
+            
+            const profitableCount = data.filter(k => k.roas > 0).length;
+            document.getElementById('profitable-count').textContent = profitableCount;
+            
+            const totalSpend = data.reduce((sum, k) => sum + k.monthlyAdSpend, 0);
+            document.getElementById('total-spend').textContent = formatCurrency(totalSpend);
+            
+            const totalRevenue = data.reduce((sum, k) => sum + k.monthlyRevenue, 0);
+            document.getElementById('total-revenue').textContent = formatCurrency(totalRevenue);
+            
+            const totalProfit = data.reduce((sum, k) => sum + k.monthlyProfit, 0);
+            document.getElementById('total-profit').textContent = formatCurrency(totalProfit);
+            document.getElementById('total-profit').className = 'value ' + (totalProfit > 0 ? 'positive' : 'negative');
+        }
+
+        function getRoasClass(roas) {
+            if (roas > 0) return 'roas-good';
+            if (roas >= -0.1) return 'roas-neutral';
+            return 'roas-bad';
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('en-US', { maximumFractionDigits: 0 });
+        }
+
+        function formatCurrency(num) {
+            return '$' + num.toLocaleString('en-US', { maximumFractionDigits: 0 });
+        }
+
+        // Event listeners
+        document.getElementById('category-filter').addEventListener('change', renderTable);
+        document.getElementById('volume-filter').addEventListener('input', renderTable);
+        document.getElementById('profit-filter').addEventListener('change', renderTable);
+        document.getElementById('sort-by').addEventListener('change', renderTable);
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>
