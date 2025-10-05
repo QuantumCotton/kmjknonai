@@ -276,17 +276,17 @@
                 
                 <div class="control-group">
                     <label>CPC (Cost Per Click)</label>
-                    <input type="number" id="cpc" value="8.76" min="1" max="50" step="0.1">
+                    <input type="number" id="cpc" value="7.85" min="1" max="50" step="0.1">
                 </div>
                 
                 <div class="control-group">
                     <label>CVR (Click to Lead %)</label>
-                    <input type="number" id="cvr" value="2.61" min="0.1" max="50" step="0.1">
+                    <input type="number" id="cvr" value="6.5" min="0.1" max="50" step="0.1">
                 </div>
                 
                 <div class="control-group">
                     <label>Close Rate (%)</label>
-                    <input type="number" id="close-rate" value="25" min="1" max="100" step="1">
+                    <input type="number" id="close-rate" value="35" min="1" max="100" step="1">
                 </div>
                 
                 <div class="control-group">
@@ -298,10 +298,11 @@
         
         <div class="info-box">
             <h4>💡 How The Model Works - Predictable for Contractors:</h4>
-            <p><strong>Fixed Ad Cost Buffer:</strong> We charge worst-case ad cost ($2,797 at 10% close rate) built into "Materials + Labor + Advertising". This NEVER changes.</p>
+            <p><strong>Fixed Ad Cost Buffer:</strong> We charge worst-case ad cost (~$2,797 at 10% close rate) built into "Materials + Labor + Advertising". This NEVER changes.</p>
             <p><strong>Your 15% Commission:</strong> Contractor always pays the same 15% from their markup - predictable and stable.</p>
-            <p><strong>Your Upside:</strong> If you close at 25% instead of 10%, actual ad cost is only $1,342. You keep the $1,455 difference as bonus profit!</p>
-            <p><strong>Example ($35K job):</strong> Base $26,923 (includes fixed $2,797 ad buffer) + 30% markup $8,077 = $35K → Contractor pays you $5,250 (15%) → Contractor keeps $2,827 → Your actual ad cost $1,342 → You net $3,908!</p>
+            <p><strong>Your Upside:</strong> Industry benchmarks show 35% close rates are achievable. The better you perform, the lower your actual ad cost, and you keep the savings!</p>
+            <p><strong>Example ($35K job at industry benchmarks):</strong> Base $26,923 (includes fixed ad buffer) + 30% markup $8,077 = $35K → Contractor pays you 15% = $5,250 → Your actual ad cost $345 → You net $4,905!</p>
+            <p><strong>Default metrics set to industry standards:</strong> $7.85 CPC, 6.5% CVR, 35% close rate. Adjust to test different scenarios!</p>
         </div>
         
         <div class="summary-cards">
@@ -424,6 +425,33 @@
         </div>
         
         <div class="comparison-section">
+            <h2 style="text-align: center; color: #667eea; margin-bottom: 25px;">📊 Marketing ROI Analysis</h2>
+            <div style="background: linear-gradient(135deg, #e8f4f8 0%, #d1e7f0 100%); padding: 30px; border-radius: 12px; border: 3px solid #667eea;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-bottom: 20px;">
+                    <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 8px;">Total Ad Spend (Monthly)</div>
+                        <div style="font-size: 2.2em; font-weight: bold; color: #e74c3c;" id="roi-ad-spend">$0</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 8px;">Total Profit (Monthly)</div>
+                        <div style="font-size: 2.2em; font-weight: bold; color: #27ae60;" id="roi-profit">$0</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 8px;">Return on Ad Spend (ROAS)</div>
+                        <div style="font-size: 2.2em; font-weight: bold; color: #667eea;" id="roi-roas">0x</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="font-size: 0.9em; color: #666; margin-bottom: 8px;">Profit Margin</div>
+                        <div style="font-size: 2.2em; font-weight: bold; color: #f39c12;" id="roi-margin">0%</div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 8px;">
+                    <p style="font-size: 1.1em; color: #555;">For every <strong>$1</strong> spent on ads, you make <strong id="roi-per-dollar">$0</strong> in profit</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="comparison-section">
             <h2 style="text-align: center; color: #667eea; margin-bottom: 20px;">🎯 The Bottom Line</h2>
             <div style="text-align: center; padding: 40px; background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border-radius: 12px;">
                 <h3 style="color: #28a745; margin-bottom: 20px; font-size: 2em;">💰 Your Annual Earnings</h3>
@@ -438,16 +466,37 @@
     <script>
         // Initialize
         const inputs = ['num-jobs', 'avg-job-value', 'cpc', 'cvr', 'close-rate', 'contractor-markup'];
+        
+        // Load saved values from localStorage on page load
+        function loadSavedValues() {
+            inputs.forEach(id => {
+                const savedValue = localStorage.getItem(`kmjk_${id}`);
+                if (savedValue !== null) {
+                    document.getElementById(id).value = savedValue;
+                }
+            });
+        }
+        
+        // Save values to localStorage on input change
+        function saveValue(id, value) {
+            localStorage.setItem(`kmjk_${id}`, value);
+        }
+        
+        // Add event listeners for input and save
         inputs.forEach(id => {
-            document.getElementById(id).addEventListener('input', calculate);
+            const element = document.getElementById(id);
+            element.addEventListener('input', () => {
+                saveValue(id, element.value);
+                calculate();
+            });
         });
         
         function calculate() {
             const numJobs = parseInt(document.getElementById('num-jobs').value) || 4;
             const avgJobValue = parseFloat(document.getElementById('avg-job-value').value) || 35000;
-            const cpc = parseFloat(document.getElementById('cpc').value) || 8.76;
-            const cvr = parseFloat(document.getElementById('cvr').value) / 100 || 0.0261;
-            const closeRate = parseFloat(document.getElementById('close-rate').value) / 100 || 0.25;
+            const cpc = parseFloat(document.getElementById('cpc').value) || 7.85;
+            const cvr = parseFloat(document.getElementById('cvr').value) / 100 || 0.065;
+            const closeRate = parseFloat(document.getElementById('close-rate').value) / 100 || 0.35;
             const contractorMargin = parseFloat(document.getElementById('contractor-markup').value) / 100 || 0.30;
             
             // CALCULATE AD COST
@@ -463,21 +512,21 @@
             const contractorKeeps = avgJobValue - totalChargeToContractor;
             
             // CONTRACTOR'S NUMBERS
-            // Calculate WORST CASE ad cost (assume 10% close rate for safety)
+            // Calculate FIXED worst-case ad cost (assume 10% close rate for safety)
             const worstCaseCloseRate = 0.10;
-            const worstCaseAdCost = (cpc * (1/cvr) * (1/worstCaseCloseRate));
+            const fixedAdCost = (cpc * (1/cvr) * (1/worstCaseCloseRate));
             
-            // Base cost includes FIXED worst-case ad cost (hidden in Materials + Labor + Advertising)
+            // Base cost includes FIXED worst-case ad cost (in Materials + Labor + Advertising)
             // Example: $35K job, 30% markup
-            // Base = $35K / 1.30 = $26,923 (includes hidden worst-case ad cost)
+            // Base = $35K / 1.30 = $26,923 (includes FIXED $2,797 ad cost)
             // Markup = $35K - $26,923 = $8,077
-            // They pay YOUR net profit = commission - actual ad cost
-            // Their profit = $8,077 - YOUR net profit
-            // Ad cost is already hidden in base cost!
-            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes hidden ad cost
-            const contractorMarkupAmount = avgJobValue - contractorBaseCost; // 30% markup
-            const contractorGrossProfit = contractorMarkupAmount; // Gross profit before paying you
-            const contractorNetProfit = contractorMarkupAmount - yourNetProfit; // Minus YOUR net profit (not full commission!)
+            // Contractor pays: 15% commission - FIXED ad cost
+            // Their profit = Markup - (15% commission - FIXED ad cost)
+            // Your actual ad cost varies, but contractor's payment is FIXED
+            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes fixed ad cost
+            const contractorMarkupAmount = avgJobValue - contractorBaseCost; // Their markup
+            const contractorPaysYou = yourCommission - fixedAdCost; // FIXED payment (15% - $2,797)
+            const contractorNetProfit = contractorMarkupAmount - contractorPaysYou; // Their net after paying you
             
             // Update summary cards
             document.getElementById('ad-cost-display').textContent = '$' + adCost.toFixed(0);
@@ -491,8 +540,8 @@
             const totalChargeMonthly = totalChargeToContractor * numJobs;
             const contractorKeepsMonthly = contractorKeeps * numJobs;
             const yourMonthlyNetProfit = yourNetProfit * numJobs; // YOUR net profit monthly
-            const contractorMonthlyGrossProfit = contractorGrossProfit * numJobs; // Their gross markup
-            const contractorMonthlyNetProfit = contractorMonthlyGrossProfit - yourMonthlyNetProfit; // AFTER paying YOUR net profit
+            const contractorMonthlyPaysYou = contractorPaysYou * numJobs; // FIXED monthly payment to you
+            const contractorMonthlyNetProfit = contractorNetProfit * numJobs; // Their net after paying FIXED amount
             const monthlyVolume = avgJobValue * numJobs;
             
             // Update side-by-side comparison - MONTHLY TOTALS
@@ -515,7 +564,7 @@
             document.getElementById('contractor-markup-amount').textContent = '$' + contractorMarkupAmount.toFixed(0);
             document.getElementById('contractor-price').textContent = '$' + avgJobValue.toLocaleString();
             document.getElementById('contractor-volume').textContent = '$' + monthlyVolume.toLocaleString();
-            document.getElementById('contractor-pays-commission').textContent = '$' + yourMonthlyNetProfit.toFixed(0); // YOUR net profit
+            document.getElementById('contractor-pays-commission').textContent = '$' + contractorMonthlyPaysYou.toFixed(0); // FIXED payment
             document.getElementById('contractor-monthly-profit').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
             document.getElementById('contractor-monthly-display').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
             
@@ -547,7 +596,22 @@
             document.getElementById('summary-avg').textContent = '$' + avgJobValue.toLocaleString();
             document.getElementById('summary-annual').textContent = '$' + (monthlyProfit * 12).toFixed(0);
             document.getElementById('summary-monthly').textContent = '$' + monthlyProfit.toFixed(0);
+            
+            // Calculate and update ROI metrics
+            const totalRevenue = yourCommission * numJobs; // Total commission
+            const roas = totalAdCostMonthly > 0 ? (yourMonthlyNetProfit / totalAdCostMonthly) : 0;
+            const profitMargin = totalRevenue > 0 ? (yourMonthlyNetProfit / totalRevenue * 100) : 0;
+            const perDollarReturn = totalAdCostMonthly > 0 ? (yourMonthlyNetProfit / totalAdCostMonthly).toFixed(2) : '0.00';
+            
+            document.getElementById('roi-ad-spend').textContent = '$' + totalAdCostMonthly.toFixed(0);
+            document.getElementById('roi-profit').textContent = '$' + yourMonthlyNetProfit.toFixed(0);
+            document.getElementById('roi-roas').textContent = roas.toFixed(2) + 'x';
+            document.getElementById('roi-margin').textContent = profitMargin.toFixed(1) + '%';
+            document.getElementById('roi-per-dollar').textContent = '$' + perDollarReturn;
         }
+        
+        // Load saved values on page load
+        loadSavedValues();
         
         // Initial calculation
         calculate();
