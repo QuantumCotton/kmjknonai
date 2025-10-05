@@ -297,10 +297,11 @@
         </div>
         
         <div class="info-box">
-            <h4>💡 How The Model Works:</h4>
-            <p><strong>YOUR Side:</strong> You run ads, close leads, charge contractor (Ad Cost + 15% commission). Your NET profit = 15% commission MINUS ad cost you spent.</p>
-            <p><strong>CONTRACTOR Side:</strong> They get quality jobs delivered, do the work, keep their 30% profit margin. No marketing, no sales calls.</p>
-            <p><strong>Example:</strong> $35K job → You earn $5,250 (15%) → Spend $1,342 on ads → Net profit $3,908. Contractor makes $10,500 (30%) and does zero marketing!</p>
+            <h4>💡 How The Model Works - Simple Breakdown:</h4>
+            <p><strong>Ad Cost:</strong> Built into "Materials + Labor + Advertising" - contractor doesn't see it as a separate line item.</p>
+            <p><strong>Your 15% Commission:</strong> Looks like standard 15%, but ad cost is already covered in base costs.</p>
+            <p><strong>What Really Happens:</strong> Your NET profit (commission - ad cost) comes out of their 30% markup. They still profit, you still profit!</p>
+            <p><strong>Example ($35K job):</strong> Base cost $26,923 (includes $3,356 ad) + 30% markup $8,077 = $35K to customer → You net $1,894 → Contractor nets $6,183 → Everyone wins!</p>
         </div>
         
         <div class="summary-cards">
@@ -313,7 +314,7 @@
                 <div class="value" id="your-profit-display">$0</div>
             </div>
             <div class="card green">
-                <h3>Contractor Profit Per Job</h3>
+                <h3>Contractor Net Profit Per Job</h3>
                 <div class="value" id="contractor-profit-display">$0</div>
             </div>
             <div class="card gold">
@@ -371,7 +372,15 @@
                         <span class="metric-value" id="contractor-jobs-count">0</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Avg Job Value:</span>
+                        <span class="metric-label">Materials + Labor + Advertising (Per Job):</span>
+                        <span class="metric-value" id="contractor-base-cost">$0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Their 30% Markup (Per Job):</span>
+                        <span class="metric-value profit" id="contractor-markup-amount">$0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Price to Customer (Per Job):</span>
                         <span class="metric-value" id="contractor-price">$0</span>
                     </div>
                     <div class="metric-row">
@@ -379,23 +388,15 @@
                         <span class="metric-value" id="contractor-volume">$0</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">30% Profit Per Job:</span>
-                        <span class="metric-value profit" id="contractor-markup-amount">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">What They Pay You (Total):</span>
-                        <span class="metric-value cost" id="contractor-pays-you">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Marketing Required:</span>
-                        <span class="metric-value">ZERO</span>
+                        <span class="metric-label">Minus Your Net Profit (Monthly):</span>
+                        <span class="metric-value cost" id="contractor-pays-commission">$0</span>
                     </div>
                     <div class="metric-row" style="border-color: #f39c12;">
-                        <span class="metric-label">THEIR MONTHLY NET PROFIT:</span>
+                        <span class="metric-label">THEIR ACTUAL NET PROFIT:</span>
                         <span class="metric-value profit" id="contractor-monthly-profit">$0</span>
                     </div>
                     <div style="margin-top: 15px; padding: 15px; background: rgba(243, 156, 18, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.9em; color: #555;">Their Monthly Profit</div>
+                        <div style="font-size: 0.9em; color: #555;">Their Net Profit (After Paying You)</div>
                         <div style="font-size: 2em; font-weight: bold; color: #f39c12;" id="contractor-monthly-display">$0</div>
                     </div>
                 </div>
@@ -462,12 +463,21 @@
             const contractorKeeps = avgJobValue - totalChargeToContractor;
             
             // CONTRACTOR'S NUMBERS
-            const contractorGrossProfit = avgJobValue * contractorMargin;
+            // Base cost INCLUDES ad cost (hidden in "Materials + Labor + Advertising")
+            // Example: $35K job, 30% markup, $3,356 ad cost
+            // Base = $35K / 1.30 = $26,923 (includes materials, labor, AND ad cost of $3,356)
+            // Markup = $35K - $26,923 = $8,077
+            // Your NET profit (commission - ad cost) = $5,250 - $3,356 = $1,894
+            // Their ACTUAL profit = $8,077 - $1,894 = $6,183
+            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes ad cost already!
+            const contractorMarkupAmount = avgJobValue - contractorBaseCost; // 30% markup
+            const contractorGrossProfit = contractorMarkupAmount; // Gross profit before paying you
+            const contractorNetProfit = contractorMarkupAmount - yourNetProfit; // Minus YOUR net profit (not full commission!)
             
             // Update summary cards
             document.getElementById('ad-cost-display').textContent = '$' + adCost.toFixed(0);
             document.getElementById('your-profit-display').textContent = '$' + yourNetProfit.toFixed(0);
-            document.getElementById('contractor-profit-display').textContent = '$' + contractorGrossProfit.toFixed(0);
+            document.getElementById('contractor-profit-display').textContent = '$' + contractorNetProfit.toFixed(0); // NET after paying you
             document.getElementById('your-monthly-profit').textContent = '$' + (yourNetProfit * numJobs).toFixed(0);
             
             // Calculate monthly totals
@@ -476,7 +486,8 @@
             const totalChargeMonthly = totalChargeToContractor * numJobs;
             const contractorKeepsMonthly = contractorKeeps * numJobs;
             const yourMonthlyNetProfit = yourNetProfit * numJobs;
-            const contractorMonthlyProfit = contractorGrossProfit * numJobs;
+            const contractorMonthlyGrossProfit = contractorGrossProfit * numJobs; // Before paying you
+            const contractorMonthlyNetProfit = contractorNetProfit * numJobs; // AFTER paying you
             const monthlyVolume = avgJobValue * numJobs;
             
             // Update side-by-side comparison - MONTHLY TOTALS
@@ -490,12 +501,13 @@
             document.getElementById('your-monthly-display').textContent = '$' + yourMonthlyNetProfit.toFixed(0);
             
             document.getElementById('contractor-jobs-count').textContent = numJobs;
+            document.getElementById('contractor-base-cost').textContent = '$' + contractorBaseCost.toFixed(0);
+            document.getElementById('contractor-markup-amount').textContent = '$' + contractorMarkupAmount.toFixed(0);
             document.getElementById('contractor-price').textContent = '$' + avgJobValue.toLocaleString();
             document.getElementById('contractor-volume').textContent = '$' + monthlyVolume.toLocaleString();
-            document.getElementById('contractor-markup-amount').textContent = '$' + contractorGrossProfit.toFixed(0);
-            document.getElementById('contractor-pays-you').textContent = '$' + totalChargeMonthly.toFixed(0);
-            document.getElementById('contractor-monthly-profit').textContent = '$' + contractorMonthlyProfit.toFixed(0);
-            document.getElementById('contractor-monthly-display').textContent = '$' + contractorMonthlyProfit.toFixed(0);
+            document.getElementById('contractor-pays-commission').textContent = '$' + yourMonthlyNetProfit.toFixed(0); // YOUR net profit monthly
+            document.getElementById('contractor-monthly-profit').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
+            document.getElementById('contractor-monthly-display').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
             
             // Update table - show 12 months
             const tbody = document.getElementById('job-breakdown');
