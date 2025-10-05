@@ -297,11 +297,11 @@
         </div>
         
         <div class="info-box">
-            <h4>💡 How The Model Works - Simple Breakdown:</h4>
-            <p><strong>Ad Cost:</strong> Built into "Materials + Labor + Advertising" - contractor doesn't see it as a separate line item.</p>
-            <p><strong>Your 15% Commission:</strong> Looks like standard 15%, but ad cost is already covered in base costs.</p>
-            <p><strong>What Really Happens:</strong> Your NET profit (commission - ad cost) comes out of their 30% markup. They still profit, you still profit!</p>
-            <p><strong>Example ($35K job):</strong> Base cost $26,923 (includes $3,356 ad) + 30% markup $8,077 = $35K to customer → You net $1,894 → Contractor nets $6,183 → Everyone wins!</p>
+            <h4>💡 How The Model Works - Predictable for Contractors:</h4>
+            <p><strong>Fixed Ad Cost Buffer:</strong> We charge worst-case ad cost ($2,797 at 10% close rate) built into "Materials + Labor + Advertising". This NEVER changes.</p>
+            <p><strong>Your 15% Commission:</strong> Contractor always pays the same 15% from their markup - predictable and stable.</p>
+            <p><strong>Your Upside:</strong> If you close at 25% instead of 10%, actual ad cost is only $1,342. You keep the $1,455 difference as bonus profit!</p>
+            <p><strong>Example ($35K job):</strong> Base $26,923 (includes fixed $2,797 ad buffer) + 30% markup $8,077 = $35K → Contractor pays you $5,250 (15%) → Contractor keeps $2,827 → Your actual ad cost $1,342 → You net $3,908!</p>
         </div>
         
         <div class="summary-cards">
@@ -388,7 +388,7 @@
                         <span class="metric-value" id="contractor-volume">$0</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Minus Your Net Profit (Monthly):</span>
+                        <span class="metric-label">Minus Your Commission (Monthly):</span>
                         <span class="metric-value cost" id="contractor-pays-commission">$0</span>
                     </div>
                     <div class="metric-row" style="border-color: #f39c12;">
@@ -463,16 +463,21 @@
             const contractorKeeps = avgJobValue - totalChargeToContractor;
             
             // CONTRACTOR'S NUMBERS
-            // Base cost INCLUDES ad cost (hidden in "Materials + Labor + Advertising")
-            // Example: $35K job, 30% markup, $3,356 ad cost
-            // Base = $35K / 1.30 = $26,923 (includes materials, labor, AND ad cost of $3,356)
+            // Calculate WORST CASE ad cost (assume 10% close rate for safety)
+            const worstCaseCloseRate = 0.10;
+            const worstCaseAdCost = (cpc * (1/cvr) * (1/worstCaseCloseRate));
+            
+            // Base cost includes FIXED worst-case ad cost
+            // Example: $35K job, 30% markup
+            // Base = $35K / 1.30 = $26,923 (includes fixed $2,797 ad buffer)
             // Markup = $35K - $26,923 = $8,077
-            // Your NET profit (commission - ad cost) = $5,250 - $3,356 = $1,894
-            // Their ACTUAL profit = $8,077 - $1,894 = $6,183
-            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes ad cost already!
+            // They pay full 15% commission = $5,250 from their markup
+            // Their profit = $8,077 - $5,250 = $2,827
+            // If your ads perform better, YOU keep the savings!
+            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes FIXED ad cost buffer
             const contractorMarkupAmount = avgJobValue - contractorBaseCost; // 30% markup
             const contractorGrossProfit = contractorMarkupAmount; // Gross profit before paying you
-            const contractorNetProfit = contractorMarkupAmount - yourNetProfit; // Minus YOUR net profit (not full commission!)
+            const contractorNetProfit = contractorMarkupAmount - yourCommission; // Minus full 15% commission
             
             // Update summary cards
             document.getElementById('ad-cost-display').textContent = '$' + adCost.toFixed(0);
@@ -505,7 +510,7 @@
             document.getElementById('contractor-markup-amount').textContent = '$' + contractorMarkupAmount.toFixed(0);
             document.getElementById('contractor-price').textContent = '$' + avgJobValue.toLocaleString();
             document.getElementById('contractor-volume').textContent = '$' + monthlyVolume.toLocaleString();
-            document.getElementById('contractor-pays-commission').textContent = '$' + yourMonthlyNetProfit.toFixed(0); // YOUR net profit monthly
+            document.getElementById('contractor-pays-commission').textContent = '$' + yourMonthlyNetProfit.toFixed(0); // YOUR net profit
             document.getElementById('contractor-monthly-profit').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
             document.getElementById('contractor-monthly-display').textContent = '$' + contractorMonthlyNetProfit.toFixed(0);
             

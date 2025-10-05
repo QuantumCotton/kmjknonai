@@ -145,7 +145,8 @@ function KitchenLanding() {
                     "Chris and the KMJK team listened to everything we wanted - more counter space, better flow, and a place where our kids could do homework while we cooked. They nailed it! The 3D design they showed us was EXACTLY what we got. No surprises on cost, no stress, just beautiful results. We've hosted three dinner parties already!"
                   </p>
                   <p className="font-semibold">— Michael & Sarah K., Stuart, FL</p>
-                  <p className="text-sm text-gray-600">Full Kitchen Remodel • $42,000 • 4 Weeks</p>
+                  <p className="text-sm text-gray-600">Complete Custom Kitchen Renovation • $140,000 • 4 Weeks</p>
+                  <p className="text-xs text-gray-500 mt-1">(Full Kitchen Remodels start at $35,000)</p>
                 </div>
               </div>
             </div>
