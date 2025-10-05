@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partnership Proposal - Skyline Group Construction</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+            .no-print {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .payment-structure {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .key-terms {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            h2.section-title {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #F8F8F8;
+            padding: 40px 20px;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Letterhead */
+        .letterhead {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 40px 60px;
+            text-align: center;
+        }
+        
+        .company-name {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        
+        .gold-underline {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, #B8860B, #DAA520);
+            margin: 15px auto;
+        }
+        
+        .tagline {
+            font-size: 1.1em;
+            letter-spacing: 0.05em;
+            opacity: 0.9;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        /* Document Title */
+        .doc-title {
+            background: #F8F8F8;
+            padding: 30px 60px;
+            border-bottom: 3px solid #B8860B;
+        }
+        
+        .doc-title h1 {
+            font-size: 2em;
+            color: #2C2C2C;
+            margin-bottom: 10px;
+        }
+        
+        .doc-subtitle {
+            font-size: 1.1em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .recipient-info {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            color: #555;
+        }
+        
+        /* Content */
+        .content {
+            padding: 40px 60px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #2C2C2C;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #B8860B;
+        }
+        
+        .section p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        
+        /* Key Terms Box */
+        .key-terms {
+            background: #F0F7FA;
+            border-left: 4px solid #B8860B;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .key-terms strong {
+            color: #2C2C2C;
+        }
+        
+        /* Payment Structure */
+        .payment-structure {
+            margin: 25px 0;
+        }
+        
+        .payment-item {
+            background: white;
+            border: 2px solid #E0E0E0;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .payment-item h4 {
+            color: #B8860B;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        .amount {
+            color: #2C2C2C;
+            font-weight: bold;
+        }
+        
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 25px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .col-box {
+            background: #F8F8F8;
+            border-left: 4px solid #B8860B;
+            padding: 20px;
+        }
+        
+        .col-box h3 {
+            color: #2C2C2C;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        /* List Styling */
+        ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin-bottom: 8px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 25px 60px;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .footer-divider {
+            width: 100px;
+            height: 2px;
+            background: #B8860B;
+            margin: 10px auto;
+        }
+        
+        /* Print Button */
+        .no-print {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+        
+        .print-btn {
+            background: #2C2C2C;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-family: Georgia, serif;
+        }
+        
+        .print-btn:hover {
+            background: #B8860B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Letterhead -->
+        <div class="letterhead">
+            <div class="company-name">THE ELITE SERVICE HUB</div>
+            <div class="gold-underline"></div>
+            <div class="tagline">Premium Lead Generation & Business Growth Partners</div>
+            <div class="contact-info">
+                650-501-7659 | chris@theeliteservicehub.com
+            </div>
+        </div>
+        
+        <!-- Document Title -->
+        <div class="doc-title">
+            <h1>Lead Generation Partnership Proposal</h1>
+            <div class="doc-subtitle">Phoenix, Arizona Market Expansion</div>
+            <div class="recipient-info">
+                <strong>Prepared For:</strong> Brian Woodhead, Skyline Group Construction, LLC<br>
+                <strong>Date:</strong> January 2025<br>
+                <strong>Market:</strong> Phoenix Metropolitan Area
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <div class="section">
+                <h2 class="section-title">Proposal Overview</h2>
+                <p>The Elite Service Hub is a performance-based lead generation firm specializing in kitchen and bathroom renovations. We are expanding into the Phoenix market and seek to establish a partnership with one premium contractor capable of delivering exceptional craftsmanship.</p>
+                <p>After reviewing your bathroom remodel work, we believe Skyline Group Construction represents the caliber of partner we require. This document outlines the proposed partnership structure.</p>
+            </div>
+            
+            <!-- Business Model -->
+            <div class="section">
+                <h2 class="section-title">Partnership Structure</h2>
+                <p>The Elite Service Hub operates on a commission-based model, similar to a sales representative earning commission on closed deals. We charge <strong>15% of the total project value</strong> for each completed job.</p>
+                <p>Our role is to generate qualified leads, convert them into signed contracts, and deliver those contracts to you for execution. You focus entirely on delivering exceptional work—we handle all lead generation and initial client acquisition.</p>
+            </div>
+            
+            <!-- Payment Model -->
+            <div class="section">
+                <h2 class="section-title">Payment Terms</h2>
+                <p>The 15% commission is structured as a two-payment system that aligns with standard contractor payment schedules:</p>
+                
+                <div class="payment-structure">
+                    <div class="payment-item">
+                        <h4>Payment #1: Contract Signing</h4>
+                        <p><strong>Amount:</strong> <span class="amount">Approximately $2,500-$3,000 per job</span> (estimated acquisition cost)</p>
+                        <p><strong>Timing:</strong> Due after you receive your first check from the customer</p>
+                        <p><strong>Integration:</strong> This cost is included within the labor portion of your bid to the customer. It represents the marketing investment required to acquire the lead.</p>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <h4>Payment #2: Job Completion</h4>
+                        <p><strong>Amount:</strong> <span class="amount">Remaining commission balance</span> (15% total commission minus Payment #1)</p>
+                        <p><strong>Timing:</strong> Due after you receive your final payment from the customer</p>
+                        <p><strong>Calculation Example:</strong> On a $55,000 project: ($55,000 × 15%) - $2,797 = $5,453 balance due</p>
+                    </div>
+                </div>
+                
+                <div class="key-terms">
+                    <p><strong>Key Advantage:</strong> You only pay The Elite Service Hub <em>after</em> you have been paid by the customer. There is no upfront cost or financial risk to your business.</p>
+                </div>
+            </div>
+            
+            <!-- Financial Example -->
+            <div class="section">
+                <h2 class="section-title">Financial Breakdown: $55,000 Kitchen Project</h2>
+                <div class="key-terms">
+                    <p><strong>Your Bid to Customer:</strong></p>
+                    <p style="margin-left: 20px;">
+                        Materials + Labor (including marketing): $39,286<br>
+                        + Your 40% Markup: $15,714<br>
+                        = <strong>Total Price to Customer: $55,000</strong>
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>Payment to The Elite Service Hub:</strong></p>
+                    <p style="margin-left: 20px;">
+                        Payment #1 (after first customer check): $2,797<br>
+                        Payment #2 (after final customer check): $5,453<br>
+                        <em>Total Commission (15% of $55,000): $8,250</em>
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>Your Net Profit:</strong></p>
+                    <p style="margin-left: 20px;">
+                        Gross Markup: $15,714<br>
+                        - Commission Balance (Payment #2): $5,453<br>
+                        = <strong style="color: #28a745;">Your Net Profit: $10,261</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Volume Projections -->
+            <div class="section">
+                <h2 class="section-title">Projected Monthly Revenue</h2>
+                <p>Based on average project values of $50,000-$60,000, your projected monthly profit potential is as follows:</p>
+                
+                <div class="two-col">
+                    <div class="col-box">
+                        <h3>2 Jobs Per Month</h3>
+                        <p><strong>Monthly Profit:</strong> $20,522<br>
+                        <strong>Annual Profit:</strong> $246,264</p>
+                    </div>
+                    <div class="col-box">
+                        <h3>4 Jobs Per Month</h3>
+                        <p><strong>Monthly Profit:</strong> $41,044<br>
+                        <strong>Annual Profit:</strong> $492,528</p>
+                    </div>
+                </div>
+                
+                <p>We typically ramp volume over 2-3 months as we stabilize the market and align with your team's capacity and operational metrics.</p>
+            </div>
+            
+            <!-- Process -->
+            <div class="section">
+                <h2 class="section-title">Operational Process</h2>
+                <p><strong>Step 1:</strong> We generate qualified leads through our advertising channels.</p>
+                <p><strong>Step 2:</strong> When a lead is closed, you execute the project and receive payment from the customer.</p>
+                <p><strong>Step 3:</strong> You remit Payment #1 to The Elite Service Hub after receiving your first customer check.</p>
+                <p><strong>Step 4:</strong> Upon project completion and final customer payment, you remit Payment #2 to The Elite Service Hub.</p>
+                <p><strong>Step 5:</strong> We continue delivering additional leads as you complete each project, maintaining consistent workflow.</p>
+                
+                <div class="key-terms" style="margin-top: 20px;">
+                    <p><strong>Timeline:</strong> It typically requires 60-90 days to fully stabilize a new market, optimize lead flow, and align with your team's capacity.</p>
+                </div>
+            </div>
+            
+            <!-- Branding Support -->
+            <div class="section">
+                <h2 class="section-title">Marketing & Branding Support</h2>
+                <p>The Elite Service Hub provides comprehensive branding support to ensure professional client presentation:</p>
+                <ul>
+                    <li>Custom-branded work orders featuring your company logo</li>
+                    <li>Professional sales agreements designed to your specifications</li>
+                    <li>Option to utilize your existing branding or development of new branded materials</li>
+                    <li>Consistent, high-quality lead presentation that reflects the premium nature of your services</li>
+                </ul>
+                <p>Our strategic marketing positions you as a highly specialized contractor, enhancing perceived value and supporting premium pricing.</p>
+            </div>
+            
+            <!-- Proven Track Record -->
+            <div class="section">
+                <h2 class="section-title">Proven Success Record</h2>
+                <p>The Elite Service Hub currently operates in Stuart, Florida, where our partner contractor maintains consistent volume:</p>
+                <ul>
+                    <li><strong>Monthly Volume:</strong> 2-4 completed jobs</li>
+                    <li><strong>Average Project Value:</strong> $50,000-$60,000</li>
+                    <li><strong>Market:</strong> Kitchen and bathroom renovations</li>
+                    <li><strong>Status:</strong> Stable, ongoing partnership with predictable lead flow</li>
+                </ul>
+                <p>This Phoenix expansion represents our second market, and we are committed to replicating our Florida success with one select partner in Arizona.</p>
+            </div>
+            
+            <!-- Partnership Terms -->
+            <div class="section">
+                <h2 class="section-title">Partnership Terms</h2>
+                <p><strong>Initial Period:</strong> 30-day pilot to establish workflow and verify market fit</p>
+                <p><strong>Target Volume:</strong> 1-2 jobs in first month, scaling to 2-4 jobs monthly by month three</p>
+                <p><strong>Commitment:</strong> Either party may terminate with 30 days written notice</p>
+                <p><strong>Territory:</strong> Phoenix metropolitan area (exclusive partnership)</p>
+                <p><strong>Services:</strong> Kitchen and bathroom remodeling projects</p>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="section">
+                <h2 class="section-title">Next Steps</h2>
+                <p>If this partnership structure aligns with your business objectives, we propose the following:</p>
+                <p><strong>1. Initial Consultation:</strong> 20-minute call to address questions and discuss operational details</p>
+                <p><strong>2. Agreement Review:</strong> Formal partnership agreement provided for your review</p>
+                <p><strong>3. Pilot Launch:</strong> 30-day test period with goal of 2-4 signed contracts</p>
+                <p><strong>4. Scale:</strong> Expand to full volume (8+ jobs monthly) based on pilot success</p>
+                
+                <div class="key-terms" style="margin-top: 20px;">
+                    <p><strong>Contact Information:</strong><br>
+                    Chris Rodriguez<br>
+                    The Elite Service Hub<br>
+                    Phone: 650-501-7659<br>
+                    Email: chris@theeliteservicehub.com</p>
+                </div>
+            </div>
+            
+            <!-- Additional Resources -->
+            <div class="section">
+                <h2 class="section-title">Additional Resources</h2>
+                <p>For a detailed review of our standard partnership terms and legal framework, please visit:</p>
+                <ul>
+                    <li><strong>Partnership Agreement:</strong> <a href="http://kmjk.pro/kmjkagreementesh" style="color: #B8860B;">kmjk.pro/kmjkagreementesh</a></li>
+                </ul>
+                <p>This document provides comprehensive detail on partnership structure, payment schedules, and operational terms.</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div>The Elite Service Hub | Premium Lead Generation & Business Growth Partners</div>
+            <div class="footer-divider"></div>
+            <div>Phoenix, AZ | 650-501-7659 | chris@theeliteservicehub.com</div>
+        </div>
+    </div>
+    
+    <div class="no-print">
+        <button onclick="window.print()" class="print-btn">Print Proposal</button>
+    </div>
+</body>
+</html>

@@ -13,6 +13,7 @@ import customEntertainment from './assets/custom_entertainment.jpg'
 // Import landing pages
 import BathroomLanding from './pages/BathroomLanding.jsx'
 import BathroomLandingImproved from './pages/BathroomLandingImproved.jsx'
+import BathroomLandingElite from './pages/BathroomLandingElite.jsx'
 import BathroomRepairsLanding from './pages/BathroomRepairsLanding.jsx'
 import KitchenLanding from './pages/KitchenLanding.jsx'
 import KitchenLandingImproved from './pages/KitchenLandingImproved.jsx'
@@ -579,6 +580,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           {/* Landing Pages - Improved Versions with Popup Forms */}
           <Route path="/bathroom-remodel" element={<BathroomLandingImproved />} />
+          <Route path="/bathrooms-elite" element={<BathroomLandingElite />} />
           <Route path="/bathroom-repairs" element={<BathroomRepairsLanding />} />
           <Route path="/kitchen-remodel" element={<KitchenLandingImproved />} />
           <Route path="/handyman-services" element={<HandymanLandingImproved />} />
