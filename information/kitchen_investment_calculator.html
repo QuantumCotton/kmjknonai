@@ -366,7 +366,7 @@
                 
                 <!-- Contractor's Column -->
                 <div class="column contractor-column">
-                    <h3>👷 CONTRACTOR'S MONTHLY PROFIT (30% Margin)</h3>
+                    <h3 id="contractor-header">👷 CONTRACTOR'S MONTHLY PROFIT (30% Margin)</h3>
                     <div class="metric-row">
                         <span class="metric-label">Jobs Per Month:</span>
                         <span class="metric-value" id="contractor-jobs-count">0</span>
@@ -376,7 +376,7 @@
                         <span class="metric-value" id="contractor-base-cost">$0</span>
                     </div>
                     <div class="metric-row">
-                        <span class="metric-label">Their 30% Markup (Per Job):</span>
+                        <span class="metric-label" id="contractor-markup-label">Their 30% Markup (Per Job):</span>
                         <span class="metric-value profit" id="contractor-markup-amount">$0</span>
                     </div>
                     <div class="metric-row">
@@ -467,17 +467,17 @@
             const worstCaseCloseRate = 0.10;
             const worstCaseAdCost = (cpc * (1/cvr) * (1/worstCaseCloseRate));
             
-            // Base cost includes FIXED worst-case ad cost
+            // Base cost includes FIXED worst-case ad cost (hidden in Materials + Labor + Advertising)
             // Example: $35K job, 30% markup
-            // Base = $35K / 1.30 = $26,923 (includes fixed $2,797 ad buffer)
+            // Base = $35K / 1.30 = $26,923 (includes hidden worst-case ad cost)
             // Markup = $35K - $26,923 = $8,077
-            // They pay full 15% commission = $5,250 from their markup
-            // Their profit = $8,077 - $5,250 = $2,827
-            // If your ads perform better, YOU keep the savings!
-            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes FIXED ad cost buffer
+            // They pay YOUR net profit = commission - actual ad cost
+            // Their profit = $8,077 - YOUR net profit
+            // Ad cost is already hidden in base cost!
+            const contractorBaseCost = avgJobValue / (1 + contractorMargin); // Includes hidden ad cost
             const contractorMarkupAmount = avgJobValue - contractorBaseCost; // 30% markup
             const contractorGrossProfit = contractorMarkupAmount; // Gross profit before paying you
-            const contractorNetProfit = contractorMarkupAmount - yourCommission; // Minus full 15% commission
+            const contractorNetProfit = contractorMarkupAmount - yourNetProfit; // Minus YOUR net profit (not full commission!)
             
             // Update summary cards
             document.getElementById('ad-cost-display').textContent = '$' + adCost.toFixed(0);
@@ -490,9 +490,9 @@
             const totalCommissionMonthly = yourCommission * numJobs;
             const totalChargeMonthly = totalChargeToContractor * numJobs;
             const contractorKeepsMonthly = contractorKeeps * numJobs;
-            const yourMonthlyNetProfit = yourNetProfit * numJobs;
-            const contractorMonthlyGrossProfit = contractorGrossProfit * numJobs; // Before paying you
-            const contractorMonthlyNetProfit = contractorNetProfit * numJobs; // AFTER paying you
+            const yourMonthlyNetProfit = yourNetProfit * numJobs; // YOUR net profit monthly
+            const contractorMonthlyGrossProfit = contractorGrossProfit * numJobs; // Their gross markup
+            const contractorMonthlyNetProfit = contractorMonthlyGrossProfit - yourMonthlyNetProfit; // AFTER paying YOUR net profit
             const monthlyVolume = avgJobValue * numJobs;
             
             // Update side-by-side comparison - MONTHLY TOTALS
@@ -504,6 +504,11 @@
             document.getElementById('contractor-keeps-total').textContent = '$' + contractorKeepsMonthly.toFixed(0);
             document.getElementById('your-monthly-final').textContent = '$' + yourMonthlyNetProfit.toFixed(0);
             document.getElementById('your-monthly-display').textContent = '$' + yourMonthlyNetProfit.toFixed(0);
+            
+            // Update contractor header and labels with dynamic percentage
+            const marginPercent = (contractorMargin * 100).toFixed(0);
+            document.getElementById('contractor-header').textContent = `👷 CONTRACTOR'S MONTHLY PROFIT (${marginPercent}% Margin)`;
+            document.getElementById('contractor-markup-label').textContent = `Their ${marginPercent}% Markup (Per Job):`;
             
             document.getElementById('contractor-jobs-count').textContent = numJobs;
             document.getElementById('contractor-base-cost').textContent = '$' + contractorBaseCost.toFixed(0);
