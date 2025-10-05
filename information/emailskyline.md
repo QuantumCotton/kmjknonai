@@ -2,7 +2,7 @@
 
 ---
 
-**From:** Chris Rodriguez  
+**From:** Chris Cotton  
 **Company:** The Elite Service Hub  
 **To:** Brian Woodhead, Skyline Group Construction  
 **Subject:** Partnership Opportunity: Pre-Qualified Kitchen & Bathroom Leads in Phoenix
@@ -123,7 +123,7 @@ I'll send over our full partnership agreement (you can review it here: [kmjk.pro
 
 Looking forward to connecting.
 
-**Chris Rodriguez**  
+**Chris Cotton**  
 Founder, The Elite Service Hub  
 📞 650-501-7659  
 📧 chris@theeliteservicehub.com  
