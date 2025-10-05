@@ -256,142 +256,56 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏠 Kitchen Renovation Investment Calculator</h1>
-            <p class="subtitle">Your 15% Commission vs Contractor's 30% Markup Analysis</p>
+            <h1>🏠 Kitchen Renovation Profit Calculator</h1>
+            <p class="subtitle">See How Much You'll Make Working With Us</p>
         </div>
         
         <div class="controls">
-            <h2 style="margin-bottom: 20px; color: #667eea;">📊 Adjust Your Parameters:</h2>
+            <h2 style="margin-bottom: 20px; color: #667eea;">📊 How Many Jobs Can You Handle?</h2>
             <div class="control-grid">
                 <div class="control-group">
-                    <label>Number of Kitchen Jobs</label>
-                    <input type="number" id="num-jobs" value="10" min="1" max="100">
+                    <label>Jobs Per Month</label>
+                    <input type="number" id="num-jobs" value="4" min="1" max="50">
                 </div>
                 
                 <div class="control-group">
                     <label>Average Kitchen Project Value</label>
-                    <input type="number" id="avg-job-value" value="15000" min="5000" max="150000" step="1000">
+                    <input type="number" id="avg-job-value" value="35000" min="5000" max="150000" step="1000">
                 </div>
                 
                 <div class="control-group">
-                    <label>Your Commission Rate (%)</label>
-                    <input type="number" id="commission-rate" value="15" min="1" max="50" step="0.5">
-                </div>
-                
-                <div class="control-group">
-                    <label>Contractor's Markup (%)</label>
-                    <input type="number" id="contractor-markup" value="30" min="1" max="100" step="1">
-                </div>
-                
-                <div class="control-group">
-                    <label>Ad Cost Per Kitchen Job</label>
-                    <input type="number" id="ad-cost" value="1343" min="100" max="5000" step="10">
-                </div>
-                
-                <div class="control-group">
-                    <label>Your Close Rate (%)</label>
-                    <input type="number" id="close-rate" value="25" min="1" max="100" step="1">
+                    <label>Your Profit Margin (%)</label>
+                    <input type="number" id="contractor-markup" value="30" min="10" max="50" step="1">
                 </div>
             </div>
         </div>
         
         <div class="info-box">
-            <h4>💡 How This Works:</h4>
-            <p><strong>Your Model:</strong> You spend money on ads → close leads → charge contractor (ad cost + 15% commission) → contractor does the work</p>
-            <p><strong>Traditional Model:</strong> Contractor spends on ads → closes their own leads (lower rate) → marks up 30% on materials/labor → does the work</p>
-            <p><strong>The Comparison:</strong> See who makes more money and who has less work!</p>
+            <h4>💡 How It Works:</h4>
+            <p><strong>We generate the leads. You do the work. You keep your 30% profit margin.</strong></p>
+            <p>No chasing leads. No wasted ad spend. No tire-kickers. Just quality kitchen renovation jobs delivered to you ready to close.</p>
+            <p>Use this calculator to see how much you'll make based on the volume of jobs you can handle each month.</p>
         </div>
         
         <div class="summary-cards">
-            <div class="card red">
-                <h3>Total Ad Investment</h3>
-                <div class="value" id="total-ad-spend">$0</div>
+            <div class="card">
+                <h3>Monthly Volume</h3>
+                <div class="value" id="monthly-volume">$0</div>
             </div>
             <div class="card green">
-                <h3>Your Total Revenue</h3>
-                <div class="value" id="your-revenue">$0</div>
+                <h3>Your Profit Per Job</h3>
+                <div class="value" id="profit-per-job">$0</div>
             </div>
             <div class="card green">
-                <h3>Your Net Profit</h3>
-                <div class="value" id="your-profit">$0</div>
+                <h3>Monthly Profit</h3>
+                <div class="value" id="monthly-profit">$0</div>
             </div>
             <div class="card gold">
-                <h3>ROI on Ad Spend</h3>
-                <div class="value" id="roi">0%</div>
+                <h3>Annual Profit</h3>
+                <div class="value" id="annual-profit">$0</div>
             </div>
         </div>
         
-        <div class="comparison-section">
-            <h2 style="text-align: center; color: #667eea; margin-bottom: 25px;">💰 Side-by-Side: Your Profit vs Contractor's Profit (Per Job)</h2>
-            
-            <div class="comparison-grid">
-                <!-- Your Column -->
-                <div class="column your-column">
-                    <h3>🎯 YOUR PROFIT (15% Model)</h3>
-                    <div class="metric-row">
-                        <span class="metric-label">Job Value:</span>
-                        <span class="metric-value" id="your-job-value">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Ad Cost (Pass-Through):</span>
-                        <span class="metric-value cost" id="your-ad-cost">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Your 15% Commission:</span>
-                        <span class="metric-value profit" id="your-commission">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">You Charge Contractor:</span>
-                        <span class="metric-value" id="your-total-charge">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Contractor Keeps:</span>
-                        <span class="metric-value" id="contractor-keeps">$0</span>
-                    </div>
-                    <div class="metric-row" style="border-color: #28a745;">
-                        <span class="metric-label">YOUR NET PROFIT:</span>
-                        <span class="metric-value profit" id="your-final-profit">$0</span>
-                    </div>
-                    <div style="margin-top: 15px; padding: 15px; background: rgba(40, 167, 69, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.9em; color: #555;">Your Profit per Job</div>
-                        <div style="font-size: 2em; font-weight: bold; color: #28a745;" id="your-profit-per-job">$0</div>
-                    </div>
-                </div>
-                
-                <!-- Contractor's Column -->
-                <div class="column contractor-column">
-                    <h3>👷 CONTRACTOR'S PROFIT (30% Model)</h3>
-                    <div class="metric-row">
-                        <span class="metric-label">Job Cost (Labor + Materials):</span>
-                        <span class="metric-value" id="contractor-base-cost">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">30% Markup:</span>
-                        <span class="metric-value profit" id="contractor-markup-amount">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Price to Customer:</span>
-                        <span class="metric-value" id="contractor-price">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Ad Spend (if doing it themselves):</span>
-                        <span class="metric-value cost" id="contractor-ad-cost">$0</span>
-                    </div>
-                    <div class="metric-row">
-                        <span class="metric-label">Lower Close Rate (10% worse):</span>
-                        <span class="metric-value cost" id="contractor-close-penalty">More wasted ad $</span>
-                    </div>
-                    <div class="metric-row" style="border-color: #f39c12;">
-                        <span class="metric-label">THEIR NET PROFIT:</span>
-                        <span class="metric-value profit" id="contractor-final-profit">$0</span>
-                    </div>
-                    <div style="margin-top: 15px; padding: 15px; background: rgba(243, 156, 18, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 0.9em; color: #555;">Their Profit per Job</div>
-                        <div style="font-size: 2em; font-weight: bold; color: #f39c12;" id="contractor-profit-per-job">$0</div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
         <div class="table-container">
             <h2 style="margin-bottom: 20px; color: #667eea;">📈 Job-by-Job Breakdown</h2>
@@ -404,9 +318,9 @@
                         <th>Your 15%</th>
                         <th>You Charge</th>
                         <th>Your Profit</th>
-                        <th>Contractor Gets</th>
-                        <th>Their 30% Markup</th>
-                        <th>Their Net Profit</th>
+                        <th>Contractor Gets (w/ you)</th>
+                        <th>Their 30% Profit (alone)</th>
+                        <th>Their Net (after ads)</th>
                         <th>Winner</th>
                     </tr>
                 </thead>
@@ -437,7 +351,7 @@
     
     <script>
         // Initialize
-        const inputs = ['num-jobs', 'avg-job-value', 'commission-rate', 'contractor-markup', 'ad-cost', 'close-rate'];
+        const inputs = ['num-jobs', 'avg-job-value', 'commission-rate', 'contractor-markup', 'cpc', 'cvr', 'close-rate'];
         inputs.forEach(id => {
             document.getElementById(id).addEventListener('input', calculate);
         });
@@ -447,8 +361,18 @@
             const avgJobValue = parseFloat(document.getElementById('avg-job-value').value) || 15000;
             const commissionRate = parseFloat(document.getElementById('commission-rate').value) / 100 || 0.15;
             const contractorMarkup = parseFloat(document.getElementById('contractor-markup').value) / 100 || 0.30;
-            const adCost = parseFloat(document.getElementById('ad-cost').value) || 1343;
+            const cpc = parseFloat(document.getElementById('cpc').value) || 8.76;
+            const cvr = parseFloat(document.getElementById('cvr').value) / 100 || 0.0261;
             const closeRate = parseFloat(document.getElementById('close-rate').value) / 100 || 0.25;
+            
+            // CALCULATE AD COST DYNAMICALLY
+            const clicksPerLead = 1 / cvr;
+            const leadsPerJob = 1 / closeRate;
+            const totalClicksPerJob = clicksPerLead * leadsPerJob;
+            const adCost = totalClicksPerJob * cpc;
+            
+            // Update the display
+            document.getElementById('ad-cost-display').value = '$' + adCost.toFixed(0);
             
             // YOUR NUMBERS
             const yourCommission = avgJobValue * commissionRate;
@@ -457,12 +381,15 @@
             const yourProfitPerJob = yourCommission; // Ad cost is reimbursed
             
             // CONTRACTOR'S NUMBERS (if doing it themselves)
-            // Assuming they close 10% worse (15% vs your 25%)
+            // Their 30% markup IS their profit (on the full job value)
+            const contractorGrossProfit = avgJobValue * contractorMarkup; // 30% of $15k = $4,500
+            
+            // But if they do their own marketing, they close 10% worse
             const contractorCloseRate = Math.max(0.15, closeRate - 0.10);
-            const contractorAdCostPerJob = adCost * (closeRate / contractorCloseRate); // More ad waste
-            const contractorBaseCost = avgJobValue / (1 + contractorMarkup); // Reverse engineer
-            const contractorMarkupAmount = avgJobValue - contractorBaseCost;
-            const contractorNetProfit = contractorMarkupAmount - contractorAdCostPerJob;
+            const contractorAdCostPerJob = (cpc * (1/cvr) * (1/contractorCloseRate)); // Their ad cost with worse close rate
+            
+            // Net profit = Gross profit - ad costs
+            const contractorNetProfit = contractorGrossProfit - contractorAdCostPerJob;
             
             // Update summary cards
             const totalAdSpend = adCost * numJobs;
@@ -477,17 +404,20 @@
             
             // Update per-job comparison
             document.getElementById('your-job-value').textContent = '$' + avgJobValue.toLocaleString();
-            document.getElementById('your-ad-cost').textContent = '$' + adCost.toLocaleString();
+            document.getElementById('your-ad-cost').textContent = '$' + adCost.toFixed(0);
             document.getElementById('your-commission').textContent = '$' + yourCommission.toLocaleString();
-            document.getElementById('your-total-charge').textContent = '$' + totalChargeToContractor.toLocaleString();
-            document.getElementById('contractor-keeps').textContent = '$' + contractorKeeps.toLocaleString();
+            document.getElementById('your-total-charge').textContent = '$' + totalChargeToContractor.toFixed(0);
+            document.getElementById('contractor-keeps').textContent = '$' + contractorKeeps.toFixed(0);
             document.getElementById('your-final-profit').textContent = '$' + yourProfitPerJob.toLocaleString();
             document.getElementById('your-profit-per-job').textContent = '$' + yourProfitPerJob.toLocaleString();
             
-            document.getElementById('contractor-base-cost').textContent = '$' + contractorBaseCost.toLocaleString();
-            document.getElementById('contractor-markup-amount').textContent = '$' + contractorMarkupAmount.toLocaleString();
+            // Contractor column
+            const adWaste = contractorAdCostPerJob - adCost;
             document.getElementById('contractor-price').textContent = '$' + avgJobValue.toLocaleString();
+            document.getElementById('contractor-markup-amount').textContent = '$' + contractorGrossProfit.toFixed(0);
             document.getElementById('contractor-ad-cost').textContent = '$' + contractorAdCostPerJob.toFixed(0);
+            document.getElementById('contractor-close-rate-display').textContent = (contractorCloseRate * 100).toFixed(0) + '% (vs your ' + (closeRate * 100).toFixed(0) + '%)';
+            document.getElementById('contractor-ad-waste').textContent = '$' + adWaste.toFixed(0);
             document.getElementById('contractor-final-profit').textContent = '$' + contractorNetProfit.toFixed(0);
             document.getElementById('contractor-profit-per-job').textContent = '$' + contractorNetProfit.toFixed(0);
             
@@ -501,12 +431,12 @@
                     <tr>
                         <td><strong>#${i}</strong></td>
                         <td>$${avgJobValue.toLocaleString()}</td>
-                        <td class="cost">$${adCost.toLocaleString()}</td>
+                        <td class="cost">$${adCost.toFixed(0)}</td>
                         <td class="profit">$${yourCommission.toLocaleString()}</td>
-                        <td>$${totalChargeToContractor.toLocaleString()}</td>
+                        <td>$${totalChargeToContractor.toFixed(0)}</td>
                         <td class="profit"><strong>$${yourProfitPerJob.toLocaleString()}</strong></td>
-                        <td>$${contractorKeeps.toLocaleString()}</td>
-                        <td class="profit">$${contractorMarkupAmount.toFixed(0)}</td>
+                        <td>$${contractorKeeps.toFixed(0)}</td>
+                        <td class="profit">$${contractorGrossProfit.toFixed(0)}</td>
                         <td class="profit">$${contractorNetProfit.toFixed(0)}</td>
                         <td><strong>${winner}</strong></td>
                     </tr>
