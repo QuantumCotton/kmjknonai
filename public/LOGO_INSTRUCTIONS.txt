@@ -1,0 +1,20 @@
+KMJK LOGO INSTALLATION INSTRUCTIONS
+====================================
+
+Your favicon is ready! Now just copy it to this folder:
+
+1. Take your favicon.ico file (the KMJK logo you created)
+2. Copy it to: e:\Projects\websites\ElegantKmjk\kmjknonai\public\
+3. Replace the existing favicon.ico file
+
+That's it! Your KMJK logo will now appear in:
+✓ Browser tabs
+✓ Bookmarks
+✓ Browser history
+✓ Mobile home screen icons
+
+The HTML is already configured to use:
+- favicon.ico (for older browsers)
+- kmjk-logo.png (for high-res modern browsers)
+
+Both files should be placed in the public/ folder.
