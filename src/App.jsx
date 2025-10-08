@@ -21,6 +21,7 @@ import HandymanLanding from './pages/HandymanLanding.jsx'
 import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
 import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
 import TVMountingLanding from './pages/TVMountingLanding.jsx'
+import GalleryPage from './pages/GalleryPage.jsx'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -264,9 +265,11 @@ function PortfolioPage() {
                     <h2 className="text-3xl font-semibold mb-4 gold-accent">{project.title}</h2>
                     <p className="text-lg text-gray-700 leading-relaxed">{project.description}</p>
                     <div className="mt-6">
-                      <Button className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
-                        View Full Gallery
-                      </Button>
+                      <Link to="/gallery">
+                        <Button className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
+                          View Full Gallery
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -574,6 +577,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/about" element={<AboutPage />} />
