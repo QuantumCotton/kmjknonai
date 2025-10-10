@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Kitchen Remodel Estimate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Sandstone & Slate -->
+    <!-- Application Structure Plan: The application is designed as a single-page interactive dashboard to deconstruct the kitchen remodel estimate. The structure prioritizes immediate understanding and exploration over a simple static table. It consists of four main parts: 1) A header with project details. 2) A "Key Metrics" section with large, clear cards for the most important totals (Grand Total, Material/Labor Costs). 3) An interactive donut chart visualizing the cost breakdown by category, serving as the primary exploratory tool. 4) A detailed, scrollable itemized table that corresponds to the chart. This dashboard structure was chosen because it allows a user to quickly grasp the overall financial picture and then drill down into specific cost centers interactively, making the complex data much more digestible and transparent than a traditional document. -->
+    <!-- Visualization & Content Choices: 1) Estimate Totals -> Goal: Inform -> Viz: Large "Stat Cards" with icons (HTML/Tailwind) -> Interaction: None, direct display -> Justification: Provides immediate, high-level financial context with enhanced visual appeal. 2) Cost Breakdown by Category -> Goal: Compare -> Viz: Donut Chart (Chart.js/Canvas) with a refined color palette -> Interaction: Hover for tooltips, click to highlight table rows -> Justification: Shows part-to-whole relationships in a visually engaging manner. 3) Full Itemized List -> Goal: Organize/Detail -> Viz: Styled HTML Table -> Interaction: Rows are highlighted based on chart clicks -> Justification: Provides complete transparency. The visual redesign of all elements aims for a premium, user-friendly aesthetic. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 420px;
+            max-height: 45vh;
+        }
+        .highlight {
+            background-color: #fef3c7; /* amber-100 */
+            transition: background-color 0.3s ease-in-out;
+        }
+        .table-category-header {
+            background-color: #f5f5f4; /* stone-100 */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-700">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-stone-900">Interactive Kitchen Remodel Estimate</h1>
+            <p class="text-md text-stone-500 mt-1">Prepared for John & Jane Smith by KMJK Renovations</p>
+            <div class="text-sm text-stone-500 mt-2">Estimate #: 2025-101 | Date: Oct 5, 2025</div>
+        </header>
+
+        <div class="mb-8 p-6 bg-white rounded-xl shadow-md border border-stone-200">
+             <h2 class="text-xl font-bold text-stone-900 mb-4">Project Overview</h2>
+             <p class="text-stone-600 leading-relaxed">This interactive estimate provides a detailed breakdown of the costs for your complete kitchen demolition and remodel. The project includes new custom cabinetry, quartz countertops, tile backsplash, updated plumbing and electrical fixtures, new flooring, and professional-grade appliance installation as discussed. Use the chart and table below to explore the budget.</p>
+        </div>
+        
+        <section id="key-metrics" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-stone-200 flex items-center">
+                <div class="text-3xl mr-4">💰</div>
+                <div>
+                    <h3 class="text-sm font-medium text-stone-500">Grand Total</h3>
+                    <p id="grandTotal" class="text-3xl font-bold text-stone-800 mt-1">$34,989.50</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md border border-stone-200 flex items-center">
+                <div class="text-3xl mr-4">📦</div>
+                <div>
+                    <h3 class="text-sm font-medium text-stone-500">Total Material Cost</h3>
+                    <p id="materialTotal" class="text-3xl font-bold text-stone-800 mt-1">$15,850.00</p>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md border border-stone-200 flex items-center">
+                <div class="text-3xl mr-4">🛠️</div>
+                <div>
+                    <h3 class="text-sm font-medium text-stone-500">Total Labor Cost</h3>
+                    <p id="laborTotal" class="text-3xl font-bold text-stone-800 mt-1">$12,150.00</p>
+                </div>
+            </div>
+        </section>
+
+        <main class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-md border border-stone-200">
+                <h2 class="text-xl font-bold text-stone-900 mb-4 text-center">Cost Breakdown by Category</h2>
+                <div class="chart-container">
+                    <canvas id="costBreakdownChart"></canvas>
+                </div>
+                 <p class="text-sm text-stone-500 mt-4 text-center">Click on a chart segment to highlight the corresponding items in the detailed list.</p>
+            </div>
+
+            <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow-md border border-stone-200">
+                <h2 class="text-xl font-bold text-stone-900 mb-4">Itemized Estimate Details</h2>
+                <div class="overflow-y-auto max-h-[600px] border border-stone-200 rounded-lg">
+                    <table class="w-full text-sm text-left text-stone-500">
+                        <thead class="text-xs text-stone-700 uppercase bg-stone-100 sticky top-0">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Description</th>
+                                <th scope="col" class="px-6 py-3 text-right">Material</th>
+                                <th scope="col" class="px-6 py-3 text-right">Labor</th>
+                                <th scope="col" class="px-6 py-3 text-right">Line Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="estimateTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const estimateData = [
+            { category: 'Demolition & Site Prep', items: [
+                { desc: 'Demolish existing fixtures', material: 250, labor: 1200 },
+                { desc: 'Debris removal and disposal', material: 300, labor: 0 },
+            ]},
+            { category: 'Plumbing', items: [
+                { desc: 'Rough-in for sink, dishwasher, etc.', material: 200, labor: 900 },
+                { desc: 'Sink & Faucet Fixture Allowance', material: 400, labor: 450 },
+            ]},
+            { category: 'Electrical', items: [
+                { desc: 'Rough-in for outlets, switches, etc.', material: 600, labor: 1250 },
+                { desc: 'Install new lighting', material: 350, labor: 800 },
+            ]},
+            { category: 'Drywall, Painting & Finish Work', items: [
+                { desc: 'Hang, tape, and finish drywall', material: 400, labor: 950 },
+                { desc: 'Prime and paint (2 coats)', material: 350, labor: 1000 },
+            ]},
+            { category: 'Cabinetry & Countertops', items: [
+                { desc: 'Custom shaker-style cabinets', material: 7000, labor: 0 },
+                { desc: 'Professional cabinet installation', material: 0, labor: 2000 },
+                { desc: 'Quartz countertops & cutout', material: 4000, labor: 0 },
+                { desc: 'Professional countertop installation', material: 0, labor: 900 },
+            ]},
+            { category: 'Flooring & Backsplash', items: [
+                { desc: 'Luxury Vinyl Plank Flooring', material: 1200, labor: 850 },
+                { desc: 'Ceramic Tile Backsplash', material: 600, labor: 1100 },
+            ]},
+            { category: 'Appliance Installation', items: [
+                { desc: 'Install all appliances', material: 0, labor: 750 },
+            ]},
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableBody = document.getElementById('estimateTableBody');
+            
+            const categoryTotals = estimateData.map(cat => {
+                const total = cat.items.reduce((acc, item) => acc + item.material + item.labor, 0);
+                return { category: cat.category, total: total };
+            });
+
+            const directCostsSubtotal = categoryTotals.reduce((acc, cat) => acc + cat.total, 0);
+            const managementFee = directCostsSubtotal * 0.21;
+            const totalMaterial = estimateData.flatMap(c => c.items).reduce((acc, item) => acc + item.material, 0);
+            const salesTax = totalMaterial * 0.07;
+            const grandTotal = directCostsSubtotal + managementFee + salesTax;
+            
+            let lastClickedSegment = -1;
+
+            const formatCurrency = (value) => value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+            document.getElementById('grandTotal').textContent = formatCurrency(grandTotal);
+            document.getElementById('materialTotal').textContent = formatCurrency(totalMaterial);
+            document.getElementById('laborTotal').textContent = formatCurrency(directCostsSubtotal - totalMaterial);
+
+
+            estimateData.forEach(category => {
+                const headerRow = document.createElement('tr');
+                headerRow.className = `table-category-header category-row-${category.category.replace(/\s|&/g, '-')}`;
+                headerRow.innerHTML = `<td colspan="4" class="px-6 py-2 font-semibold text-stone-800">${category.category}</td>`;
+                tableBody.appendChild(headerRow);
+
+                category.items.forEach(item => {
+                    const itemRow = document.createElement('tr');
+                    itemRow.className = `bg-white border-b border-stone-200 category-row-${category.category.replace(/\s|&/g, '-')}`;
+                    itemRow.innerHTML = `
+                        <td class="px-6 py-4 text-stone-700 whitespace-nowrap">${item.desc}</td>
+                        <td class="px-6 py-4 text-right">${formatCurrency(item.material)}</td>
+                        <td class="px-6 py-4 text-right">${formatCurrency(item.labor)}</td>
+                        <td class="px-6 py-4 text-right font-semibold text-stone-900">${formatCurrency(item.material + item.labor)}</td>
+                    `;
+                    tableBody.appendChild(itemRow);
+                });
+            });
+            
+            const totalsRow = (label, value, isBold = false, isFooter = false) => {
+                const row = document.createElement('tr');
+                row.className = isFooter ? 'bg-stone-100' : 'bg-white';
+                if (isBold) row.classList.add('font-bold');
+                
+                let textColor = isBold ? 'text-stone-900' : 'text-stone-700';
+                
+                row.innerHTML = `<td colspan="3" class="px-6 py-4 text-right ${textColor}">${label}</td><td class="px-6 py-4 text-right ${textColor}">${formatCurrency(value)}</td>`;
+                return row;
+            }
+
+            tableBody.appendChild(totalsRow('Direct Project Costs Subtotal', directCostsSubtotal, true, true));
+            tableBody.appendChild(totalsRow('Project Management & General Conditions (21%)', managementFee, false, true));
+            tableBody.appendChild(totalsRow('Sales Tax (7% on Materials)', salesTax, false, true));
+            tableBody.appendChild(totalsRow('GRAND TOTAL', grandTotal, true, true));
+
+            const ctx = document.getElementById('costBreakdownChart').getContext('2d');
+            const costChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: categoryTotals.map(c => c.category),
+                    datasets: [{
+                        label: 'Cost Breakdown',
+                        data: categoryTotals.map(c => c.total),
+                        backgroundColor: [
+                            '#44403c', // stone-700
+                            '#78716c', // stone-500
+                            '#a8a29e', // stone-400
+                            '#d6d3d1', // stone-300
+                            '#b9a284', // warm-tan
+                            '#d6c7b1', // light-tan
+                            '#a16207'  // amber-600
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 4,
+                        hoverOffset: 15,
+                        hoverBorderColor: '#f5f5f4'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#292524',
+                            titleColor: '#fafaf9',
+                            bodyColor: '#e7e5e4',
+                            padding: 10,
+                            cornerRadius: 4,
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    const value = context.raw;
+                                    const percentage = (value / directCostsSubtotal * 100).toFixed(1);
+                                    label += `${formatCurrency(value)} (${percentage}%)`;
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const segmentIndex = elements[0].index;
+                            
+                            document.querySelectorAll('#estimateTableBody tr').forEach(row => {
+                                row.classList.remove('highlight');
+                            });
+
+                            if (lastClickedSegment !== segmentIndex) {
+                                const category = estimateData[segmentIndex].category;
+                                const categoryClass = `category-row-${category.replace(/\s|&/g, '-')}`;
+                                document.querySelectorAll(`.${categoryClass}`).forEach(row => {
+                                    row.classList.add('highlight');
+                                });
+                                lastClickedSegment = segmentIndex;
+                            } else {
+                                lastClickedSegment = -1;
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
