@@ -163,6 +163,34 @@ function Footer() {
 }
 
 function HomePage() {
+  const differentiators = [
+    {
+      title: 'Owner-led, concierge project management',
+      stat: 'Weekly site walkthroughs',
+      description:
+        'Founder Chris Kummer personally coordinates every trade partner, so you have a single point of accountability from demo through punch list.',
+    },
+    {
+      title: 'Focused on Treasure Coast residences',
+      stat: 'Stuart • Palm City • Jensen Beach',
+      description:
+        'We only serve homeowners along the Treasure Coast, leveraging a vetted network of local craftsmen to keep schedules tight and expectations aligned.',
+    },
+    {
+      title: 'Elevated finishes without runaway change orders',
+      stat: 'Transparent budgets',
+      description:
+        'Detailed scopes, showroom partnerships, and proactive procurement keep your investment controlled while delivering the elevated millwork you expect.',
+    },
+  ]
+
+  const homeownerSignals = [
+    'You are planning a $60K+ kitchen or bath investment and want every detail curated before construction begins.',
+    'You expect showroom-quality millwork, custom cabinetry, and integrated lighting that feel truly bespoke.',
+    'You want one accountable partner to manage designers, trades, and inspections so you can stay focused on your family or business.',
+    'You value clean job sites, reliable timelines, and craftspeople who respect your home as much as you do.',
+  ]
+
   return (
     <div className="pt-20">
       {/* Hero Section */}
@@ -174,7 +202,11 @@ function HomePage() {
         <div className="hero-content max-w-4xl px-4">
           <div className="logo-text">KMJK</div>
           <div className="logo-underline"></div>
-          <h1 className="tagline">Exceptional Craftsmanship. A Seamless Experience.</h1>
+          <h1 className="hero-heading">Luxury Remodeling for Stuart &amp; The Treasure Coast</h1>
+          <p className="hero-subheading">
+            KMJK Home Improvement partners with discerning homeowners to deliver fully managed kitchen, bathroom, and custom renovation experiences backed by meticulous craftsmanship.
+          </p>
+          <p className="hero-proof">Licensed &amp; insured • Owner on-site weekly • 5-star client feedback</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <a href="tel:650-501-7659">
               <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
@@ -191,13 +223,47 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="section-title">Our Mission</h2>
+      {/* Fit Check */}
+      <section className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-4 text-center">
+          <h2 className="section-title">Is KMJK the Right Partner for Your Renovation?</h2>
           <p className="text-lg leading-relaxed text-gray-700">
-            KMJK Home Improvement is dedicated to transforming homes through meticulous craftsmanship and an unwavering commitment to client satisfaction. We believe a renovation should be an exciting journey, not a stressful ordeal.
+            Our boutique team is best suited for homeowners who want a trusted advisor guiding every milestone. If these statements sound like you, let’s start the conversation.
           </p>
+          <ul className="homeowner-list mt-10 text-left">
+            {homeownerSignals.map((signal, index) => (
+              <li key={index} className="flex items-start gap-3 text-lg text-gray-700">
+                <span className="mt-2 h-3 w-3 rounded-full bg-[var(--brushed-gold)] flex-shrink-0"></span>
+                <span>{signal}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Mission Statement */}
+      <section className="py-20 bg-[var(--warm-off-white)]">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="section-title">Our Promise</h2>
+          <p className="text-lg leading-relaxed text-gray-700">
+            Renovations should feel orchestrated—not overwhelming. From the first design workshop to your final walkthrough, our team protects your time, budget, and vision with proactive communication and white-glove site management.
+          </p>
+        </div>
+      </section>
+
+      {/* Differentiators */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="section-title">Why Stuart Homeowners Choose KMJK</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            {differentiators.map((item, index) => (
+              <div key={index} className="value-card">
+                <div className="value-card-stat">{item.stat}</div>
+                <h3 className="value-card-title">{item.title}</h3>
+                <p className="value-card-description">{item.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
