@@ -17,6 +17,7 @@ import BathroomLandingElite from './pages/BathroomLandingElite.jsx'
 import BathroomRepairsLanding from './pages/BathroomRepairsLanding.jsx'
 import KitchenLanding from './pages/KitchenLanding.jsx'
 import KitchenLandingImproved from './pages/KitchenLandingImproved.jsx'
+import OperationsDashboard from './pages/OperationsDashboard.jsx'
 import HandymanLanding from './pages/HandymanLanding.jsx'
 import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
 import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
@@ -34,6 +35,12 @@ function Navigation() {
     { path: '/process', label: 'Our Process', icon: Briefcase },
     { path: '/about', label: 'About Us', icon: Users },
     { path: '/contact', label: 'Contact', icon: MessageSquare },
+    {
+      path: '/operations-dashboard',
+      aliases: ['/operationsdashboard'],
+      label: 'Team Dashboard',
+      icon: Briefcase,
+    },
   ]
 
   return (
@@ -55,7 +62,9 @@ function Navigation() {
                 key={link.path}
                 to={link.path}
                 className={`hover:text-[var(--brushed-gold)] transition-colors ${
-                  location.pathname === link.path ? 'text-[var(--brushed-gold)]' : ''
+                  location.pathname === link.path || link.aliases?.includes(location.pathname)
+                    ? 'text-[var(--brushed-gold)]'
+                    : ''
                 }`}
               >
                 {link.label}
@@ -88,7 +97,9 @@ function Navigation() {
                 key={link.path}
                 to={link.path}
                 className={`block py-2 hover:text-[var(--brushed-gold)] transition-colors ${
-                  location.pathname === link.path ? 'text-[var(--brushed-gold)]' : ''
+                  location.pathname === link.path || link.aliases?.includes(location.pathname)
+                    ? 'text-[var(--brushed-gold)]'
+                    : ''
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -569,6 +580,31 @@ function ContactPage() {
   )
 }
 
+function NotFoundPage() {
+  return (
+    <div className="pt-32 pb-24 bg-white">
+      <div className="max-w-3xl mx-auto px-4 text-center space-y-6">
+        <h1 className="text-4xl font-semibold text-[var(--deep-charcoal)]">Page not found</h1>
+        <p className="text-lg text-gray-600">
+          We couldn&apos;t find the route you were looking for. Double-check the link or pick a page below to continue.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link to="/">
+            <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
+              Back to home
+            </Button>
+          </Link>
+          <Link to="/operations-dashboard">
+            <Button variant="outline" size="lg" className="border-[var(--deep-charcoal)] text-[var(--deep-charcoal)]">
+              Open team dashboard
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function App() {
   return (
     <Router>
@@ -587,6 +623,8 @@ function App() {
           <Route path="/bathrooms-elite" element={<BathroomLandingElite />} />
           <Route path="/bathroom-repairs" element={<BathroomRepairsLanding />} />
           <Route path="/kitchen-remodel" element={<KitchenLandingImproved />} />
+          <Route path="/operations-dashboard" element={<OperationsDashboard />} />
+          <Route path="/operationsdashboard" element={<OperationsDashboard />} />
           <Route path="/handyman-services" element={<HandymanLandingImproved />} />
           <Route path="/tv-mounting" element={<TVMountingLanding />} />
           {/* Old Versions for Reference */}
@@ -594,6 +632,7 @@ function App() {
           <Route path="/kitchen-remodel-old" element={<KitchenLanding />} />
           <Route path="/handyman-services-old" element={<HandymanLanding />} />
           <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </div>
