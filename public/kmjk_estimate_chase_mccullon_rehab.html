@@ -215,6 +215,36 @@
             font-style: italic;
         }
 
+        .phase-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .phase-table thead {
+            background: #f1efe6;
+            color: #2c2c2c;
+        }
+
+        .phase-table th,
+        .phase-table td {
+            padding: 12px 14px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .phase-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .phase-table .amount {
+            white-space: nowrap;
+            font-weight: 600;
+            text-align: right;
+        }
+
         .payment-flex {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -364,15 +394,16 @@
             </div>
         </div>
 
-        <div class="content">
-can you u            <div class="project-intro">
+            <div class="content">
+            <div class="project-intro">
                 <h3>Project Overview</h3>
                 <p>
                     Complete interior and exterior rehabilitation of the client’s mobile home, including 
                     creation of a third bedroom and bathroom, full flooring replacement, structural panel 
                     upgrades, and finish improvements throughout. Work also includes exterior cleaning and 
                     roof coating to prepare the residence for market-ready presentation. AC equipment is to 
-                    be supplied by the client and is outside of this scope.
+                    be supplied by the client and is outside of this scope. The effort is organized into a 
+                    four-phase delivery plan so progress draws align with tangible milestone completions.
                 </p>
             </div>
 
@@ -437,25 +468,85 @@ can you u            <div class="project-intro">
             </div>
 
             <div class="section">
+                <h2 class="section-title">Phase Milestones &amp; Draw Schedule</h2>
+                <p style="font-size: 0.86em; color: #555; margin-bottom: 10px;">
+                    Work will be delivered in four clearly defined construction phases following an initial mobilization deposit. 
+                    Each 20% draw totals <strong>$3,800.00</strong>, aligning billing with key project checkpoints to keep cash flow predictable and transparent.
+                </p>
+                <table class="phase-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 18%;">Milestone</th>
+                            <th>Scope Highlights</th>
+                            <th style="width: 22%;">Invoice Trigger</th>
+                            <th style="width: 15%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mobilization Deposit</strong></td>
+                            <td>Contract execution, schedule locking, material procurement, and permit coordination.</td>
+                            <td>Due at acceptance</td>
+                            <td class="amount">$3,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 1</strong><br><span style="font-size: 0.8em; color: #666;">Layout &amp; Framing</span></td>
+                            <td>Third bedroom and bath framing, structural panel replacement, doorway reconfiguration, and wall prep.</td>
+                            <td>Upon framing inspection sign-off</td>
+                            <td class="amount">$3,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 2</strong><br><span style="font-size: 0.8em; color: #666;">Bathroom Conversion</span></td>
+                            <td>Standing shower conversion, toilet replacement, plumbing tie-ins, waterproofing, and fixture install.</td>
+                            <td>Completion of rough &amp; finish plumbing</td>
+                            <td class="amount">$3,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 3</strong><br><span style="font-size: 0.8em; color: #666;">Flooring &amp; Kitchen</span></td>
+                            <td>Full-home flooring install, baseboards, kitchen assembly with island set, and finish carpentry.</td>
+                            <td>Walkthrough of interior finishes</td>
+                            <td class="amount">$3,800.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 4</strong><br><span style="font-size: 0.8em; color: #666;">Exterior Cleaning &amp; Coating</span></td>
+                            <td>Power washing, roof coating, exterior cleanup, and final site presentation.</td>
+                            <td>Final punch list &amp; turnover</td>
+                            <td class="amount">$3,800.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
                 <h2 class="section-title">Payment Schedule</h2>
                 <div class="payment-flex">
                     <div class="payment-card">
-                        <h4>Initial Deposit (50%)</h4>
-                        <p>Due at acceptance to secure materials, scheduling, and crew allocations.</p>
-                        <div class="amount">$9,500.00</div>
+                        <h4>Mobilization Deposit (20%)</h4>
+                        <p>Due at agreement signing to secure calendar, order materials, and mobilize crews.</p>
+                        <div class="amount">$3,800.00</div>
                     </div>
                     <div class="payment-card">
-                        <h4>Progress Payment (30%)</h4>
-                        <p>Due after framing, rough plumbing, flooring install, and kitchen set-up milestones.</p>
-                        <div class="amount">$5,700.00</div>
+                        <h4>Phase 1 Draw (20%)</h4>
+                        <p>Released once structural layout adjustments and framing inspections are completed.</p>
+                        <div class="amount">$3,800.00</div>
                     </div>
                     <div class="payment-card">
-                        <h4>Final Payment (20%)</h4>
-                        <p>Due at project completion following client walkthrough and punch list approval.</p>
+                        <h4>Phase 2 Draw (20%)</h4>
+                        <p>Issued after bathroom conversion and plumbing upgrades pass quality review.</p>
+                        <div class="amount">$3,800.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 3 Draw (20%)</h4>
+                        <p>Due upon acceptance of flooring installation and kitchen assembly finishes.</p>
+                        <div class="amount">$3,800.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 4 / Final (20%)</h4>
+                        <p>Collected after exterior cleaning, roof coating, and final punch list sign-off.</p>
                         <div class="amount">$3,800.00</div>
                     </div>
                 </div>
-                <p style="font-size: 0.82em; color: #555; margin-top: 10px;">Installments reflect the full $19,000 project total inclusive of Florida sales tax.</p>
+                <p style="font-size: 0.82em; color: #555; margin-top: 10px;">Each invoice equates to <strong>$3,800.00</strong>; all five draws total the $19,000 project investment inclusive of Florida sales tax.</p>
             </div>
 
             <div class="section">
@@ -466,7 +557,8 @@ can you u            <div class="project-intro">
                     <li>Any scope revisions or unforeseen conditions will be documented and priced via change order.</li>
                     <li>Client responsible for permits, HOA approvals, and utility coordination unless otherwise arranged.</li>
                     <li>KMJK is licensed and insured; safety protocols and site protection maintained throughout project.</li>
-                    <li>Final payment is due immediately upon completion and acceptance of the project scope.</li>
+                    <li>Progress billing follows five equal 20% draws tied to the milestone schedule above.</li>
+                    <li>Final draw is due within three business days of Phase 4 acceptance and punch list clearance.</li>
                 </ul>
             </div>
 
