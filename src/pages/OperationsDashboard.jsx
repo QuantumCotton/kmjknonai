@@ -1,16 +1,14 @@
 import { useMemo, useState } from 'react'
 import {
-  Activity,
   AlertCircle,
   CheckCircle2,
   FileText,
   Image as ImageIcon,
-  Layers,
   Lock,
+  LogOut,
   Mail,
   MessageSquare,
   Mic,
-  ShieldCheck,
   UploadCloud,
   Users,
 } from 'lucide-react'
@@ -23,9 +21,8 @@ const accounts = [
     title: 'Project Director',
     email: 'josue@kmjkrenovations.com',
     phone: '555-0112',
-    passwordHash: 'd7962818d115bdbca56efe59e69b37aa8a74abce49010f52a85d3c55741ffe35',
-    fallbackPassword: 'Cotton247',
-    accent: 'from-sky-500 via-blue-500 to-indigo-500',
+    password: 'Cotton247',
+    accent: 'from-sky-500 via-blue-500 to-indigo-600',
   },
   {
     id: 'chris',
@@ -33,46 +30,45 @@ const accounts = [
     title: 'Owner / Field Operations',
     email: 'chris@theeliteservicehub.com',
     phone: '650-501-7659',
-    passwordHash: 'b48beaa3060f4c75053f18e9ea73c2eb071c913fd551b00a53443bcf057a7250',
-    fallbackPassword: 'C0tt0n247',
+    password: 'C0tt0n247',
     accent: 'from-amber-500 via-orange-500 to-rose-500',
   },
 ]
 
-const projectsSeed = [
+const projectSeeds = [
   {
     id: 'marquez-suite',
     name: 'Marquez Primary Suite',
     client: 'Marquez Family',
-    status: 'Rough-in walk-through scheduled',
+    status: 'Rough-in walkthrough scheduled',
     due: 'Oct 12',
     tags: ['bathroom', 'millwork'],
     updates: [
       {
-        id: 'up-1',
+        id: 'update-1',
         author: 'Josue Lopez',
-        role: 'Project Director',
-        text: 'Municipal inspections cleared. Hostway can begin closing walls after electrical touch-ups.',
-        timestamp: '2025-10-07T10:22:00Z',
+        authorId: 'josue',
+        body: 'Municipal inspections cleared. Hostway can begin closing walls after electrical touch ups.',
+        createdAt: '2025-10-07T10:22:00Z',
       },
       {
-        id: 'up-2',
+        id: 'update-2',
         author: 'Chris Cotton',
-        role: 'Owner / Field Operations',
-        text: 'Framing punch list complete. Added photo set to shared drive.',
-        timestamp: '2025-10-06T21:10:00Z',
+        authorId: 'chris',
+        body: 'Framing punch list complete. Uploaded photo set to shared drive for review.',
+        createdAt: '2025-10-06T20:54:00Z',
       },
     ],
     notes: [
       {
         id: 'note-1',
-        type: 'text',
-        author: 'Josue Lopez',
-        text: 'Client approved the brushed brass plumbing trim. Update procurement to release PO.',
-        timestamp: '2025-10-05T17:32:00Z',
-        status: 'organized',
-        summary: 'Approved brass trim for Marquez bath; release purchase order.',
+        text: 'Client approved the brushed brass plumbing trim. Release purchase order.',
+        attachments: [],
+        createdAt: '2025-10-05T17:30:00Z',
+        client: 'Marquez Family',
         notify: ['josue'],
+        status: 'organized',
+        summary: 'Client: Marquez Family\nNo attachments.\nNext steps: release brass trim purchase order.',
       },
     ],
   },
@@ -85,169 +81,145 @@ const projectsSeed = [
     tags: ['kitchen'],
     updates: [
       {
-        id: 'up-3',
+        id: 'update-3',
         author: 'Chris Cotton',
-        role: 'Owner / Field Operations',
-        text: 'Demo complete. Need confirmation on island outlet layout before Friday.',
-        timestamp: '2025-10-07T14:40:00Z',
+        authorId: 'chris',
+        body: 'Demo complete. Need confirmation on island outlet layout before Friday.',
+        createdAt: '2025-10-07T14:10:00Z',
       },
     ],
     notes: [],
   },
 ]
 
-const attachmentIcons = {
-  image: ImageIcon,
-  audio: Mic,
-  document: FileText,
-}
+const attachmentTypes = [
+  { id: 'image', label: 'Image', icon: ImageIcon },
+  { id: 'audio', label: 'Audio', icon: Mic },
+  { id: 'document', label: 'Document', icon: FileText },
+]
 
-const emailTargets = [
+const recipients = [
   { id: 'josue', label: 'Email Josue' },
   { id: 'chris', label: 'Email Chris' },
 ]
 
-async function hashPassword(input) {
-  if (typeof window === 'undefined' || !window.crypto?.subtle) {
-    return input
-  }
+const keywordClientMap = [
+  { token: 'marquez', client: 'Marquez Family' },
+  { token: 'fitzgerald', client: 'Fitzgerald Residence' },
+  { token: 'hostway', client: 'KMJK Field Ops' },
+]
 
-  const encoder = new TextEncoder()
-  const data = encoder.encode(input)
-  const digest = await window.crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(digest))
-  return hashArray.map((byte) => byte.toString(16).padStart(2, '0')).join('')
-}
+const keywordActions = [
+  { token: 'screw', message: 'Flag hardware change for carpentry team.' },
+  { token: 'nail', message: 'Confirm fastener schedule with structural lead.' },
+  { token: 'pvc', message: 'Check plumbing materials inventory for PVC fittings.' },
+  { token: 'outlet', message: 'Coordinate electrical layout update.' },
+]
 
-function formatRelative(timestamp) {
-  const date = new Date(timestamp)
+function formatDate(input) {
+  const date = new Date(input)
   if (Number.isNaN(date.getTime())) return 'Just now'
-  return date.toLocaleString(undefined, {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })
+  return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
 }
 
-function simulateAiProcessing({ text, files, client, sendEmailTo }) {
+function analyseNote({ text, attachments, client, notify }) {
   const lower = text.toLowerCase()
-  let detectedClient = client
-  const keywordToClient = [
-    { keyword: 'marquez', client: 'Marquez Family' },
-    { keyword: 'fitzgerald', client: 'Fitzgerald Residence' },
-    { keyword: 'hostway', client: 'KMJK Field Ops' },
-  ]
+  let resolvedClient = client?.trim() || ''
 
-  if (!detectedClient) {
-    const match = keywordToClient.find((entry) => lower.includes(entry.keyword))
-    if (match) detectedClient = match.client
+  if (!resolvedClient) {
+    const match = keywordClientMap.find((entry) => lower.includes(entry.token))
+    if (match) resolvedClient = match.client
   }
 
-  const nextSteps = []
-  if (lower.includes('screw')) {
-    nextSteps.push('Flag hardware change for carpentry team')
-  }
-  if (lower.includes('nail')) {
-    nextSteps.push('Confirm fastener schedule with structural lead')
-  }
-  if (files.some((file) => file.kind === 'image')) {
-    nextSteps.push('Sync uploaded images to project gallery folder')
-  }
-  if (files.some((file) => file.kind === 'audio')) {
-    nextSteps.push('Transcribe new audio note and attach to daily report')
+  const actionItems = keywordActions
+    .filter((entry) => lower.includes(entry.token))
+    .map((entry) => entry.message)
+
+  if (!actionItems.length) {
+    actionItems.push('Review with project lead and post to daily brief.')
   }
 
-  if (!nextSteps.length) {
-    nextSteps.push('Review note details and update task board')
-  }
-
-  const notify = sendEmailTo.length ? sendEmailTo : lower.includes('chris') ? ['chris'] : lower.includes('josue') ? ['josue'] : []
+  const autoNotify = [...notify]
+  if (!autoNotify.includes('chris') && lower.includes('chris')) autoNotify.push('chris')
+  if (!autoNotify.includes('josue') && lower.includes('josue')) autoNotify.push('josue')
+  if (!autoNotify.includes('chris') && lower.includes('hostway')) autoNotify.push('chris')
 
   const summary = [
-    detectedClient ? `Client: ${detectedClient}` : 'Client not detected — needs review',
-    `Captured ${files.length ? files.length : 'no'} attachment${files.length === 1 ? '' : 's'}.`,
-    nextSteps.join(' • '),
-  ].join(' \n')
+    `Client: ${resolvedClient || 'Needs routing'}`,
+    `${attachments.length ? `${attachments.length} attachment${attachments.length === 1 ? '' : 's'}` : 'No attachments'}.`,
+    `Next steps: ${actionItems.join(' ')}`,
+  ].join('\n')
 
   return {
     status: 'organized',
     summary,
-    notify,
-    client: detectedClient,
+    client: resolvedClient,
+    notify: autoNotify,
   }
 }
 
 function OperationsDashboard() {
-  const [activeUserId, setActiveUserId] = useState(null)
+  const [selectedAccountId, setSelectedAccountId] = useState(accounts[0].id)
   const [passwordInput, setPasswordInput] = useState('')
-  const [isAuthenticating, setIsAuthenticating] = useState(false)
   const [authError, setAuthError] = useState('')
   const [sessionUser, setSessionUser] = useState(null)
-  const [projects, setProjects] = useState(projectsSeed)
-  const [activeProjectId, setActiveProjectId] = useState(projectsSeed[0]?.id ?? null)
+
+  const [projects, setProjects] = useState(projectSeeds)
+  const [activeProjectId, setActiveProjectId] = useState(projectSeeds[0]?.id ?? null)
   const [messageDraft, setMessageDraft] = useState('')
+
   const [noteDraft, setNoteDraft] = useState({
     text: '',
-    files: [],
     client: '',
-    sendEmailTo: [],
+    attachments: [],
+    notify: [],
+    attachmentType: 'image',
+    attachmentLabel: '',
   })
-  const [processingNotes, setProcessingNotes] = useState([])
 
   const activeProject = useMemo(
     () => projects.find((project) => project.id === activeProjectId) ?? null,
     [activeProjectId, projects],
   )
 
-  const clients = useMemo(() => {
-    const fromProjects = projects.map((project) => project.client)
-    const distinct = Array.from(new Set(fromProjects))
-    return distinct.sort()
-  }, [projects])
+  const structuredNotes = useMemo(
+    () =>
+      projects
+        .flatMap((project) =>
+          project.notes.map((note) => ({ ...note, projectName: project.name, projectId: project.id })),
+        )
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
+    [projects],
+  )
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault()
-    if (!activeUserId) {
-      setAuthError('Select a user to continue.')
-      return
-    }
-
-    const account = accounts.find((item) => item.id === activeUserId)
+    const account = accounts.find((entry) => entry.id === selectedAccountId)
     if (!account) {
-      setAuthError('Account not found.')
+      setAuthError('Choose an account to continue.')
       return
     }
 
-    setIsAuthenticating(true)
-    setAuthError('')
-
-    try {
-      const digest = await hashPassword(passwordInput)
-      const verified = digest === account.passwordHash || passwordInput === account.fallbackPassword
-      if (!verified) {
-        setAuthError('Incorrect password for this account.')
-        return
-      }
-
-      setSessionUser(account)
-      setPasswordInput('')
-    } catch (error) {
-      console.error(error)
-      setAuthError('Unable to verify credentials in this prototype.')
-    } finally {
-      setIsAuthenticating(false)
+    if (passwordInput !== account.password) {
+      setAuthError('Incorrect password for this account.')
+      return
     }
+
+    setSessionUser(account)
+    setPasswordInput('')
+    setAuthError('')
   }
 
-  const handleAddUpdate = (event) => {
+  const handleMessageSubmit = (event) => {
     event.preventDefault()
-    if (!sessionUser || !messageDraft.trim() || !activeProject) return
+    if (!sessionUser || !activeProject || !messageDraft.trim()) return
 
     const newUpdate = {
-      id: `up-${Date.now()}`,
+      id: `update-${Date.now()}`,
       author: sessionUser.name,
-      role: sessionUser.title,
-      text: messageDraft.trim(),
-      timestamp: new Date().toISOString(),
+      authorId: sessionUser.id,
+      body: messageDraft.trim(),
+      createdAt: new Date().toISOString(),
     }
 
     setProjects((prev) =>
@@ -257,97 +229,78 @@ function OperationsDashboard() {
           : project,
       ),
     )
+
     setMessageDraft('')
   }
 
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files ?? [])
-    if (!files.length) return
+  const handleAddAttachment = () => {
+    if (!noteDraft.attachmentLabel.trim()) return
+    const typeEntry = attachmentTypes.find((entry) => entry.id === noteDraft.attachmentType)
+    if (!typeEntry) return
 
-    const normalized = files.map((file) => {
-      const type = file.type.startsWith('image') ? 'image' : file.type.startsWith('audio') ? 'audio' : 'document'
-      return {
-        id: `${type}-${file.name}-${Date.now()}`,
-        kind: type,
-        name: file.name,
-        size: file.size,
-      }
-    })
+    const attachment = {
+      id: `${noteDraft.attachmentType}-${Date.now()}`,
+      type: noteDraft.attachmentType,
+      label: noteDraft.attachmentLabel.trim(),
+    }
 
-    setNoteDraft((prev) => ({ ...prev, files: [...prev.files, ...normalized] }))
-    event.target.value = ''
-  }
-
-  const toggleEmailTarget = (id) => {
-    setNoteDraft((prev) => {
-      const exists = prev.sendEmailTo.includes(id)
-      return {
-        ...prev,
-        sendEmailTo: exists
-          ? prev.sendEmailTo.filter((item) => item !== id)
-          : [...prev.sendEmailTo, id],
-      }
-    })
-  }
-
-  const removeFile = (fileId) => {
     setNoteDraft((prev) => ({
       ...prev,
-      files: prev.files.filter((file) => file.id !== fileId),
+      attachments: [...prev.attachments, attachment],
+      attachmentLabel: '',
+    }))
+  }
+
+  const handleRemoveAttachment = (attachmentId) => {
+    setNoteDraft((prev) => ({
+      ...prev,
+      attachments: prev.attachments.filter((item) => item.id !== attachmentId),
+    }))
+  }
+
+  const toggleNotify = (recipientId) => {
+    setNoteDraft((prev) => ({
+      ...prev,
+      notify: prev.notify.includes(recipientId)
+        ? prev.notify.filter((id) => id !== recipientId)
+        : [...prev.notify, recipientId],
     }))
   }
 
   const handleNoteSubmit = (event) => {
     event.preventDefault()
-    if (!sessionUser || !noteDraft.text.trim()) return
+    if (!sessionUser || !activeProject || !noteDraft.text.trim()) return
 
-    const newNote = {
+    const baseNote = {
       id: `note-${Date.now()}`,
-      type: noteDraft.files.length ? 'multimodal' : 'text',
-      author: sessionUser.name,
       text: noteDraft.text.trim(),
-      timestamp: new Date().toISOString(),
-      status: 'processing',
-      files: noteDraft.files,
-      client: noteDraft.client,
-      sendEmailTo: noteDraft.sendEmailTo,
+      attachments: noteDraft.attachments,
+      createdAt: new Date().toISOString(),
+      client: noteDraft.client.trim(),
+      notify: noteDraft.notify,
     }
+
+    const aiResult = analyseNote(baseNote)
+    const finalNote = { ...baseNote, ...aiResult }
 
     setProjects((prev) =>
       prev.map((project) =>
-        project.id === activeProjectId
-          ? { ...project, notes: [newNote, ...project.notes] }
+        project.id === activeProject.id
+          ? { ...project, notes: [finalNote, ...project.notes] }
           : project,
       ),
     )
 
-    setProcessingNotes((prev) => [newNote.id, ...prev])
-
-    setTimeout(() => {
-      const aiResult = simulateAiProcessing(newNote)
-      setProjects((prev) =>
-        prev.map((project) =>
-          project.id === activeProjectId
-            ? {
-                ...project,
-                notes: project.notes.map((note) =>
-                  note.id === newNote.id ? { ...note, ...aiResult } : note,
-                ),
-              }
-            : project,
-        ),
-      )
-      setProcessingNotes((prev) => prev.filter((id) => id !== newNote.id))
-    }, 750)
-
-    setNoteDraft({ text: '', files: [], client: '', sendEmailTo: [] })
+    setNoteDraft({ text: '', client: '', attachments: [], notify: [], attachmentType: 'image', attachmentLabel: '' })
   }
 
   const logout = () => {
     setSessionUser(null)
-    setActiveUserId(null)
+    setActiveProjectId(projectSeeds[0]?.id ?? null)
     setPasswordInput('')
-    setNoteDraft({ text: '', files: [], client: '', sendEmailTo: [] })
+    setAuthError('')
+    setMessageDraft('')
+    setNoteDraft({ text: '', client: '', attachments: [], notify: [], attachmentType: 'image', attachmentLabel: '' })
   }
 
   return (
@@ -360,29 +313,27 @@ function OperationsDashboard() {
           <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <h1 className="text-3xl font-semibold text-white md:text-4xl">KMJK Field Command Dashboard</h1>
-              <p className="mt-2 max-w-2xl text-base text-slate-300">
-                Collaborate with Hostway, capture job-site context in any format, and let the AI organizer sort and deliver
-                updates to the right teammate. This prototype keeps everything on the front end so you can validate the flow
-                before wiring services like Supabase, Resend, and OpenAI Agents.
+              <p className="mt-2 max-w-3xl text-base text-slate-300">
+                Collaborate with Hostway on active builds, drop multimodal notes, and let the AI pass the right details to the
+                right teammate. Everything here runs in-browser so you can validate the experience before wiring a real backend.
               </p>
             </div>
             {sessionUser ? (
-              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/40 p-4">
+              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/50 p-4">
                 <div className={`h-12 w-12 rounded-full bg-gradient-to-br ${sessionUser.accent}`}></div>
                 <div>
-                  <p className="text-sm text-slate-300">Signed in as</p>
+                  <p className="text-xs uppercase tracking-wide text-slate-300">Signed in as</p>
                   <p className="text-lg font-semibold text-white">{sessionUser.name}</p>
                 </div>
                 <Button variant="outline" className="border-white/20 text-slate-100" onClick={logout}>
-                  Sign out
+                  <LogOut size={16} className="mr-2" /> Sign out
                 </Button>
               </div>
             ) : (
               <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-6 py-5 text-emerald-100">
                 <p className="text-sm font-semibold uppercase tracking-wide">Private</p>
                 <p className="text-xs text-emerald-200/80">
-                  Passwords are verified client-side for demo purposes only. Wire this flow to a real auth provider before
-                  launching.
+                  Demo passwords match the ones you requested. Replace this with Supabase or Firebase auth before launch.
                 </p>
               </div>
             )}
@@ -394,17 +345,16 @@ function OperationsDashboard() {
             <div className="md:col-span-2">
               <h2 className="text-xl font-semibold text-white">Choose your access bubble</h2>
               <p className="mt-2 text-sm text-slate-300">
-                Tap your name and enter the shared passphrase. Hashing runs in-browser so the clear text never leaves the device
-                in this mockup.
+                Tap a profile, enter your passphrase, and you&apos;re in. Everything stays client-side in this prototype.
               </p>
               <div className="mt-6 grid gap-4">
                 {accounts.map((account) => (
                   <button
                     key={account.id}
                     type="button"
-                    onClick={() => setActiveUserId(account.id)}
-                    className={`flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition hover:border-white/70 ${
-                      activeUserId === account.id
+                    onClick={() => setSelectedAccountId(account.id)}
+                    className={`flex items-center gap-4 rounded-2xl border-2 p-4 text-left transition hover:border-white/60 ${
+                      selectedAccountId === account.id
                         ? 'border-white bg-white/20'
                         : 'border-white/10 bg-black/30'
                     }`}
@@ -412,13 +362,13 @@ function OperationsDashboard() {
                     <div className={`h-12 w-12 flex-none rounded-full bg-gradient-to-br ${account.accent}`}></div>
                     <div>
                       <p className="text-lg font-semibold text-white">{account.name}</p>
-                      <p className="text-xs uppercase tracking-wider text-slate-300">{account.title}</p>
+                      <p className="text-xs uppercase tracking-widest text-slate-300">{account.title}</p>
                     </div>
                   </button>
                 ))}
               </div>
             </div>
-            <form className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-black/30 p-6 md:col-span-3" onSubmit={handleLogin}>
+            <form className="flex flex-col gap-6 rounded-2xl border border-white/10 bg-black/40 p-6 md:col-span-3" onSubmit={handleLogin}>
               <div>
                 <label className="text-sm font-semibold text-slate-200" htmlFor="password-input">
                   Passphrase
@@ -432,18 +382,15 @@ function OperationsDashboard() {
                   value={passwordInput}
                   onChange={(event) => setPasswordInput(event.target.value)}
                 />
-                <p className="mt-2 text-xs text-slate-400">
-                  Josue: Cotton247 &nbsp;|&nbsp; Chris: C0tt0n247 — stored as SHA-256 hashes in the browser for this demo.
-                </p>
+                <p className="mt-2 text-xs text-slate-400">Josue: Cotton247 &nbsp;|&nbsp; Chris: C0tt0n247</p>
               </div>
               {authError && (
                 <div className="flex items-center gap-2 rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  <AlertCircle size={18} />
-                  {authError}
+                  <AlertCircle size={18} /> {authError}
                 </div>
               )}
-              <Button type="submit" disabled={isAuthenticating} className="h-12 bg-emerald-500 hover:bg-emerald-400">
-                {isAuthenticating ? 'Verifying…' : 'Enter Dashboard'}
+              <Button type="submit" className="h-12 bg-emerald-500 hover:bg-emerald-400">
+                Enter dashboard
               </Button>
             </form>
           </section>
@@ -452,7 +399,7 @@ function OperationsDashboard() {
             <aside className="flex flex-col gap-6 lg:col-span-4">
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
                 <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
-                  <Users size={16} /> Active Projects
+                  <Users size={16} /> Active projects
                 </div>
                 <ul className="mt-5 space-y-4">
                   {projects.map((project) => (
@@ -463,16 +410,16 @@ function OperationsDashboard() {
                         className={`w-full rounded-2xl border-2 p-4 text-left transition ${
                           activeProjectId === project.id
                             ? 'border-emerald-400 bg-emerald-400/10'
-                            : 'border-white/10 bg-black/30 hover:border-white/40'
+                            : 'border-white/10 bg-black/40 hover:border-white/40'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <h3 className="text-lg font-semibold text-white">{project.name}</h3>
-                          <span className="text-xs uppercase tracking-wide text-slate-300">{project.due}</span>
+                          <span className="text-xs uppercase tracking-wide text-slate-300">Due {project.due}</span>
                         </div>
                         <p className="mt-1 text-sm text-slate-300">Client: {project.client}</p>
-                        <p className="mt-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-amber-200">
-                          <Activity size={14} /> {project.status}
+                        <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-emerald-200">
+                          {project.status}
                         </p>
                         <div className="mt-3 flex flex-wrap gap-2">
                           {project.tags.map((tag) => (
@@ -489,291 +436,224 @@ function OperationsDashboard() {
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
                 <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
-                  <ShieldCheck size={16} /> Implementation Checklist
+                  <CheckCircle2 size={16} /> Launch checklist
                 </div>
-                <ol className="mt-4 space-y-3 text-sm text-slate-200">
-                  <li className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                    Scaffold Supabase or Firebase for auth, storage, and real-time updates.
-                  </li>
-                  <li className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                    Connect OpenAI Agent (GPT-4.1 mini today, swap to GPT-5 nano when available) for triage + routing.
-                  </li>
-                  <li className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                    Trigger Resend/SendGrid email when Agent response includes notify directives.
-                  </li>
-                  <li className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                    Mirror structured note data into Notion or your PM tool via webhooks.
-                  </li>
-                </ol>
+                <ul className="mt-4 space-y-3 text-sm text-slate-200">
+                  <li>Connect Supabase or Firebase Auth so these credentials live server-side.</li>
+                  <li>Store uploads in cloud storage and save signed URLs with each note.</li>
+                  <li>Forward notes to an OpenAI Agent (GPT-4o today, GPT-5 nano when available) for routing + summaries.</li>
+                  <li>Trigger Resend/SendGrid emails whenever notify flags are returned.</li>
+                </ul>
               </div>
             </aside>
 
             <div className="flex flex-col gap-6 lg:col-span-8">
               {activeProject && (
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div>
-                      <h2 className="text-2xl font-semibold text-white">{activeProject.name}</h2>
-                      <p className="text-sm text-slate-300">Client: {activeProject.client}</p>
-                    </div>
-                    <div className="flex gap-2 text-xs uppercase tracking-wider text-slate-300">
-                      <Layers size={16} />
-                      {activeProject.tags.join(' • ')}
-                    </div>
+                  <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
+                    <MessageSquare size={16} /> {activeProject.name} thread
                   </div>
-                  <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-sm uppercase tracking-[0.3em] text-slate-300">
-                        <MessageSquare size={16} /> Thread with Hostway
-                      </div>
-                      <form onSubmit={handleAddUpdate} className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                        <label htmlFor="update-entry" className="sr-only">
-                          Add an update
-                        </label>
-                        <textarea
-                          id="update-entry"
-                          rows={3}
-                          className="w-full rounded-2xl border border-white/20 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
-                          placeholder="Share a status update, decision, or question for Hostway."
-                          value={messageDraft}
-                          onChange={(event) => setMessageDraft(event.target.value)}
-                        />
-                        <div className="mt-3 flex items-center justify-between">
-                          <p className="text-xs text-slate-400">Updates stay with this project thread.</p>
-                          <Button type="submit" disabled={!messageDraft.trim()} size="sm" className="bg-emerald-500 hover:bg-emerald-400">
-                            Post update
-                          </Button>
-                        </div>
-                      </form>
-
-                      <ul className="space-y-3">
-                        {activeProject.updates.map((update) => (
-                          <li key={update.id} className="rounded-2xl border border-white/10 bg-black/40 p-4">
-                            <div className="flex items-center justify-between text-xs uppercase tracking-wide text-slate-300">
-                              <span>{update.author}</span>
-                              <span>{formatRelative(update.timestamp)}</span>
-                            </div>
-                            <p className="mt-2 text-xs text-slate-400">{update.role}</p>
-                            <p className="mt-3 text-sm text-slate-100">{update.text}</p>
-                          </li>
-                        ))}
-                      </ul>
+                  <p className="mt-3 text-sm text-slate-300">
+                    Use this feed to keep Hostway and the office in sync. Messages appear newest first for quick triage.
+                  </p>
+                  <form className="mt-6 flex flex-col gap-4" onSubmit={handleMessageSubmit}>
+                    <textarea
+                      className="min-h-[120px] rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
+                      placeholder="Type an update for this project..."
+                      value={messageDraft}
+                      onChange={(event) => setMessageDraft(event.target.value)}
+                    ></textarea>
+                    <div className="flex flex-wrap justify-between gap-3 text-xs text-slate-400">
+                      <span>Tip: Mention Josue or Chris to auto-tag them.</span>
+                      <Button type="submit" className="bg-emerald-500 hover:bg-emerald-400">
+                        Post update
+                      </Button>
                     </div>
-
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-sm uppercase tracking-[0.3em] text-slate-300">
-                        <UploadCloud size={16} /> Multimodal note intake
-                      </div>
-                      <form onSubmit={handleNoteSubmit} className="space-y-4 rounded-2xl border border-white/10 bg-black/30 p-4">
-                        <div>
-                          <label className="text-xs font-semibold uppercase tracking-wide text-slate-300" htmlFor="note-text">
-                            Note to organize
-                          </label>
-                          <textarea
-                            id="note-text"
-                            rows={4}
-                            className="mt-2 w-full rounded-2xl border border-white/20 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
-                            placeholder="Drop text notes, transcription snippets, material lists, etc."
-                            value={noteDraft.text}
-                            onChange={(event) => setNoteDraft((prev) => ({ ...prev, text: event.target.value }))}
-                          />
+                  </form>
+                  <ul className="mt-6 space-y-4">
+                    {activeProject.updates.map((update) => (
+                      <li key={update.id} className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm font-semibold text-white">{update.author}</p>
+                          <span className="text-xs uppercase tracking-wide text-slate-400">{formatDate(update.createdAt)}</span>
                         </div>
-                        <div className="grid gap-3 sm:grid-cols-2">
-                          <div>
-                            <label className="text-xs font-semibold uppercase tracking-wide text-slate-300" htmlFor="note-client">
-                              Client (optional)
-                            </label>
-                            <select
-                              id="note-client"
-                              className="mt-2 w-full rounded-2xl border border-white/20 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
-                              value={noteDraft.client}
-                              onChange={(event) => setNoteDraft((prev) => ({ ...prev, client: event.target.value }))}
-                            >
-                              <option value="">Detect automatically</option>
-                              {clients.map((client) => (
-                                <option key={client} value={client}>
-                                  {client}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                          <div>
-                            <label className="text-xs font-semibold uppercase tracking-wide text-slate-300">
-                              Notify
-                            </label>
-                            <div className="mt-2 flex flex-wrap gap-2">
-                              {emailTargets.map((target) => {
-                                const active = noteDraft.sendEmailTo.includes(target.id)
-                                return (
-                                  <button
-                                    key={target.id}
-                                    type="button"
-                                    onClick={() => toggleEmailTarget(target.id)}
-                                    className={`rounded-full border px-3 py-1 text-xs uppercase tracking-wide transition ${
-                                      active
-                                        ? 'border-emerald-400 bg-emerald-400/10 text-emerald-200'
-                                        : 'border-white/20 bg-black/40 text-slate-300 hover:border-white/40'
-                                    }`}
-                                  >
-                                    <Mail size={14} className="mr-1 inline" />
-                                    {target.label}
-                                  </button>
-                                )
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <label className="text-xs font-semibold uppercase tracking-wide text-slate-300" htmlFor="note-files">
-                            Attachments
-                          </label>
-                          <input
-                            id="note-files"
-                            type="file"
-                            accept="image/*,audio/*,.pdf,.doc,.docx,.txt"
-                            multiple
-                            className="mt-2 block w-full text-sm text-slate-200 file:mr-4 file:rounded-full file:border-0 file:bg-emerald-500 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-emerald-400"
-                            onChange={handleFileChange}
-                          />
-                          <p className="mt-2 text-xs text-slate-400">
-                            Images, field sketches, voice memos, material lists — drop them all. The AI agent will align and notify.
-                          </p>
-                          {!!noteDraft.files.length && (
-                            <ul className="mt-3 space-y-2">
-                              {noteDraft.files.map((file) => {
-                                const Icon = attachmentIcons[file.kind] ?? FileText
-                                return (
-                                  <li key={file.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm">
-                                    <span className="flex items-center gap-2 text-slate-100">
-                                      <Icon size={16} />
-                                      {file.name}
-                                    </span>
-                                    <button
-                                      type="button"
-                                      onClick={() => removeFile(file.id)}
-                                      className="text-xs uppercase tracking-wide text-rose-200 hover:text-rose-100"
-                                    >
-                                      Remove
-                                    </button>
-                                  </li>
-                                )
-                              })}
-                            </ul>
-                          )}
-                        </div>
-                        <Button
-                          type="submit"
-                          disabled={!noteDraft.text.trim()}
-                          className="w-full bg-emerald-500 hover:bg-emerald-400"
-                        >
-                          Send to AI Organizer
-                        </Button>
-                      </form>
-                      {processingNotes.length > 0 && (
-                        <div className="rounded-2xl border border-emerald-400/40 bg-emerald-400/10 p-4 text-sm text-emerald-100">
-                          <p className="font-semibold uppercase tracking-wide">Processing</p>
-                          <p className="mt-1 text-emerald-200/80">
-                            {processingNotes.length} note{processingNotes.length === 1 ? '' : 's'} queued with the KMJK Agent. Refreshing automatically.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                        <p className="mt-3 text-sm text-slate-200 whitespace-pre-wrap">{update.body}</p>
+                      </li>
+                    ))}
+                    {!activeProject.updates.length && (
+                      <li className="rounded-2xl border border-dashed border-white/10 bg-black/30 p-4 text-sm text-slate-400">
+                        No updates yet. Be the first to leave one!
+                      </li>
+                    )}
+                  </ul>
                 </div>
               )}
 
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
                 <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
-                  <FileText size={16} /> Structured note log
+                  <UploadCloud size={16} /> Upload a project note
                 </div>
-                <div className="mt-4 space-y-4">
-                  {projects
-                    .filter((project) => project.notes.length)
-                    .map((project) => (
-                      <div key={project.id} className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                        <h3 className="text-lg font-semibold text-white">{project.name}</h3>
-                        <ul className="mt-3 space-y-3">
-                          {project.notes.map((note) => (
-                            <li key={note.id} className="rounded-xl border border-white/10 bg-black/40 p-4">
-                              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                <p className="text-sm font-semibold text-white">{note.author}</p>
-                                <p className="text-xs uppercase tracking-wide text-slate-400">{formatRelative(note.timestamp)}</p>
-                              </div>
-                              <p className="mt-3 text-sm text-slate-200 whitespace-pre-wrap">{note.text}</p>
-                              <div className="mt-3 flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide">
-                                <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-slate-200">
-                                  {note.status === 'organized' ? 'Organized' : 'Processing'}
-                                </span>
-                                {note.client && (
-                                  <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-emerald-200">
-                                    {note.client}
-                                  </span>
-                                )}
-                                {note.notify?.length ? (
-                                  <span className="flex items-center gap-1 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-amber-200">
-                                    <Mail size={14} />
-                                    {note.notify.map((id) => (id === 'josue' ? 'Josue' : 'Chris')).join(', ')}
-                                  </span>
-                                ) : (
-                                  <span className="flex items-center gap-1 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-slate-300">
-                                    <Mail size={14} />
-                                    No emails queued
-                                  </span>
-                                )}
-                              </div>
-                              {note.summary && (
-                                <div className="mt-3 rounded-xl border border-emerald-400/30 bg-emerald-400/5 p-3 text-xs text-emerald-100">
-                                  <p className="font-semibold uppercase tracking-wide text-emerald-200">Agent summary</p>
-                                  <p className="mt-1 whitespace-pre-wrap text-emerald-100">{note.summary}</p>
-                                </div>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
+                <p className="mt-3 text-sm text-slate-300">
+                  Drop site photos, transcribed audio, or quick checklists. The AI pass will organize by client and flag who needs an email.
+                </p>
+                <form className="mt-6 space-y-5" onSubmit={handleNoteSubmit}>
+                  <div>
+                    <label className="text-xs font-semibold uppercase tracking-wide text-slate-300">Note text</label>
+                    <textarea
+                      className="mt-2 min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
+                      placeholder="Paste transcription, type instructions, or describe the upload..."
+                      value={noteDraft.text}
+                      onChange={(event) => setNoteDraft((prev) => ({ ...prev, text: event.target.value }))}
+                    ></textarea>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="text-xs font-semibold uppercase tracking-wide text-slate-300">Client (optional)</label>
+                      <input
+                        type="text"
+                        className="mt-2 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
+                        placeholder="Enter client if known"
+                        value={noteDraft.client}
+                        onChange={(event) => setNoteDraft((prev) => ({ ...prev, client: event.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">Notify</p>
+                      <div className="mt-2 flex flex-wrap gap-3">
+                        {recipients.map((recipient) => (
+                          <button
+                            key={recipient.id}
+                            type="button"
+                            onClick={() => toggleNotify(recipient.id)}
+                            className={`rounded-full border px-4 py-2 text-xs uppercase tracking-wide transition ${
+                              noteDraft.notify.includes(recipient.id)
+                                ? 'border-emerald-400 bg-emerald-400/20 text-emerald-100'
+                                : 'border-white/10 bg-black/40 text-slate-200 hover:border-white/30'
+                            }`}
+                          >
+                            {recipient.label}
+                          </button>
+                        ))}
                       </div>
-                    ))}
-                  {!projects.some((project) => project.notes.length) && (
-                    <p className="text-sm text-slate-300">
-                      Notes routed here after the AI finishes processing. Submit a note above to see the structured output.
-                    </p>
-                  )}
-                </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-300">Attachments</p>
+                    <div className="mt-2 flex flex-col gap-3 rounded-2xl border border-dashed border-white/20 bg-black/30 p-4">
+                      <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
+                        <div className="flex items-center gap-3">
+                          {attachmentTypes.map((entry) => {
+                            const Icon = entry.icon
+                            return (
+                              <button
+                                key={entry.id}
+                                type="button"
+                                onClick={() => setNoteDraft((prev) => ({ ...prev, attachmentType: entry.id }))}
+                                className={`flex h-10 w-10 items-center justify-center rounded-full border transition ${
+                                  noteDraft.attachmentType === entry.id
+                                    ? 'border-emerald-400 bg-emerald-400/20 text-emerald-100'
+                                    : 'border-white/10 bg-black/40 text-slate-200 hover:border-white/30'
+                                }`}
+                              >
+                                <Icon size={18} />
+                              </button>
+                            )
+                          })}
+                        </div>
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-2 text-sm text-slate-100 focus:border-emerald-400 focus:outline-none"
+                            placeholder="Describe the upload – e.g. ‘Framing photo set’"
+                            value={noteDraft.attachmentLabel}
+                            onChange={(event) => setNoteDraft((prev) => ({ ...prev, attachmentLabel: event.target.value }))}
+                          />
+                        </div>
+                        <Button type="button" variant="outline" className="border-white/20 text-slate-100" onClick={handleAddAttachment}>
+                          Add attachment
+                        </Button>
+                      </div>
+                      {noteDraft.attachments.length > 0 ? (
+                        <ul className="space-y-2 text-sm text-slate-200">
+                          {noteDraft.attachments.map((attachment) => {
+                            const Icon = attachmentTypes.find((entry) => entry.id === attachment.type)?.icon ?? FileText
+                            return (
+                              <li key={attachment.id} className="flex items-center justify-between rounded-xl border border-white/10 bg-black/40 px-3 py-2">
+                                <span className="flex items-center gap-2">
+                                  <Icon size={16} /> {attachment.label}
+                                </span>
+                                <button
+                                  type="button"
+                                  className="text-xs uppercase tracking-wide text-red-300 hover:text-red-200"
+                                  onClick={() => handleRemoveAttachment(attachment.id)}
+                                >
+                                  Remove
+                                </button>
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      ) : (
+                        <p className="text-sm text-slate-400">No attachments yet. Add a quick label and tap “Add attachment”.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  <Button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400">
+                    Send to AI organizer
+                  </Button>
+                </form>
               </div>
 
-              <div className="grid gap-6 lg:grid-cols-2">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-                  <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
-                    <MessageSquare size={16} /> Agent blueprint
-                  </div>
-                  <ul className="mt-4 space-y-3 text-sm text-slate-200">
-                    <li className="flex gap-3">
-                      <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                      Create an OpenAI Agent with instructions to: classify client/project, summarize action items, and return notify targets.
-                    </li>
-                    <li className="flex gap-3">
-                      <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                      Enable the multimodal toolset (vision + audio) so uploads route through GPT-4o today, GPT-5 nano when available.
-                    </li>
-                    <li className="flex gap-3">
-                      <CheckCircle2 className="mt-0.5 text-emerald-400" size={18} />
-                      Persist structured results in your database and emit a webhook to send notifications.
-                    </li>
-                  </ul>
+              <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
+                <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
+                  <Mail size={16} /> Structured note log
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur">
-                  <div className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-slate-300">
-                    <AlertCircle size={16} /> Next engineering tasks
-                  </div>
-                  <ul className="mt-4 space-y-3 text-sm text-slate-200">
-                    <li>Wire auth bubbles to Supabase Auth (email or magic link) and move password hashes server-side.</li>
-                    <li>Replace the simulated AI call with a `/api/notes` endpoint that forwards to the OpenAI Agents API.</li>
-                    <li>Use storage buckets for images/audio and persist signed URLs alongside each note.</li>
-                    <li>Automate email delivery with Resend + project-branded templates.</li>
-                  </ul>
+                <p className="mt-3 text-sm text-slate-300">
+                  Notes appear here after the AI pass. The notify column shows who should receive an email once hooked up to Resend.
+                </p>
+                <div className="mt-5 space-y-4">
+                  {structuredNotes.map((note) => (
+                    <div key={note.id} className="rounded-2xl border border-white/10 bg-black/40 p-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-white">{note.projectName}</p>
+                          <p className="text-xs uppercase tracking-wide text-slate-400">{formatDate(note.createdAt)}</p>
+                        </div>
+                        <div className="flex flex-wrap gap-2 text-xs uppercase tracking-wide">
+                          <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-slate-200">{note.status}</span>
+                          <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-emerald-200">
+                            {note.client || 'Client TBD'}
+                          </span>
+                          <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-amber-200">
+                            Notify: {note.notify.length ? note.notify.map((id) => (id === 'josue' ? 'Josue' : 'Chris')).join(', ') : 'None'}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="mt-3 text-sm text-slate-200 whitespace-pre-wrap">{note.text}</p>
+                      {note.attachments.length > 0 && (
+                        <ul className="mt-3 flex flex-wrap gap-3 text-xs text-slate-300">
+                          {note.attachments.map((attachment) => {
+                            const Icon = attachmentTypes.find((entry) => entry.id === attachment.type)?.icon ?? FileText
+                            return (
+                              <li key={attachment.id} className="flex items-center gap-1 rounded-full border border-white/10 bg-white/10 px-3 py-1">
+                                <Icon size={14} /> {attachment.label}
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      )}
+                      <div className="mt-3 rounded-xl border border-emerald-400/30 bg-emerald-400/10 p-3 text-xs text-emerald-100">
+                        <p className="font-semibold uppercase tracking-wide text-emerald-200">AI summary</p>
+                        <p className="mt-1 whitespace-pre-wrap text-emerald-100">{note.summary}</p>
+                      </div>
+                    </div>
+                  ))}
+                  {!structuredNotes.length && (
+                    <p className="text-sm text-slate-400">No notes yet. Submit something above to see the organized output.</p>
+                  )}
                 </div>
               </div>
             </div>
