@@ -6,12 +6,12 @@
     <title>The Elite Service Hub – Contractor Intake</title>
     <style>
         :root {
-            --ink: #1f1f1f;
-            --gold: #c08a2c;
-            --warm-gray: #f5f2eb;
+            --ink: #2c2c2c;
+            --gold: #b8860b;
+            --warm-gray: #f8f8f8;
             --card: #ffffff;
-            --border: #ded7c8;
-            --accent: #1f3d5a;
+            --border: #d8d1c2;
+            --accent: #2c2c2c;
         }
 
         *, *::before, *::after {
@@ -20,8 +20,8 @@
 
         body {
             margin: 0;
-            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #f0ece4 0%, #faf9f6 100%);
+            font-family: "Georgia", "Times New Roman", serif;
+            background: var(--warm-gray);
             color: var(--ink);
             padding: 32px;
         }
@@ -31,40 +31,50 @@
             margin: 0 auto 40px auto;
             background: var(--card);
             border-radius: 20px;
-            box-shadow: 0 28px 60px rgba(31, 61, 90, 0.15);
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.12);
             overflow: hidden;
         }
 
         header {
-            background: linear-gradient(120deg, #0f2438, var(--accent));
-            color: #fff;
-            padding: 36px 44px 40px;
+            background: #2c2c2c;
+            color: #f8f8f8;
+            padding: 32px 44px 36px;
         }
 
-        header .branding {
+        header .topline {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-        }
-
-        header .branding span {
-            font-size: 0.9rem;
+            gap: 2px;
+            margin-bottom: 18px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            opacity: 0.78;
+        }
+
+        header .topline .org-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--gold);
+        }
+
+        header .topline .division {
+            font-size: 0.82rem;
+            opacity: 0.85;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.6rem;
-            letter-spacing: 0.08em;
+            font-size: 2.4rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-transform: uppercase;
         }
 
         header p {
             max-width: 580px;
             line-height: 1.5;
             margin-top: 18px;
-            font-size: 1.05rem;
+            font-size: 1rem;
+            color: rgba(248, 248, 248, 0.85);
         }
 
         .content {
@@ -78,7 +88,7 @@
             border: 1px solid var(--border);
             border-radius: 18px;
             padding: 28px;
-            background: #fffdf8;
+            background: #ffffff;
             position: relative;
         }
 
@@ -88,7 +98,7 @@
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(192, 138, 44, 0.4), rgba(15, 36, 56, 0.25));
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.45), rgba(44, 44, 44, 0.25));
             -webkit-mask:
                 linear-gradient(#fff 0 0) content-box,
                 linear-gradient(#fff 0 0);
@@ -100,8 +110,8 @@
         .section h2 {
             margin: 0 0 20px 0;
             font-size: 1.3rem;
-            letter-spacing: 0.05em;
-            color: var(--accent);
+            letter-spacing: 0.08em;
+            color: var(--gold);
             text-transform: uppercase;
         }
 
@@ -129,16 +139,17 @@
             width: 100%;
             padding: 12px 14px;
             border-radius: 10px;
-            border: 1px solid rgba(31, 61, 90, 0.18);
+            border: 1px solid rgba(44, 44, 44, 0.18);
             background: #fff;
             font-size: 1rem;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(31, 61, 90, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.2);
         }
 
         textarea {
@@ -163,7 +174,7 @@
         .inline-options input[type="checkbox"],
         .inline-options input[type="radio"] {
             width: auto;
-            accent-color: var(--accent);
+            accent-color: var(--gold);
         }
 
         .files-note {
@@ -194,24 +205,24 @@
 
         .ghost-button {
             background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
+            border: 2px solid var(--gold);
+            color: var(--gold);
         }
 
         .ghost-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 8px 16px rgba(31, 61, 90, 0.15);
+            box-shadow: 0 8px 16px rgba(184, 134, 11, 0.2);
         }
 
         button.submit {
-            background: linear-gradient(120deg, var(--gold), #f0b44c);
+            background: linear-gradient(120deg, var(--gold), #f5c76b);
             color: #121212;
-            box-shadow: 0 12px 20px rgba(192, 138, 44, 0.25);
+            box-shadow: 0 12px 20px rgba(184, 134, 11, 0.25);
         }
 
         button.submit:hover {
             transform: translateY(-1px);
-            box-shadow: 0 12px 26px rgba(192, 138, 44, 0.32);
+            box-shadow: 0 12px 26px rgba(184, 134, 11, 0.32);
         }
 
         .legal-note {
@@ -231,7 +242,7 @@
             background: #f7f2e5;
             padding: 16px 20px;
             border-radius: 14px;
-            border: 1px solid rgba(192, 138, 44, 0.25);
+            border: 1px solid rgba(184, 134, 11, 0.25);
             font-size: 0.93rem;
             line-height: 1.5;
         }
@@ -239,7 +250,7 @@
         .legend-card strong {
             display: block;
             margin-bottom: 6px;
-            color: var(--accent);
+            color: var(--gold);
             letter-spacing: 0.04em;
         }
 
@@ -283,8 +294,8 @@
             }
 
             header {
-                background: #0f2438;
-                color: #fff;
+                background: #2c2c2c;
+                color: #f8f8f8;
             }
 
             .section {
@@ -309,10 +320,11 @@
 <body>
     <div class="container">
         <header>
-            <div class="branding">
-                <span>Elite Service Hub • Contractor Success Division</span>
-                <h1>Contractor Intake Blueprint</h1>
+            <div class="topline">
+                <span class="org-name">The Elite Service Hub</span>
+                <span class="division">Contractor Success Division • KMJK</span>
             </div>
+            <h1>Contractor Intake Blueprint</h1>
             <p>
                 The Elite Service Hub (parent organization to KMJK) transforms ambitious crews into elite service providers. Our
                 15% performance commission already covers the advertising engine—meaning your first payment clears materials,
