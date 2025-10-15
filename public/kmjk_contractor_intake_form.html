@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Elite Service Hub – Contractor Intake</title>
+    <style>
+        :root {
+            --ink: #1f1f1f;
+            --gold: #c08a2c;
+            --warm-gray: #f5f2eb;
+            --card: #ffffff;
+            --border: #ded7c8;
+            --accent: #1f3d5a;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0ece4 0%, #faf9f6 100%);
+            color: var(--ink);
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto 40px auto;
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: 0 28px 60px rgba(31, 61, 90, 0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(120deg, #0f2438, var(--accent));
+            color: #fff;
+            padding: 36px 44px 40px;
+        }
+
+        header .branding {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        header .branding span {
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.78;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.6rem;
+            letter-spacing: 0.08em;
+        }
+
+        header p {
+            max-width: 580px;
+            line-height: 1.5;
+            margin-top: 18px;
+            font-size: 1.05rem;
+        }
+
+        .content {
+            padding: 36px 44px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .section {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            background: #fffdf8;
+            position: relative;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(192, 138, 44, 0.4), rgba(15, 36, 56, 0.25));
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.65;
+        }
+
+        .section h2 {
+            margin: 0 0 20px 0;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .section p.section-intro {
+            margin: -10px 0 24px;
+            color: rgba(31, 31, 31, 0.72);
+            font-size: 0.95rem;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 18px 22px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.92rem;
+            letter-spacing: 0.03em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(31, 61, 90, 0.18);
+            background: #fff;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(31, 61, 90, 0.15);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .inline-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+
+        .inline-options label {
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0;
+        }
+
+        .inline-options input[type="checkbox"],
+        .inline-options input[type="radio"] {
+            width: auto;
+            accent-color: var(--accent);
+        }
+
+        .files-note {
+            font-size: 0.93rem;
+            color: rgba(31, 31, 31, 0.75);
+            margin-top: 12px;
+            line-height: 1.45;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        button, .ghost-button {
+            border: none;
+            cursor: pointer;
+            padding: 12px 26px;
+            font-size: 1rem;
+            border-radius: 999px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ghost-button {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .ghost-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(31, 61, 90, 0.15);
+        }
+
+        button.submit {
+            background: linear-gradient(120deg, var(--gold), #f0b44c);
+            color: #121212;
+            box-shadow: 0 12px 20px rgba(192, 138, 44, 0.25);
+        }
+
+        button.submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 26px rgba(192, 138, 44, 0.32);
+        }
+
+        .legal-note {
+            font-size: 0.85rem;
+            color: rgba(31, 31, 31, 0.6);
+            line-height: 1.5;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+        }
+
+        .legend-card {
+            background: #f7f2e5;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(192, 138, 44, 0.25);
+            font-size: 0.93rem;
+            line-height: 1.5;
+        }
+
+        .legend-card strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            header {
+                padding: 32px 28px;
+            }
+
+            .content {
+                padding: 28px 20px 36px;
+            }
+
+            .section {
+                padding: 22px 20px;
+            }
+
+            .button-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button, .ghost-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            header {
+                background: #0f2438;
+                color: #fff;
+            }
+
+            .section {
+                background: #fff;
+                border-color: rgba(0, 0, 0, 0.12);
+            }
+
+            .button-row,
+            .ghost-button,
+            button.submit,
+            .no-print {
+                display: none !important;
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="branding">
+                <span>Elite Service Hub • Contractor Success Division</span>
+                <h1>Contractor Intake Blueprint</h1>
+            </div>
+            <p>
+                The Elite Service Hub (parent organization to KMJK) transforms ambitious crews into elite service providers. Our
+                15% performance commission already covers the advertising engine—meaning your first payment clears materials,
+                labor, and our marketing buffer in a single motion. Tell us where you are today and the capacity you want to unlock.
+            </p>
+        </header>
+
+        <form class="content" action="https://formsubmit.co/chris@theeliteservicehub.com" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="_subject" value="New Contractor Intake Submission">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="form" value="Elite Service Hub Contractor Intake">
+
+            <section class="section" aria-labelledby="company-overview">
+                <h2 id="company-overview">Company Overview</h2>
+                <div class="grid-two">
+                    <div>
+                        <label for="company-name">Legal Business Name</label>
+                        <input id="company-name" name="Company Name" type="text" placeholder="Example: Apex Build Co." required>
+                    </div>
+                    <div>
+                        <label for="dba">Operating Name (DBA)</label>
+                        <input id="dba" name="Operating Name" type="text" placeholder="If different from legal name">
+                    </div>
+                    <div>
+                        <label for="primary-contact">Primary Contact</label>
+                        <input id="primary-contact" name="Primary Contact" type="text" placeholder="Name of decision maker" required>
+                    </div>
+                    <div>
+                        <label for="role">Role / Title</label>
+                        <input id="role" name="Role" type="text" placeholder="Owner, GM, etc." required>
+                    </div>
+                    <div>
+                        <label for="phone">Best Contact Number</label>
+                        <input id="phone" name="Phone" type="tel" placeholder="(555) 123-4567" required>
+                    </div>
+                    <div>
+                        <label for="email">Contact Email</label>
+                        <input id="email" name="Email" type="email" placeholder="crewlead@example.com" required>
+                    </div>
+                    <div>
+                        <label for="hq-location">Headquarters City &amp; State</label>
+                        <input id="hq-location" name="Headquarters" type="text" placeholder="City, State" required>
+                    </div>
+                    <div>
+                        <label for="service-area">Primary Service Territory</label>
+                        <input id="service-area" name="Service Area" type="text" placeholder="Counties / metros you cover" required>
+                    </div>
+                    <div>
+                        <label for="entity-type">Entity Type</label>
+                        <select id="entity-type" name="Entity Type" required>
+                            <option value="" disabled selected>Select one</option>
+                            <option>LLC</option>
+                            <option>Corporation (S or C)</option>
+                            <option>Sole Proprietor</option>
+                            <option>Partnership</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="years-operating">Years in Operation</label>
+                        <input id="years-operating" name="Years Operating" type="number" min="0" placeholder="Number of years" required>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="revenue-profile">
+                <h2 id="revenue-profile">Revenue Profile</h2>
+                <p class="section-intro">
+                    We align our campaigns with your current output and future capacity. Please share honest snapshots so we can
+                    engineer volume responsibly.
+                </p>
+                <div class="grid-two">
+                    <div>
+                        <label for="monthly-revenue">Average Monthly Revenue (Last 6 Months)</label>
+                        <input id="monthly-revenue" name="Current Monthly Revenue" type="number" min="0" step="0.01" placeholder="USD" required>
+                    </div>
+                    <div>
+                        <label for="revenue-capacity">Monthly Revenue Capacity (If Fully Booked)</label>
+                        <input id="revenue-capacity" name="Revenue Capacity" type="number" min="0" step="0.01" placeholder="USD potential" required>
+                    </div>
+                    <div>
+                        <label for="owner-profit">Owner's Estimated Monthly Profit</label>
+                        <input id="owner-profit" name="Owner Profit" type="number" min="0" step="0.01" placeholder="What you take home" required>
+                    </div>
+                    <div>
+                        <label for="avg-project">Average Project Value</label>
+                        <input id="avg-project" name="Average Project Value" type="number" min="0" step="0.01" placeholder="Typical contract size">
+                    </div>
+                    <div>
+                        <label for="crew-count">Active Crew Size</label>
+                        <input id="crew-count" name="Crew Count" type="number" min="0" placeholder="Field crew members" required>
+                    </div>
+                    <div>
+                        <label for="capacity-notes">Capacity Constraints</label>
+                        <textarea id="capacity-notes" name="Capacity Notes" placeholder="Scheduling limits, material bottlenecks, subcontractor availability, etc."></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label for="services">Core Services (List)</label>
+                    <textarea id="services" name="Core Services" placeholder="Kitchen remodels, bathroom gut &amp; replace, whole-home renovation, etc." required></textarea>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="insurance-compliance">
+                <h2 id="insurance-compliance">Insurance &amp; Compliance Snapshot</h2>
+                <div class="grid-two">
+                    <div>
+                        <label>General Liability Insurance</label>
+                        <div class="inline-options">
+                            <label><input type="radio" name="Insurance" value="Yes" required> Yes</label>
+                            <label><input type="radio" name="Insurance" value="No"> No</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="policy-expiration">Policy Expiration Date</label>
+                        <input id="policy-expiration" name="Insurance Expiration" type="date">
+                    </div>
+                    <div>
+                        <label for="license-number">License Number</label>
+                        <input id="license-number" name="License Number" type="text" placeholder="State license">
+                    </div>
+                    <div>
+                        <label for="ein">Federal EIN</label>
+                        <input id="ein" name="EIN" type="text" placeholder="XX-XXXXXXX">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="financial-readiness">
+                <h2 id="financial-readiness">Capital &amp; Growth Planning</h2>
+                <p class="section-intro">
+                    We are not running credit checks. We simply gather the data lenders usually request so we can support funding
+                    conversations on your behalf.
+                </p>
+                <div class="grid-two">
+                    <div>
+                        <label for="financing-goal">Growth Funding Goal</label>
+                        <input id="financing-goal" name="Desired Financing Amount" type="number" min="0" step="0.01" placeholder="How much capital would accelerate growth?">
+                    </div>
+                    <div>
+                        <label for="use-of-funds">Intended Use of Funds</label>
+                        <input id="use-of-funds" name="Funding Use" type="text" placeholder="Crew hires, equipment, cash flow, etc.">
+                    </div>
+                    <div>
+                        <label for="business-banking">Business Banking Relationship</label>
+                        <input id="business-banking" name="Business Banking" type="text" placeholder="Bank / credit union">
+                    </div>
+                    <div>
+                        <label for="monthly-debt">Monthly Debt Obligations</label>
+                        <input id="monthly-debt" name="Monthly Debt" type="number" min="0" step="0.01" placeholder="Estimated total">
+                    </div>
+                    <div>
+                        <label for="credit-score">Owner Credit Score Range</label>
+                        <select id="credit-score" name="Credit Score Range">
+                            <option value="" disabled selected>Select range</option>
+                            <option>720+</option>
+                            <option>680 – 719</option>
+                            <option>640 – 679</option>
+                            <option>600 – 639</option>
+                            <option>Below 600</option>
+                            <option>Prefer not to say</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="financial-notes">Additional Financial Notes</label>
+                        <textarea id="financial-notes" name="Financial Notes" placeholder="Existing credit lines, collateral, partners, etc."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="operations-marketing">
+                <h2 id="operations-marketing">Operations &amp; Marketing Alignment</h2>
+                <div class="grid-two">
+                    <div>
+                        <label for="close-rate">Close Rate on Qualified Leads (%)</label>
+                        <input id="close-rate" name="Close Rate" type="number" min="0" max="100" step="0.1" placeholder="Example: 35">
+                    </div>
+                    <div>
+                        <label for="avg-cycle">Average Project Timeline</label>
+                        <input id="avg-cycle" name="Average Timeline" type="text" placeholder="Bid to completion timeframe">
+                    </div>
+                    <div>
+                        <label for="crm">CRM or Job Management Platform</label>
+                        <input id="crm" name="CRM" type="text" placeholder="Buildertrend, Jobber, custom spreadsheets, etc.">
+                    </div>
+                    <div>
+                        <label for="team-structure">Team Structure</label>
+                        <textarea id="team-structure" name="Team Structure" placeholder="Who handles sales, project management, craftsmanship, admin"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <label for="unique-value">What makes your workmanship elite?</label>
+                    <textarea id="unique-value" name="Unique Value" placeholder="Craftsmanship focus, specialties, warranties, certifications, etc."></textarea>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="portfolio">
+                <h2 id="portfolio">Project Portfolio Upload</h2>
+                <p class="section-intro">
+                    Upload up to 10 showcase images directly here, or send them later to <strong>chris@theeliteservicehub.com</strong>.
+                    You can also drop files into our Drive folder: <a href="https://drive.google.com/drive/folders/11R5HjAbMLt1cbRt4T-V1GaY9VQCueUYV?usp=sharing" target="_blank" rel="noopener">Elite Service Hub Project Assets</a>.
+                </p>
+                <input type="file" name="Project Images" id="project-images" accept="image/*" multiple data-max-files="10">
+                <div class="files-note">
+                    Please include finished project shots, in-progress details, and any before/after transformations. Filenames will be saved alongside your profile for our internal dashboard build-out.
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="next-steps">
+                <h2 id="next-steps">Expectations &amp; Next Steps</h2>
+                <div class="legend">
+                    <div class="legend-card">
+                        <strong>Launch Call</strong>
+                        We review your intake, confirm service territory, and set the initial performance targets before campaigns go live.
+                    </div>
+                    <div class="legend-card">
+                        <strong>Funding Support</strong>
+                        With the data you provided, our partners can roadmap lending options without hard credit pulls or unnecessary applications.
+                    </div>
+                    <div class="legend-card">
+                        <strong>Marketing Engine</strong>
+                        Your ad spend is baked into our 15% commission model. First draw covers materials, labor, and the Elite Service Hub marketing buffer.
+                    </div>
+                </div>
+                <div class="legal-note" style="margin-top: 18px;">
+                    By submitting this form you confirm that the information provided is accurate to the best of your knowledge and acknowledge that The Elite Service Hub will store it securely for partnership evaluation.
+                </div>
+                <div class="inline-options" style="margin-top: 16px;">
+                    <label><input type="checkbox" name="Consent" value="Yes" required> I agree to the intake terms above.</label>
+                </div>
+            </section>
+
+            <div class="button-row">
+                <button type="button" class="ghost-button" id="print-form">Print Blank Copy</button>
+                <button type="submit" class="submit">Submit Intake to Elite Service Hub</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        (function () {
+            const printButton = document.getElementById('print-form');
+            const form = document.querySelector('form');
+            const fileInput = document.getElementById('project-images');
+            const elements = form.querySelectorAll('input, textarea, select');
+
+            const clearPlaceholders = () => {
+                elements.forEach(el => {
+                    if (el.dataset.placeholder != null) return;
+                    if (el.placeholder) {
+                        el.dataset.placeholder = el.placeholder;
+                        el.placeholder = '';
+                    }
+                });
+            };
+
+            const restorePlaceholders = () => {
+                elements.forEach(el => {
+                    if (el.dataset.placeholder !== undefined) {
+                        el.placeholder = el.dataset.placeholder;
+                        delete el.dataset.placeholder;
+                    }
+                });
+            };
+
+            if (printButton) {
+                printButton.addEventListener('click', () => {
+                    clearPlaceholders();
+                    window.print();
+                });
+            }
+
+            if (fileInput) {
+                fileInput.addEventListener('change', () => {
+                    const maxFiles = parseInt(fileInput.dataset.maxFiles || '10', 10);
+                    if (fileInput.files.length > maxFiles) {
+                        alert(`Please upload no more than ${maxFiles} images at a time.`);
+                        fileInput.value = '';
+                    }
+                });
+            }
+
+            window.addEventListener('afterprint', restorePlaceholders);
+        })();
+    </script>
+</body>
+</html>
