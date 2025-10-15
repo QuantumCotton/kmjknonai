@@ -46,6 +46,16 @@ pnpm run build
 pnpm run preview
 ```
 
+### Accessing the contractor intake form
+
+The Elite Service Hub contractor intake form lives in `public/kmjk_contractor_intake_form.html`. There are three easy ways to view or download it:
+
+1. **During development** – run `pnpm run dev` and open `http://localhost:5173/kmjk_contractor_intake_form.html` in your browser. Vite automatically serves everything in the `public/` folder, so you can interact with the live form there.
+2. **From the production build** – after `pnpm run build`, the compiled site will appear in the `dist/` folder. The intake form will be copied to `dist/kmjk_contractor_intake_form.html`; double-click that file to open it locally or drag it into any browser.
+3. **Direct download from GitHub** – navigate to `public/kmjk_contractor_intake_form.html` in the repository, click **Raw**, then use your browser’s save dialog to download the file straight to your PC.
+
+> **Tip for GitHub Desktop users:** ensure you are on the `main` branch and click **Pull origin**. The redesigned form shipped in commit `9143890`, so pulling the latest changes will place the file in the `public/` folder on your machine.
+
 ## Project Structure
 
 ```
