@@ -22,6 +22,11 @@ import HandymanLandingWithPricing from './pages/HandymanLandingWithPricing.jsx'
 import HandymanLandingImproved from './pages/HandymanLandingImproved.jsx'
 import TVMountingLanding from './pages/TVMountingLanding.jsx'
 import GalleryPage from './pages/GalleryPage.jsx'
+import BathroomRemodelSailfishPoint from './pages/BathroomRemodelSailfishPoint.jsx'
+import BathroomRemodelSewallsPoint from './pages/BathroomRemodelSewallsPoint.jsx'
+import BathroomRemodelPalmCity from './pages/BathroomRemodelPalmCity.jsx'
+import BathroomRemodelHutchinsonIsland from './pages/BathroomRemodelHutchinsonIsland.jsx'
+import BathroomRemodelStuart from './pages/BathroomRemodelStuart.jsx'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -424,7 +429,7 @@ function AboutPage() {
           <div className="mt-16 bg-[var(--warm-off-white)] p-8 rounded-lg">
             <h3 className="text-2xl font-semibold mb-4 text-center">Our Commitment</h3>
             <p className="text-lg text-gray-700 text-center leading-relaxed max-w-3xl mx-auto">
-              At KMJK, we don't just build beautiful spacesâ€”we build trust. Our commitment to quality, transparency, and exceptional service has earned us the loyalty of countless satisfied clients who continue to recommend us to their friends and family.
+              At KMJK, we don't just build beautiful spaces—we build trust. Our commitment to quality, transparency, and exceptional service has earned us the loyalty of countless satisfied clients who continue to recommend us to their friends and family.
             </p>
           </div>
         </div>
@@ -438,69 +443,121 @@ function ContactPage() {
     name: '',
     email: '',
     phone: '',
-    message: '',
+    message: ''
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const handleSubmit = async (e) => { e.preventDefault(); const formDataToSend = new FormData(); formDataToSend.append('access_key','8e63e7e3-ab53-43a9-80c5-ebc113c25912'); formDataToSend.append('name', formData.name); formDataToSend.append('email', formData.email); formDataToSend.append('phone', formData.phone); formDataToSend.append('message', formData.message); formDataToSend.append('subject','New Website Inquiry'); formDataToSend.append('Source URL', window.location.href); try { const res = await fetch('https://api.web3forms.com/submit',{ method:'POST', body: formDataToSend }); const data = await res.json(); if(data.success){ if(window.gtag){ window.gtag('event','generate_lead',{ service: 'General Inquiry', source: 'Contact Page', value: 1 }); } alert('Thanks! We\'ll be in touch shortly.'); setFormData({ name: '', email: '', phone: '', message: '' }); } else { alert('Submission error: '+(data.message||'Please try again.')); } } catch(err){ alert('Network error. Please try again.'); } };\n\n              <form onSubmit={handleSubmit} className="contact-form">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-1">Name *</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full"
-                  />
-                </div>
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setFormData((previous) => ({ ...previous, [name]: value }))
+  }
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">Email *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full"
-                  />
-                </div>
+  const handleSubmit = async (event) => {
+    event.preventDefault()
 
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone *</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full"
-                  />
-                </div>
+    const formDataToSend = new FormData()
+    formDataToSend.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912')
+    formDataToSend.append('name', formData.name)
+    formDataToSend.append('email', formData.email)
+    formDataToSend.append('phone', formData.phone)
+    formDataToSend.append('message', formData.message)
+    formDataToSend.append('subject', 'New Website Inquiry')
+    formDataToSend.append('Source URL', window.location.href)
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">Message *</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows="5"
-                    className="w-full"
-                  ></textarea>
-                </div>
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      })
+      const data = await response.json()
 
-                <Button type="submit" size="lg" className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
-                  Send Message
-                </Button>
-              </form>
-            </div>
+      if (data.success) {
+        if (window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            service: 'General Inquiry',
+            source: 'Contact Page',
+            value: 1
+          })
+        }
+        alert("Thanks! We'll be in touch shortly.")
+        setFormData({ name: '', email: '', phone: '', message: '' })
+      } else {
+        alert('Submission error: ' + (data.message || 'Please try again.'))
+      }
+    } catch (error) {
+      alert('Network error. Please try again.')
+    }
+  }
+
+  return (
+    <div className="pt-20">
+      <section className="py-16 bg-[var(--warm-off-white)]">
+        <div className="max-w-3xl mx-auto px-4">
+          <h1 className="section-title mb-8">Contact Us</h1>
+          <div className="bg-white shadow-xl rounded-xl p-8 space-y-6">
+            <p className="text-gray-600">
+              Tell us a little about your project and our team will reach out to schedule a consultation.
+            </p>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium mb-1">
+                  Name *
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                />
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium mb-1">
+                  Phone *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium mb-1">
+                  Message *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                ></textarea>
+              </div>
+              <Button type="submit" size="lg" className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
+                Send Message
+              </Button>
+            </form>
           </div>
         </div>
       </section>
@@ -532,10 +589,13 @@ function App() {
           <Route path="/bathroom-remodel-old" element={<BathroomLanding />} />
           <Route path="/kitchen-remodel-old" element={<KitchenLanding />} />
           <Route path="/handyman-services-old" element={<HandymanLanding />} />
-          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />\          <Route path="/sailfish-point-bathroom-remodel" element={<BathroomRemodelSailfishPoint />} />
+          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
+          {/* Local Landing Pages */}
+          <Route path="/sailfish-point-bathroom-remodel" element={<BathroomRemodelSailfishPoint />} />
           <Route path="/sewalls-point-bathroom-remodel" element={<BathroomRemodelSewallsPoint />} />
           <Route path="/palm-city-bathroom-remodel" element={<BathroomRemodelPalmCity />} />
-          <Route path="/hutchinson-island-bathroom-remodel" element={<BathroomRemodelHutchinsonIsland />} />n          <Route path="/stuart-bathroom-remodel" element={<BathroomRemodelStuart />} />} />
+          <Route path="/hutchinson-island-bathroom-remodel" element={<BathroomRemodelHutchinsonIsland />} />
+          <Route path="/stuart-bathroom-remodel" element={<BathroomRemodelStuart />} />
         </Routes>
         <Footer />
       </div>
@@ -543,10 +603,18 @@ function App() {
   )
 }
 
-\nfunction AppWrapper(){ return (<><App /><StickyCtaBar /></>)}\n\nexport default AppWrapper
+function AppWrapper() {
+  return (
+    <>
+      <App />
+      <StickyCtaBar />
+    </>
+  )
+}
 
+export default AppWrapper
 
-function StickyCtaBar(){
+function StickyCtaBar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 border-t border-gray-200 shadow-lg md:hidden">
       <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-3 gap-2 text-sm">
@@ -563,5 +631,4 @@ function StickyCtaBar(){
     </div>
   )
 }
-
 
