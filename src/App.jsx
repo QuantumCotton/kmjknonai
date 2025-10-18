@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
@@ -287,17 +287,17 @@ function ServicesPage() {
     {
       title: 'Full Kitchen Remodels',
       description: 'From concept to completion, we transform kitchens into functional, beautiful spaces that become the heart of your home. Our comprehensive approach includes design consultation, custom cabinetry, countertop selection, appliance installation, and finishing touches.',
-      icon: '🍳',
+      icon: 'ðŸ³',
     },
     {
       title: 'Luxury Bathroom Renovations',
       description: 'Create your personal spa retreat with our luxury bathroom renovation services. We specialize in high-end finishes, custom tile work, modern fixtures, and thoughtful layouts that maximize both style and functionality.',
-      icon: '🛁',
+      icon: 'ðŸ›',
     },
     {
       title: 'Custom Cabinetry & Millwork',
       description: 'Our master craftsmen create bespoke cabinetry and millwork that seamlessly integrates with your home\'s architecture. From built-in bookcases to custom closets, we bring your vision to life with precision and artistry.',
-      icon: '🪵',
+      icon: 'ðŸªµ',
     },
   ]
 
@@ -339,25 +339,25 @@ function ProcessPage() {
       number: '01',
       title: 'Consultation & Design',
       description: 'We begin by understanding your vision, needs, and budget through an in-depth consultation and collaborative design process.',
-      icon: '💡',
+      icon: 'ðŸ’¡',
     },
     {
       number: '02',
       title: 'Meticulous Planning',
       description: 'Every detail is carefully planned, from materials selection to project timeline, ensuring a smooth and predictable renovation experience.',
-      icon: '📋',
+      icon: 'ðŸ“‹',
     },
     {
       number: '03',
       title: 'Professional Execution',
       description: 'Our skilled craftsmen bring the design to life with precision and care, maintaining open communication throughout the build.',
-      icon: '🔨',
+      icon: 'ðŸ”¨',
     },
     {
       number: '04',
       title: 'The Final Walkthrough',
       description: 'We conduct a comprehensive walkthrough to ensure every element meets our exacting standards and exceeds your expectations.',
-      icon: '✓',
+      icon: 'âœ“',
     },
   ]
 
@@ -424,7 +424,7 @@ function AboutPage() {
           <div className="mt-16 bg-[var(--warm-off-white)] p-8 rounded-lg">
             <h3 className="text-2xl font-semibold mb-4 text-center">Our Commitment</h3>
             <p className="text-lg text-gray-700 text-center leading-relaxed max-w-3xl mx-auto">
-              At KMJK, we don't just build beautiful spaces—we build trust. Our commitment to quality, transparency, and exceptional service has earned us the loyalty of countless satisfied clients who continue to recommend us to their friends and family.
+              At KMJK, we don't just build beautiful spacesâ€”we build trust. Our commitment to quality, transparency, and exceptional service has earned us the loyalty of countless satisfied clients who continue to recommend us to their friends and family.
             </p>
           </div>
         </div>
@@ -443,68 +443,7 @@ function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // In a real application, this would send the form data to a server
-    alert('Thank you for your message! We will get back to you soon.')
-    setFormData({ name: '', email: '', phone: '', message: '' })
-  }
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  return (
-    <div className="pt-20">
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4">
-          <h1 className="section-title">Contact Us</h1>
-          <p className="text-center text-lg text-gray-600 mb-12">
-            Ready to transform your home? Get in touch with us today.
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <div>
-              <h2 className="text-2xl font-semibold mb-6 gold-accent">Get In Touch</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold mb-2">KMJK Home Improvement</h3>
-                  <div className="space-y-2">
-                    <a href="tel:650-501-7659" className="flex items-center space-x-2 text-gray-700 hover:text-[var(--brushed-gold)] transition-colors">
-                      <Phone size={20} />
-                      <span>650-501-7659</span>
-                    </a>
-                    <a href="mailto:chris@theeliteservicehub.com" className="flex items-center space-x-2 text-gray-700 hover:text-[var(--brushed-gold)] transition-colors">
-                      <Mail size={20} />
-                      <span>chris@theeliteservicehub.com</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-gray-200">
-                  <h3 className="font-semibold mb-2">Service Area</h3>
-                  <p className="text-gray-700">
-                    Proudly serving Stuart, Florida, and the Treasure Coast.
-                  </p>
-                </div>
-
-                <div className="pt-6 border-t border-gray-200">
-                  <h3 className="font-semibold mb-2">Business Hours</h3>
-                  <p className="text-gray-700">
-                    Monday - Friday: 8:00 AM - 6:00 PM<br />
-                    Saturday: 9:00 AM - 4:00 PM<br />
-                    Sunday: By Appointment
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div>
-              <h2 className="text-2xl font-semibold mb-6 gold-accent">Send Us a Message</h2>
-              <form onSubmit={handleSubmit} className="contact-form">
+    const handleSubmit = async (e) => { e.preventDefault(); const formDataToSend = new FormData(); formDataToSend.append('access_key','8e63e7e3-ab53-43a9-80c5-ebc113c25912'); formDataToSend.append('name', formData.name); formDataToSend.append('email', formData.email); formDataToSend.append('phone', formData.phone); formDataToSend.append('message', formData.message); formDataToSend.append('subject','New Website Inquiry'); formDataToSend.append('Source URL', window.location.href); try { const res = await fetch('https://api.web3forms.com/submit',{ method:'POST', body: formDataToSend }); const data = await res.json(); if(data.success){ if(window.gtag){ window.gtag('event','generate_lead',{ service: 'General Inquiry', source: 'Contact Page', value: 1 }); } alert('Thanks! We\'ll be in touch shortly.'); setFormData({ name: '', email: '', phone: '', message: '' }); } else { alert('Submission error: '+(data.message||'Please try again.')); } } catch(err){ alert('Network error. Please try again.'); } };\n\n              <form onSubmit={handleSubmit} className="contact-form">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-1">Name *</label>
                   <input
@@ -593,7 +532,10 @@ function App() {
           <Route path="/bathroom-remodel-old" element={<BathroomLanding />} />
           <Route path="/kitchen-remodel-old" element={<KitchenLanding />} />
           <Route path="/handyman-services-old" element={<HandymanLanding />} />
-          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />} />
+          <Route path="/handyman-services-pricing" element={<HandymanLandingWithPricing />\          <Route path="/sailfish-point-bathroom-remodel" element={<BathroomRemodelSailfishPoint />} />
+          <Route path="/sewalls-point-bathroom-remodel" element={<BathroomRemodelSewallsPoint />} />
+          <Route path="/palm-city-bathroom-remodel" element={<BathroomRemodelPalmCity />} />
+          <Route path="/hutchinson-island-bathroom-remodel" element={<BathroomRemodelHutchinsonIsland />} />n          <Route path="/stuart-bathroom-remodel" element={<BathroomRemodelStuart />} />} />
         </Routes>
         <Footer />
       </div>
@@ -601,4 +543,25 @@ function App() {
   )
 }
 
-export default App
+\nfunction AppWrapper(){ return (<><App /><StickyCtaBar /></>)}\n\nexport default AppWrapper
+
+
+function StickyCtaBar(){
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 border-t border-gray-200 shadow-lg md:hidden">
+      <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-3 gap-2 text-sm">
+        <a href="tel:650-501-7659" className="text-center py-2 rounded-md bg-[var(--deep-charcoal)] text-white" aria-label="Call KMJK">
+          Call
+        </a>
+        <a href="mailto:chris@theeliteservicehub.com" className="text-center py-2 rounded-md bg-[var(--brushed-gold)] text-white" aria-label="Email KMJK">
+          Email
+        </a>
+        <a href="/contact" className="text-center py-2 rounded-md bg-white border text-[var(--deep-charcoal)]" aria-label="Get a Quote">
+          Quote
+        </a>
+      </div>
+    </div>
+  )
+}
+
+

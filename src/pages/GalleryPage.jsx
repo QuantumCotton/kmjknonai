@@ -2,79 +2,136 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 
-// Import images
-import kitchenModern from '../assets/kitchen_modern.jpg'
-import bathroomLuxurySpa from '../assets/bathroom_luxury_spa.jpg'
-import bathroomLuxury from '../assets/bathroom_luxury.jpg'
-import bathroomLuxury2 from '../assets/bathroom_luxury_2.jpeg'
-import bathroomMarble from '../assets/bathroom_marble.jpg'
-import customEntertainment from '../assets/custom_entertainment.jpg'
-import customBuiltin from '../assets/custom_builtin.jpg'
-import customCabinetry from '../assets/custom_cabinetry.jpg'
-import customCloset from '../assets/custom_closet.jpg'
+// Portfolio imagery
+import kitchenTimberlineChefSuite from '../assets/portfolio/kitchen-timberline-chef-suite.jpg'
+import kitchenSculptedMarbleGathering from '../assets/portfolio/kitchen-sculpted-marble-gathering.jpg'
+import kitchenTimberAndStoneHearth from '../assets/portfolio/kitchen-timber-and-stone-hearth.jpg'
+import kitchenArabesqueMarbleEstate from '../assets/portfolio/kitchen-arabesque-marble-estate.jpg'
+import kitchenCharcoalLinearGalley from '../assets/portfolio/kitchen-charcoal-linear-galley.jpg'
+import kitchenSleekEspressoLounge from '../assets/portfolio/kitchen-sleek-espresso-lounge.jpg'
+import kitchenSunlitNavyHub from '../assets/portfolio/kitchen-sunlit-navy-hub.jpg'
+import bathroomLightFilledSpaSuite from '../assets/portfolio/bathroom-light-filled-spa-suite.jpg'
+import bathroomVintageCharmRetreat from '../assets/portfolio/bathroom-vintage-charm-retreat.jpg'
+import bathroomBrassAndGraphiteSuite from '../assets/portfolio/bathroom-brass-and-graphite-suite.jpg'
+import bathroomHonedHoneycombVanity from '../assets/portfolio/bathroom-honed-honeycomb-vanity.jpg'
+import bathroomMarbleAndOakSpa from '../assets/portfolio/bathroom-marble-and-oak-spa.jpg'
+import bathroomSilverOakRetreat from '../assets/portfolio/bathroom-silver-oak-retreat.jpg'
+import bathroomLakeviewMarbleRetreat from '../assets/portfolio/bathroom-lakeview-marble-retreat.jpg'
+import bathroomWavePanelPowder from '../assets/portfolio/bathroom-wave-panel-powder.jpg'
 
 const galleryImages = [
   {
-    src: kitchenModern,
-    title: 'Coastal Modern Kitchen',
+    src: kitchenTimberlineChefSuite,
+    title: 'Timberline Chef Suite',
     category: 'Kitchen',
-    description: 'Bright, coastal-inspired kitchen with custom cabinetry and quartz countertops'
+    style: 'Transitional',
+    description: 'Dual islands, pro-grade appliances, and warm brass accents create a hardworking family kitchen framed by scenic backyard views.'
   },
   {
-    src: bathroomLuxurySpa,
-    title: 'Luxury Spa Bathroom',
+    src: kitchenSculptedMarbleGathering,
+    title: 'Sculpted Marble Gathering Kitchen',
+    category: 'Kitchen',
+    style: 'Modern',
+    description: 'A monolithic waterfall island and continuous slab backsplash wrap this minimalist space in veined marble and soft uplighting.'
+  },
+  {
+    src: kitchenTimberAndStoneHearth,
+    title: 'Timber & Stone Hearth Kitchen',
+    category: 'Kitchen',
+    style: 'Rustic Contemporary',
+    description: 'Exposed beams, a stone hearth, and mixed-finish cabinetry bring lodge warmth to an open kitchen designed for entertaining.'
+  },
+  {
+    src: kitchenArabesqueMarbleEstate,
+    title: 'Arabesque Marble Estate Kitchen',
+    category: 'Kitchen',
+    style: 'Luxury Classic',
+    description: 'Grand arched steel doors, a sculpted hood, and bookmatched marble surfaces define this statement-making estate kitchen.'
+  },
+  {
+    src: kitchenCharcoalLinearGalley,
+    title: 'Charcoal Linear Galley Kitchen',
+    category: 'Kitchen',
+    style: 'Contemporary',
+    description: 'Full-height charcoal cabinetry, a waterfall peninsula, and glass mosaic backsplash deliver a streamlined work zone with ample storage.'
+  },
+  {
+    src: kitchenSleekEspressoLounge,
+    title: 'Sleek Espresso Lounge Kitchen',
+    category: 'Kitchen',
+    style: 'Contemporary',
+    description: 'Sculptural pendants and soft grey cabinetry blur the line between kitchen and lounge, perfect for casual gatherings.'
+  },
+  {
+    src: kitchenSunlitNavyHub,
+    title: 'Sunlit Navy Hub Kitchen',
+    category: 'Kitchen',
+    style: 'Transitional',
+    description: 'Bold navy cabinetry, brass lighting, and a farmhouse sink balance modern energy with timeless function in this family hub.'
+  },
+  {
+    src: bathroomLightFilledSpaSuite,
+    title: 'Light-Filled Spa Suite Bath',
     category: 'Bathroom',
-    description: 'Spa-like retreat with modern fixtures and elegant finishes'
+    style: 'Transitional',
+    description: 'A freestanding soaking tub, oversized shower, and illuminated mirrors transform this spacious suite into a calming retreat.'
   },
   {
-    src: bathroomMarble,
-    title: 'Marble Master Bath',
+    src: bathroomVintageCharmRetreat,
+    title: 'Vintage Charm Retreat Bath',
     category: 'Bathroom',
-    description: 'Elegant bathroom featuring marble finishes and custom lighting'
+    style: 'Historic Revival',
+    description: 'Paneled wainscoting, pedestal sinks, and lantern sconces honor the home’s history while updating the clawfoot soaking experience.'
   },
   {
-    src: bathroomLuxury,
-    title: 'Contemporary Bathroom',
+    src: bathroomBrassAndGraphiteSuite,
+    title: 'Brass & Graphite Suite Bath',
     category: 'Bathroom',
-    description: 'Modern bathroom design with sleek fixtures'
+    style: 'Modern Classic',
+    description: 'Brushed brass fixtures, a furniture-style double vanity, and geometric tile flooring deliver elevated everyday luxury.'
   },
   {
-    src: bathroomLuxury2,
-    title: 'Luxury Bathroom Suite',
+    src: bathroomHonedHoneycombVanity,
+    title: 'Honed Honeycomb Vanity Bath',
     category: 'Bathroom',
-    description: 'High-end bathroom renovation with premium materials'
+    style: 'Soft Traditional',
+    description: 'Warm hexagon marble tile and polished nickel hardware frame a dual vanity that maximizes storage in an intimate footprint.'
   },
   {
-    src: customEntertainment,
-    title: 'Custom Entertainment Center',
-    category: 'Millwork',
-    description: 'Built-in entertainment center with custom millwork'
+    src: bathroomMarbleAndOakSpa,
+    title: 'Marble & Oak Spa Bath',
+    category: 'Bathroom',
+    style: 'Modern',
+    description: 'A floating oak vanity, integrated LED mirrors, and large-format porcelain slabs create a serene spa-like atmosphere.'
   },
   {
-    src: customBuiltin,
-    title: 'Custom Built-Ins',
-    category: 'Millwork',
-    description: 'Functional storage solutions seamlessly integrated'
+    src: bathroomSilverOakRetreat,
+    title: 'Silver Oak Retreat Bath',
+    category: 'Bathroom',
+    style: 'Contemporary',
+    description: 'Sycamore-toned tile, frameless glass, and a sculptural soaking tub invite relaxation with a view of the surrounding greenery.'
   },
   {
-    src: customCabinetry,
-    title: 'Custom Cabinetry',
-    category: 'Millwork',
-    description: 'Bespoke cabinetry crafted with precision'
+    src: bathroomLakeviewMarbleRetreat,
+    title: 'Lakeview Marble Retreat Bath',
+    category: 'Bathroom',
+    style: 'Coastal Contemporary',
+    description: 'Polished marble floors and a curved backlit mirror reflect natural light from panoramic windows overlooking the water.'
   },
   {
-    src: customCloset,
-    title: 'Custom Closet System',
-    category: 'Millwork',
-    description: 'Organized closet system with custom design'
+    src: bathroomWavePanelPowder,
+    title: 'Wave Panel Powder Room',
+    category: 'Bathroom',
+    style: 'Statement Powder',
+    description: '3D wave wall panels and a compact gloss vanity pack texture and functionality into this guest-ready powder room.'
   }
 ]
+
+const categories = ['All', ...Array.from(new Set(galleryImages.map((img) => img.category)))]
 
 export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState(null)
   const [filter, setFilter] = useState('All')
-
-  const categories = ['All', 'Kitchen', 'Bathroom', 'Millwork']
 
   const filteredImages = filter === 'All' 
     ? galleryImages 
@@ -126,7 +183,7 @@ export default function GalleryPage() {
                   </div>
                 </div>
                 <div className="absolute top-4 right-4 bg-[var(--brushed-gold)] text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  {image.category}
+                  {image.category}{image.style ? ` · ${image.style}` : ''}
                 </div>
               </div>
             ))}
