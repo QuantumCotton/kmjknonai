@@ -7,8 +7,10 @@ import './App.css'
 // Import images
 import kitchenModern from './assets/kitchen_modern.jpg'
 import bathroomLuxurySpa from './assets/bathroom_luxury_spa.jpg'
-import bathroomMarble from './assets/bathroom_marble.jpg'
 import customEntertainment from './assets/custom_entertainment.jpg'
+import kitchenTimberlineChefSuite from './assets/portfolio/kitchen-timberline-chef-suite.jpg'
+import kitchenSculptedMarbleGathering from './assets/portfolio/kitchen-sculpted-marble-gathering.jpg'
+import bathroomLightFilledSpaSuite from './assets/portfolio/bathroom-light-filled-spa-suite.jpg'
 
 // Import landing pages
 import BathroomLanding from './pages/BathroomLanding.jsx'
@@ -236,19 +238,19 @@ function HomePage() {
 function PortfolioPage() {
   const projects = [
     {
-      title: 'Coastal Modern Kitchen - Stuart, FL',
-      image: kitchenModern,
-      description: 'The client envisioned a bright, coastal-inspired kitchen with modern amenities. We delivered a stunning space featuring custom cabinetry, quartz countertops, and a seamless open-concept design.',
+      title: 'Timberline Chef Suite Kitchen',
+      image: kitchenTimberlineChefSuite,
+      description: 'Dual islands, pro-grade appliances, and warm brass accents create a hardworking family kitchen framed by scenic backyard views.',
     },
     {
-      title: 'Luxury Master Bath - Treasure Coast',
-      image: bathroomMarble,
-      description: 'Transforming a dated bathroom into a spa-like retreat, we incorporated marble finishes, a freestanding tub, and custom lighting to create an elegant sanctuary.',
+      title: 'Sculpted Marble Gathering Kitchen',
+      image: kitchenSculptedMarbleGathering,
+      description: 'A monolithic waterfall island and continuous slab backsplash wrap this minimalist space in veined marble and soft uplighting.',
     },
     {
-      title: 'Custom Built-Ins & Millwork',
-      image: customEntertainment,
-      description: 'The homeowner wanted functional yet beautiful storage solutions. Our custom millwork seamlessly integrated with the home\'s architecture, adding both value and character.',
+      title: 'Light-Filled Spa Suite Bath',
+      image: bathroomLightFilledSpaSuite,
+      description: 'A freestanding soaking tub, oversized shower, and illuminated mirrors transform this spacious suite into a calming retreat.',
     },
   ]
 
