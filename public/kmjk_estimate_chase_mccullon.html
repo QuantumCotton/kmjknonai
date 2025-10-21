@@ -653,6 +653,24 @@
             color: #FFFFFF;
         }
         
+        .form-status {
+            font-size: 0.9em;
+            margin-top: 14px;
+            letter-spacing: 0.03em;
+        }
+        
+        .form-status.pending {
+            color: #B8860B;
+        }
+        
+        .form-status.success {
+            color: #1F7A4D;
+        }
+        
+        .form-status.error {
+            color: #B00020;
+        }
+        
         .payment-options {
             background: linear-gradient(135deg, #1F1F1F 0%, #2E2E2E 100%);
             color: #F5F5F5;
@@ -1032,12 +1050,14 @@
                     
                     <label class="acceptance-checkbox">
                         <input type="checkbox" id="acceptTerms">
-                        <span>I, <span id="agreeNamePreview">__________________</span>, certify that I am the person named above and authorize KMJK Home Improvement to proceed with the services described.</span>
+                        <span>I, <span id="agreeNamePreview">your name</span>, certify that I am the person named above and authorize KMJK Home Improvement to proceed with the services described.</span>
                     </label>
                     
                     <button type="submit" id="acceptButton" class="accept-button" disabled>
                         I Accept &amp; Sign
                     </button>
+                    
+                    <div id="formStatus" class="form-status hidden"></div>
                 </form>
                 
                 <div id="thankYouCard" class="thank-you-card">
@@ -1099,6 +1119,23 @@
             const thankYouSketch = document.getElementById('thankYouSketch');
             const signatureDownload = document.getElementById('signatureDownload');
             const printReceiptButton = document.getElementById('printReceiptButton');
+            const formStatus = document.getElementById('formStatus');
+            const web3formsEndpoint = 'https://api.web3forms.com/submit';
+            const web3formsAccessKey = '8e63e7e3-ab53-43a9-80c5-ebc113c25912';
+            
+            const setStatus = function (state, message) {
+                if (!formStatus) {
+                    return;
+                }
+                formStatus.textContent = message || '';
+                formStatus.classList.remove('pending', 'success', 'error');
+                if (!state) {
+                    formStatus.classList.add('hidden');
+                    return;
+                }
+                formStatus.classList.remove('hidden');
+                formStatus.classList.add(state);
+            };
             
             const canvas = document.getElementById('signatureCanvas');
             const clearSignatureButton = document.getElementById('clearSignature');
@@ -1186,7 +1223,7 @@
             
             const updateNamePreview = function () {
                 const value = signerName.value.trim();
-                agreeNamePreview.textContent = value || '__________________';
+                agreeNamePreview.textContent = value || 'your name';
                 if (!userEditedTypedSignature) {
                     typedSignature.value = value;
                 }
@@ -1218,12 +1255,15 @@
             updateNamePreview();
             updateButtonState();
             
-            form.addEventListener('submit', function (event) {
+            form.addEventListener('submit', async function (event) {
                 event.preventDefault();
                 updateButtonState();
                 if (acceptButton.disabled) {
                     return;
                 }
+                
+                acceptButton.disabled = true;
+                setStatus('pending', 'Submitting authorization...');
                 
                 const name = signerName.value.trim();
                 const dobValue = signerDob.value;
@@ -1231,7 +1271,7 @@
                 const signedDate = new Date();
                 
                 const signedDisplay = signedDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' });
-                let dobDisplay = '—';
+                let dobDisplay = 'N/A';
                 if (dobValue) {
                     const dobDate = new Date(dobValue + 'T00:00:00');
                     if (!Number.isNaN(dobDate.getTime())) {
@@ -1241,54 +1281,76 @@
                     }
                 }
                 
-                thankYouName.textContent = name;
-                thankYouTimestamp.textContent = signedDisplay;
-                thankYouDob.textContent = dobDisplay;
-                thankYouTyped.textContent = typedValue;
-                thankYouSketch.textContent = hasDrawnSignature ? 'Captured (download below)' : 'Not provided';
+                const projectTotalElement = document.querySelector('.total-amount');
+                const projectTotal = projectTotalElement ? projectTotalElement.textContent.trim() : '';
+                const signatureImageData = hasDrawnSignature && canvas && canvas.toDataURL ? canvas.toDataURL('image/png') : '';
+                const documentHtml = document.documentElement.outerHTML;
                 
-                if (signatureDownload) {
-                    if (hasDrawnSignature && canvas && canvas.toDataURL) {
-                        const dataUrl = canvas.toDataURL('image/png');
-                        signatureDownload.href = dataUrl;
-                        signatureDownload.download = 'kmjk-digital-signature-' + Date.now() + '.png';
-                        signatureDownload.classList.remove('hidden');
-                    } else {
-                        signatureDownload.classList.add('hidden');
-                    }
+                const formData = new FormData();
+                formData.append('access_key', web3formsAccessKey);
+                formData.append('subject', 'Digital Acceptance - ' + estimateNumber);
+                formData.append('full_name', name);
+                formData.append('date_of_birth_raw', dobValue || 'N/A');
+                formData.append('date_of_birth_display', dobDisplay);
+                formData.append('typed_signature', typedValue);
+                formData.append('typed_signature_matches_name', typedValue.toLowerCase() === name.toLowerCase() ? 'Yes' : 'No');
+                formData.append('drawn_signature_provided', hasDrawnSignature ? 'Yes' : 'No');
+                formData.append('signed_on', signedDate.toISOString());
+                formData.append('signed_on_display', signedDisplay);
+                formData.append('estimate_number', estimateNumber);
+                if (projectTotal) {
+                    formData.append('project_total', projectTotal);
+                }
+                formData.append('estimate_html', documentHtml);
+                formData.append('source_url', window.location.href);
+                if (signatureImageData) {
+                    formData.append('signature_image_base64', signatureImageData);
                 }
                 
-                thankYouCard.classList.add('active');
-                
-                const emailRecipient = 'info@kmjk.com';
-                const emailSubject = 'Digital Acceptance - ' + estimateNumber;
-                const emailBodyLines = [
-                    'Estimate: ' + estimateNumber,
-                    'Client Name: ' + name,
-                    'Date of Birth: ' + dobDisplay,
-                    'Typed Signature: ' + typedValue,
-                    'Drawn Signature Captured: ' + (hasDrawnSignature ? 'Yes' : 'No'),
-                    'Signed On: ' + signedDisplay
-                ];
-                const mailtoUrl = 'mailto:' + emailRecipient +
-                    '?subject=' + encodeURIComponent(emailSubject) +
-                    '&body=' + encodeURIComponent(emailBodyLines.join('\n'));
-                
-                setTimeout(function () {
-                    const link = document.createElement('a');
-                    link.href = mailtoUrl;
-                    link.style.display = 'none';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }, 400);
-                
-                Array.prototype.forEach.call(form.elements, function (element) {
-                    if (element === printReceiptButton || element.tagName.toLowerCase() === 'a') {
-                        return;
+                try {
+                    const response = await fetch(web3formsEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json'
+                        },
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (!result.success) {
+                        throw new Error(result.message || 'Submission failed.');
                     }
-                    element.disabled = true;
-                });
+                    
+                    thankYouName.textContent = name;
+                    thankYouTimestamp.textContent = signedDisplay;
+                    thankYouDob.textContent = dobDisplay;
+                    thankYouTyped.textContent = typedValue;
+                    thankYouSketch.textContent = hasDrawnSignature ? 'Captured (download below)' : 'Not provided';
+                    
+                    if (signatureDownload) {
+                        if (signatureImageData) {
+                            signatureDownload.href = signatureImageData;
+                            signatureDownload.download = 'kmjk-digital-signature-' + Date.now() + '.png';
+                            signatureDownload.classList.remove('hidden');
+                        } else {
+                            signatureDownload.classList.add('hidden');
+                        }
+                    }
+                    
+                    thankYouCard.classList.add('active');
+                    setStatus('success', 'Authorization received. A confirmation email has been sent to KMJK.');
+                    
+                    Array.prototype.forEach.call(form.elements, function (element) {
+                        if (element === printReceiptButton || element.tagName.toLowerCase() === 'a') {
+                            return;
+                        }
+                        element.disabled = true;
+                    });
+                } catch (error) {
+                    console.error('Digital acceptance submission failed:', error);
+                    setStatus('error', 'Could not submit the authorization. Please try again or contact KMJK.');
+                    updateButtonState();
+                    return;
+                }
             });
             
             if (printReceiptButton) {
