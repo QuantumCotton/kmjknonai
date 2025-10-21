@@ -499,12 +499,13 @@ Charging worst-case ad costs while optimizing for best-case results is the core 
 
 ## 📞 **CONTACT & BUSINESS INFO**
 
-**Business Name:** KMJK Kitchen Renovations  
-**Owner:** Marcus Rodriguez  
+**Business Name:** KMJK 
+**Owner:** Josue Lopez
+**Internet and Business Developer** Chris Cotton  
 **Location:** Stuart, FL  
-**Website:** kmjknonai (TBD domain)  
-**Service Area:** TBD (likely Martin County, FL)  
-**Specialty:** Premium kitchen renovations  
+**Website:** kmjk.pro  
+**Service Area:** treasure coast  
+**Specialty:** Premium kitchen and bathroom renovations  
 
 ---
 
