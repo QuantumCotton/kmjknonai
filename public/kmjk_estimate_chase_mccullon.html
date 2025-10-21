@@ -545,13 +545,22 @@
         .acceptance-checkbox {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            font-size: 0.9em;
+            gap: 12px;
+            font-size: 0.95em;
             color: #2C2C2C;
+            line-height: 1.6;
         }
         
         .acceptance-checkbox input {
-            margin-top: 4px;
+            margin-top: 2px;
+            width: 22px;
+            height: 22px;
+            accent-color: #B8860B;
+            flex-shrink: 0;
+        }
+        
+        .acceptance-checkbox span {
+            display: block;
         }
         
         .accept-button {
@@ -739,6 +748,111 @@
             font-size: 0.85em;
             color: #CFCFCF;
             letter-spacing: 0.04em;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                margin: 0 10px;
+            }
+            
+            .content {
+                padding: 30px 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+            
+            .letterhead {
+                padding: 28px 24px 18px;
+            }
+            
+            .doc-header {
+                padding: 26px 24px;
+            }
+            
+            .content {
+                padding: 26px 20px;
+            }
+            
+            .digital-acceptance {
+                margin-top: 36px;
+                padding: 26px 22px;
+            }
+            
+            .signature-form {
+                gap: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .signature-pad canvas {
+                height: 150px;
+            }
+            
+            .acceptance-checkbox {
+                flex-direction: column;
+            }
+            
+            .acceptance-checkbox input {
+                margin-top: 0;
+            }
+            
+            .accept-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .thank-you-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .payment-options {
+                padding: 26px 22px;
+            }
+            
+            .cashapp-callout {
+                gap: 22px;
+            }
+        }
+        
+        @media (max-width: 520px) {
+            body {
+                padding: 20px 12px;
+            }
+            
+            .letterhead,
+            .doc-header,
+            .content {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+            
+            .digital-acceptance {
+                padding: 22px 16px;
+            }
+            
+            .signature-pad canvas {
+                height: 135px;
+            }
+            
+            .acceptance-checkbox span {
+                font-size: 0.92em;
+            }
+            
+            .thank-you-card {
+                padding: 24px 18px;
+            }
+            
+            .payment-options {
+                padding: 22px 18px;
+            }
         }
         
         /* Footer */
