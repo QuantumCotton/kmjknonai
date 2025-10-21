@@ -1284,7 +1284,28 @@
                 const projectTotalElement = document.querySelector('.total-amount');
                 const projectTotal = projectTotalElement ? projectTotalElement.textContent.trim() : '';
                 const signatureImageData = hasDrawnSignature && canvas && canvas.toDataURL ? canvas.toDataURL('image/png') : '';
-                const documentHtml = document.documentElement.outerHTML;
+                const summaryTextLines = [
+                    'Estimate: ' + estimateNumber,
+                    'Client Name: ' + name,
+                    'Date of Birth: ' + dobDisplay,
+                    'Typed Signature: ' + typedValue,
+                    'Drawn Signature Captured: ' + (hasDrawnSignature ? 'Yes' : 'No'),
+                    'Signed On: ' + signedDisplay,
+                    projectTotal ? 'Project Total: ' + projectTotal : null
+                ].filter(Boolean);
+                const summaryText = summaryTextLines.join('\n');
+                const summaryHtml = [
+                    '<h3 style=\"margin:0 0 12px 0;font-family:Georgia,serif;color:#2C2C2C;\">Digital Authorization Summary</h3>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Estimate:</strong> ' + estimateNumber + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Client Name:</strong> ' + name + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Date of Birth:</strong> ' + dobDisplay + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Typed Signature:</strong> ' + typedValue + '</p>',
+                    projectTotal ? '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Project Total:</strong> ' + projectTotal + '</p>' : '',
+                    '<p style=\"margin:0 0 12px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Signed On:</strong> ' + signedDisplay + '</p>',
+                    hasDrawnSignature && signatureImageData
+                        ? '<div><p style=\"margin:0 0 8px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Drawn Signature:</strong></p><img src=\"' + signatureImageData + '\" alt=\"Drawn signature\" style=\"max-width:320px;border:1px solid #ddd;border-radius:6px;\"></div>'
+                        : '<p style=\"margin:0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Drawn Signature:</strong> Not provided</p>'
+                ].join('');
                 
                 const formData = new FormData();
                 formData.append('access_key', web3formsAccessKey);
@@ -1301,10 +1322,12 @@
                 if (projectTotal) {
                     formData.append('project_total', projectTotal);
                 }
-                formData.append('estimate_html', documentHtml);
+                formData.append('summary_text', summaryText);
+                formData.append('summary_html', summaryHtml);
                 formData.append('source_url', window.location.href);
                 if (signatureImageData) {
-                    formData.append('signature_image_base64', signatureImageData);
+                    formData.append('signature_image_base64', signatureImageData.replace(/^data:image\/png;base64,/, ''));
+                    formData.append('signature_image_data_url', signatureImageData);
                 }
                 
                 try {
