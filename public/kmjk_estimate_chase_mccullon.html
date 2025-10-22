@@ -49,6 +49,21 @@
             margin: 0 auto;
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 160%;
+            height: 160%;
+            background: url('../information/KMJK PAID STAMP.png') center/contain no-repeat;
+            opacity: 0.24;
+            pointer-events: none;
+            transform: translate(-50%, -50%) rotate(-12deg);
         }
         
         /* Letterhead */
@@ -269,10 +284,30 @@
             padding: 20px;
             color: #2C2C2C;
         }
-        
+
         .total-amount {
             color: #B8860B;
             font-size: 1.3em;
+        }
+
+        .paid-stamp-text {
+            position: relative;
+            display: inline-block;
+            padding: 2px 6px;
+            color: #1F7A4D;
+            font-weight: 700;
+            z-index: 0;
+        }
+
+        .paid-stamp-text::after {
+            content: "";
+            position: absolute;
+            inset: -12px -22px;
+            background: url('../information/KMJK PAID STAMP.png') center/contain no-repeat;
+            opacity: 0.42;
+            pointer-events: none;
+            transform: rotate(-15deg);
+            z-index: -1;
         }
         
         /* Payment Schedule */
@@ -1019,11 +1054,11 @@
                         <tr>
                             <td><strong>Commercial Demolition Service</strong></td>
                             <td>Site protection, wall demo (22'x8'), debris removal, complete cleanup</td>
-                            <td>$600.00</td>
+                            <td><span class="paid-stamp-text">$600.00</span></td>
                         </tr>
                         <tr class="total-row">
                             <td colspan="2"><strong>Total Project Investment</strong></td>
-                            <td class="total-amount">$600.00</td>
+                            <td class="total-amount"><span class="paid-stamp-text">$600.00</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1042,14 +1077,14 @@
                         <div class="payment-detail"><strong>Date:</strong> October 21, 2025</div>
                         <div class="payment-detail"><strong>Time:</strong> 7:33 PM</div>
                         <div class="payment-detail"><strong>Method:</strong> Cash App ($kmjkhomerenov)</div>
-                        <div class="payment-amount">$600.00</div>
+                        <div class="payment-amount"><span class="paid-stamp-text">$600.00</span></div>
                     </div>
                     <div class="payment-card">
                         <div class="payment-number">0</div>
                         <div class="payment-title">Remaining Balance</div>
                         <div class="payment-detail"><strong>Status:</strong> Paid in Full</div>
                         <div class="payment-detail"><strong>Amount Due:</strong> None</div>
-                        <div class="payment-amount">$0.00</div>
+                        <div class="payment-amount"><span class="paid-stamp-text">$0.00</span></div>
                     </div>
                 </div>
                 
@@ -1076,7 +1111,7 @@
             
             <div class="validity-notice">
                 <p>Current balance on this receipt:</p>
-                <p class="validity-date">$0.00</p>
+                <p class="validity-date"><span class="paid-stamp-text">$0.00</span></p>
             </div>
             
             <!-- Signature Section (Print Version) -->
@@ -1227,7 +1262,7 @@
             <p style="margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Client Name:</strong> Chase mccullon</p>
             <p style="margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Date of Birth:</strong> March 25, 1994</p>
             <p style="margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Typed Signature:</strong> Chase mccullon</p>
-            <p style="margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Project Total:</strong> $600.00</p>
+            <p style="margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Project Total:</strong> <span class="paid-stamp-text">$600.00</span></p>
             <p style="margin:0 0 12px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Signed On:</strong> October 21, 2025 at 7:33 PM</p>
             <div>
                 <p style="margin:0 0 8px 0;font-family:Georgia,serif;color:#2C2C2C;"><strong>Drawn Signature:</strong></p>
