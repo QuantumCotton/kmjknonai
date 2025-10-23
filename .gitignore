@@ -15,6 +15,10 @@ dist/
 *.swp
 *.swo
 
+# Local reference dumps
+information/
+*.zip
+
 # OS files
 .DS_Store
 Thumbs.db

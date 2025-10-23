@@ -30,6 +30,7 @@ import BathroomRemodelPalmCity from './pages/BathroomRemodelPalmCity.jsx'
 import BathroomRemodelHutchinsonIsland from './pages/BathroomRemodelHutchinsonIsland.jsx'
 import BathroomRemodelStuart from './pages/BathroomRemodelStuart.jsx'
 import InternalDashboard from './pages/InternalDashboard.jsx'
+import ChatWidget from './components/ChatWidget.jsx'
 import {
   KitchenRenovationPalmCity,
   KitchenRenovationSailfishPoint,
@@ -668,6 +669,7 @@ function AppWrapper() {
     <>
       <App />
       <StickyCtaBar />
+      <ChatWidget />
     </>
   )
 }
