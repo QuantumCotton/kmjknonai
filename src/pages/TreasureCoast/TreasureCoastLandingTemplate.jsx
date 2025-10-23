@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Phone, MessageSquare, Calendar, Check, Star, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
@@ -9,6 +10,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog.jsx'
+import { LocalPresenceSection } from '@/components/LocalPresenceSection.jsx'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion.jsx'
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
@@ -24,6 +27,10 @@ export function createTreasureCoastLandingPage(config) {
       testimonials = [],
       serviceArea,
       finalCta,
+      caseStudies = [],
+      faqs = [],
+      relatedLinks = [],
+      landmarkImage,
     } = config
 
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -122,8 +129,94 @@ export function createTreasureCoastLandingPage(config) {
       }
     }
 
+    const pageUrl = typeof window !== 'undefined' ? window.location.href : ''
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: 'KMJK Home Improvement',
+      image: hero.backgroundImage,
+      url: pageUrl,
+      telephone: '650-501-7659',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '43 SW Osceola St',
+        addressLocality: 'Stuart',
+        addressRegion: 'FL',
+        postalCode: '34994',
+        addressCountry: 'US',
+      },
+      areaServed: serviceArea?.items,
+      servesCuisine: undefined,
+      serviceType,
+      makesOffer: pricingOptions?.map((option) => ({
+        '@type': 'Offer',
+        name: option.name,
+        price: option.range,
+      })),
+    }
+
+    if (!structuredData.areaServed) {
+      delete structuredData.areaServed
+    }
+
+    if (!structuredData.makesOffer?.length) {
+      delete structuredData.makesOffer
+    }
+
+    const faqSchema = faqs.length
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : null
+
+    const serviceSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      name: `${cityName || 'Treasure Coast'} ${serviceType || 'Home Improvement'}`,
+      areaServed: serviceArea?.items,
+      provider: {
+        '@type': 'LocalBusiness',
+        name: 'KMJK Home Improvement',
+        telephone: '650-501-7659',
+      },
+      hasOfferCatalog: pricingOptions?.length
+        ? {
+            '@type': 'OfferCatalog',
+            name: `${serviceType || 'Service'} Packages`,
+            itemListElement: pricingOptions.map((option) => ({
+              '@type': 'Offer',
+              name: option.name,
+              price: option.range,
+              description: option.features?.join(', '),
+            })),
+          }
+        : undefined,
+    }
+
+    if (!serviceSchema.areaServed) {
+      delete serviceSchema.areaServed
+    }
+
     return (
       <div className="pt-20">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              [structuredData, faqSchema, serviceSchema].filter(Boolean)
+            ),
+          }}
+        />
         {hero && (
           <section
             className="relative min-h-[80vh] flex items-center justify-center bg-cover"
@@ -140,6 +233,7 @@ export function createTreasureCoastLandingPage(config) {
           >
             <div className="absolute inset-0 bg-black/55"></div>
             <div className="relative z-10 max-w-4xl mx-auto px-4 text-center text-white space-y-6">
+              {hero.alt && <span className="sr-only">{hero.alt}</span>}
               {hero.badge && (
                 <div className="inline-block bg-[var(--brushed-gold)] text-white px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">
                   {hero.badge}
@@ -314,6 +408,47 @@ export function createTreasureCoastLandingPage(config) {
           </section>
         )}
 
+        {caseStudies.length > 0 && (
+          <section className="py-16 bg-white">
+            <div className="max-w-6xl mx-auto px-4 space-y-10">
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl font-bold text-[var(--deep-charcoal)]">Recent {cityName || 'Treasure Coast'} Projects</h2>
+                <p className="text-gray-600">
+                  A snapshot of KMJK craftsmanship across waterfront estates, golf communities, and island residences.
+                </p>
+              </div>
+              <div className="grid gap-8 md:grid-cols-2">
+                {caseStudies.map((study, index) => (
+                  <article key={index} className="bg-[var(--warm-off-white)] rounded-2xl overflow-hidden shadow-lg border border-white/70">
+                    {study.image && (
+                      <img
+                        src={study.image}
+                        alt={study.alt || study.title}
+                        className="w-full h-64 object-cover"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="p-6 space-y-3 text-left">
+                      <h3 className="text-2xl font-semibold text-[var(--deep-charcoal)]">{study.title}</h3>
+                      {study.location && (
+                        <p className="text-sm uppercase tracking-wide text-[var(--brushed-gold)]">{study.location}</p>
+                      )}
+                      {study.description && <p className="text-gray-600 leading-relaxed">{study.description}</p>}
+                      {study.metrics && (
+                        <ul className="text-sm text-gray-500 space-y-1">
+                          {study.metrics.map((metric, metricIndex) => (
+                            <li key={metricIndex}>• {metric}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {serviceArea && (
           <section className="py-16 bg-white">
             <div className="max-w-5xl mx-auto px-4">
@@ -339,6 +474,56 @@ export function createTreasureCoastLandingPage(config) {
                     )}
                   </div>
                 </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        <LocalPresenceSection
+          businessName="KMJK Home Improvement"
+          addressLines={["Stuart Design Studio", '43 SW Osceola St', 'Stuart, FL 34994']}
+          serviceAreas={serviceArea?.items || ['Palm City', 'Sewall’s Point', 'Sailfish Point', 'Hutchinson Island']}
+        />
+
+        {faqs.length > 0 && (
+          <section className="py-16 bg-[var(--warm-off-white)]">
+            <div className="max-w-5xl mx-auto px-4 space-y-6">
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-bold text-[var(--deep-charcoal)]">Frequently Asked Questions</h2>
+                <p className="text-gray-600">
+                  Answers to the most common {serviceType?.toLowerCase() || 'project'} questions from Treasure Coast homeowners.
+                </p>
+              </div>
+              <Accordion type="single" collapsible className="bg-white rounded-2xl shadow-lg border border-white/70">
+                {faqs.map((faq, index) => (
+                  <AccordionItem value={`faq-${index}`} key={index}>
+                    <AccordionTrigger className="px-6 text-[var(--deep-charcoal)] text-base">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-6 text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </section>
+        )}
+
+        {relatedLinks.length > 0 && (
+          <section className="py-12 bg-white">
+            <div className="max-w-5xl mx-auto px-4 space-y-4 text-center">
+              <h2 className="text-2xl font-semibold text-[var(--deep-charcoal)]">Explore More KMJK Services</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {relatedLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    className="border border-gray-200 hover:border-[var(--brushed-gold)] hover:bg-[var(--brushed-gold)]/10 text-sm font-medium px-4 py-2 rounded-full transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </section>

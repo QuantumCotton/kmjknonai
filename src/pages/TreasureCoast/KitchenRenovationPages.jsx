@@ -7,6 +7,30 @@ const sailfishPointKitchenHero = new URL('../../../pics/kitchen/JRLyuKDlSF7l-CDM
 const sewallsPointKitchenHero = new URL('../../../pics/kitchen/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
 const hutchinsonIslandKitchenHero = new URL('../../../pics/kitchen/hp_17-ya0s-vNX.jpg', import.meta.url).href
 
+const kitchenRelatedLinks = [
+  { label: 'Palm City Bathroom Renovation', href: '/palm-city-bathroom-renovation' },
+  { label: 'Treasure Coast Handyman Plans', href: '/palm-city-handyman-services' },
+  { label: 'Sailfish Point TV Mounting', href: '/sailfish-point-tv-mounting' },
+]
+
+const kitchenFaqs = [
+  {
+    question: 'How far out are you booking kitchen remodels on the Treasure Coast?',
+    answer:
+      'We typically schedule new kitchen projects 6–8 weeks out. Palm City and Sailfish Point clients can often reserve a start date sooner when selections are finalized quickly.',
+  },
+  {
+    question: 'Do you handle HOA approvals and condo logistics for island kitchens?',
+    answer:
+      'Yes. KMJK manages HOA/ARB submissions, elevator reservations, and impact-rated materials so your condo or club remodel stays compliant and on schedule.',
+  },
+  {
+    question: 'Can you coordinate appliances and specialty vendors?',
+    answer:
+      'Absolutely. We source and receive appliances, stone, and millwork, then coordinate deliveries, installation, and warranty documentation for a seamless handoff.',
+  },
+]
+
 const kitchenStats = [
   { value: '300+', label: 'Treasure Coast Kitchens' },
   { value: '15+', label: 'Years Designing + Building' },
@@ -71,7 +95,15 @@ const kitchenPricing = [
   },
 ]
 
-const buildKitchenPage = ({ cityName, heroImage, heroPosition = 'center center', neighborhoods, testimonial }) =>
+const buildKitchenPage = ({
+  cityName,
+  heroImage,
+  heroAlt,
+  heroPosition = 'center center',
+  neighborhoods,
+  testimonial,
+  caseStudies,
+}) =>
   createTreasureCoastLandingPage({
     componentName: `KitchenRenovation${cityName.replace(/\s/g, '')}`,
     cityName,
@@ -84,6 +116,7 @@ const buildKitchenPage = ({ cityName, heroImage, heroPosition = 'center center',
         'Experience concierge design-build service with detailed 3D previews, fixed budgets, and craftsman finishes built for Treasure Coast living.',
       backgroundImage: heroImage,
       backgroundPosition: heroPosition,
+      alt: heroAlt,
       tagline: 'Treasure Coast • Custom Kitchens • KMJK',
     },
     statHighlights: kitchenStats,
@@ -106,11 +139,15 @@ const buildKitchenPage = ({ cityName, heroImage, heroPosition = 'center center',
       heading: `Ready to design your ${cityName} kitchen?`,
       subheading: 'Book a complimentary in-home consultation or 3D design session with Chris and the KMJK team.',
     },
+    caseStudies,
+    faqs: kitchenFaqs,
+    relatedLinks: kitchenRelatedLinks,
   })
 
 export const KitchenRenovationPalmCity = buildKitchenPage({
   cityName: 'Palm City',
   heroImage: palmCityKitchenHero,
+  heroAlt: 'Palm City kitchen renovation with quartz waterfall island and custom cabinetry',
   heroPosition: 'center center',
   neighborhoods: [
     'Monarch Country Club',
@@ -126,11 +163,23 @@ export const KitchenRenovationPalmCity = buildKitchenPage({
     author: 'The Ramirez Family, Palm City',
     detail: 'Full Custom Kitchen • $138k • 6 Weeks',
   },
+  caseStudies: [
+    {
+      title: 'Palm Cove Waterfront Chef Kitchen',
+      location: 'Palm City, FL',
+      description:
+        'Removed structural walls to open the river view, added a 14-foot waterfall island, and integrated a hidden walk-in pantry behind custom paneling.',
+      metrics: ['6-week completion', 'Marine-grade finishes', 'Integrated lighting + automation'],
+      image: palmCityKitchenHero,
+      alt: 'Palm Cove waterfront kitchen renovation with large island and pendant lighting',
+    },
+  ],
 })
 
 export const KitchenRenovationSailfishPoint = buildKitchenPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointKitchenHero,
+  heroAlt: 'Sailfish Point kitchen with navy cabinetry and coastal brass fixtures',
   heroPosition: 'center 35%',
   neighborhoods: [
     'Sailfish Point Oceanfront Residences',
@@ -144,11 +193,23 @@ export const KitchenRenovationSailfishPoint = buildKitchenPage({
     author: 'Anabeth & Colin R., Sailfish Point',
     detail: 'Elite Chef Suite • $212k • 8 Weeks',
   },
+  caseStudies: [
+    {
+      title: 'Oceanfront Entertainer Kitchen',
+      location: 'Sailfish Point, FL',
+      description:
+        'Designed a dual-island layout with marine-rated cabinetry, integrated wine tower, and telescoping doors to the lanai for effortless entertaining.',
+      metrics: ['HOA approvals managed', 'Outdoor passthrough station', 'Custom Control4 integration'],
+      image: sailfishPointKitchenHero,
+      alt: 'Luxury Sailfish Point kitchen with dual islands and ocean view',
+    },
+  ],
 })
 
 export const KitchenRenovationSewallsPoint = buildKitchenPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointKitchenHero,
+  heroAlt: 'Sewall’s Point kitchen featuring coastal white cabinetry and rattan stools',
   heroPosition: 'center 40%',
   neighborhoods: [
     "South Sewall's Point",
@@ -163,11 +224,23 @@ export const KitchenRenovationSewallsPoint = buildKitchenPage({
     author: 'Marianne & Victor L., Sewall’s Point',
     detail: 'Signature Refresh • $62k • 4 Weeks',
   },
+  caseStudies: [
+    {
+      title: 'Historic Coastal Refresh',
+      location: "Sewall's Point, FL",
+      description:
+        'Preserved original millwork while upgrading to inset cabinetry, honed quartzite counters, and a concealed coffee pantry.',
+      metrics: ['Original wood floors refinished', 'Custom inset cabinetry', 'Discreet appliance garages'],
+      image: sewallsPointKitchenHero,
+      alt: 'Historic Sewall’s Point kitchen with inset cabinetry and quartzite counters',
+    },
+  ],
 })
 
 export const KitchenRenovationHutchinsonIsland = buildKitchenPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandKitchenHero,
+  heroAlt: 'Hutchinson Island condo kitchen with ocean-view breakfast bar',
   heroPosition: 'center 45%',
   neighborhoods: [
     'Ocean Club',
@@ -183,4 +256,15 @@ export const KitchenRenovationHutchinsonIsland = buildKitchenPage({
     author: 'Denise & Robert K., Hutchinson Island',
     detail: 'Full Custom Kitchen • $118k • 5 Weeks',
   },
+  caseStudies: [
+    {
+      title: 'Ocean Village Penthouse Kitchen',
+      location: 'Hutchinson Island, FL',
+      description:
+        'Optimized condo layout with mirrored pantry wall, backlit glass shelving, and a bi-fold window bar to capture the Atlantic breeze.',
+      metrics: ['Condo elevator coordination', 'Backlit glass shelving', 'Quartzite bar with seating for six'],
+      image: hutchinsonIslandKitchenHero,
+      alt: 'Hutchinson Island penthouse kitchen with ocean-facing bar seating',
+    },
+  ],
 })
