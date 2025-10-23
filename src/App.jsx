@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
@@ -29,6 +29,37 @@ import BathroomRemodelSewallsPoint from './pages/BathroomRemodelSewallsPoint.jsx
 import BathroomRemodelPalmCity from './pages/BathroomRemodelPalmCity.jsx'
 import BathroomRemodelHutchinsonIsland from './pages/BathroomRemodelHutchinsonIsland.jsx'
 import BathroomRemodelStuart from './pages/BathroomRemodelStuart.jsx'
+import InternalDashboard from './pages/InternalDashboard.jsx'
+import {
+  KitchenRenovationPalmCity,
+  KitchenRenovationSailfishPoint,
+  KitchenRenovationSewallsPoint,
+  KitchenRenovationHutchinsonIsland,
+} from './pages/TreasureCoast/KitchenRenovationPages.jsx'
+import {
+  BathroomRenovationPalmCity,
+  BathroomRenovationSailfishPoint,
+  BathroomRenovationSewallsPoint,
+  BathroomRenovationHutchinsonIsland,
+} from './pages/TreasureCoast/BathroomRenovationPages.jsx'
+import {
+  HandymanPalmCity,
+  HandymanSailfishPoint,
+  HandymanSewallsPoint,
+  HandymanHutchinsonIsland,
+} from './pages/TreasureCoast/HandymanPages.jsx'
+import {
+  TvMountingPalmCity,
+  TvMountingSailfishPoint,
+  TvMountingSewallsPoint,
+  TvMountingHutchinsonIsland,
+} from './pages/TreasureCoast/TVMountingPages.jsx'
+import {
+  EpoxyPalmCity,
+  EpoxySailfishPoint,
+  EpoxySewallsPoint,
+  EpoxyHutchinsonIsland,
+} from './pages/TreasureCoast/EpoxyFlooringPages.jsx'
 
 function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -598,6 +629,33 @@ function App() {
           <Route path="/palm-city-bathroom-remodel" element={<BathroomRemodelPalmCity />} />
           <Route path="/hutchinson-island-bathroom-remodel" element={<BathroomRemodelHutchinsonIsland />} />
           <Route path="/stuart-bathroom-remodel" element={<BathroomRemodelStuart />} />
+          {/* Internal Tools */}
+          <Route path="/internal-dashboard" element={<InternalDashboard />} />
+          {/* Treasure Coast - Kitchen Renovations */}
+          <Route path="/palm-city-kitchen-renovation" element={<KitchenRenovationPalmCity />} />
+          <Route path="/sailfish-point-kitchen-renovation" element={<KitchenRenovationSailfishPoint />} />
+          <Route path="/sewalls-point-kitchen-renovation" element={<KitchenRenovationSewallsPoint />} />
+          <Route path="/hutchinson-island-kitchen-renovation" element={<KitchenRenovationHutchinsonIsland />} />
+          {/* Treasure Coast - Bathroom Renovations */}
+          <Route path="/palm-city-bathroom-renovation" element={<BathroomRenovationPalmCity />} />
+          <Route path="/sailfish-point-bathroom-renovation" element={<BathroomRenovationSailfishPoint />} />
+          <Route path="/sewalls-point-bathroom-renovation" element={<BathroomRenovationSewallsPoint />} />
+          <Route path="/hutchinson-island-bathroom-renovation" element={<BathroomRenovationHutchinsonIsland />} />
+          {/* Treasure Coast - Handyman Services */}
+          <Route path="/palm-city-handyman-services" element={<HandymanPalmCity />} />
+          <Route path="/sailfish-point-handyman-services" element={<HandymanSailfishPoint />} />
+          <Route path="/sewalls-point-handyman-services" element={<HandymanSewallsPoint />} />
+          <Route path="/hutchinson-island-handyman-services" element={<HandymanHutchinsonIsland />} />
+          {/* Treasure Coast - TV Mounting */}
+          <Route path="/palm-city-tv-mounting" element={<TvMountingPalmCity />} />
+          <Route path="/sailfish-point-tv-mounting" element={<TvMountingSailfishPoint />} />
+          <Route path="/sewalls-point-tv-mounting" element={<TvMountingSewallsPoint />} />
+          <Route path="/hutchinson-island-tv-mounting" element={<TvMountingHutchinsonIsland />} />
+          {/* Treasure Coast - Epoxy Flooring */}
+          <Route path="/palm-city-epoxy-flooring" element={<EpoxyPalmCity />} />
+          <Route path="/sailfish-point-epoxy-flooring" element={<EpoxySailfishPoint />} />
+          <Route path="/sewalls-point-epoxy-flooring" element={<EpoxySewallsPoint />} />
+          <Route path="/hutchinson-island-epoxy-flooring" element={<EpoxyHutchinsonIsland />} />
         </Routes>
         <Footer />
       </div>
