@@ -1,12 +1,21 @@
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Phone, MessageSquare, Calendar, Check, Star, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog.jsx'
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
     const {
       metaTitle,
+      cityName,
+      serviceType,
       hero = {},
       statHighlights = [],
       intro,
@@ -17,20 +26,119 @@ export function createTreasureCoastLandingPage(config) {
       finalCta,
     } = config
 
+    const [isFormOpen, setIsFormOpen] = useState(false)
+    const [buttonContext, setButtonContext] = useState('')
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitSuccess, setSubmitSuccess] = useState(false)
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      timeline: '',
+      budget: '',
+      projectDetails: '',
+    })
+
     useEffect(() => {
       if (metaTitle) {
         document.title = metaTitle
       }
     }, [metaTitle])
 
+    const openForm = (context) => {
+      setButtonContext(context)
+      setIsFormOpen(true)
+    }
+
+    const closeForm = () => {
+      setIsFormOpen(false)
+      setButtonContext('')
+      setSubmitSuccess(false)
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        timeline: '',
+        budget: '',
+        projectDetails: '',
+      })
+    }
+
+    const handleFormChange = (field, value) => {
+      setFormData((prev) => ({ ...prev, [field]: value }))
+    }
+
+    const handleSubmit = async (event) => {
+      event.preventDefault()
+      if (isSubmitting) return
+
+      setIsSubmitting(true)
+
+      try {
+        const payload = new FormData()
+        payload.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912')
+        payload.append('name', formData.name)
+        payload.append('email', formData.email)
+        payload.append('phone', formData.phone)
+        payload.append('address', formData.address)
+        payload.append('timeline', formData.timeline)
+        payload.append('budget', formData.budget)
+        payload.append('message', formData.projectDetails)
+        payload.append('service_type', serviceType || 'Treasure Coast Service')
+        payload.append('city', cityName || hero?.badge || '')
+        payload.append('button_context', buttonContext || 'Treasure Coast Landing')
+        payload.append('source_url', window.location.href)
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: payload,
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+          if (window.gtag) {
+            window.gtag('event', 'generate_lead', {
+              service: serviceType || 'Treasure Coast Service',
+              button_context: buttonContext || 'Treasure Coast Landing',
+              city: cityName,
+            })
+          }
+
+          setSubmitSuccess(true)
+          setTimeout(() => {
+            closeForm()
+          }, 2500)
+        } else {
+          throw new Error(data.message || 'Failed to submit form')
+        }
+      } catch (error) {
+        console.error('[Treasure Coast Form] submission error:', error)
+        alert('We could not submit the form right now. Please try again or call us directly.')
+      } finally {
+        setIsSubmitting(false)
+      }
+    }
+
     return (
       <div className="pt-20">
         {hero && (
           <section
-            className="relative min-h-[80vh] flex items-center justify-center bg-cover bg-center"
-            style={hero.backgroundImage ? { backgroundImage: `url(${hero.backgroundImage})` } : undefined}
+            className="relative min-h-[80vh] flex items-center justify-center bg-cover"
+            style={
+              hero.backgroundImage
+                ? {
+                    backgroundImage: `url(${hero.backgroundImage})`,
+                    backgroundPosition: hero.backgroundPosition || 'center',
+                    backgroundSize: hero.backgroundSize || 'cover',
+                    backgroundRepeat: 'no-repeat',
+                  }
+                : undefined
+            }
           >
-            <div className="absolute inset-0 bg-black/60"></div>
+            <div className="absolute inset-0 bg-black/55"></div>
             <div className="relative z-10 max-w-4xl mx-auto px-4 text-center text-white space-y-6">
               {hero.badge && (
                 <div className="inline-block bg-[var(--brushed-gold)] text-white px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">
@@ -48,24 +156,34 @@ export function createTreasureCoastLandingPage(config) {
                 </p>
               )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  onClick={() => openForm('Hero - Schedule Consultation')}
+                  className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
+                >
+                  <Calendar className="mr-2" size={22} />
+                  Schedule Consultation
+                </Button>
                 <a href="tel:650-501-7659">
-                  <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white px-8 py-6 text-lg">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
+                  >
                     <Phone className="mr-2" size={22} />
                     Call 650-501-7659
                   </Button>
                 </a>
                 <a href="sms:650-501-7659">
-                  <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
+                  >
                     <MessageSquare className="mr-2" size={22} />
                     Text Photos To Chris
                   </Button>
                 </a>
-                <Link to="/contact">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[var(--deep-charcoal)] px-8 py-6 text-lg">
-                    <Calendar className="mr-2" size={22} />
-                    Schedule Consultation
-                  </Button>
-                </Link>
               </div>
               {hero.tagline && (
                 <p className="text-sm uppercase tracking-[0.3em] text-gray-300 mt-6">
@@ -236,28 +354,166 @@ export function createTreasureCoastLandingPage(config) {
                 <p className="text-lg md:text-xl text-gray-200">{finalCta.subheading}</p>
               )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg"
+                  onClick={() => openForm('Footer - Book Consultation')}
+                >
+                  <Calendar className="mr-2" size={22} />
+                  Book Consultation
+                </Button>
                 <a href="tel:650-501-7659">
-                  <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg">
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
                     <Phone className="mr-2" size={22} />
                     Call: 650-501-7659
                   </Button>
                 </a>
                 <a href="sms:650-501-7659">
-                  <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white px-8 py-6 text-lg">
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
                     <MessageSquare className="mr-2" size={22} />
                     Text For Quick Quote
                   </Button>
                 </a>
-                <Link to="/contact">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-[var(--deep-charcoal)] px-8 py-6 text-lg">
-                    <Calendar className="mr-2" size={22} />
-                    Book Consultation
-                  </Button>
-                </Link>
               </div>
             </div>
           </section>
         )}
+
+        <Dialog
+          open={isFormOpen}
+          onOpenChange={(open) => {
+            if (!open) {
+              closeForm()
+            } else {
+              setIsFormOpen(true)
+            }
+          }}
+        >
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-[var(--deep-charcoal)]">
+                Start Your {cityName ? `${cityName} ` : ''}{serviceType || 'Project'}
+              </DialogTitle>
+              <DialogDescription>
+                Share a few details and we’ll reach out within one business day.
+              </DialogDescription>
+            </DialogHeader>
+
+            {submitSuccess ? (
+              <div className="py-10 text-center space-y-3">
+                <div className="text-5xl">✅</div>
+                <p className="text-xl font-semibold text-[var(--deep-charcoal)]">We received your request!</p>
+                <p className="text-gray-600">
+                  Chris and the KMJK team will follow up shortly to schedule your consultation.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                      Name*
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(event) => handleFormChange('name', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="Full name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                      Email*
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(event) => handleFormChange('email', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="you@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                      Phone*
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(event) => handleFormChange('phone', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                      Address / Community
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.address}
+                      onChange={(event) => handleFormChange('address', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="Neighborhood, condo, or HOA"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">Desired Timeline</label>
+                    <input
+                      type="text"
+                      value={formData.timeline}
+                      onChange={(event) => handleFormChange('timeline', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="e.g., ASAP, 3 months, this summer"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">Budget Range</label>
+                    <input
+                      type="text"
+                      value={formData.budget}
+                      onChange={(event) => handleFormChange('budget', event.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                      placeholder="e.g., $50k - $70k"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                    Tell us about your project
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={formData.projectDetails}
+                    onChange={(event) => handleFormChange('projectDetails', event.target.value)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
+                    placeholder="Share inspiration, must-haves, or challenges we should know."
+                  />
+                </div>
+
+                <DialogFooter className="pt-2">
+                  <Button type="button" variant="ghost" onClick={closeForm} disabled={isSubmitting}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending...' : 'Send Project Details'}
+                  </Button>
+                </DialogFooter>
+              </form>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     )
   }

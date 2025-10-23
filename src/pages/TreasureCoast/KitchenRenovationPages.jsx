@@ -1,8 +1,11 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
-const palmCityKitchenHero = new URL('../../../pics/M2PIwTLqn310-BXsfJGgi.jpg', import.meta.url).href
-const sailfishPointKitchenHero = new URL('../../../pics/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
-const sewallsPointKitchenHero = new URL('../../../pics/JRLyuKDlSF7l-CDMJYmNl.jpg', import.meta.url).href
-const hutchinsonIslandKitchenHero = new URL('../../../pics/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
+const palmCityKitchenHero = new URL(
+  '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
+  import.meta.url
+).href
+const sailfishPointKitchenHero = new URL('../../../pics/kitchen/JRLyuKDlSF7l-CDMJYmNl.jpg', import.meta.url).href
+const sewallsPointKitchenHero = new URL('../../../pics/kitchen/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
+const hutchinsonIslandKitchenHero = new URL('../../../pics/kitchen/hp_17-ya0s-vNX.jpg', import.meta.url).href
 
 const kitchenStats = [
   { value: '300+', label: 'Treasure Coast Kitchens' },
@@ -68,9 +71,11 @@ const kitchenPricing = [
   },
 ]
 
-const buildKitchenPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
+const buildKitchenPage = ({ cityName, heroImage, heroPosition = 'center center', neighborhoods, testimonial }) =>
   createTreasureCoastLandingPage({
     componentName: `KitchenRenovation${cityName.replace(/\s/g, '')}`,
+    cityName,
+    serviceType: 'Kitchen Renovation',
     metaTitle: `${cityName}, FL Kitchen Renovation | KMJK Home Improvement`,
     hero: {
       badge: `${cityName}, FL • Custom Kitchens`,
@@ -78,6 +83,7 @@ const buildKitchenPage = ({ cityName, heroImage, neighborhoods, testimonial }) =
       subheading:
         'Experience concierge design-build service with detailed 3D previews, fixed budgets, and craftsman finishes built for Treasure Coast living.',
       backgroundImage: heroImage,
+      backgroundPosition: heroPosition,
       tagline: 'Treasure Coast • Custom Kitchens • KMJK',
     },
     statHighlights: kitchenStats,
@@ -105,6 +111,7 @@ const buildKitchenPage = ({ cityName, heroImage, neighborhoods, testimonial }) =
 export const KitchenRenovationPalmCity = buildKitchenPage({
   cityName: 'Palm City',
   heroImage: palmCityKitchenHero,
+  heroPosition: 'center center',
   neighborhoods: [
     'Monarch Country Club',
     'Palm Cove Golf & Yacht Club',
@@ -124,6 +131,7 @@ export const KitchenRenovationPalmCity = buildKitchenPage({
 export const KitchenRenovationSailfishPoint = buildKitchenPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointKitchenHero,
+  heroPosition: 'center 35%',
   neighborhoods: [
     'Sailfish Point Oceanfront Residences',
     'Sailfish Point Marina Villas',
@@ -141,6 +149,7 @@ export const KitchenRenovationSailfishPoint = buildKitchenPage({
 export const KitchenRenovationSewallsPoint = buildKitchenPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointKitchenHero,
+  heroPosition: 'center 40%',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -159,6 +168,7 @@ export const KitchenRenovationSewallsPoint = buildKitchenPage({
 export const KitchenRenovationHutchinsonIsland = buildKitchenPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandKitchenHero,
+  heroPosition: 'center 45%',
   neighborhoods: [
     'Ocean Club',
     'Inlet Village',

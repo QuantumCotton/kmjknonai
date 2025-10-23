@@ -1,8 +1,8 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
-const palmCityBathroomHero = new URL('../../../pics/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href
-const sailfishPointBathroomHero = new URL('../../../pics/Phoenixbathroomafter.png', import.meta.url).href
-const sewallsPointBathroomHero = new URL('../../../pics/phoenixbathroombefore.png', import.meta.url).href
-const hutchinsonIslandBathroomHero = new URL('../../../pics/thumbnail_IMG_1246.jpg', import.meta.url).href
+const palmCityBathroomHero = new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href
+const sailfishPointBathroomHero = new URL('../../../pics/bathroom/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
+const sewallsPointBathroomHero = new URL('../../../pics/bathroom/bai_11-uXYAcnvq.jpg', import.meta.url).href
+const hutchinsonIslandBathroomHero = new URL('../../../pics/bathroom/xiCgKIVMEJzO-ErVzbRzk.jpg', import.meta.url).href
 
 const bathroomStats = [
   { value: '250+', label: 'Luxury Baths Delivered' },
@@ -68,9 +68,11 @@ const bathroomPricing = [
   },
 ]
 
-const buildBathroomPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
+const buildBathroomPage = ({ cityName, heroImage, heroPosition = 'center center', neighborhoods, testimonial }) =>
   createTreasureCoastLandingPage({
     componentName: `BathroomRenovation${cityName.replace(/\s/g, '')}`,
+    cityName,
+    serviceType: 'Bathroom Renovation',
     metaTitle: `${cityName}, FL Bathroom Renovation | KMJK Home Improvement`,
     hero: {
       badge: `${cityName}, FL • Luxury Bathrooms`,
@@ -78,6 +80,7 @@ const buildBathroomPage = ({ cityName, heroImage, neighborhoods, testimonial }) 
       subheading:
         'Embrace spa serenity with KMJK. We handle design, permitting, and installation with concierge-level care for Treasure Coast homeowners.',
       backgroundImage: heroImage,
+      backgroundPosition: heroPosition,
       tagline: 'Treasure Coast • Luxury Bathrooms • KMJK',
     },
     statHighlights: bathroomStats,
@@ -105,6 +108,7 @@ const buildBathroomPage = ({ cityName, heroImage, neighborhoods, testimonial }) 
 export const BathroomRenovationPalmCity = buildBathroomPage({
   cityName: 'Palm City',
   heroImage: palmCityBathroomHero,
+  heroPosition: 'center 40%',
   neighborhoods: [
     'Palm City Farms',
     'The Evergreen Club',
@@ -124,6 +128,7 @@ export const BathroomRenovationPalmCity = buildBathroomPage({
 export const BathroomRenovationSailfishPoint = buildBathroomPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointBathroomHero,
+  heroPosition: 'center 45%',
   neighborhoods: [
     'Oceanfront Estates',
     'Harbour Residences',
@@ -141,6 +146,7 @@ export const BathroomRenovationSailfishPoint = buildBathroomPage({
 export const BathroomRenovationSewallsPoint = buildBathroomPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointBathroomHero,
+  heroPosition: 'center 38%',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -159,6 +165,7 @@ export const BathroomRenovationSewallsPoint = buildBathroomPage({
 export const BathroomRenovationHutchinsonIsland = buildBathroomPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandBathroomHero,
+  heroPosition: 'center 35%',
   neighborhoods: [
     'Indian River Plantation',
     'Plantation Beach Club',

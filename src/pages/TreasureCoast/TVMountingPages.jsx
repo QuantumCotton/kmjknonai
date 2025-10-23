@@ -1,8 +1,8 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
-const palmCityTvHero = new URL('../../../pics/hp_09-CrdLi6WD.jpg', import.meta.url).href
-const sailfishPointTvHero = new URL('../../../pics/hp_14-DHyl6RsD.jpg', import.meta.url).href
-const sewallsPointTvHero = new URL('../../../pics/hp_15-BLRtevCm.jpg', import.meta.url).href
-const hutchinsonIslandTvHero = new URL('../../../pics/hp_17-ya0s-vNX.jpg', import.meta.url).href
+const palmCityTvHero = new URL('../../../pics/tv mounts/tv install stuart.png', import.meta.url).href
+const sailfishPointTvHero = new URL('../../../pics/tv mounts/tvmountsewallspoint.png', import.meta.url).href
+const sewallsPointTvHero = new URL('../../../pics/tv mounts/tvmountsewallspoint.png', import.meta.url).href
+const hutchinsonIslandTvHero = new URL('../../../pics/tv mounts/tvmountisland.png', import.meta.url).href
 
 const tvStats = [
   { value: '600+', label: 'TV Installs Completed' },
@@ -65,9 +65,11 @@ const tvPricing = [
   },
 ]
 
-const buildTvPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
+const buildTvPage = ({ cityName, heroImage, heroPosition = 'center center', neighborhoods, testimonial }) =>
   createTreasureCoastLandingPage({
     componentName: `TvMounting${cityName.replace(/\s/g, '')}`,
+    cityName,
+    serviceType: 'TV Mounting',
     metaTitle: `${cityName}, FL TV Mounting & Media Walls | KMJK Home Improvement`,
     hero: {
       badge: `${cityName}, FL • TV Mounting`,
@@ -75,6 +77,7 @@ const buildTvPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
       subheading:
         'KMJK engineers flawless AV installs with hidden wiring, designer finishes, and concierge service throughout the Treasure Coast.',
       backgroundImage: heroImage,
+      backgroundPosition: heroPosition,
       tagline: 'Treasure Coast • TV Mounting • KMJK',
     },
     statHighlights: tvStats,
@@ -102,6 +105,7 @@ const buildTvPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
 export const TvMountingPalmCity = buildTvPage({
   cityName: 'Palm City',
   heroImage: palmCityTvHero,
+  heroPosition: 'center 38%',
   neighborhoods: [
     'Palm City Farms',
     'Carmel',
@@ -120,6 +124,7 @@ export const TvMountingPalmCity = buildTvPage({
 export const TvMountingSailfishPoint = buildTvPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointTvHero,
+  heroPosition: 'center 40%',
   neighborhoods: [
     'Oceanfront Estates',
     'Marina Residences',
@@ -137,6 +142,7 @@ export const TvMountingSailfishPoint = buildTvPage({
 export const TvMountingSewallsPoint = buildTvPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointTvHero,
+  heroPosition: 'center 45%',
   neighborhoods: [
     'Mandarin Isle',
     'High Point',
@@ -155,6 +161,7 @@ export const TvMountingSewallsPoint = buildTvPage({
 export const TvMountingHutchinsonIsland = buildTvPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandTvHero,
+  heroPosition: 'center 35%',
   neighborhoods: [
     'Ocean Village',
     'Inlet Village',
