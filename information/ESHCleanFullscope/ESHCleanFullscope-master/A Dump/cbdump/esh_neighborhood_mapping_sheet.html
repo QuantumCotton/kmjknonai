@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Elite Service Hub — Neighborhood & Keyword Mapping</title>
+    <style>
+        :root {
+            --deep-charcoal: #212121;
+            --soft-ivory: #fffbf3;
+            --warm-gold: #b8860b;
+            --warm-gold-light: #d1ad5c;
+            --border-warm: #caa96a;
+            --text-primary: #2c2c2c;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: #ffffff;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .content {
+                padding: 40px 55px;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            textarea::placeholder {
+                color: transparent !important;
+            }
+            textarea {
+                background: #ffffff !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background: #f3f1ec;
+            padding: 40px 20px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: #ffffff;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .letterhead {
+            background: var(--deep-charcoal);
+            color: #f8f8f8;
+            padding: 38px 60px 34px;
+            text-align: center;
+        }
+
+        .company-name {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+            color: var(--warm-gold);
+        }
+
+        .gold-underline {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--warm-gold), transparent);
+            margin: 18px auto 22px;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            color: var(--warm-gold-light);
+        }
+
+        .content {
+            padding: 50px 60px 60px;
+        }
+
+        .doc-title {
+            font-size: 2em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 35px;
+            color: #2c2c2c;
+            letter-spacing: 0.03em;
+        }
+
+        .section {
+            border: 1.5px solid var(--border-warm);
+            border-radius: 10px;
+            padding: 26px 28px 32px;
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: var(--warm-gold);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--border-warm);
+            padding-bottom: 6px;
+            letter-spacing: 0.06em;
+        }
+
+        .section-intro {
+            font-size: 0.95em;
+            color: #4b4b4b;
+            margin-bottom: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.92em;
+        }
+
+        table th,
+        table td {
+            border: 1px solid var(--border-warm);
+            padding: 9px 10px;
+            text-align: left;
+        }
+
+        table th {
+            background: #f9f1df;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            color: var(--text-primary);
+        }
+
+        .notes-area {
+            border: 1px dashed var(--warm-gold);
+            border-radius: 8px;
+            padding: 16px 18px;
+            background: var(--soft-ivory);
+            margin-top: 18px;
+        }
+
+        .notes-area textarea {
+            border: none;
+            background: transparent;
+            padding: 0;
+            min-height: 120px;
+            font-family: inherit;
+            font-size: 0.95em;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 12px;
+            color: #6b6b6b;
+            font-size: 0.9em;
+            letter-spacing: 0.08em;
+        }
+
+        .no-print {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0 auto 20px;
+            max-width: 8.5in;
+        }
+
+        .no-print button {
+            background: var(--deep-charcoal);
+            color: #f8f8f8;
+            border: none;
+            border-radius: 999px;
+            padding: 12px 26px;
+            font-size: 0.9em;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .no-print button:hover {
+            opacity: 0.85;
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button onclick="window.print()">Print Mapping Sheet</button>
+    </div>
+    <div class="container">
+        <header class="letterhead">
+            <div class="company-name">THE ELITE SERVICE HUB</div>
+            <div class="gold-underline"></div>
+            <div class="tagline">Precision Contractor Network</div>
+        </header>
+
+        <main class="content">
+            <h1 class="doc-title">Neighborhood & Keyword Mapping</h1>
+
+            <section class="section">
+                <h2 class="section-title">High-Value Neighborhood Grid</h2>
+                <p class="section-intro">List the elite enclaves we target with tailored landing pages and creative.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Neighborhood / HOA</th>
+                            <th>City / ZIP</th>
+                            <th>Home Profile / Avg Value</th>
+                            <th>Ideal Services</th>
+                            <th>Notable Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Local Keyword Intelligence</h2>
+                <p class="section-intro">Capture the phrases homeowners use when requesting work in these areas.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Search Phrase / Prompt</th>
+                            <th>Service Type</th>
+                            <th>Neighborhood Focus</th>
+                            <th>Season / Timing</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Referral & Influence Nodes</h2>
+                <p class="section-intro">Map designers, realtors, and suppliers who provide access to these enclaves.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Partner / Influencer</th>
+                            <th>Role</th>
+                            <th>Neighborhoods Covered</th>
+                            <th>Introduction Status</th>
+                            <th>Notes / Next Steps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Seasonal & Event Triggers</h2>
+                <p class="section-intro">List timing cues that spike demand so ads anticipate peak seasons.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Season / Event</th>
+                            <th>Neighborhoods Impacted</th>
+                            <th>Target Services</th>
+                            <th>Lead Time Required</th>
+                            <th>Activation Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Voice & Imagery Cues</h2>
+                <p class="section-intro">Document how each neighborhood wants to be addressed and which visuals resonate.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Neighborhood</th>
+                            <th>Tone of Voice</th>
+                            <th>Visual Style</th>
+                            <th>Pain Points / Desires</th>
+                            <th>Must-Include Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <div class="notes-area">
+                <textarea placeholder="Additional intel, anecdotes, or homeowner quotes that capture the neighborhood ethos."></textarea>
+            </div>
+
+            <div class="footer-note">
+                Mapping Complete → Feed Data into Landing Pages & Ads
+            </div>
+        </main>
+    </div>
+</body>
+</html>

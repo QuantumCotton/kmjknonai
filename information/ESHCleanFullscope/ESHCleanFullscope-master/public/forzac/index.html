@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forzac Tuning Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --esh-black: #000000;
+      --esh-gold: #d4af37;
+      --esh-zinc-900: #18181b;
+      --esh-zinc-800: #27272a;
+      --esh-zinc-700: #3f3f46;
+      --esh-zinc-600: #52525b;
+      --esh-zinc-500: #71717a;
+      --esh-zinc-400: #a1a1aa;
+      --esh-zinc-300: #d4d4d8;
+      --esh-white: #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, var(--esh-black) 0%, var(--esh-zinc-900) 100%); color: var(--esh-zinc-300); margin: 0; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 24px; }
+    .card { background: var(--esh-zinc-900); border: 1px solid var(--esh-zinc-800); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+    header.hero { position: relative; padding: 48px 40px; text-align: center; border-bottom: 2px solid var(--esh-gold); background: linear-gradient(135deg, var(--esh-black) 0%, var(--esh-zinc-800) 100%); }
+    header.hero::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(212,175,55,0.03) 100px, rgba(212,175,55,0.03) 200px); }
+    .hero-content { position: relative; z-index: 1; }
+    .logo { height: 72px; width: auto; opacity: .95; object-fit: contain; display: block; margin: 0 auto 10px; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; letter-spacing: .02em; margin: 0 0 12px; color: var(--esh-white); }
+    h1 { font-size: 3rem; font-weight: 300; }
+    h1 .gold { color: var(--esh-gold); font-weight: 400; }
+    p.lead { color: var(--esh-zinc-400); margin: 8px auto 0; max-width: 720px; font-weight: 300; }
+    .content { padding: 40px; line-height: 1.75; font-size: 1.02rem; }
+    .section { margin: 28px 0; padding: 28px; background: var(--esh-black); border: 1px solid var(--esh-zinc-800); border-radius: 12px; }
+    .section h2 { color: var(--esh-gold); font-weight: 400; letter-spacing: .04em; }
+    .muted { color: var(--esh-zinc-500); }
+    .list { margin: 10px 0 0 18px; }
+    .list li { margin: 6px 0; }
+    .callout { border-left: 3px solid var(--esh-gold); background: linear-gradient(135deg, rgba(212,175,55,0.10) 0%, rgba(212,175,55,0.05) 100%); padding: 16px 18px; border-radius: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .badge { display: inline-block; padding: 4px 10px; border: 1px solid var(--esh-zinc-700); border-radius: 999px; color: var(--esh-zinc-300); font-size: .8rem; margin-right: 6px; }
+    .toolbar { position: sticky; top: 0; display: flex; justify-content: flex-end; gap: 8px; padding: 10px; background: rgba(0,0,0,0.4); backdrop-filter: blur(6px); border-bottom: 1px solid var(--esh-zinc-800); z-index: 5; }
+    .tool-btn { padding: 10px 14px; border-radius: 8px; border: 1px solid var(--esh-zinc-700); background: var(--esh-zinc-900); color: var(--esh-zinc-300); cursor: pointer; font-weight: 600; letter-spacing: .04em; }
+    .tool-btn:hover { border-color: var(--esh-gold); color: var(--esh-gold); }
+    .footer-note { text-align: center; color: var(--esh-zinc-500); font-size: .9rem; margin-top: 18px; }
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none !important; }
+      .card { box-shadow: none; border: 1px solid #333; }
+      header.hero { background: var(--esh-black) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 20px 30px !important; }
+      .content { padding: 20px 30px !important; font-size: .95rem; line-height: 1.55; }
+      .section { background: #fff !important; border: 1px solid #333; }
+      .logo { width: 60px !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header class="hero">
+        <div class="toolbar">
+          <button class="tool-btn" onclick="window.print()">Print</button>
+        </div>
+        <div class="hero-content">
+          <img src="/images/logos/esh-dark-bg.png" alt="Elite Service Hub" class="logo" />
+          <h1>Forzac <span class="gold">Tuning Brief</span></h1>
+          <p class="lead">A high-level overview of professional ECU tuning workflows, risks, and platform-specific considerations. For educational reference only.</p>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="section callout">
+          <h2>Critical Disclaimer</h2>
+          <p class="muted">ECU tuning carries significant risk. A single incorrect value can cause catastrophic engine damage or render an ECU inoperable. Proceed only with professional training, proper tools, and a stable power supply.</p>
+        </section>
+
+        <section class="section">
+          <h2>The Professional Toolkit</h2>
+          <div class="grid">
+            <div>
+              <h3>Hardware</h3>
+              <ul class="list">
+                <li><span class="badge">OBD-II</span> KESSv2, Flex, HP Tuners, EFILive</li>
+                <li><span class="badge">Bench/Boot</span> K-TAG, Flex bench harness</li>
+                <li><span class="badge">Power</span> Stable 13.5–14.0V automotive supply</li>
+                <li><span class="badge">Legacy</span> EPROM reader/programmer (e.g., Burn2)</li>
+                <li>Reliable laptop, shielded cables</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Software</h3>
+              <ul class="list">
+                <li><span class="badge">Editor</span> WinOLS (hex editor)</li>
+                <li><span class="badge">Defs</span> Damos/Map packs for exact ECU SW</li>
+                <li><span class="badge">Checksum</span> Auto-correction plugins/tooling</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Vehicle Scenarios</h2>
+          <div class="grid">
+            <div>
+              <h3>2010 Corvette (GM E38)</h3>
+              <p class="muted">Best supported. Prefer HP Tuners/OBD-II read. Save stock BIN immediately.</p>
+            </div>
+            <div>
+              <h3>2008 Ram 2500 Cummins</h3>
+              <p class="muted">Diesel-specific logic. EFILive or Flex via OBD-II; confirm full read.</p>
+            </div>
+            <div>
+              <h3>2000 Honda Accord</h3>
+              <p class="muted">Often Hondata/KTuner hardware; some require ECU modification or bench read.</p>
+            </div>
+            <div>
+              <h3>1991 Ford F-150 (EEC-IV)</h3>
+              <p class="muted">OBD-I/EPROM era. Chip read/programming or QuarterHorse emulator.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Acquiring ECU Data: Step-by-Step</h2>
+          <div class="grid">
+            <div>
+              <h3>2010 Corvette (GM E38)</h3>
+              <ol class="list">
+                <li>Connect a stable 13.5–14.0V power supply to battery.</li>
+                <li>Plug HP Tuners/EFILive/KESSv2 into OBD-II and laptop.</li>
+                <li>Ignition ON (engine off). Identify ECU and software ID.</li>
+                <li>Full read of calibration. Save BIN and back up separately.</li>
+              </ol>
+            </div>
+            <div>
+              <h3>2008 Ram 2500 Cummins</h3>
+              <ol class="list">
+                <li>Use EFILive or Flex with diesel protocol.</li>
+                <li>Maintain stable power. Key ON, perform controller ID.</li>
+                <li>Execute full read; verify checksum and file size.</li>
+                <li>Save multiple copies of the stock file.</li>
+              </ol>
+            </div>
+            <div>
+              <h3>2000 Honda Accord</h3>
+              <ol class="list">
+                <li>Prefer Hondata/KTuner ECU platform (may require ECU mod).</li>
+                <li>Connect via their USB interface; load base map definition.</li>
+                <li>Read or start from provided stock map matching ECU code.</li>
+                <li>Back up the map; label with ECU part/SW revision.</li>
+              </ol>
+            </div>
+            <div>
+              <h3>1991 Ford F‑150 (EEC‑IV)</h3>
+              <ol class="list">
+                <li>Disconnect battery; remove ECU from kick panel.</li>
+                <li>Open case; identify EPROM. Use chip puller or desolder.</li>
+                <li>Read EPROM with programmer (e.g., Burn2). Save BIN.</li>
+                <li>Optional: Install QuarterHorse for real-time tuning.</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>WinOLS Workflow (After Read)</h2>
+          <ol class="list">
+            <li>Open BIN in WinOLS and import the correct Damos/map pack.</li>
+            <li>Edit calibrated areas conservatively: Spark, Fuel/VE, Torque, Boost.</li>
+            <li>Target safe AFR and monitor knock/EGT; respect hardware limits.</li>
+            <li>Correct checksums via plugin or writer tool; export.</li>
+            <li>Flash back with stable power; avoid any interruption.</li>
+          </ol>
+        </section>
+
+        <section class="section callout">
+          <h2>Reality Check: Power vs. Hardware</h2>
+          <p>Software optimizes what hardware allows. Big gains require supporting upgrades:</p>
+          <ul class="list">
+            <li>Fuel system capacity (injectors/pump)</li>
+            <li>Forced induction sizing (turbo/supercharger)</li>
+            <li>Intake/exhaust flow and engine internals</li>
+          </ul>
+        </section>
+
+        <p class="footer-note">Prepared as a professional overview for educational purposes only.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
