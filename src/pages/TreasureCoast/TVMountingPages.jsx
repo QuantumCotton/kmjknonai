@@ -4,6 +4,30 @@ const sailfishPointTvHero = new URL('../../../pics/tv mounts/tvmountsewallspoint
 const sewallsPointTvHero = new URL('../../../pics/tv mounts/tvmountsewallspoint.png', import.meta.url).href
 const hutchinsonIslandTvHero = new URL('../../../pics/tv mounts/tvmountisland.png', import.meta.url).href
 
+const tvRelatedLinks = [
+  { label: 'Palm City Home Theater Remodels', href: '/palm-city-kitchen-renovation' },
+  { label: 'Sailfish Point Epoxy Garage Floors', href: '/sailfish-point-epoxy-flooring' },
+  { label: 'Treasure Coast Handyman Maintenance', href: '/palm-city-handyman-services' },
+]
+
+const tvFaqs = [
+  {
+    question: 'Can KMJK hide all wiring and components during a TV install?',
+    answer:
+      'Yes. We relocate outlets, run in-wall wiring, and conceal media gear inside cabinets or remote closets so the finished wall remains clean.',
+  },
+  {
+    question: 'Do you handle outdoor and lanai TV mounting?',
+    answer:
+      'Absolutely. We install weatherproof enclosures, marine-rated mounts, and integrate landscape audio so your lanai or pool deck is entertainment ready.',
+  },
+  {
+    question: 'Can you integrate Control4, Sonos, or other smart systems?',
+    answer:
+      'Our techs work with Control4, Sonos, Samsung Frame, and other smart platforms to sync audio, lighting, and automation with your new media wall.',
+  },
+]
+
 const tvStats = [
   { value: '600+', label: 'TV Installs Completed' },
   { value: '24 HR', label: 'Rapid Scheduling' },
@@ -65,7 +89,15 @@ const tvPricing = [
   },
 ]
 
-const buildTvPage = ({ cityName, heroImage, heroPosition = 'center center', neighborhoods, testimonial }) =>
+const buildTvPage = ({
+  cityName,
+  heroImage,
+  heroAlt,
+  heroPosition = 'center center',
+  neighborhoods,
+  testimonial,
+  caseStudies,
+}) =>
   createTreasureCoastLandingPage({
     componentName: `TvMounting${cityName.replace(/\s/g, '')}`,
     cityName,
@@ -77,6 +109,7 @@ const buildTvPage = ({ cityName, heroImage, heroPosition = 'center center', neig
       subheading:
         'KMJK engineers flawless AV installs with hidden wiring, designer finishes, and concierge service throughout the Treasure Coast.',
       backgroundImage: heroImage,
+      alt: heroAlt,
       backgroundPosition: heroPosition,
       tagline: 'Treasure Coast • TV Mounting • KMJK',
     },
@@ -100,11 +133,15 @@ const buildTvPage = ({ cityName, heroImage, heroPosition = 'center center', neig
       heading: `Upgrade your ${cityName} viewing experience`,
       subheading: 'Share your inspiration photos or AV plans and KMJK will craft a media wall that exceeds expectations.',
     },
+    caseStudies,
+    faqs: tvFaqs,
+    relatedLinks: tvRelatedLinks,
   })
 
 export const TvMountingPalmCity = buildTvPage({
   cityName: 'Palm City',
   heroImage: palmCityTvHero,
+  heroAlt: 'Palm City living room feature wall with KMJK TV mounting and custom millwork',
   heroPosition: 'center 38%',
   neighborhoods: [
     'Palm City Farms',
@@ -119,11 +156,23 @@ export const TvMountingPalmCity = buildTvPage({
     author: 'Kelsey & Matt F., Palm City',
     detail: 'Custom Feature Wall • $2,450 • 2 Days',
   },
+  caseStudies: [
+    {
+      title: 'Palm City Club Room Upgrade',
+      location: 'Palm City, FL',
+      description:
+        'Installed a recessed 85" display with hidden rack storage, Atmos sound calibration, and custom shiplap to match the home’s coastal palette.',
+      metrics: ['85" recessed display', 'Hidden rack + ventilation', 'Atmos calibration completed'],
+      image: palmCityTvHero,
+      alt: 'Palm City recessed TV installation with shiplap wall',
+    },
+  ],
 })
 
 export const TvMountingSailfishPoint = buildTvPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointTvHero,
+  heroAlt: 'Sailfish Point media wall with motorized mount and custom paneling',
   heroPosition: 'center 40%',
   neighborhoods: [
     'Oceanfront Estates',
@@ -137,11 +186,23 @@ export const TvMountingSailfishPoint = buildTvPage({
     author: 'The Lopez Family, Sailfish Point',
     detail: 'Outdoor Entertainment Suite • $6,800 • 3 Days',
   },
+  caseStudies: [
+    {
+      title: 'Sailfish Point Dual-Zone Media Suite',
+      location: 'Sailfish Point, FL',
+      description:
+        'Motorized mount with swivel for ocean or fireplace viewing, hidden Control4 rack, and custom acoustic paneling to elevate the club room.',
+      metrics: ['Motorized swivel mount', 'Control4 integration', 'Acoustic panel feature wall'],
+      image: sailfishPointTvHero,
+      alt: 'Luxury Sailfish Point TV mounting with acoustic panels',
+    },
+  ],
 })
 
 export const TvMountingSewallsPoint = buildTvPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointTvHero,
+  heroAlt: 'Sewall’s Point art-inspired media wall with concealed wiring',
   heroPosition: 'center 45%',
   neighborhoods: [
     'Mandarin Isle',
@@ -156,11 +217,23 @@ export const TvMountingSewallsPoint = buildTvPage({
     author: 'The Whitman Residence, Sewall’s Point',
     detail: 'Signature Mounting • $825 • 1 Day',
   },
+  caseStudies: [
+    {
+      title: 'Gallery Wall Hidden Display',
+      location: "Sewall's Point, FL",
+      description:
+        'Recessed a Frame TV within custom molding, rerouted power through attic space, and installed art lighting for a cohesive gallery experience.',
+      metrics: ['Frame TV recess', 'Attic wire routing', 'Custom molding + art lighting'],
+      image: sewallsPointTvHero,
+      alt: 'Flush-mounted TV within gallery wall in Sewall’s Point',
+    },
+  ],
 })
 
 export const TvMountingHutchinsonIsland = buildTvPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandTvHero,
+  heroAlt: 'Hutchinson Island outdoor TV mounting with weatherproof enclosure',
   heroPosition: 'center 35%',
   neighborhoods: [
     'Ocean Village',
@@ -175,4 +248,15 @@ export const TvMountingHutchinsonIsland = buildTvPage({
     author: 'Nate & Farah Q., Hutchinson Island',
     detail: 'Outdoor Entertainment Suite • $4,200 • 2 Days',
   },
+  caseStudies: [
+    {
+      title: 'Lanai Entertainment Upgrade',
+      location: 'Hutchinson Island, FL',
+      description:
+        'Installed a 75" outdoor display with heater-rated enclosure, recessed soundbar, and landscape audio tied into existing pool deck controls.',
+      metrics: ['Weatherproof enclosure', 'Landscape audio integration', 'Pool deck control sync'],
+      image: hutchinsonIslandTvHero,
+      alt: 'Outdoor TV enclosure on Hutchinson Island lanai',
+    },
+  ],
 })

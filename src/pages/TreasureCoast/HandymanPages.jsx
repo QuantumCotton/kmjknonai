@@ -4,6 +4,30 @@ const sailfishPointHandymanHero = new URL('../../../pics/hp_08-CAgYmBlP.jpg', im
 const sewallsPointHandymanHero = new URL('../../../pics/hp_12-DMjuhQl1.jpg', import.meta.url).href
 const hutchinsonIslandHandymanHero = new URL('../../../pics/hp_16-C7ix_NF5.jpg', import.meta.url).href
 
+const handymanRelatedLinks = [
+  { label: 'Palm City Kitchen Remodels', href: '/palm-city-kitchen-renovation' },
+  { label: 'Sailfish Point Bathroom Renovations', href: '/sailfish-point-bathroom-renovation' },
+  { label: 'Treasure Coast TV Mounting', href: '/palm-city-tv-mounting' },
+]
+
+const handymanFaqs = [
+  {
+    question: 'How quickly can KMJK schedule a handyman visit?',
+    answer:
+      'Most Palm City and Stuart clients can reserve a half-day or full-day crew within 3–5 business days. Ongoing estate-plan members get priority same-week scheduling.',
+  },
+  {
+    question: 'Do you supply materials or should we purchase them?',
+    answer:
+      'We handle material sourcing for most repairs and upgrades. If you have specialty fixtures or hardware picked out, we are happy to install them.',
+  },
+  {
+    question: 'Can you manage repairs while we are out of town?',
+    answer:
+      'Yes. We coordinate key access, send before/after photo reports, and communicate with property managers or neighbors to keep your home guest-ready.',
+  },
+]
+
 const handymanStats = [
   { value: '1,200+', label: 'Punch Lists Completed' },
   { value: '48 HR', label: 'Average Turnaround' },
@@ -65,7 +89,15 @@ const handymanPricing = [
   },
 ]
 
-const buildHandymanPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
+const buildHandymanPage = ({
+  cityName,
+  heroImage,
+  heroAlt,
+  heroPosition = 'center center',
+  neighborhoods,
+  testimonial,
+  caseStudies,
+}) =>
   createTreasureCoastLandingPage({
     componentName: `HandymanServices${cityName.replace(/\s/g, '')}`,
     metaTitle: `${cityName}, FL Handyman & Home Services | KMJK Home Improvement`,
@@ -75,6 +107,8 @@ const buildHandymanPage = ({ cityName, heroImage, neighborhoods, testimonial }) 
       subheading:
         'From high-end touchups to intricate repairs, KMJK keeps Treasure Coast homes impeccable with reliable, respectful professionals.',
       backgroundImage: heroImage,
+      backgroundPosition: heroPosition,
+      alt: heroAlt,
       tagline: 'Treasure Coast • Handyman & Maintenance • KMJK',
     },
     statHighlights: handymanStats,
@@ -97,11 +131,16 @@ const buildHandymanPage = ({ cityName, heroImage, neighborhoods, testimonial }) 
       heading: `Need handyman help in ${cityName}?`,
       subheading: 'Reserve a half-day or full-day visit. We can also build a recurring maintenance plan tailored to your property.',
     },
+    caseStudies,
+    faqs: handymanFaqs,
+    relatedLinks: handymanRelatedLinks,
   })
 
 export const HandymanPalmCity = buildHandymanPage({
   cityName: 'Palm City',
   heroImage: palmCityHandymanHero,
+  heroAlt: 'Palm City handyman installing custom trim in a luxury home',
+  heroPosition: 'center 35%',
   neighborhoods: [
     'Canoe Creek',
     'Cobblestone Country Club',
@@ -116,11 +155,24 @@ export const HandymanPalmCity = buildHandymanPage({
     author: 'Emerald Key Properties, Palm City',
     detail: 'Monthly Estate Plan • Since 2022',
   },
+  caseStudies: [
+    {
+      title: 'Palm Cove Guest Suite Punch List',
+      location: 'Palm City, FL',
+      description:
+        'Repaired drywall, tuned doors, replaced hardware, and refreshed caulking ahead of holiday guests in a single half-day visit.',
+      metrics: ['Half-day crew', '12-item punch list completed', 'Same-day photo report'],
+      image: palmCityHandymanHero,
+      alt: 'Palm City handyman completing punch list in guest suite',
+    },
+  ],
 })
 
 export const HandymanSailfishPoint = buildHandymanPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointHandymanHero,
+  heroAlt: 'KMJK handyman servicing Sailfish Point waterfront residence',
+  heroPosition: 'center 45%',
   neighborhoods: [
     'Oceanfront Estates',
     'Harbour Villas',
@@ -133,11 +185,24 @@ export const HandymanSailfishPoint = buildHandymanPage({
     author: 'The Richardson Family, Sailfish Point',
     detail: 'Full-Day Premium Crew • Ongoing',
   },
+  caseStudies: [
+    {
+      title: 'Sailfish Point Seasonal Prep',
+      location: 'Sailfish Point, FL',
+      description:
+        'Installed outdoor fans, tuned sliding doors, and upgraded smart thermostats ahead of the owners’ arrival, coordinating elevator and HOA access.',
+      metrics: ['Full-day premium crew', 'HOA coordination', 'Smart home upgrades completed'],
+      image: sailfishPointHandymanHero,
+      alt: 'Handyman adjusting fixtures in Sailfish Point estate',
+    },
+  ],
 })
 
 export const HandymanSewallsPoint = buildHandymanPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointHandymanHero,
+  heroAlt: 'Sewall’s Point handyman finishing built-in shelving',
+  heroPosition: 'center 35%',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -151,11 +216,24 @@ export const HandymanSewallsPoint = buildHandymanPage({
     author: 'Brian & Angela M., Sewall’s Point',
     detail: 'Monthly Estate Plan • 3 Years',
   },
+  caseStudies: [
+    {
+      title: 'Riverfront Library Built-ins',
+      location: "Sewall's Point, FL",
+      description:
+        'Custom-built shelving, installed accent lighting, and refinished trim to match historic details in a two-day handyman engagement.',
+      metrics: ['Custom carpentry', 'Library lighting upgrade', 'Dustless sanding'],
+      image: sewallsPointHandymanHero,
+      alt: 'Handyman installing custom shelving in Sewall’s Point home',
+    },
+  ],
 })
 
 export const HandymanHutchinsonIsland = buildHandymanPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandHandymanHero,
+  heroAlt: 'Hutchinson Island handyman repairing lanai screens and railings',
+  heroPosition: 'center 42%',
   neighborhoods: [
     'Indian River Plantation',
     'Ocean Village',
@@ -170,4 +248,15 @@ export const HandymanHutchinsonIsland = buildHandymanPage({
     author: 'The Shapiro Family, Hutchinson Island',
     detail: 'Half-Day Finish Work • Quarterly',
   },
+  caseStudies: [
+    {
+      title: 'Ocean Village Lanai Refresh',
+      location: 'Hutchinson Island, FL',
+      description:
+        'Replaced corroded railings, rescreened the lanai, and pressure washed surfaces in coordination with the condo association.',
+      metrics: ['Condo coordination', 'Lanai rescreened same day', 'Corrosion-resistant hardware installed'],
+      image: hutchinsonIslandHandymanHero,
+      alt: 'Handyman working on Hutchinson Island lanai',
+    },
+  ],
 })
