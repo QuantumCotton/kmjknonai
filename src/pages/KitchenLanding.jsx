@@ -2,7 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, Mail, Check, Star, Calendar, MessageSquare, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import kitchenModern from '../assets/kitchen_modern.jpg'
+
+const heroKitchenImage = new URL(
+  '../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
+  import.meta.url
+).href
+const showcaseKitchenImage = new URL('../../pics/kitchen/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
 
 function KitchenLanding() {
   const [projectSize, setProjectSize] = useState('full')
@@ -18,7 +23,7 @@ function KitchenLanding() {
       {/* Hero Section */}
       <section
         className="relative h-[90vh] flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${kitchenModern})` }}
+        style={{ backgroundImage: `url(${heroKitchenImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 to-black/45 z-1"></div>
         <div className="relative z-2 max-w-4xl mx-auto px-4 text-center text-white">
@@ -128,7 +133,7 @@ function KitchenLanding() {
           <div className="space-y-12">
             <div className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <img src={kitchenModern} alt="Modern Kitchen Transformation" className="w-full h-full object-cover" />
+                <img src={showcaseKitchenImage} alt="Modern Kitchen Transformation" className="w-full h-full object-cover" />
                 <div className="p-8 flex flex-col justify-center">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex">
@@ -171,7 +176,11 @@ function KitchenLanding() {
                   <p className="font-semibold">— Patricia L., Port St. Lucie, FL</p>
                   <p className="text-sm text-gray-600">Kitchen Refresh • $18,500 • 2 Weeks</p>
                 </div>
-                <img src={kitchenModern} alt="Kitchen Refresh" className="w-full h-full object-cover order-1 lg:order-2" />
+                <img
+                  src={heroKitchenImage}
+                  alt="Kitchen Refresh"
+                  className="w-full h-full object-cover order-1 lg:order-2"
+                />
               </div>
             </div>
           </div>

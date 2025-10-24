@@ -1,8 +1,11 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
-const palmCityHandymanHero = new URL('../../../pics/hp_07-Bvb1DaNv.jpg', import.meta.url).href
-const sailfishPointHandymanHero = new URL('../../../pics/hp_08-CAgYmBlP.jpg', import.meta.url).href
-const sewallsPointHandymanHero = new URL('../../../pics/hp_12-DMjuhQl1.jpg', import.meta.url).href
-const hutchinsonIslandHandymanHero = new URL('../../../pics/hp_16-C7ix_NF5.jpg', import.meta.url).href
+const palmCityHandymanHero = new URL(
+  '../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png',
+  import.meta.url
+).href
+const sailfishPointHandymanHero = new URL('../../../pics/bathroom/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
+const sewallsPointHandymanHero = new URL('../../../pics/bathroom/bai_11-uXYAcnvq.jpg', import.meta.url).href
+const hutchinsonIslandHandymanHero = new URL('../../../pics/bathroom/xiCgKIVMEJzO-ErVzbRzk.jpg', import.meta.url).href
 
 const handymanRelatedLinks = [
   { label: 'Palm City Kitchen Remodels', href: '/palm-city-kitchen-renovation' },
@@ -139,8 +142,8 @@ const buildHandymanPage = ({
 export const HandymanPalmCity = buildHandymanPage({
   cityName: 'Palm City',
   heroImage: palmCityHandymanHero,
-  heroAlt: 'Palm City handyman installing custom trim in a luxury home',
-  heroPosition: 'center 35%',
+  heroAlt: 'Palm City bathroom renovation with walk-in shower and floating vanity',
+  heroPosition: 'center 40%',
   neighborhoods: [
     'Canoe Creek',
     'Cobblestone Country Club',
@@ -171,8 +174,8 @@ export const HandymanPalmCity = buildHandymanPage({
 export const HandymanSailfishPoint = buildHandymanPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointHandymanHero,
-  heroAlt: 'KMJK handyman servicing Sailfish Point waterfront residence',
-  heroPosition: 'center 45%',
+  heroAlt: 'Sailfish Point bathroom featuring marble shower and double vanity',
+  heroPosition: 'center 42%',
   neighborhoods: [
     'Oceanfront Estates',
     'Harbour Villas',
@@ -201,8 +204,8 @@ export const HandymanSailfishPoint = buildHandymanPage({
 export const HandymanSewallsPoint = buildHandymanPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointHandymanHero,
-  heroAlt: 'Sewall’s Point handyman finishing built-in shelving',
-  heroPosition: 'center 35%',
+  heroAlt: 'Sewall’s Point bathroom with brass fixtures and custom cabinetry',
+  heroPosition: 'center 38%',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -232,8 +235,8 @@ export const HandymanSewallsPoint = buildHandymanPage({
 export const HandymanHutchinsonIsland = buildHandymanPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandHandymanHero,
-  heroAlt: 'Hutchinson Island handyman repairing lanai screens and railings',
-  heroPosition: 'center 42%',
+  heroAlt: 'Hutchinson Island coastal bathroom with glass shower enclosure',
+  heroPosition: 'center 48%',
   neighborhoods: [
     'Indian River Plantation',
     'Ocean Village',

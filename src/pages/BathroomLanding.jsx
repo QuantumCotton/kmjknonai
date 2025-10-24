@@ -2,8 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, Mail, Check, Star, Calendar, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import bathroomLuxurySpa from '../assets/bathroom_luxury_spa.jpg'
-import bathroomMarble from '../assets/bathroom_marble.jpg'
+
+const heroBathroomImage = new URL(
+  '../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png',
+  import.meta.url
+).href
+const showcaseBathroomImage = new URL('../../pics/bathroom/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
 
 function BathroomLanding() {
   const [monthlyBudget, setMonthlyBudget] = useState(500)
@@ -14,7 +18,7 @@ function BathroomLanding() {
       {/* Hero Section - The Visual Instant */}
       <section
         className="relative h-[90vh] flex items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${bathroomLuxurySpa})` }}
+        style={{ backgroundImage: `url(${heroBathroomImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-1"></div>
         <div className="relative z-2 max-w-4xl mx-auto px-4 text-center text-white">
@@ -140,7 +144,7 @@ function BathroomLanding() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg">
-              <img src={bathroomMarble} alt="Luxury Bathroom After" className="w-full h-80 object-cover" />
+              <img src={showcaseBathroomImage} alt="Luxury Bathroom After" className="w-full h-80 object-cover" />
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="flex">
@@ -157,7 +161,7 @@ function BathroomLanding() {
               </div>
             </div>
             <div className="bg-[var(--warm-off-white)] rounded-lg overflow-hidden shadow-lg">
-              <img src={bathroomLuxurySpa} alt="Modern Bathroom After" className="w-full h-80 object-cover" />
+              <img src={heroBathroomImage} alt="Modern Bathroom After" className="w-full h-80 object-cover" />
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="flex">

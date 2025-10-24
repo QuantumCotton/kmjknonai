@@ -5,7 +5,7 @@ const sewallsPointTvHero = new URL('../../../pics/tv mounts/tvmountsewallspoint.
 const hutchinsonIslandTvHero = new URL('../../../pics/tv mounts/tvmountisland.png', import.meta.url).href
 
 const tvRelatedLinks = [
-  { label: 'Palm City Home Theater Remodels', href: '/palm-city-kitchen-renovation' },
+  { label: 'Palm City Home Theater Remodels', href: '/palm-city-tv-mounting' },
   { label: 'Sailfish Point Epoxy Garage Floors', href: '/sailfish-point-epoxy-flooring' },
   { label: 'Treasure Coast Handyman Maintenance', href: '/palm-city-handyman-services' },
 ]
