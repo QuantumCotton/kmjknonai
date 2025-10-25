@@ -37,7 +37,7 @@ function KitchenLanding() {
             In Your Dream Kitchen
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
-            Transform your kitchen into the heart of your home. See your space in 3D before we start. Fixed pricing. Zero surprises.
+            Transform your kitchen into the heart of your home with concierge design-build service. Fixed pricing. Zero surprises.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href={KMJK_PHONE_SMS_LINK}>
@@ -48,8 +48,8 @@ function KitchenLanding() {
             </a>
             <Link to="/contact">
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <MessageSquare className="mr-2" size={24} />
-                See Your Kitchen in 3D!
+                <Calendar className="mr-2" size={24} />
+                Schedule Design Consultation
               </Button>
             </Link>
           </div>
@@ -114,7 +114,7 @@ function KitchenLanding() {
           <div className="text-center mt-8">
             <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                Text {KMJK_CONTACT_NAME} for Your Quote & 3D Design
+                Text {KMJK_CONTACT_NAME} for Your Quote
               </Button>
             </a>
             <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: {KMJK_PHONE_DISPLAY}</p>

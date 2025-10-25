@@ -57,11 +57,24 @@ export default function BathroomRemodelPalmCity(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh:</strong> –</p>
-              <p className="mb-2"><strong>Full Remodel:</strong> –</p>
-              <p className="mb-2"><strong>Luxury:</strong> +</p>
+              <p className="mb-2"><strong>Refresh Retreat:</strong> $35k – $55k</p>
+              <p className="mb-2"><strong>Full Custom Remodel:</strong> $65k – $105k</p>
+              <p className="mb-2"><strong>Luxury Spa Suite:</strong> $135k+</p>
               <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-[var(--warm-off-white)]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-[var(--deep-charcoal)]">Palm City Homeowners Trust KMJK</h2>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex mb-3 text-[var(--brushed-gold)] text-xl">★★★★★</div>
+            <p className="text-gray-700 italic mb-4">
+              "KMJK turned our master bath into a true retreat. The custom cabinetry and steam shower were exact to the design Chris showed us, and the crew kept everything immaculate. Worth every penny."
+            </p>
+            <div className="text-sm text-gray-600 font-semibold">— Olivia & Brent M., Palm City</div>
           </div>
         </div>
       </section>

@@ -167,7 +167,6 @@ function BathroomLandingElite() {
               Get Free Quote
             </Button>
           </div>
-          <p className="mt-6 text-sm">🏆 2024 Best Bathroom Remodeler - Treasure Coast • ⭐ 4.9/5 Stars (237 Reviews)</p>
         </div>
       </section>
 

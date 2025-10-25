@@ -57,11 +57,24 @@ export default function BathroomRemodelHutchinsonIsland(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh:</strong> –</p>
-              <p className="mb-2"><strong>Full Remodel:</strong> –</p>
-              <p className="mb-2"><strong>Luxury:</strong> +</p>
+              <p className="mb-2"><strong>Refresh Retreat:</strong> $42k – $65k</p>
+              <p className="mb-2"><strong>Full Coastal Remodel:</strong> $85k – $130k</p>
+              <p className="mb-2"><strong>Oceanfront Spa:</strong> $165k+</p>
               <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-[var(--warm-off-white)]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-[var(--deep-charcoal)]">Loved by Hutchinson Island Residents</h2>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex mb-3 text-[var(--brushed-gold)] text-xl">★★★★★</div>
+            <p className="text-gray-700 italic mb-4">
+              "Our oceanfront bath needed a total waterproof upgrade. KMJK handled the whole project flawlessly, even coordinating around hurricane shutters. The new steam shower and heated floors are incredible."
+            </p>
+            <div className="text-sm text-gray-600 font-semibold">— Dana & Marcus F., Hutchinson Island</div>
           </div>
         </div>
       </section>

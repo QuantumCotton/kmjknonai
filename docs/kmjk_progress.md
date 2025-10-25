@@ -4,7 +4,7 @@
 | Phase | Focus | Key Outcomes | Status |
 | --- | --- | --- | --- |
 | Phase 1 | Foundation & global contact alignment | Central constants, core templates, initial CTA refresh | ✅ Complete |
-| Phase 2 | Page-by-page contact/CTA rollout | SMS-first CTAs, visible buttons, consistent contact info | ⏳ In progress (22 / 24) |
+| Phase 2 | Page-by-page contact/CTA rollout | SMS-first CTAs, visible buttons, consistent contact info | ✅ Complete (24 / 24) |
 | Phase 3 | Intake form modernization | Budget ranges, Web3Forms upgrades, image upload, text cues | ⏳ Not started |
 | Phase 4 | Hyper-local testimonials & containment | Location-accurate social proof, interim fixes, gap log | ⏳ Not started |
 | Phase 5 | KMJK collateral & Atlas chatbot | Social Proof Request Kit, partner outreach, chatbot polish | ⏳ Not started |
@@ -24,7 +24,7 @@ Deliverables complete. Moving to per-page execution.
 ## Phase 2 – Page-Level Contact & CTA Rollout ⏳
 Goal: Every landing page uses the constants, exposes a visible SMS CTA, and removes legacy phone/email values.
 
-**Progress bar**: `███████████████████░` (22 / 24 pages)
+**Progress bar**: `████████████████████` (24 / 24 pages)
 
 - **[x]** `src/pages/BathroomLanding.jsx`
 - **[x]** `src/pages/BathroomLandingElite.jsx`
@@ -47,8 +47,8 @@ Goal: Every landing page uses the constants, exposes a visible SMS CTA, and remo
 - **[x]** `src/pages/BathroomRemodelSewallsPoint.jsx`
 - **[x]** `src/pages/BathroomRemodelHutchinsonIsland.jsx`
 - **[x]** `src/pages/BathroomRemodelStuart.jsx`
-- **[ ]** `src/pages/GalleryPage.jsx`
-- **[ ]** `src/pages/InternalDashboard.jsx`
+- **[x]** `src/pages/GalleryPage.jsx`
+- **[x]** `src/pages/InternalDashboard.jsx`
 
 _Note: As each page is updated, mark the checkbox and add any follow-up notes in the log below._
 

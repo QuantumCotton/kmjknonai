@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MessageSquare, Check } from 'lucide-react'
+import { Calendar, MessageSquare, Upload, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
@@ -27,18 +27,28 @@ export default function BathroomRemodelSailfishPoint(){
       >
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
+          <div className="inline-block bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-md">
+            Sailfish Point Signature Service • Projects from $85k+
+          </div>
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Sailfish Point, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex gap-3 justify-center">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/contact">
+              <Button size="lg" className="w-full bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
+                <Calendar className="mr-2" size={20} />
+                Schedule Private Design Call
+              </Button>
+            </a>
             <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="bg-[var(--brushed-gold)] text-white">
-                <MessageSquare className="mr-2" size={18} />
+              <Button size="lg" className="w-full bg-[var(--brushed-gold)] text-white hover:bg-[var(--brushed-bronze)]">
+                <MessageSquare className="mr-2" size={20} />
                 Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
               </Button>
             </a>
-            <a href="/contact">
-              <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">Free Consultation</Button>
-            </a>
+            <Button onClick={() => window.location.href = KMJK_PHONE_SMS_LINK} size="lg" className="w-full bg-[var(--deep-charcoal)] text-white hover:bg-[var(--brushed-gold)]">
+              <Upload className="mr-2" size={20} />
+              Upload Estate Photos
+            </Button>
           </div>
         </div>
       </section>
@@ -57,9 +67,9 @@ export default function BathroomRemodelSailfishPoint(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh:</strong> –</p>
-              <p className="mb-2"><strong>Full Remodel:</strong> –</p>
-              <p className="mb-2"><strong>Luxury:</strong> +</p>
+              <p className="mb-2"><strong>Refresh Suites:</strong> $55k – $80k</p>
+              <p className="mb-2"><strong>Full Custom Retreat:</strong> $95k – $145k</p>
+              <p className="mb-2"><strong>Ultra Luxury Spa:</strong> $175k+</p>
               <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
             </div>
           </div>

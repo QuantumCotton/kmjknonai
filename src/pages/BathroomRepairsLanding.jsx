@@ -110,8 +110,8 @@ function BathroomRepairsLanding() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/70 to-black/60 z-1"></div>
         <div className="relative z-2 max-w-6xl mx-auto px-4 py-16 text-white">
           <div className="text-center mb-8">
-            <div className="inline-block bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 animate-pulse">
-              🛁 BATHROOM SPECIALISTS • Same-Day Service Available
+            <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-md animate-pulse">
+              🚨 Same Day Emergency Service Available!
             </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Expert Bathroom Repairs<br />
@@ -123,26 +123,26 @@ function BathroomRepairsLanding() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <Link to="/contact" className="block">
+              <div className="bg-white text-[var(--deep-charcoal)] p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+                <Phone className="mx-auto mb-3" size={40} />
+                <div className="text-2xl font-bold mb-2">Schedule Repair Call</div>
+                <div className="text-sm mt-2">Guaranteed same-day response</div>
+              </div>
+            </Link>
             <a href={KMJK_PHONE_SMS_LINK} className="block">
               <div className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
                 <MessageSquare className="mx-auto mb-3" size={40} />
                 <div className="text-2xl font-bold mb-2">Text {KMJK_CONTACT_NAME}</div>
-                <div className="text-sm mt-2">Send pics for fast quote</div>
+                <div className="text-sm mt-2">Share photos for fastest quote</div>
               </div>
             </a>
-            <Link to="/contact" className="block">
-              <div className="bg-white text-[var(--deep-charcoal)] p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
-                <Phone className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Request Call Back</div>
-                <div className="text-sm mt-2">We respond same-day</div>
-              </div>
-            </Link>
             <button onClick={() => openModalWithContext('Hero Section - Get Quote')} className="block w-full">
               <div className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105 h-full">
                 <Upload className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Get Quote</div>
-                <div className="text-lg font-bold">Upload Photos</div>
-                <div className="text-sm mt-2">Fast online estimate</div>
+                <div className="text-2xl font-bold mb-2">Upload Photos</div>
+                <div className="text-lg font-bold">Get Fast Estimate</div>
+                <div className="text-sm mt-2">We respond within 1 hour</div>
               </div>
             </button>
           </div>
