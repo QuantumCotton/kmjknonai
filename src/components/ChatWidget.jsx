@@ -13,6 +13,9 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   const [inputValue, setInputValue] = useState('')
   const [isSending, setIsSending] = useState(false)
   const messagesEndRef = useRef(null)
+  const streamingMessageRef = useRef(null)
+  const lastAssistantIdRef = useRef(null)
+  const [streamingState, setStreamingState] = useState(null)
 
   useEffect(() => {
     if (isOpen && !conversation) {
@@ -23,6 +26,40 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [conversation?.messages])
+
+  useEffect(() => {
+    if (!conversation?.messages?.length) return
+    const lastAssistant = [...conversation.messages].reverse().find((msg) => msg.role === 'assistant')
+    if (!lastAssistant) return
+    if (lastAssistantIdRef.current === lastAssistant.id) return
+
+    lastAssistantIdRef.current = lastAssistant.id
+    setStreamingState({ id: lastAssistant.id, full: lastAssistant.content || '', visible: '' })
+  }, [conversation?.messages])
+
+  useEffect(() => {
+    if (!streamingState) return
+    if (streamingState.visible.length >= streamingState.full.length) {
+      setStreamingState(null)
+      return
+    }
+
+    const timeout = setTimeout(() => {
+      setStreamingState((prev) => {
+        if (!prev) return null
+        const nextLength = Math.min(prev.visible.length + 2, prev.full.length)
+        return { ...prev, visible: prev.full.slice(0, nextLength) }
+      })
+    }, 18)
+
+    return () => clearTimeout(timeout)
+  }, [streamingState])
+
+  useEffect(() => {
+    if (streamingState) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [streamingState?.visible])
 
   const initConversation = async () => {
     const newConversation = await startKmjkConversation()
@@ -102,32 +139,44 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
       {!isMinimized && (
         <>
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-            {conversation?.messages?.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[80%] p-3 rounded-lg text-sm whitespace-pre-wrap ${
-                    msg.role === 'user'
-                      ? 'bg-[var(--deep-charcoal)] text-white'
-                      : 'bg-white border border-gray-200 text-[var(--deep-charcoal)]'
-                  }`}
-                >
-                  {msg.content}
-                  {msg.quickReplies && msg.quickReplies.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {msg.quickReplies.map((reply) => (
-                        <button
-                          key={reply}
-                          onClick={() => handleSend(reply)}
-                          className="px-3 py-1 text-xs border border-gray-300 rounded-full hover:bg-gray-100"
-                        >
-                          {reply}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+            {conversation?.messages?.map((msg, index) => {
+              const isAssistant = msg.role === 'assistant'
+              const isStreaming = streamingState?.id === msg.id
+              const visibleContent = isStreaming ? streamingState.visible || ' ' : msg.content
+              const shouldShowQuickReplies =
+                isAssistant && index === 0 && Array.isArray(msg.quickReplies) && msg.quickReplies.length > 0
+
+              return (
+                <div key={msg.id} className={`flex ${isAssistant ? 'justify-start' : 'justify-end'}`}>
+                  <div
+                    className={`max-w-[80%] p-3 rounded-lg text-sm whitespace-pre-wrap ${
+                      isAssistant
+                        ? 'bg-white border border-gray-200 text-[var(--deep-charcoal)]'
+                        : 'bg-[var(--deep-charcoal)] text-white'
+                    }`}
+                  >
+                    {visibleContent}
+                    {isStreaming && (
+                      <span className="inline-block w-2 h-4 bg-gray-300 align-baseline animate-pulse ml-1" />
+                    )}
+
+                    {shouldShowQuickReplies && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {msg.quickReplies.map((reply) => (
+                          <button
+                            key={reply}
+                            onClick={() => handleSend(reply)}
+                            className="px-3 py-1 text-xs border border-gray-300 rounded-full hover:bg-gray-100"
+                          >
+                            {reply}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
 
             {isSending && (
               <div className="flex justify-start">
