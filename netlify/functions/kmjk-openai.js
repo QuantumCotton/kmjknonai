@@ -21,7 +21,7 @@ export const handler = async (event) => {
       messages = [],
       systemPrompt,
       temperature = 0.4,
-      maxTokens = 650,
+      maxTokens = 2000,
       maxCompletionTokens,
     } = requestBody
 
@@ -102,8 +102,11 @@ export const handler = async (event) => {
       const payload = {
         model,
         messages: openAiMessages,
-        max_completion_tokens: finalMaxTokens,
         verbosity: 'low',
+      }
+
+      if (typeof finalMaxTokens === 'number' && finalMaxTokens > 0) {
+        payload.max_completion_tokens = finalMaxTokens
       }
 
       const disallowCustomTemperature = /gpt-5/i.test(model)
