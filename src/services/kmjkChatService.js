@@ -271,11 +271,49 @@ async function requestOpenAI(messages, systemPrompt) {
       { signal: controller.signal }
     )
     clearTimeout(timeout)
-    return response.data?.text || "I'm here to help with your remodel! Let's talk details."
+    return {
+      text: response.data?.text || "I'm here to help with your remodel! Let's talk details.",
+      usedFallback: false,
+    }
   } catch (error) {
     clearTimeout(timeout)
-    console.error('[KMJK Chat] OpenAI error:', error)
-    return "I'm having trouble reaching the rest of the team. Could you share a few more project details while I reconnect?"
+    throw error
+  }
+}
+
+function formatMissingItems(items) {
+  if (items.length === 1) return items[0]
+  if (items.length === 2) return `${items[0]} and ${items[1]}`
+  const [first, second, ...rest] = items
+  return [first, second, ...rest.slice(0, -1)].join(', ') + `, and ${items[items.length - 1]}`
+}
+
+function buildFallbackResponse(conversation, userInput) {
+  const { leadData } = conversation
+  const missing = []
+
+  if (!leadData.name) missing.push('your name')
+  if (!leadData.phone && !leadData.email) missing.push('a phone or email')
+  if (!leadData.projectType) missing.push('which service you need (kitchen, bathroom, handyman, epoxy, or TV/AV)')
+  if (!leadData.scopeNotes || leadData.scopeNotes.length === 0) missing.push('project details or photos')
+  if (!leadData.timeline) missing.push('timeline expectations')
+  if (!leadData.budget) missing.push('an investment range you have in mind')
+
+  const suffix = missing.length
+    ? `Could you share ${formatMissingItems(missing)} so I can hand everything to Chris right now?`
+    : 'I have what I need to brief Chris. Expect a follow-up from 772-777-0622 or info@kmjk.pro within one business day.'
+
+  const serviceHint = leadData.projectType
+    ? `Thanks for confirming your ${leadData.projectType.toLowerCase()} plans. `
+    : 'Thanks for reaching out about your project. '
+
+  const encouragement = leadData.scopeNotes && leadData.scopeNotes.length > 0
+    ? 'Feel free to tap “Here are the project details” if anything else comes to mind.'
+    : 'You can tap “Here are the project details” to add photos, room sizes, or punch lists.'
+
+  return {
+    text: `${serviceHint}${suffix} ${encouragement}`.trim(),
+    quickReplies: generateQuickReplies(leadData),
   }
 }
 
@@ -332,14 +370,30 @@ export async function sendKmjkMessage(conversation, userInput) {
     }))
 
   const systemPrompt = buildPrompt(updatedConversation, userInput)
-  const responseText = await requestOpenAI(chatMessages, systemPrompt)
+
+  let assistantResponse
+  try {
+    const response = await requestOpenAI(chatMessages, systemPrompt)
+    assistantResponse = {
+      text: response.text,
+      quickReplies: generateQuickReplies(updatedConversation.leadData),
+    }
+  } catch (error) {
+    console.error('[KMJK Chat] Falling back after OpenAI error:', error)
+    const fallback = buildFallbackResponse(updatedConversation, userInput)
+    assistantResponse = {
+      text: fallback.text,
+      quickReplies: fallback.quickReplies,
+      usedFallback: true,
+    }
+  }
 
   const assistantMessage = {
     id: `msg_assistant_${Date.now()}`,
     role: 'assistant',
-    content: responseText,
+    content: assistantResponse.text,
     timestamp: new Date(),
-    quickReplies: generateQuickReplies(updatedConversation.leadData),
+    quickReplies: assistantResponse.quickReplies,
   }
 
   updatedConversation.messages = [...updatedConversation.messages, assistantMessage]

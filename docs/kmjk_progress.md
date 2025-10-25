@@ -17,6 +17,7 @@
   - Global contact/address sweep → Standardized to 1301 SE Francis Street, Jensen Beach, FL 34957
   - Palm City / Sailfish Point / Sewall’s Point / Hutchinson Island kitchen pages → Removed 3D promises, added upload prompts & pricing cues
   - Atlas chat concierge → Service catalog prompts, scope capture, richer lead notifications
+  - Netlify Atlas backend → Added `netlify/functions/kmjk-openai.js` + `kmjk-send-lead.js` for live chat + lead emails
 - **In Progress / Next Up**
   - Bathroom Remodel Elite → Remove financing language, add monthly context ✅
   - Bathroom Repairs Landing → Note $375 minimum, bundling, emergency surcharge ✅
@@ -28,7 +29,7 @@
   - Global contact/address → Update to 1301 SE Francis Street, Jensen Beach, FL 34957 ✅
   - Bathroom Remodel Sewall’s Point → Add pricing tiers + local testimonial ✅
   - Form modernization plan → Budget presets, upload component, SMS prompts ⏳
-  - Atlas chat → Verify Netlify function email payload includes service + scope details ⏳
+  - Atlas chat → Verify Netlify function email payload includes service + scope details ✅
 
 ## Phase Overview
 | Phase | Focus | Key Outcomes | Status |
