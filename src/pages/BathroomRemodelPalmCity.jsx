@@ -1,7 +1,8 @@
-﻿import { useEffect } from 'react'
-import { Phone, Check } from 'lucide-react'
+import { useEffect } from 'react'
+import { MessageSquare, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 export default function BathroomRemodelPalmCity(){
   useEffect(() => {
@@ -20,14 +21,20 @@ export default function BathroomRemodelPalmCity(){
 
   return (
     <div className="pt-20">
-      <section className="relative min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: url() }}>
+      <section
+        className="relative min-h-[70vh] flex items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${bathroomSpa})` }}
+      >
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Palm City, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
           <div className="mt-6 flex gap-3 justify-center">
-            <a href="tel:650-501-7659">
-              <Button size="lg" className="bg-[var(--brushed-gold)] text-white"><Phone className="mr-2" size={18}/>Call 650-501-7659</Button>
+            <a href={KMJK_PHONE_SMS_LINK}>
+              <Button size="lg" className="bg-[var(--brushed-gold)] text-white">
+                <MessageSquare className="mr-2" size={18} />
+                Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
+              </Button>
             </a>
             <a href="/contact">
               <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">Free Consultation</Button>
