@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, MessageSquare, Calendar, Check, Star, MapPin } from 'lucide-react'
+import { MessageSquare, Calendar, Check, Star, MapPin, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
   Dialog,
@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog.jsx'
 import { LocalPresenceSection } from '@/components/LocalPresenceSection.jsx'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion.jsx'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_DIGITS, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
@@ -123,7 +124,7 @@ export function createTreasureCoastLandingPage(config) {
         }
       } catch (error) {
         console.error('[Treasure Coast Form] submission error:', error)
-        alert('We could not submit the form right now. Please try again or call us directly.')
+        alert(`We could not submit the form right now. Please text us at ${KMJK_PHONE_DISPLAY} or email ${KMJK_EMAIL}.`)
       } finally {
         setIsSubmitting(false)
       }
@@ -137,7 +138,7 @@ export function createTreasureCoastLandingPage(config) {
       name: 'KMJK Home Improvement',
       image: hero.backgroundImage,
       url: pageUrl,
-      telephone: '650-501-7659',
+      telephone: KMJK_PHONE_DIGITS,
       address: {
         '@type': 'PostalAddress',
         streetAddress: '43 SW Osceola St',
@@ -187,7 +188,7 @@ export function createTreasureCoastLandingPage(config) {
       provider: {
         '@type': 'LocalBusiness',
         name: 'KMJK Home Improvement',
-        telephone: '650-501-7659',
+        telephone: KMJK_PHONE_DIGITS,
       },
       hasOfferCatalog: pricingOptions?.length
         ? {
@@ -258,24 +259,24 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Schedule Consultation
                 </Button>
-                <a href="tel:650-501-7659">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
-                  >
-                    <Phone className="mr-2" size={22} />
-                    Call 650-501-7659
-                  </Button>
-                </a>
-                <a href="sms:650-501-7659">
+                <a href={KMJK_PHONE_SMS_LINK}>
                   <Button
                     size="lg"
                     variant="outline"
                     className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
                   >
                     <MessageSquare className="mr-2" size={22} />
-                    Text Photos To Chris
+                    Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
+                  </Button>
+                </a>
+                <a href={`mailto:${KMJK_EMAIL}`}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
+                  >
+                    <Mail className="mr-2" size={22} />
+                    Email {KMJK_EMAIL}
                   </Button>
                 </a>
               </div>
@@ -547,16 +548,16 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Book Consultation
                 </Button>
-                <a href="tel:650-501-7659">
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
-                    <Phone className="mr-2" size={22} />
-                    Call: 650-501-7659
-                  </Button>
-                </a>
-                <a href="sms:650-501-7659">
+                <a href={KMJK_PHONE_SMS_LINK}>
                   <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
                     <MessageSquare className="mr-2" size={22} />
-                    Text For Quick Quote
+                    Text {KMJK_PHONE_DISPLAY}
+                  </Button>
+                </a>
+                <a href={`mailto:${KMJK_EMAIL}`}>
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
+                    <Mail className="mr-2" size={22} />
+                    Email {KMJK_EMAIL}
                   </Button>
                 </a>
               </div>
