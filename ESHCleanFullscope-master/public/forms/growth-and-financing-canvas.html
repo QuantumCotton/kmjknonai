@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth & Financing Canvas - Elite Service Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --esh-black: #000000;
+            --esh-panel: #18181b;
+            --esh-panel-alt: #111111;
+            --esh-panel-soft: rgba(255, 255, 255, 0.03);
+            --esh-border: #27272a;
+            --esh-border-soft: rgba(255, 255, 255, 0.08);
+            --esh-gold: #d4af37;
+            --esh-gold-soft: #e5c158;
+            --esh-text: #f5f5f5;
+            --esh-muted: #a1a1aa;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--esh-black) 0%, var(--esh-panel-alt) 100%);
+            color: var(--esh-text);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.02em;
+        }
+
+        .no-print {
+            display: flex;
+            justify-content: flex-end;
+            max-width: 1100px;
+            margin: 0 auto 24px auto;
+        }
+
+        .no-print button {
+            background: var(--esh-gold);
+            color: var(--esh-black);
+            border: none;
+            border-radius: 999px;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .no-print button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 28px 60px rgba(212, 175, 55, 0.35);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 40px auto;
+            background: var(--esh-panel);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--esh-border);
+            box-shadow: 0 45px 90px rgba(0, 0, 0, 0.45);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(11, 11, 11, 0.94) 0%, rgba(39, 39, 42, 0.92) 100%);
+            padding: 60px 48px 52px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 110px, rgba(212, 175, 55, 0.06) 110px, rgba(212, 175, 55, 0.06) 220px);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 105px;
+            height: auto;
+            margin-bottom: 24px;
+            opacity: 0.9;
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: var(--esh-text);
+        }
+
+        header h1 .gold {
+            color: var(--esh-gold);
+            font-weight: 400;
+        }
+
+        header p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--esh-muted);
+            font-size: 1.1rem;
+            letter-spacing: 0.04em;
+        }
+
+        .cover-page {
+            padding: 96px 48px 88px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.16) 0%, rgba(24, 24, 27, 0.88) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-page::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.25), transparent 60%);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cover-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .cover-tagline {
+            font-size: 0.78rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--esh-gold);
+            margin-bottom: 20px;
+        }
+
+        .cover-title {
+            font-size: 3.3rem;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            margin-bottom: 20px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            color: var(--esh-muted);
+            line-height: 1.8;
+        }
+
+        .cover-highlights {
+            margin-top: 40px;
+            display: grid;
+            gap: 18px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .cover-highlights li {
+            list-style: none;
+            border-left: 3px solid var(--esh-gold);
+            padding: 16px 18px;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 12px;
+            color: var(--esh-text);
+            font-size: 0.95rem;
+        }
+
+        .cover-footer {
+            margin-top: 44px;
+            font-size: 0.85rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--esh-muted);
+        }
+
+        main {
+            padding: 56px 48px 64px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, rgba(24, 24, 27, 0.9) 100%);
+        }
+
+        .doc-title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            text-align: center;
+            color: var(--esh-gold);
+            margin-bottom: 18px;
+        }
+
+        .doc-subtitle {
+            max-width: 720px;
+            margin: 0 auto 48px;
+            text-align: center;
+            color: var(--esh-muted);
+            font-size: 1rem;
+        }
+
+        section.section {
+            border: 1px solid var(--esh-border);
+            border-radius: 16px;
+            padding: 32px 32px 36px;
+            margin-bottom: 32px;
+            background: rgba(15, 15, 15, 0.85);
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-bottom: 16px;
+            color: var(--esh-gold);
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--esh-gold), transparent);
+        }
+
+        .section-intro {
+            color: var(--esh-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px 28px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: var(--esh-muted);
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--esh-panel);
+            border: 1px solid var(--esh-border);
+            border-radius: 10px;
+            color: var(--esh-text);
+            font-family: inherit;
+            font-size: 0.98rem;
+            transition: border 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--esh-gold);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--esh-text);
+            font-size: 0.95rem;
+        }
+
+        .checkbox-item input {
+            margin-top: 4px;
+            accent-color: var(--esh-gold);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+            font-size: 0.92rem;
+            border: 1px solid var(--esh-border);
+            background: rgba(17, 17, 17, 0.85);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: rgba(212, 175, 55, 0.15);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            color: var(--esh-gold);
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        table td {
+            border-top: 1px solid var(--esh-border);
+            padding: 12px 14px;
+            color: var(--esh-text);
+        }
+
+        .notes-area {
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            border-radius: 14px;
+            padding: 20px 22px;
+            background: rgba(212, 175, 55, 0.08);
+            margin-top: 22px;
+        }
+
+        .notes-area textarea {
+            background: transparent;
+            border: none;
+            padding: 0;
+            min-height: 140px;
+        }
+
+        .notes-area textarea:focus {
+            box-shadow: none;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 36px;
+            color: var(--esh-muted);
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 14px;
+            }
+
+            header {
+                padding: 48px 28px 42px;
+            }
+
+            header h1 {
+                font-size: 2.4rem;
+            }
+
+            .cover-page {
+                padding: 64px 24px 56px;
+            }
+
+            .cover-title {
+                font-size: 2.4rem;
+            }
+
+            .cover-highlights {
+                gap: 14px;
+            }
+
+            main {
+                padding: 36px 24px 48px;
+            }
+
+            section.section {
+                padding: 24px 22px 28px;
+            }
+
+            .no-print {
+                justify-content: center;
+            }
+
+            .no-print button {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+            }
+
+            header {
+                background: #000000;
+                color: #ffffff;
+            }
+
+            header::before {
+                display: none;
+            }
+
+            .cover-page {
+                background: #ffffff;
+                color: #000000;
+                page-break-after: always;
+                border-bottom: 1px solid #000000;
+                padding: 48px 55px 52px;
+            }
+
+            .cover-title,
+            .cover-subtitle,
+            .cover-highlights li,
+            .cover-footer,
+            .cover-tagline {
+                color: #000000;
+            }
+
+            .cover-highlights li {
+                background: #ffffff;
+                border-color: #000000;
+            }
+
+            main {
+                background: #ffffff;
+                color: #000000;
+                padding: 40px 55px 45px;
+            }
+
+            section.section {
+                page-break-inside: avoid;
+                background: #ffffff;
+                border: 1px solid #000000;
+                box-shadow: none;
+            }
+
+            .section-title,
+            .section-intro,
+            label,
+            table th,
+            table td,
+            .footer-note {
+                color: #000000;
+            }
+
+            input,
+            textarea,
+            select {
+                background: #ffffff;
+                color: #000000;
+                border: 1px solid #000000;
+            }
+
+            .notes-area {
+                border-color: #000000;
+                background: transparent;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button type="button" onclick="window.print()">Print Growth Canvas</button>
+    </div>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="/images/logos/esh-dark-bg.png" alt="Elite Service Hub" class="logo">
+                <h1>Elite Service Hub <span class="gold">Growth Engine</span></h1>
+                <p>Map the revenue goals, capital pathways, and talent moves that help remodelers, cleaners, detailers, pressure washers, and mobile mechanics scale with precision.</p>
+            </div>
+        </header>
+        <section class="cover-page">
+            <div class="cover-inner">
+                <div class="cover-tagline">Strategic Planning</div>
+                <h2 class="cover-title">Growth & Financing Canvas</h2>
+                <p class="cover-subtitle">
+                    Design a roadmap that honors how <em>you</em> want to grow—whether that means staying boutique, scaling into new territories, or building recurring service revenue with the right capital support.
+                </p>
+                <ul class="cover-highlights">
+                    <li>Lock in 12–36 month revenue, capacity, and service targets that match your appetite.</li>
+                    <li>Clarify capital partners, cash flow guardrails, and equipment strategies for residential and mobile ops.</li>
+                    <li>Map the talent, lifestyle, and risk plans ESH should reinforce as your growth partner.</li>
+                </ul>
+                <div class="cover-footer">Complete → Review with ESH Success Team</div>
+            </div>
+        </section>
+        <main>
+            <h1 class="doc-title">Growth & Financing Canvas</h1>
+            <p class="doc-subtitle">Use this canvas to align ESH resources with your next-stage targets. We designed it for elite contractors and mobile service professionals alike—customize the numbers and notes to your model.</p>
+
+            <section class="section">
+                <h2 class="section-title">Revenue Targets & Milestones</h2>
+                <p class="section-intro">Quantify the next 12–36 months so our lead engine and retention programs hit the right cadence.</p>
+                <div class="grid-two">
+                    <div>
+                        <label for="rev-12">12-Month Monthly Revenue Target</label>
+                        <input type="text" id="rev-12" placeholder="$120,000 / month">
+                    </div>
+                    <div>
+                        <label for="rev-36">36-Month Monthly Revenue Target</label>
+                        <input type="text" id="rev-36" placeholder="$250,000 / month">
+                    </div>
+                    <div>
+                        <label for="volume-goal">Annual Project / Service Volume Goal</label>
+                        <input type="text" id="volume-goal" placeholder="e.g., 180 projects, 800 recurring visits">
+                    </div>
+                    <div>
+                        <label for="ticket-size">Desired Average Ticket Size</label>
+                        <input type="text" id="ticket-size" placeholder="$3,500 remodel, $450 fleet detail, etc.">
+                    </div>
+                </div>
+                <div class="notes-area">
+                    <label for="revenue-drivers">Primary Revenue Drivers / Focus Markets</label>
+                    <textarea id="revenue-drivers"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Capital & Financing Strategy</h2>
+                <p class="section-intro">Identify existing capital tools and appetite for new financing levers across residential and commercial work.</p>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox"> Offers homeowner financing currently</label>
+                    <label class="checkbox-item"><input type="checkbox"> Offers business or fleet payment plans</label>
+                    <label class="checkbox-item"><input type="checkbox"> Needs guidance to add consumer financing partner</label>
+                    <label class="checkbox-item"><input type="checkbox"> Uses business credit lines for equipment / supplies</label>
+                    <label class="checkbox-item"><input type="checkbox"> Interested in equipment or vehicle financing</label>
+                    <label class="checkbox-item"><input type="checkbox"> Open to profit reinvestment for rapid scaling</label>
+                    <label class="checkbox-item"><input type="checkbox"> Prefers conservative growth pace</label>
+                </div>
+                <div class="grid-two" style="margin-top:20px;">
+                    <div>
+                        <label for="financing-partners">Current Financing Partners & Limits</label>
+                        <textarea id="financing-partners"></textarea>
+                    </div>
+                    <div>
+                        <label for="capital-constraints">Capital Constraints / Pain Points</label>
+                        <textarea id="capital-constraints"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Crew Expansion & Talent Pipeline</h2>
+                <p class="section-intro">Document hiring appetite, subcontractor relationships, and leadership development.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Role / Skill</th>
+                            <th>Status (Have / Need)</th>
+                            <th>Timeline to Hire</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Lead Technician / Crew Chief</td><td></td><td></td><td></td></tr>
+                        <tr><td>Residential Cleaning Supervisor</td><td></td><td></td><td></td></tr>
+                        <tr><td>Pressure Washing or Exterior Specialist</td><td></td><td></td><td></td></tr>
+                        <tr><td>Mobile Detail / Mechanic Technician</td><td></td><td></td><td></td></tr>
+                        <tr><td>Estimator / Dispatcher / Customer Success</td><td></td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="notes-area">
+                    <label for="talent-notes">Talent Development Notes / Training Needs</label>
+                    <textarea id="talent-notes"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Service Expansion & Innovation</h2>
+                <p class="section-intro">Capture new offerings or packages that unlock higher margin and retention.</p>
+                <div class="grid-two">
+                    <div>
+                        <label for="new-services">New Services to Launch</label>
+                        <textarea id="new-services" placeholder="e.g., Soft wash add-ons, subscription cleaning tiers, fleet maintenance packages"></textarea>
+                    </div>
+                    <div>
+                        <label for="maintenance-plans">Maintenance / Subscription Ideas</label>
+                        <textarea id="maintenance-plans"></textarea>
+                    </div>
+                    <div>
+                        <label for="partnerships">Partnership Opportunities</label>
+                        <textarea id="partnerships" placeholder="Builders, property managers, dealerships, HOAs, logistics hubs..."></textarea>
+                    </div>
+                    <div>
+                        <label for="innovation-budget">Innovation Budget / Appetite</label>
+                        <textarea id="innovation-budget"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Owner Vision & Lifestyle Design</h2>
+                <p class="section-intro">Align business growth with the owner’s personal mission, schedule, and community impact goals.</p>
+                <div class="grid-two">
+                    <div>
+                        <label for="vision">3-Year Vision Narrative</label>
+                        <textarea id="vision"></textarea>
+                    </div>
+                    <div>
+                        <label for="personal-goals">Personal Goals Supported by ESH</label>
+                        <textarea id="personal-goals" placeholder="e.g., Reduce field hours, expand into new markets, build succession plan"></textarea>
+                    </div>
+                    <div>
+                        <label for="constraints">Non-Negotiables / Constraints</label>
+                        <textarea id="constraints"></textarea>
+                    </div>
+                    <div>
+                        <label for="rewards">Reward & Recognition Preferences</label>
+                        <textarea id="rewards" placeholder="Team incentives, personal perks, community givebacks"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Risk Radar & Contingency Plans</h2>
+                <p class="section-intro">Anticipate shocks so ESH can reinforce your operation proactively.</p>
+                <div class="grid-two">
+                    <div>
+                        <label for="risk-factors">Major Risk Factors</label>
+                        <textarea id="risk-factors" placeholder="Labor shortages, supply volatility, severe weather, vehicle downtime..."></textarea>
+                    </div>
+                    <div>
+                        <label for="contingency">Contingency Strategies</label>
+                        <textarea id="contingency"></textarea>
+                    </div>
+                </div>
+                <div class="notes-area">
+                    <label for="esh-support">Ways ESH Reinforces</label>
+                    <textarea id="esh-support" placeholder="Backup crews, marketing throttle control, financing bridge, customer communication support..."></textarea>
+                </div>
+            </section>
+
+            <div class="footer-note">
+                Growth Roadmap Locked → Sync with ESH Success Team Quarterly
+            </div>
+        </main>
+    </div>
+</body>
+</html>

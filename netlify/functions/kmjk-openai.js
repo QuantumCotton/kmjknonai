@@ -15,18 +15,15 @@ export const handler = async (event) => {
     }
   }
 
-  const apiKey = process.env.OPENAI_API_KEY
-  if (!apiKey) {
-    return {
-      statusCode: 500,
-      headers: corsHeaders(),
-      body: JSON.stringify({ error: 'Missing OPENAI_API_KEY environment variable.' }),
-    }
-  }
-
   try {
     const requestBody = JSON.parse(event.body || '{}')
-    const { messages = [], systemPrompt, temperature = 0.4, maxTokens = 650 } = requestBody
+    const {
+      messages = [],
+      systemPrompt,
+      temperature = 0.4,
+      maxTokens = 650,
+      maxCompletionTokens,
+    } = requestBody
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return {
@@ -36,7 +33,46 @@ export const handler = async (event) => {
       }
     }
 
-    const model = process.env.OPENAI_MODEL || 'gpt-4o-mini'
+    const apiKey = (process.env.OPENAI_API_KEY || '').trim()
+    if (!apiKey) {
+      return {
+        statusCode: 500,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: 'Missing OPENAI_API_KEY environment variable.' }),
+      }
+    }
+
+    const DEFAULT_OPENAI_URL = 'https://api.openai.com/v1/chat/completions'
+    const DEFAULT_MODEL = 'gpt-5-nano'
+
+    const resolveOpenAIUrl = () => {
+      const direct = (process.env.OPENAI_API_URL || '').trim()
+      if (direct) return direct
+
+      const base = (process.env.OPENAI_BASE_URL || '').trim()
+      if (!base) return DEFAULT_OPENAI_URL
+
+      const normalized = base.replace(/\/+/g, '')
+      if (/\/(v\d+|chat|responses)/i.test(normalized)) {
+        return normalized
+      }
+
+      return `${normalized}/v1/chat/completions`
+    }
+
+    const getAuthHeader = (apiKey) => {
+      const headerName = (process.env.OPENAI_API_KEY_HEADER || 'Authorization').trim()
+      const prefix = process.env.OPENAI_API_KEY_PREFIX
+      const effectivePrefix = prefix === undefined ? 'Bearer ' : prefix
+      return { name: headerName, value: `${effectivePrefix || ''}${apiKey}` }
+    }
+
+    const OPENAI_TIMEOUT_MS = 45000
+
+    const OPENAI_API_URL = resolveOpenAIUrl()
+    const authHeader = getAuthHeader(apiKey)
+
+    const preferredModel = (process.env.OPENAI_MODEL || DEFAULT_MODEL).trim() || DEFAULT_MODEL
 
     const openAiMessages = []
 
@@ -53,30 +89,69 @@ export const handler = async (event) => {
       }
     })
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
+    const finalMaxTokens =
+      typeof maxCompletionTokens === 'number'
+        ? maxCompletionTokens
+        : typeof maxTokens === 'number'
+          ? maxTokens
+          : undefined
+
+    const useDefaultTemperature = typeof temperature !== 'number' || Number.isNaN(temperature) || temperature === 1
+
+    const callModel = async (model) => {
+      const payload = {
         model,
         messages: openAiMessages,
-        temperature,
-        max_tokens: maxTokens,
-      }),
-    })
+        max_completion_tokens: finalMaxTokens,
+        verbosity: 'low',
+      }
+
+      if (!useDefaultTemperature) {
+        payload.temperature = temperature
+      }
+
+      const response = await fetch(OPENAI_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          [authHeader.name]: authHeader.value,
+        },
+        body: JSON.stringify(payload),
+      })
+
+      return response
+    }
+
+    let usedModel = preferredModel
+    let response = await callModel(usedModel)
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error('[kmjk-openai] OpenAI API error:', errorText)
-      return {
-        statusCode: response.status,
-        headers: corsHeaders(),
-        body: JSON.stringify({
-          error: 'OpenAI API request failed',
-          detail: errorText,
-        }),
+      let errorText = await response.text()
+      const retriable =
+        /model|does not exist|not found|invalid model/i.test(errorText) || [400, 404].includes(response.status)
+
+      if (retriable) {
+        const fallbacks = (process.env.OPENAI_FALLBACK_MODELS || '')
+          .split(',')
+          .map((entry) => entry.trim())
+          .filter(Boolean)
+
+        for (const fallback of fallbacks) {
+          if (!fallback || fallback === usedModel) continue
+          usedModel = fallback
+          response = await callModel(usedModel)
+          if (response.ok) break
+          errorText = await response.text()
+        }
+      }
+
+      if (!response.ok) {
+        console.error('[kmjk-openai] OpenAI API error:', response.status, errorText)
+        return {
+          statusCode: 502,
+          headers: corsHeaders(),
+          body: JSON.stringify({ error: 'OpenAI API request failed', detail: errorText, model: usedModel }),
+        }
       }
     }
 
@@ -84,12 +159,21 @@ export const handler = async (event) => {
     const choice = data.choices?.[0]
     const text = choice?.message?.content?.trim()
 
+    if (!text) {
+      console.error('[kmjk-openai] Empty response from OpenAI', data)
+      return {
+        statusCode: 500,
+        headers: corsHeaders(),
+        body: JSON.stringify({ error: 'OpenAI returned empty response', model: usedModel, debug: data }),
+      }
+    }
+
     return {
       statusCode: 200,
       headers: corsHeaders(),
       body: JSON.stringify({
-        text: text || "I'm here to help with your remodel! Let's talk details.",
-        model,
+        text,
+        model: usedModel,
         usage: data.usage,
       }),
     }
