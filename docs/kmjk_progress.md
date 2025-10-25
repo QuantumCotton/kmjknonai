@@ -4,7 +4,7 @@
 | Phase | Focus | Key Outcomes | Status |
 | --- | --- | --- | --- |
 | Phase 1 | Foundation & global contact alignment | Central constants, core templates, initial CTA refresh | ✅ Complete |
-| Phase 2 | Page-by-page contact/CTA rollout | SMS-first CTAs, visible buttons, consistent contact info | ⏳ In progress (12 / 18) |
+| Phase 2 | Page-by-page contact/CTA rollout | SMS-first CTAs, visible buttons, consistent contact info | ⏳ In progress (17 / 18) |
 | Phase 3 | Intake form modernization | Budget ranges, Web3Forms upgrades, image upload, text cues | ⏳ Not started |
 | Phase 4 | Hyper-local testimonials & containment | Location-accurate social proof, interim fixes, gap log | ⏳ Not started |
 | Phase 5 | KMJK collateral & Atlas chatbot | Social Proof Request Kit, partner outreach, chatbot polish | ⏳ Not started |
@@ -24,7 +24,7 @@ Deliverables complete. Moving to per-page execution.
 ## Phase 2 – Page-Level Contact & CTA Rollout ⏳
 Goal: Every landing page uses the constants, exposes a visible SMS CTA, and removes legacy phone/email values.
 
-**Progress bar**: `██████████████░` (12 / 18 pages)
+**Progress bar**: `████████████████` (17 / 18 pages)
 
 - **[x]** `src/pages/BathroomLanding.jsx`
 - **[x]** `src/pages/BathroomLandingElite.jsx`
@@ -37,11 +37,11 @@ Goal: Every landing page uses the constants, exposes a visible SMS CTA, and remo
 - **[x]** `src/pages/HandymanLandingImproved.jsx`
 - **[x]** `src/pages/HandymanLandingWithPricing.jsx`
 - **[x]** `src/pages/TVMountingLanding.jsx`
-- **[ ]** `src/pages/TreasureCoast/KitchenRenovationPages.jsx`
-- **[ ]** `src/pages/TreasureCoast/BathroomRenovationPages.jsx`
-- **[ ]** `src/pages/TreasureCoast/HandymanPages.jsx`
-- **[ ]** `src/pages/TreasureCoast/EpoxyFlooringPages.jsx`
-- **[ ]** `src/pages/TreasureCoast/TVMountingPages.jsx`
+- **[x]** `src/pages/TreasureCoast/KitchenRenovationPages.jsx`
+- **[x]** `src/pages/TreasureCoast/BathroomRenovationPages.jsx`
+- **[x]** `src/pages/TreasureCoast/HandymanPages.jsx`
+- **[x]** `src/pages/TreasureCoast/EpoxyFlooringPages.jsx`
+- **[x]** `src/pages/TreasureCoast/TVMountingPages.jsx`
 - **[ ]** `src/pages/BathroomRemodelPalmCity.jsx`
 - **[ ]** `src/pages/BathroomRemodelSailfishPoint.jsx`
 - **[ ]** `src/pages/BathroomRemodelSewallsPoint.jsx`

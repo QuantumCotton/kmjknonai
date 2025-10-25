@@ -66,9 +66,8 @@ function TVMountingLanding() {
         // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
         if (window.gtag) {
           // Estimate package value based on selectedPackage string
-          let packageValue = 399 // Default to "The Clean Look"
-          if (selectedPackage.includes('$199')) packageValue = 199
-          else if (selectedPackage.includes('$399')) packageValue = 399
+          let packageValue = 399 // Default to "Pro Mount"
+          if (selectedPackage.includes('$1,299')) packageValue = 1299
           else if (selectedPackage.includes('$699')) packageValue = 699
           
           window.gtag('event', 'generate_lead', {
@@ -307,7 +306,7 @@ function TVMountingLanding() {
             {/* Package 1: Pro Mount */}
             <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all h-full flex flex-col">
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">Pro Mount</h3>
-              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $199</div>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $399</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
                   <Check className="text-green-600 flex-shrink-0 mt-1" size={20} />
@@ -327,7 +326,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => openModalWithPackage('Pro Mount - Starting at $199')}
+                onClick={() => openModalWithPackage('Pro Mount - Starting at $399')}
                 className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white mt-auto"
               >
                 Get Quote
@@ -341,7 +340,7 @@ function TVMountingLanding() {
                 MOST POPULAR
               </div>
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)] mt-2">The Clean Look</h3>
-              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $399</div>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $699</div>
               <div className="text-sm text-gray-600 mb-4 font-semibold">Everything in Pro Mount PLUS:</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -362,7 +361,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => openModalWithPackage('The Clean Look - Starting at $399 (MOST POPULAR)')}
+                onClick={() => openModalWithPackage('The Clean Look - Starting at $699 (MOST POPULAR)')}
                 className="w-full bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white text-lg py-6 mt-auto"
               >
                 Get Quote (Recommended)
@@ -372,7 +371,7 @@ function TVMountingLanding() {
             {/* Package 3: Ultimate Experience */}
             <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 border-2 border-gray-200 hover:border-[var(--brushed-gold)] transition-all h-full flex flex-col">
               <h3 className="text-xl md:text-2xl font-bold mb-4 text-[var(--deep-charcoal)]">The Ultimate Experience</h3>
-              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $699</div>
+              <div className="text-3xl md:text-4xl font-bold text-[var(--brushed-gold)] mb-6">Starting at $1,299</div>
               <div className="text-sm text-gray-600 mb-4 font-semibold">Everything in The Clean Look PLUS:</div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -393,7 +392,7 @@ function TVMountingLanding() {
                 </li>
               </ul>
               <Button 
-                onClick={() => openModalWithPackage('The Ultimate Experience - Starting at $699')}
+                onClick={() => openModalWithPackage('The Ultimate Experience - Starting at $1,299')}
                 className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white mt-auto"
               >
                 Get Quote

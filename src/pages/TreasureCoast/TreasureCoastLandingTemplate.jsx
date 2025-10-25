@@ -263,7 +263,7 @@ export function createTreasureCoastLandingPage(config) {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
+                    className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
                   >
                     <MessageSquare className="mr-2" size={22} />
                     Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
@@ -273,7 +273,7 @@ export function createTreasureCoastLandingPage(config) {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg"
+                    className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
                   >
                     <Mail className="mr-2" size={22} />
                     Email {KMJK_EMAIL}
@@ -549,13 +549,13 @@ export function createTreasureCoastLandingPage(config) {
                   Book Consultation
                 </Button>
                 <a href={KMJK_PHONE_SMS_LINK}>
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
                     <MessageSquare className="mr-2" size={22} />
                     Text {KMJK_PHONE_DISPLAY}
                   </Button>
                 </a>
                 <a href={`mailto:${KMJK_EMAIL}`}>
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 px-8 py-6 text-lg">
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
                     <Mail className="mr-2" size={22} />
                     Email {KMJK_EMAIL}
                   </Button>
