@@ -1,13 +1,15 @@
 import { Phone, MapPin, Clock } from 'lucide-react'
+import { KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 export function LocalPresenceSection({
   businessName = 'KMJK Home Improvement',
   addressLines = ['Stuart, FL 34994'],
-  phone = '650-501-7659',
+  phone = KMJK_PHONE_DISPLAY,
   hours = ['Mon–Fri: 8am – 6pm', 'Sat: By appointment', 'Sun: Closed'],
   serviceAreas = ['Palm City', 'Sewall’s Point', 'Sailfish Point', 'Hutchinson Island'],
   mapEmbedUrl = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3581.2940979754007!2d-80.25275902381229!3d27.197551850869153!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88ded61f23995ab9%3A0x36a2f8a7b2d0d0c7!2sStuart%2C%20FL!5e0!3m2!1sen!2sus!4v1730000000000!5m2!1sen!2sus',
 }) {
+  const smsLink = KMJK_PHONE_SMS_LINK
   return (
     <section className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4 grid gap-10 lg:grid-cols-[1.15fr_1fr] items-start">
@@ -39,8 +41,8 @@ export function LocalPresenceSection({
               <div className="flex items-start gap-3">
                 <Phone className="text-[var(--brushed-gold)]" size={22} />
                 <div>
-                  <p className="font-semibold text-[var(--deep-charcoal)]">Direct Line</p>
-                  <a href={`tel:${phone}`} className="text-gray-600 hover:text-[var(--deep-charcoal)]">
+                  <p className="font-semibold text-[var(--deep-charcoal)]">Text Concierge</p>
+                  <a href={smsLink} className="text-gray-600 hover:text-[var(--deep-charcoal)]">
                     {phone}
                   </a>
                 </div>

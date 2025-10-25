@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, MessageSquare, Check, Star, Clock, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, DollarSign } from 'lucide-react'
+import { MessageSquare, Check, Star, Clock, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function HandymanLandingWithPricing() {
   const [jobsCompleted, setJobsCompleted] = useState(47)
@@ -79,29 +80,30 @@ function HandymanLandingWithPricing() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <a href="tel:650-501-7659" className="block">
+            <a href={KMJK_PHONE_SMS_LINK} className="block">
               <div className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
-                <Phone className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Call Now</div>
-                <div className="text-3xl font-bold">650-501-7659</div>
-                <div className="text-sm mt-2">Speak to a real person immediately</div>
-              </div>
-            </a>
-            <a href="sms:650-501-7659" className="block">
-              <div className="bg-white text-[var(--deep-charcoal)] p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
                 <MessageSquare className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Text Us</div>
-                <div className="text-3xl font-bold text-[var(--brushed-gold)]">650-501-7659</div>
-                <div className="text-sm mt-2">Get instant response & quote</div>
+                <div className="text-2xl font-bold mb-2">Text {KMJK_CONTACT_NAME}</div>
+                <div className="text-3xl font-bold">{KMJK_PHONE_DISPLAY}</div>
+                <div className="text-sm mt-2">Share photos for fastest quote</div>
               </div>
             </a>
+            <Link to="/contact" className="block">
+              <div className="bg-white text-[var(--deep-charcoal)] p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
+                <DollarSign className="mx-auto mb-3" size={40} />
+                <div className="text-2xl font-bold mb-2">Request Pricing Call</div>
+                <div className="text-lg font-semibold text-[var(--brushed-gold)]">We respond within 1 hour</div>
+                <div className="text-sm mt-2">Perfect for bundled services</div>
+              </div>
+            </Link>
           </div>
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 space-y-2">
             <div className="inline-flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full">
               <Clock className="text-green-400" size={24} />
               <span className="text-lg font-semibold">Jobs Completed Today: {jobsCompleted}</span>
             </div>
+            <p className="text-sm text-gray-200">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
           </div>
         </div>
       </section>
@@ -189,18 +191,17 @@ function HandymanLandingWithPricing() {
               We handle 50+ home services! Call or text photos of your project for an instant, accurate quote.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="tel:650-501-7659">
+              <a href={KMJK_PHONE_SMS_LINK}>
                 <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                  <Phone className="mr-2" size={20} />
-                  Call for Custom Quote
-                </Button>
-              </a>
-              <a href="sms:650-501-7659">
-                <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                   <MessageSquare className="mr-2" size={20} />
-                  Text Photos for Quote
+                  Text {KMJK_CONTACT_NAME} for Custom Quote
                 </Button>
               </a>
+              <Link to="/contact">
+                <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+                  Schedule Call-Back
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -221,24 +222,24 @@ function HandymanLandingWithPricing() {
             <div className="bg-green-100 border-4 border-green-500 p-6 rounded-lg text-center animate-pulse">
               <div className="text-2xl font-bold text-green-700 mb-2">2:00 PM</div>
               <div className="text-sm text-green-600 font-semibold">AVAILABLE NOW!</div>
-              <a href="tel:650-501-7659">
+              <a href={KMJK_PHONE_SMS_LINK}>
                 <Button className="mt-3 bg-green-600 hover:bg-green-700 text-white">
-                  Book This Slot
+                  Text to Book
                 </Button>
               </a>
             </div>
             <div className="bg-yellow-100 border-2 border-yellow-500 p-6 rounded-lg text-center">
               <div className="text-2xl font-bold text-yellow-700 mb-2">5:00 PM</div>
               <div className="text-sm text-yellow-600">1 Spot Left</div>
-              <a href="tel:650-501-7659">
+              <a href={KMJK_PHONE_SMS_LINK}>
                 <Button className="mt-3 bg-yellow-600 hover:bg-yellow-700 text-white">
-                  Grab This Spot
+                  Text to Reserve
                 </Button>
               </a>
             </div>
           </div>
           <p className="text-center text-sm text-gray-500 mt-6">
-            ⏰ Slots fill up fast! Call or text now to secure your time.
+            ⏰ Slots fill up fast! Text us now to secure your time.
           </p>
         </div>
       </section>
@@ -313,21 +314,23 @@ function HandymanLandingWithPricing() {
             Licensed, insured, and ready to tackle your to-do list. Call or text for same-day service!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                 <MessageSquare className="mr-2" size={24} />
-                Text for Instant Quote
+                Text {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
+            <Link to="/contact">
+              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
+                Schedule a Call-Back
+              </Button>
+            </Link>
           </div>
           <p className="text-sm">
             ✓ Same-Day Service Available • ✓ Licensed & Insured • ✓ Background Checked • ✓ No Job Too Small
+          </p>
+          <p className="text-sm mt-2 text-gray-300">
+            📸 Text photos to {KMJK_PHONE_DISPLAY} for priority quoting.
           </p>
         </div>
       </section>

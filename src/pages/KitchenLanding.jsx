@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, Mail, Check, Star, Calendar, MessageSquare, Heart } from 'lucide-react'
+import { Check, Star, Calendar, MessageSquare, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 const heroKitchenImage = new URL(
   '../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
@@ -39,10 +40,10 @@ function KitchenLanding() {
             Transform your kitchen into the heart of your home. See your space in 3D before we start. Fixed pricing. Zero surprises.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <Phone className="mr-2" size={24} />
-                Call Now: 650-501-7659
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_CONTACT_NAME}
               </Button>
             </a>
             <Link to="/contact">
@@ -111,12 +112,12 @@ function KitchenLanding() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                Get My Free Detailed Quote & 3D Design
+                Text {KMJK_CONTACT_NAME} for Your Quote & 3D Design
               </Button>
             </a>
-            <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: 650-501-7659</p>
+            <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: {KMJK_PHONE_DISPLAY}</p>
           </div>
         </div>
       </section>
@@ -268,16 +269,10 @@ function KitchenLanding() {
             Get your free in-home consultation and see your new kitchen in 3D. No pressure, just possibilities!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                 <MessageSquare className="mr-2" size={24} />
-                Text for Quick Quote
+                Text {KMJK_PHONE_DISPLAY} for Quick Quote
               </Button>
             </a>
             <Link to="/contact">

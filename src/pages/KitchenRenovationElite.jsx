@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Phone, MessageSquare, Check, Star, Calendar, ChefHat, Upload, Loader2, ArrowRight, Users, Clock, Award, TrendingUp } from 'lucide-react'
+import { MessageSquare, Check, Star, Calendar, ChefHat, Upload, Loader2, ArrowRight, Users, Clock, Award, TrendingUp } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import kitchenModern from '../assets/kitchen_modern.jpg'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function KitchenRenovationElite() {
   const [projectSize, setProjectSize] = useState('full')
@@ -10,6 +11,7 @@ function KitchenRenovationElite() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [buttonContext, setButtonContext] = useState('')
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,6 +41,11 @@ function KitchenRenovationElite() {
     const total = monthly * parseInt(loanTerm)
     const interest = total - parseFloat(loanAmount)
     return interest.toFixed(2)
+  }
+
+  const smsLinkForPackage = (pkgLabel) => {
+    const body = `Hi ${KMJK_CONTACT_NAME}, I'm interested in the ${pkgLabel} kitchen package. Can we review details?`
+    return `${KMJK_PHONE_SMS_LINK}?body=${encodeURIComponent(body)}`
   }
 
   const openModalWithContext = (context) => {
@@ -180,19 +187,21 @@ function KitchenRenovationElite() {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-7 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full shadow-2xl transform hover:scale-105 transition-all">
-                <Phone className="mr-2" size={24} />
-                Call Now: 650-501-7659
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
             
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-8 py-7 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full shadow-2xl transform hover:scale-105 transition-all">
-                <MessageSquare className="mr-2" size={24} />
-                Text for Fast Quote
-              </Button>
-            </a>
+            <Button 
+              onClick={() => openModalWithContext('Hero - Schedule Private Consultation')} 
+              size="lg" 
+              className="text-lg px-8 py-7 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full shadow-2xl transform hover:scale-105 transition-all"
+            >
+              <Calendar className="mr-2" size={24} />
+              Schedule Consultation
+            </Button>
             
             <Button 
               onClick={() => openModalWithContext('Hero - Upload Photos for Instant Quote')} 
@@ -203,6 +212,9 @@ function KitchenRenovationElite() {
               Upload Photos → Get Quote
             </Button>
           </div>
+          <p className="mt-6 text-sm text-gray-200">
+            Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a>
+          </p>
           
           <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm">
             <div className="flex items-center gap-2">
@@ -422,12 +434,11 @@ function KitchenRenovationElite() {
                   ))}
                 </div>
                 
-                <Button 
-                  onClick={() => openModalWithContext(`Pricing - ${key} Package Selected`)}
-                  className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white py-4 text-lg font-semibold"
-                >
-                  Select {key.charAt(0).toUpperCase() + key.slice(1)}
-                </Button>
+                <a href={smsLinkForPackage(key)}>
+                  <Button className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white py-4 text-lg font-semibold">
+                    Text {KMJK_CONTACT_NAME} to Start
+                  </Button>
+                </a>
               </div>
             ))}
           </div>
@@ -631,13 +642,13 @@ function KitchenRenovationElite() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-xl px-12 py-8 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 shadow-2xl transform hover:scale-105 transition-all">
-                <Phone className="mr-3" size={28} />
-                Call: 650-501-7659
+                <MessageSquare className="mr-3" size={28} />
+                Text {KMJK_PHONE_DISPLAY}
               </Button>
             </a>
-            
+
             <Button 
               onClick={() => openModalWithContext('Final CTA - Upload Photos for Quote')}
               size="lg" 

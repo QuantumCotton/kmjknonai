@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Phone, MessageSquare, Check, Star, Calendar, X, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 import bathroomLuxurySpa from '../assets/bathroom_luxury_spa.jpg'
 import bathroomMarble from '../assets/bathroom_marble.jpg'
 
@@ -115,18 +116,18 @@ function BathroomLandingImproved() {
             Transform your outdated bathroom into a luxurious sanctuary in just 7 days. Zero stress. Zero surprises. 100% guaranteed.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-6 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
                 <MessageSquare className="mr-2" size={24} />
-                Text Us Now
+                Text {KMJK_CONTACT_NAME}
               </Button>
             </a>
+            <Link to="/contact" className="w-full">
+              <Button size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
+                <Phone className="mr-2" size={24} />
+                Request Call Back
+              </Button>
+            </Link>
             <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
               <Upload className="mr-2" size={24} />
               Get Free Quote
@@ -388,10 +389,10 @@ function BathroomLandingImproved() {
             Schedule your free in-home consultation today. Upload photos and get a detailed quote!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_PHONE_DISPLAY}
               </Button>
             </a>
             <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">

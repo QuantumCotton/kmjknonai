@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, MessageSquare, Check, Star, Calendar, Heart, Upload, Loader2, X } from 'lucide-react'
+import { MessageSquare, Check, Star, Calendar, Heart, Upload, Loader2, X } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import kitchenModern from '../assets/kitchen_modern.jpg'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function KitchenLandingImproved() {
   const [projectSize, setProjectSize] = useState('full')
@@ -123,24 +124,25 @@ function KitchenLandingImproved() {
             Transform your kitchen into the heart of your home. Fixed pricing. Zero surprises. Financing available.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-6 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
                 <MessageSquare className="mr-2" size={24} />
-                Text Us Now
+                Text {KMJK_CONTACT_NAME}
               </Button>
             </a>
-            <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
+            <Button onClick={() => openModalWithContext('Hero Section - Start Consultation')} size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
+              <Calendar className="mr-2" size={24} />
+              Plan Your Consultation
+            </Button>
+            <Button onClick={() => openModalWithContext('Hero Section - Send Photos for Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
               <Upload className="mr-2" size={24} />
               Get Free Quote
             </Button>
           </div>
           <p className="mt-6 text-sm">🏆 2024 Best Kitchen Remodeler - Treasure Coast • ⭐ 4.9/5 Stars (237 Reviews)</p>
+          <p className="mt-2 text-sm text-gray-200">
+            Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a>
+          </p>
         </div>
       </section>
 
@@ -323,7 +325,7 @@ function KitchenLandingImproved() {
             <Button onClick={() => openModalWithContext('Pricing Calculator - Get Detailed Quote')} size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
               Get My Free Detailed Quote
             </Button>
-            <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos for accurate pricing</p>
+            <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: {KMJK_PHONE_DISPLAY}</p>
           </div>
         </div>
       </section>
@@ -376,10 +378,10 @@ function KitchenLandingImproved() {
             Get your free in-home consultation and detailed quote. No pressure, just possibilities!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_PHONE_DISPLAY} for Quick Quote
               </Button>
             </a>
             <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">

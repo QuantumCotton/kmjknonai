@@ -3,6 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
+import {
+  KMJK_CONTACT_NAME,
+  KMJK_PHONE_DISPLAY,
+  KMJK_PHONE_SMS_LINK,
+  KMJK_EMAIL,
+} from '@/constants/contact.js'
 
 // Import images
 import kitchenModern from './assets/kitchen_modern.jpg'
@@ -104,9 +110,12 @@ function Navigation() {
 
           {/* Contact Info */}
           <div className="hidden lg:flex items-center space-x-4 text-sm">
-            <a href="tel:650-501-7659" className="flex items-center space-x-1 hover:text-[var(--brushed-gold)] transition-colors">
+            <a
+              href={KMJK_PHONE_SMS_LINK}
+              className="flex items-center space-x-1 hover:text-[var(--brushed-gold)] transition-colors"
+            >
               <Phone size={16} />
-              <span>650-501-7659</span>
+              <span>Text {KMJK_PHONE_DISPLAY}</span>
             </a>
           </div>
 
@@ -135,13 +144,13 @@ function Navigation() {
               </Link>
             ))}
             <div className="mt-4 pt-4 border-t border-gray-600">
-              <a href="tel:650-501-7659" className="flex items-center space-x-2 py-2">
+              <a href={KMJK_PHONE_SMS_LINK} className="flex items-center space-x-2 py-2">
                 <Phone size={16} />
-                <span>650-501-7659</span>
+                <span>Text {KMJK_PHONE_DISPLAY}</span>
               </a>
-              <a href="mailto:chris@theeliteservicehub.com" className="flex items-center space-x-2 py-2">
+              <a href={`mailto:${KMJK_EMAIL}`} className="flex items-center space-x-2 py-2">
                 <Mail size={16} />
-                <span>chris@theeliteservicehub.com</span>
+                <span>{KMJK_EMAIL}</span>
               </a>
             </div>
           </div>
@@ -172,13 +181,19 @@ function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact Us</h4>
             <div className="space-y-2 text-sm">
-              <a href="tel:650-501-7659" className="flex items-center space-x-2 hover:text-[var(--brushed-gold)] transition-colors">
+              <a
+                href={KMJK_PHONE_SMS_LINK}
+                className="flex items-center space-x-2 hover:text-[var(--brushed-gold)] transition-colors"
+              >
                 <Phone size={16} />
-                <span>650-501-7659</span>
+                <span>Text {KMJK_CONTACT_NAME}</span>
               </a>
-              <a href="mailto:chris@theeliteservicehub.com" className="flex items-center space-x-2 hover:text-[var(--brushed-gold)] transition-colors">
+              <a
+                href={`mailto:${KMJK_EMAIL}`}
+                className="flex items-center space-x-2 hover:text-[var(--brushed-gold)] transition-colors"
+              >
                 <Mail size={16} />
-                <span>chris@theeliteservicehub.com</span>
+                <span>{KMJK_EMAIL}</span>
               </a>
             </div>
           </div>
@@ -215,10 +230,10 @@ function HomePage() {
           <div className="logo-underline"></div>
           <h1 className="tagline">Exceptional Craftsmanship. A Seamless Experience.</h1>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                 <Phone className="mr-2" size={20} />
-                Call Us: 650-501-7659
+                Text {KMJK_CONTACT_NAME}
               </Button>
             </a>
             <Link to="/contact">
@@ -680,10 +695,18 @@ function StickyCtaBar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 border-t border-gray-200 shadow-lg md:hidden">
       <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-3 gap-2 text-sm">
-        <a href="tel:650-501-7659" className="text-center py-2 rounded-md bg-[var(--deep-charcoal)] text-white" aria-label="Call KMJK">
-          Call
+        <a
+          href={KMJK_PHONE_SMS_LINK}
+          className="text-center py-2 rounded-md bg-[var(--deep-charcoal)] text-white"
+          aria-label="Text KMJK"
+        >
+          Text
         </a>
-        <a href="mailto:chris@theeliteservicehub.com" className="text-center py-2 rounded-md bg-[var(--brushed-gold)] text-white" aria-label="Email KMJK">
+        <a
+          href={`mailto:${KMJK_EMAIL}`}
+          className="text-center py-2 rounded-md bg-[var(--brushed-gold)] text-white"
+          aria-label="Email KMJK"
+        >
           Email
         </a>
         <a href="/contact" className="text-center py-2 rounded-md bg-white border text-[var(--deep-charcoal)]" aria-label="Get a Quote">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Phone, Mail, Check, Star, Calendar, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import { KMJK_CONTACT_NAME, KMJK_EMAIL, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 const heroBathroomImage = new URL(
   '../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png',
@@ -33,18 +34,18 @@ function BathroomLanding() {
             Transform your outdated bathroom into a luxurious sanctuary in just 7 days. Zero stress. Zero surprises. 100% guaranteed.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <Phone className="mr-2" size={24} />
-                Call Now: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                 <MessageSquare className="mr-2" size={24} />
-                Text Us - Get Instant Response!
+                Text {KMJK_CONTACT_NAME} to Start
               </Button>
             </a>
+            <Link to="/contact">
+              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
+                <Calendar className="mr-2" size={24} />
+                Schedule Consultation
+              </Button>
+            </Link>
           </div>
           <p className="mt-4 text-sm">📅 Next Available Start Date: This Week! • ⚡ Same-Day Estimates Available</p>
         </div>
@@ -122,9 +123,9 @@ function BathroomLanding() {
                 </div>
               </div>
               <div className="mt-6">
-                <a href="tel:650-501-7659">
+                <a href={KMJK_PHONE_SMS_LINK}>
                   <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                    Get My Free Detailed Quote
+                    Text {KMJK_PHONE_DISPLAY} for Detailed Quote
                   </Button>
                 </a>
               </div>
@@ -260,16 +261,10 @@ function BathroomLanding() {
             Schedule your free in-home consultation today. See 3D designs before we start. No obligation, no pressure.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
-              </Button>
-            </a>
-            <a href="sms:650-501-7659">
-              <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                 <MessageSquare className="mr-2" size={24} />
-                Text for Instant Quote
+                Text {KMJK_PHONE_DISPLAY} for Instant Quote
               </Button>
             </a>
             <Link to="/contact">

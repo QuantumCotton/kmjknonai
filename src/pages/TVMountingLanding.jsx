@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, MessageSquare, Check, Star, Shield, MapPin, Award, Sparkles, Upload, Loader2 } from 'lucide-react'
+import { MessageSquare, Check, Star, Shield, MapPin, Award, Sparkles, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
 import customBuiltin from '../assets/custom_builtin.jpg'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -115,18 +116,31 @@ function TVMountingLanding() {
             <span className="text-[var(--brushed-gold)] font-semibold">Guaranteed.</span>
           </p>
           
-          <Button 
-            onClick={() => openModalWithPackage('General Inquiry - Hero Section')}
-            size="lg" 
-            className="text-xl px-12 py-8 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white mb-6 shadow-2xl"
-          >
-            Get My Free Quote Now
-          </Button>
+          <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
+            <a href={KMJK_PHONE_SMS_LINK}>
+              <Button 
+                size="lg" 
+                className="text-xl px-10 py-7 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white shadow-2xl"
+              >
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_CONTACT_NAME} Now
+              </Button>
+            </a>
+            <Button 
+              onClick={() => openModalWithPackage('General Inquiry - Hero Section')}
+              size="lg" 
+              className="text-xl px-10 py-7 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 shadow-2xl"
+            >
+              <Upload className="mr-2" size={24} />
+              Upload Room Photos
+            </Button>
+          </div>
           
           <p className="text-sm flex items-center justify-center gap-2">
             <Shield className="inline" size={18} />
             Licensed, Insured & 5-Star Rated
           </p>
+          <p className="text-xs mt-4 text-gray-300">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
         </div>
       </section>
 
@@ -449,10 +463,10 @@ function TVMountingLanding() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <a href="tel:650-501-7659">
+            <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Phone className="mr-2" size={24} />
-                Call: 650-501-7659
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_PHONE_DISPLAY}
               </Button>
             </a>
             <Button 
