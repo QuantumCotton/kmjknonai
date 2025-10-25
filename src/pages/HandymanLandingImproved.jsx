@@ -71,7 +71,7 @@ function HandymanLandingImproved() {
       console.log('Web3Forms Response:', data)
 
       if (data.success) {
-        console.log('✅ Form submitted successfully! Email sent to chris@theeliteservicehub.com')
+        console.log('✅ Form submitted successfully! Email sent to info@kmjk.pro')
         
         // 🔥 TRACK LEAD IN GOOGLE ANALYTICS
         if (window.gtag) {

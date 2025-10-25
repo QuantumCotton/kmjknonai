@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MessageSquare, Check } from 'lucide-react'
+import { MessageSquare, Check, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
@@ -29,7 +29,7 @@ export default function BathroomRemodelSewallsPoint(){
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Sewall's Point, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex gap-3 justify-center">
+          <div className="mt-6 flex flex-wrap gap-3 justify-center">
             <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--brushed-gold)] text-white">
                 <MessageSquare className="mr-2" size={18} />
@@ -39,7 +39,19 @@ export default function BathroomRemodelSewallsPoint(){
             <a href="/contact">
               <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">Free Consultation</Button>
             </a>
+            <Button
+              type="button"
+              onClick={() => (window.location.href = KMJK_PHONE_SMS_LINK)}
+              size="lg"
+              className="bg-[var(--deep-charcoal)] text-white"
+            >
+              <Upload className="mr-2" size={18} />
+              Share Project Photos
+            </Button>
           </div>
+          <p className="mt-4 text-sm opacity-80">
+            Text us inspiration photos or your punch list so we can prioritize Sewall's Point scheduling and finishes.
+          </p>
         </div>
       </section>
 
@@ -57,11 +69,24 @@ export default function BathroomRemodelSewallsPoint(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh:</strong> –</p>
-              <p className="mb-2"><strong>Full Remodel:</strong> –</p>
-              <p className="mb-2"><strong>Luxury:</strong> +</p>
-              <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
+              <p className="mb-2"><strong>Riverside Refresh:</strong> $48k - $72k</p>
+              <p className="mb-2"><strong>Intracoastal Retreat:</strong> $85k - $125k</p>
+              <p className="mb-2"><strong>Estate Spa Experience:</strong> $155k+</p>
+              <p className="text-sm text-gray-600">Includes concierge design, permitting, and daily communication from start to finish.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-12 bg-[var(--warm-off-white)]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-[var(--deep-charcoal)]">Sewall's Point Homeowners Trust KMJK</h2>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex mb-3 text-[var(--brushed-gold)] text-xl">★★★★★</div>
+            <p className="text-gray-700 italic mb-4">
+              "While we were traveling, KMJK transformed our owners' suite. They coordinated with our designer, wrapped every surface for protection, and the steam shower they built is flawless. We came home to a spotless, magazine-worthy bath."
+            </p>
+            <div className="text-sm text-gray-600 font-semibold">— Brian & Angela M., Sewall's Point</div>
           </div>
         </div>
       </section>

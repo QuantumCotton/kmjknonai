@@ -4,7 +4,7 @@ A professional, sophisticated website for KMJK Home Improvement, showcasing exce
 
 ## About
 
-KMJK Home Improvement is dedicated to transforming homes through meticulous craftsmanship and an unwavering commitment to client satisfaction in Stuart, Florida, and the Treasure Coast area.
+KMJK Home Improvement is dedicated to transforming homes through meticulous craftsmanship and an unwavering commitment to client satisfaction across Jensen Beach, Stuart, and the greater Treasure Coast area.
 
 ## Features
 
@@ -64,9 +64,10 @@ kmjk-website/
 ## Contact Information
 
 **KMJK Home Improvement**
-- Phone: 650-501-7659
-- Email: chris@theeliteservicehub.com
-- Service Area: Stuart, Florida, and the Treasure Coast
+- Phone: 772-777-0622
+- Email: info@kmjk.pro
+- Operations Hub: 1301 SE Francis Street, Jensen Beach, FL 34957
+- Service Area: Jensen Beach, Stuart, Palm City, and the Treasure Coast
 
 ## Brand Identity
 
