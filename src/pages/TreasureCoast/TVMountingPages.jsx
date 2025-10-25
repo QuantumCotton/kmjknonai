@@ -59,32 +59,32 @@ const tvSellingPoints = [
 const tvPricing = [
   {
     name: 'Signature Mounting',
-    range: '$395+',
+    range: 'Starting at $399',
     features: [
-      'Premium fixed or tilt mount up to 65"',
+      'Premium fixed or tilt mount up to 75"',
       'Cord concealment and outlet repositioning',
       'Soundbar bracket install + device setup',
-      'Perfect for guest suites or secondary spaces',
+      'Site visit minimum $375 — bundle AV tasks for best value',
     ],
   },
   {
-    name: 'Custom Feature Wall',
-    range: '$1,250+',
+    name: 'The Clean Look',
+    range: 'Starting at $699',
     features: [
-      'Fireplace, stone, or millwork backdrop fabrication',
-      'Distributed audio and lighting integration',
-      'Frameless mounting with hidden access panels',
-      'Ideal for great rooms and media dens',
+      'In-wall wire concealment and power relocation',
+      'Custom trim or panel accents for a finished aesthetic',
+      'Professional cable management + device calibration',
+      'Perfect for main living spaces and owner suites',
     ],
   },
   {
-    name: 'Outdoor Entertainment Suite',
-    range: '$1,850+',
+    name: 'Ultimate Entertainment Suite',
+    range: 'Starting at $1,299',
     features: [
-      'Weatherproof mounts, enclosures, and cable routing',
-      'Landscape audio, Wi-Fi boosters, and lighting scenes',
-      'Sea-air resistant hardware for coastal durability',
-      'Perfect for lanais, pool decks, and rooftop terraces',
+      'Outdoor or multi-zone installs with marine-grade hardware',
+      'Soundbar, surround, and smart automation integration',
+      'Custom cabinetry, stone, or shiplap backdrops crafted in-house',
+      'Ideal for lanais, club rooms, and theater experiences',
     ],
   },
 ]
@@ -118,7 +118,7 @@ const buildTvPage = ({
       title: `Your ${cityName} Media Experience, Perfected`,
       paragraphs: [
         `Whether it’s a bay-view living room or an oceanfront lanai, KMJK delivers perfectly aligned, expertly wired TV installations across ${cityName}. Our team coordinates electrical work, structural blocking, and finish carpentry so everything feels built-in from day one.`,
-        'We carefully protect your home, arrive on time, and complete most projects in a single visit. Expect clean lines, concealed cables, and technology that simply works.',
+        'Text us photos before your visit so we can stage mounts, outlets, and AV gear in advance. Minimum site investment is $375, with most clients bundling mounting, concealment, and calibration in a single appointment.',
       ],
     },
     sellingPoints: tvSellingPoints,
@@ -131,7 +131,7 @@ const buildTvPage = ({
     },
     finalCta: {
       heading: `Upgrade your ${cityName} viewing experience`,
-      subheading: 'Share your inspiration photos or AV plans and KMJK will craft a media wall that exceeds expectations.',
+      subheading: 'Share your inspiration photos or AV plans. $375 site minimum applies—bundle multiple installs for concierge pricing.',
     },
     caseStudies,
     faqs: tvFaqs,

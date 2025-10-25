@@ -30,7 +30,7 @@ function BathroomLandingElite() {
   const pricing = {
     'refresh': { 
       range: '$12,000 - $20,000', 
-      monthly: '$500/mo', 
+      monthly: '≈$500/mo (typical bank payment)', 
       features: [
         'New Tile & Flooring',
         'Modern Vanity & Mirror',
@@ -41,7 +41,7 @@ function BathroomLandingElite() {
     },
     'full': { 
       range: '$25,000 - $45,000', 
-      monthly: '$1,042/mo', 
+      monthly: '≈$1,050/mo (typical bank payment)', 
       features: [
         'Complete Gut & Rebuild',
         'Custom Vanity & Storage',
@@ -53,7 +53,7 @@ function BathroomLandingElite() {
     },
     'luxury': { 
       range: '$50,000+', 
-      monthly: '$2,083/mo', 
+      monthly: '≈$2,100/mo (typical bank payment)', 
       features: [
         'Spa-Grade Materials',
         'Custom Walk-In Shower',
@@ -147,7 +147,7 @@ function BathroomLandingElite() {
             Your Dream Bathroom
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
-            Turn your bathroom into a spa-like sanctuary. Fixed pricing. Zero surprises. Financing available.
+            Turn your bathroom into a spa-like sanctuary. Fixed pricing. Zero surprises. Ask about typical monthly payments our clients secure through their lenders.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
             <a href={KMJK_PHONE_SMS_LINK}>
@@ -333,7 +333,7 @@ function BathroomLandingElite() {
               >
                 <h3 className="text-2xl font-bold mb-2 capitalize">{key} Remodel</h3>
                 <div className="text-3xl font-bold text-[var(--brushed-gold)] mb-2">{data.range}</div>
-                <div className="text-sm text-gray-600 mb-4">or {data.monthly} with financing</div>
+                <div className="text-sm text-gray-600 mb-4">{data.monthly} secured via outside lenders (WAC)</div>
                 <ul className="space-y-2 mb-6">
                   {data.features.map((feature, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm">

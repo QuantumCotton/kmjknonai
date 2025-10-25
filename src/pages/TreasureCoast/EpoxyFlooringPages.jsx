@@ -65,7 +65,7 @@ const epoxyPricing = [
   },
 ]
 
-const buildEpoxyPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
+const buildEpoxyPage = ({ cityName, heroImage, neighborhoods, testimonial, heroNote }) =>
   createTreasureCoastLandingPage({
     componentName: `EpoxyFlooring${cityName.replace(/\s/g, '')}`,
     metaTitle: `${cityName}, FL Epoxy Flooring & Concrete Coatings | KMJK Home Improvement`,
@@ -76,13 +76,16 @@ const buildEpoxyPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
         'Transform garages, hangars, and outdoor living spaces with commercial-grade epoxy systems built for coastal conditions.',
       backgroundImage: heroImage,
       tagline: 'Treasure Coast • Epoxy Flooring • KMJK',
+      note:
+        heroNote ||
+        'Text slab photos or dimensions so we can stage samples and moisture mitigation gear before your consultation.',
     },
     statHighlights: epoxyStats,
     intro: {
       title: `Epoxy Floors Engineered for ${cityName}`,
       paragraphs: [
         `Salt air, humidity, and daily wear demand top-tier epoxy systems. KMJK delivers designer finishes and industrial durability for ${cityName} garages, patios, hangars, and commercial spaces.`,
-        'Our certified installers handle concrete prep, repairs, and coatings in-house. Expect impeccable prep, tight timelines, and a floor that performs and impresses.',
+        'Our certified installers handle concrete prep, repairs, and coatings in-house. Text us photos ahead of your visit so we can confirm moisture mitigation plans, color blends, and install logistics.',
       ],
     },
     sellingPoints: epoxySellingPoints,
@@ -95,13 +98,15 @@ const buildEpoxyPage = ({ cityName, heroImage, neighborhoods, testimonial }) =>
     },
     finalCta: {
       heading: `Schedule your ${cityName} epoxy consultation`,
-      subheading: 'Book a site assessment with KMJK to choose colors, finishes, and performance options for your space.',
+      subheading:
+        'Book a site assessment with KMJK. Share photos and square footage upfront to fast-track samples, schedules, and finish selections.',
     },
   })
 
 export const EpoxyPalmCity = buildEpoxyPage({
   cityName: 'Palm City',
   heroImage: palmCityEpoxyHero,
+  heroNote: 'Text garage dimensions or slab photos to Chris so we can dial in Palm City color blends before arriving.',
   neighborhoods: [
     'Palm City Farms',
     'Monarch Country Club',
@@ -121,6 +126,7 @@ export const EpoxyPalmCity = buildEpoxyPage({
 export const EpoxySailfishPoint = buildEpoxyPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointEpoxyHero,
+  heroNote: 'Share clubroom or hangar photos. We’ll stage metallic samples and marine-grade topcoats for Sailfish Point walkthroughs.',
   neighborhoods: [
     'Sailfish Point Oceanfront Residences',
     'Marina Point',
@@ -138,6 +144,7 @@ export const EpoxySailfishPoint = buildEpoxyPage({
 export const EpoxySewallsPoint = buildEpoxyPage({
   cityName: "Sewall's Point",
   heroImage: sewallsPointEpoxyHero,
+  heroNote: 'Send breezeway and garage videos so we can plan quartz blends and humidity controls for Sewall’s Point installs.',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -156,6 +163,7 @@ export const EpoxySewallsPoint = buildEpoxyPage({
 export const EpoxyHutchinsonIsland = buildEpoxyPage({
   cityName: 'Hutchinson Island',
   heroImage: hutchinsonIslandEpoxyHero,
+  heroNote: 'Upload lanai and fish-cleaning station photos. We prep slip-resistant, salt-air safe coatings ahead of Hutchinson Island visits.',
   neighborhoods: [
     'Ocean Village',
     'Harbour Isle',

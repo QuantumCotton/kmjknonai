@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MessageSquare, Check } from 'lucide-react'
+import { MessageSquare, Check, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
@@ -29,7 +29,7 @@ export default function BathroomRemodelPalmCity(){
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Palm City, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex gap-3 justify-center">
+          <div className="mt-6 flex flex-wrap gap-3 justify-center">
             <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--brushed-gold)] text-white">
                 <MessageSquare className="mr-2" size={18} />
@@ -39,7 +39,19 @@ export default function BathroomRemodelPalmCity(){
             <a href="/contact">
               <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">Free Consultation</Button>
             </a>
+            <Button
+              type="button"
+              onClick={() => (window.location.href = KMJK_PHONE_SMS_LINK)}
+              size="lg"
+              className="bg-[var(--deep-charcoal)] text-white"
+            >
+              <Upload className="mr-2" size={18} />
+              Share Project Photos
+            </Button>
           </div>
+          <p className="mt-4 text-sm opacity-80">
+            Include inspiration shots or punch lists in your text so we can tailor your Palm City proposal.
+          </p>
         </div>
       </section>
 
@@ -57,10 +69,10 @@ export default function BathroomRemodelPalmCity(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh Retreat:</strong> $35k – $55k</p>
-              <p className="mb-2"><strong>Full Custom Remodel:</strong> $65k – $105k</p>
-              <p className="mb-2"><strong>Luxury Spa Suite:</strong> $135k+</p>
-              <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
+              <p className="mb-2"><strong>Owner's Suite Refresh:</strong> $45k - $70k</p>
+              <p className="mb-2"><strong>Riverfront Retreat:</strong> $85k - $125k</p>
+              <p className="mb-2"><strong>Club & Estate Spa:</strong> $145k+</p>
+              <p className="text-sm text-gray-600">Includes concierge design, permitting, and daily progress updates.</p>
             </div>
           </div>
         </div>
@@ -72,7 +84,7 @@ export default function BathroomRemodelPalmCity(){
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex mb-3 text-[var(--brushed-gold)] text-xl">★★★★★</div>
             <p className="text-gray-700 italic mb-4">
-              "KMJK turned our master bath into a true retreat. The custom cabinetry and steam shower were exact to the design Chris showed us, and the crew kept everything immaculate. Worth every penny."
+              "KMJK turned our Palm City riverfront primary suite into a true retreat. The custom cabinetry and steam shower matched what Chris previewed, and the crew kept everything immaculate. Worth every penny."
             </p>
             <div className="text-sm text-gray-600 font-semibold">— Olivia & Brent M., Palm City</div>
           </div>

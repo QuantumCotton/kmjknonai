@@ -1,20 +1,11 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Check, Star, Clock, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, Calendar } from 'lucide-react'
+import { MessageSquare, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
+const bathroomHero = new URL('../../pics/bathroom/Phoenixbathroomafter.png', import.meta.url).href
+
 function HandymanLanding() {
-  const [jobsCompleted, setJobsCompleted] = useState(47)
-
-  // Simulate real-time job counter
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setJobsCompleted(prev => (prev >= 50 ? 47 : prev + 1))
-    }, 30000) // Update every 30 seconds for demo
-    return () => clearInterval(interval)
-  }, [])
-
   const services = [
     { icon: Wrench, title: 'General Repairs', description: 'Doors, locks, drywall, trim' },
     { icon: Zap, title: 'Electrical', description: 'Outlets, switches, fixtures, fans' },
@@ -27,8 +18,12 @@ function HandymanLanding() {
   return (
     <div className="pt-20">
       {/* Hero Section - Urgent & Action-Oriented */}
-      <section className="bg-gradient-to-r from-[var(--deep-charcoal)] to-[var(--brushed-bronze)] text-white py-16">
-        <div className="max-w-6xl mx-auto px-4">
+      <section
+        className="relative min-h-[70vh] flex items-center text-white py-16 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bathroomHero})` }}
+      >
+        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
             <div className="inline-block bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-md animate-pulse">
               ⚡ AVAILABLE TODAY • Same-Day Service!
@@ -38,7 +33,7 @@ function HandymanLanding() {
               We're On It Today!
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">
-              Licensed, insured, background-checked handymen ready to tackle your to-do list. No job too small!
+              Licensed, insured, background-checked handymen ready to tackle your to-do list. $375 minimum visit—bundle fixtures to maximize value.
             </p>
           </div>
 
@@ -60,13 +55,7 @@ function HandymanLanding() {
               </div>
             </Link>
           </div>
-          <div className="text-center mt-8 space-y-2">
-            <div className="inline-flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full">
-              <Clock className="text-green-400" size={24} />
-              <span className="text-lg font-semibold">Jobs Completed Today: {jobsCompleted}</span>
-            </div>
-            <p className="text-sm text-gray-200">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
-          </div>
+          <p className="text-center mt-6 text-sm text-gray-200">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
         </div>
       </section>
 

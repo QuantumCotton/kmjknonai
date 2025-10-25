@@ -1,5 +1,27 @@
 # KMJK Landing Page Optimization Roadmap
 
+## Daily Snapshot – 2025-10-24 @ 10:56 PM ET
+- **Completed Today**
+  - Kitchen Remodel (Improved)
+  - Bathroom Remodel (Improved)
+  - Bathroom Repairs Landing
+  - Handyman Services (Improved)
+  - TV Mounting Landing
+  - Palm City Bathroom Remodel
+  - Sailfish Point Bathroom Remodel
+  - Hutchinson Island Bathroom Remodel
+  - Internal Dashboard updates (structure + logging)
+- **In Progress / Next Up**
+  - Bathroom Remodel Elite → Remove financing language, add monthly context ✅
+  - Bathroom Repairs Landing → Note $375 minimum, bundling, emergency surcharge ✅
+  - Handyman Services (Improved) → Swap gallery/hero image to bathroom shot ✅
+  - Handyman Services With Pricing → Add hero image, update pricing, drop daily jobs counter ✅
+  - Treasure Coast Handyman / TV Mounting / Epoxy pages → Apply CTA + pricing alignment and refreshed imagery
+  - Palm City / Sailfish Point / Hutchinson Island bathroom landing pages → Remove 3D mention, add upload prompt under consultation CTA
+  - Global contact/address → Update to 1301 SE Francis Street, Jensen Beach, FL 34957
+  - Bathroom Remodel Sewall’s Point → Add pricing tiers + local testimonial
+  - Form modernization plan → Budget presets, upload component, SMS prompts
+
 ## Phase Overview
 | Phase | Focus | Key Outcomes | Status |
 | --- | --- | --- | --- |
@@ -51,6 +73,29 @@ Goal: Every landing page uses the constants, exposes a visible SMS CTA, and remo
 - **[x]** `src/pages/InternalDashboard.jsx`
 
 _Note: As each page is updated, mark the checkbox and add any follow-up notes in the log below._
+
+### 2025-10-24 Local Bathroom Remodel Polish
+- **[x]** `src/pages/BathroomRemodelPalmCity.jsx` – upload CTA + Palm City pricing story
+- **[x]** `src/pages/BathroomRemodelHutchinsonIsland.jsx` – upload CTA + coastal pricing story
+- **[x]** `src/pages/BathroomRemodelSailfishPoint.jsx` – upload CTA + premium pricing
+- **[ ]** `src/pages/BathroomRemodelSewallsPoint.jsx` – add pricing tiers + Sewall’s Point review
+
+### Pending Local Service Page Enhancements
+- **[ ]** Treasure Coast Handyman pages – align CTA layout, pricing cues, testimonials
+- **[ ]** Treasure Coast TV mounting pages – align CTA layout + premium prompts
+- **[ ]** Treasure Coast Epoxy pages – align CTA layout + pricing story
+
+### 2025-10-24 Feedback Backlog (Dashboard Priority Order)
+- **[x]** `Bathroom Remodel Elite` – financing language removed; monthly guidance references outside lenders.
+- **[x]** `Bathroom Repairs Landing` – $375 minimum noted, bundling prompt + emergency surcharge reminder.
+- **[x]** `Handyman Services (Improved)` – hero imagery swapped to bathroom photo, $375 minimum highlighted.
+- **[x]** `Handyman Services With Pricing` – hero imagery added, daily jobs counter removed, pricing aligned (fans $375, disposals $200, $375 minimum visit).
+- **[x]** `TV Mounting Landing` + Treasure Coast TV pages – pricing synced ($399/$699/$1,299 tiers) with $375 minimum callouts.
+- **[ ]** `Treasure Coast Handyman` cards – apply updated pricing copy (fan/disposal starts, $375 minimum) and revised imagery where available.
+- **[ ]** `Treasure Coast Epoxy Flooring` pages – align gallery imagery with location naming; reuse approved assets if needed.
+- **[ ]** `BathroomRemodelPalmCity` / `SailfishPoint` / `HutchinsonIsland` – remove 3D rendering promises, add upload-photo prompt beneath “Schedule Consultation.”
+- **[ ]** Global contact blocks (`LocalPresenceSection.jsx`, footers, dashboards) – update business address to `1301 SE Francis Street, Jensen Beach, FL 34957`.
+- **[ ]** `docs/kmjk_progress.md` follow-up – create template guidance so galleries and testimonials mirror dashboard naming conventions.
 
 ---
 

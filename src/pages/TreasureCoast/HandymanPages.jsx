@@ -61,33 +61,33 @@ const handymanSellingPoints = [
 
 const handymanPricing = [
   {
-    name: 'Half-Day Finish Work',
-    range: '$425 Flat',
+    name: 'Concierge Punch List',
+    range: 'Starting at $375',
     features: [
-      'Two craftsmen on-site up to 4 hours',
-      'Touch-up painting, fixture swaps, minor carpentry',
-      'Includes materials pickup and disposal',
-      'Ideal for punch lists before guests arrive',
+      'Licensed craftsman on-site for our $375 minimum visit',
+      'Bundle 3–5 to-do items for the strongest value',
+      'Includes materials pickup, setup, and spotless cleanup',
+      'Text photos ahead so we stage parts before arrival',
     ],
   },
   {
-    name: 'Full-Day Premium Crew',
-    range: '$795',
+    name: 'Premium Full-Day Crew',
+    range: 'Starting at $795',
     features: [
-      'Dedicated lead carpenter + assistant',
-      'Built-ins, trim, drywall, tile repairs, smart device installs',
-      'Detailed task summary with photos and recommendations',
-      'Priority scheduling for ongoing clients',
+      'Lead carpenter + assistant handling complex repairs',
+      'Custom trim, tile, smart home upgrades, exterior tune-ups',
+      'Detailed photo report, recommendations, and concierge follow-up',
+      'Priority booking for repeat and seasonal clients',
     ],
   },
   {
-    name: 'Monthly Estate Plan',
+    name: 'Estate Maintenance Plan',
     range: '$950/mo',
     features: [
-      'Pre-scheduled maintenance visits + on-call support',
-      'Filter changes, pressure washing, hardware tuning, caulking',
-      'Vendor oversight for specialty trades',
-      'Ideal for seasonal or multi-property owners',
+      'Reserved monthly visits plus urgent-call priority',
+      'Seasonal maintenance, exterior refreshes, and safety checks',
+      'Coordination with security, HOA, and specialty vendors',
+      'Ideal for multi-property and seasonal ownership',
     ],
   },
 ]
@@ -100,6 +100,7 @@ const buildHandymanPage = ({
   neighborhoods,
   testimonial,
   caseStudies,
+  heroNote,
 }) =>
   createTreasureCoastLandingPage({
     componentName: `HandymanServices${cityName.replace(/\s/g, '')}`,
@@ -113,13 +114,16 @@ const buildHandymanPage = ({
       backgroundPosition: heroPosition,
       alt: heroAlt,
       tagline: 'Treasure Coast • Handyman & Maintenance • KMJK',
+      note:
+        heroNote ||
+        'Text us photos of your punch list. $375 minimum visit applies—bundle repairs to maximize value.',
     },
     statHighlights: handymanStats,
     intro: {
       title: `Reliable Handyman Help in ${cityName}`,
       paragraphs: [
         `KMJK supports ${cityName} homeowners, property managers, and seasonal residents with trustworthy handyman and small-project services. We arrive prepared, protect your home, and leave every space spotless.`,
-        'Need a one-time punch list or recurring maintenance plan? Our project coordinators manage scheduling, material procurement, and updates so you don’t have to.',
+        'Need a one-time punch list or recurring maintenance plan? Text us photos ahead of your visit so we can bundle tasks, stage materials, and honor the $375 minimum with maximum productivity.',
       ],
     },
     sellingPoints: handymanSellingPoints,
@@ -132,7 +136,8 @@ const buildHandymanPage = ({
     },
     finalCta: {
       heading: `Need handyman help in ${cityName}?`,
-      subheading: 'Reserve a half-day or full-day visit. We can also build a recurring maintenance plan tailored to your property.',
+      subheading:
+        'Site visit minimum is $375. Share photos to bundle services or reserve a full-day crew for deeper projects.',
     },
     caseStudies,
     faqs: handymanFaqs,
@@ -144,6 +149,7 @@ export const HandymanPalmCity = buildHandymanPage({
   heroImage: palmCityHandymanHero,
   heroAlt: 'Palm City bathroom renovation with walk-in shower and floating vanity',
   heroPosition: 'center 40%',
+  heroNote: 'Text Chris photos of your Palm City punch list. $375 minimum visit—bundle repairs for best value.',
   neighborhoods: [
     'Canoe Creek',
     'Cobblestone Country Club',
@@ -176,6 +182,7 @@ export const HandymanSailfishPoint = buildHandymanPage({
   heroImage: sailfishPointHandymanHero,
   heroAlt: 'Sailfish Point bathroom featuring marble shower and double vanity',
   heroPosition: 'center 42%',
+  heroNote: 'Share Sailfish Point maintenance photos with our concierge desk. $375 minimum visit; premium crews available.',
   neighborhoods: [
     'Oceanfront Estates',
     'Harbour Villas',
@@ -206,6 +213,7 @@ export const HandymanSewallsPoint = buildHandymanPage({
   heroImage: sewallsPointHandymanHero,
   heroAlt: 'Sewall’s Point bathroom with brass fixtures and custom cabinetry',
   heroPosition: 'center 38%',
+  heroNote: 'Traveling? Text us photos before you leave. $375 minimum visit keeps your Sewall’s Point home guest-ready.',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -237,6 +245,7 @@ export const HandymanHutchinsonIsland = buildHandymanPage({
   heroImage: hutchinsonIslandHandymanHero,
   heroAlt: 'Hutchinson Island coastal bathroom with glass shower enclosure',
   heroPosition: 'center 48%',
+  heroNote: 'Condo turnovers go faster when you text photos first. $375 minimum visit—bundle lanai, bath, and AV touches.',
   neighborhoods: [
     'Indian River Plantation',
     'Ocean Village',

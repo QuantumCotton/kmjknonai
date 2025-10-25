@@ -50,6 +50,9 @@ export default function BathroomRemodelSailfishPoint(){
               Upload Estate Photos
             </Button>
           </div>
+          <p className="mt-4 text-sm opacity-80">
+            Share inspiration shots or punch lists when you text us for Sailfish Point scheduling priority.
+          </p>
         </div>
       </section>
 
@@ -67,11 +70,23 @@ export default function BathroomRemodelSailfishPoint(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh Suites:</strong> $55k – $80k</p>
-              <p className="mb-2"><strong>Full Custom Retreat:</strong> $95k – $145k</p>
-              <p className="mb-2"><strong>Ultra Luxury Spa:</strong> $175k+</p>
-              <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
+              <p className="mb-2"><strong>Signature Suites:</strong> $85k - $130k</p>
+              <p className="mb-2"><strong>Ocean Club Retreat:</strong> $145k - $195k</p>
+              <p className="mb-2"><strong>Estate Spa Experience:</strong> $225k+</p>
+              <p className="text-sm text-gray-600">Includes concierge design, HOA coordination, and white-glove protection for existing finishes.</p>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="py-12 bg-[var(--warm-off-white)]">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-2xl font-semibold mb-6 text-center text-[var(--deep-charcoal)]">Sailfish Point Families Share Their Experience</h2>
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex mb-3 text-[var(--brushed-gold)] text-xl">*****</div>
+            <p className="text-gray-700 italic mb-4">
+              "Our Sailfish Point cabana bath had to wow guests and survive salt air. KMJK coordinated with security, protected every floor, and delivered a steam shower that feels like the club spa."
+            </p>
+            <div className="text-sm text-gray-600 font-semibold">- Dana & William L., Sailfish Point</div>
           </div>
         </div>
       </section>

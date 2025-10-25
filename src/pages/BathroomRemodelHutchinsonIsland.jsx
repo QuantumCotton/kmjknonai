@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { MessageSquare, Check } from 'lucide-react'
+import { MessageSquare, Check, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
@@ -29,7 +29,7 @@ export default function BathroomRemodelHutchinsonIsland(){
         <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Hutchinson Island, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex gap-3 justify-center">
+          <div className="mt-6 flex flex-wrap gap-3 justify-center">
             <a href={KMJK_PHONE_SMS_LINK}>
               <Button size="lg" className="bg-[var(--brushed-gold)] text-white">
                 <MessageSquare className="mr-2" size={18} />
@@ -39,7 +39,19 @@ export default function BathroomRemodelHutchinsonIsland(){
             <a href="/contact">
               <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">Free Consultation</Button>
             </a>
+            <Button
+              type="button"
+              onClick={() => (window.location.href = KMJK_PHONE_SMS_LINK)}
+              size="lg"
+              className="bg-[var(--deep-charcoal)] text-white"
+            >
+              <Upload className="mr-2" size={18} />
+              Share Project Photos
+            </Button>
           </div>
+          <p className="mt-4 text-sm opacity-80">
+            Attach your coastal bath photos with your text so we can recommend salt-air safe materials.
+          </p>
         </div>
       </section>
 
@@ -57,10 +69,10 @@ export default function BathroomRemodelHutchinsonIsland(){
           <div>
             <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
             <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh Retreat:</strong> $42k – $65k</p>
-              <p className="mb-2"><strong>Full Coastal Remodel:</strong> $85k – $130k</p>
-              <p className="mb-2"><strong>Oceanfront Spa:</strong> $165k+</p>
-              <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
+              <p className="mb-2"><strong>Coastal Refresh Retreat:</strong> $48k - $70k</p>
+              <p className="mb-2"><strong>Intracoastal Custom Remodel:</strong> $90k - $135k</p>
+              <p className="mb-2"><strong>Oceanfront Spa Suite:</strong> $175k+</p>
+              <p className="text-sm text-gray-600">Includes marine-grade finishes, dehumidification plans, and concierge hurricane prep coordination.</p>
             </div>
           </div>
         </div>

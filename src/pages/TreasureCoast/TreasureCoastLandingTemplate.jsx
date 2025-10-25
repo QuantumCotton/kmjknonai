@@ -141,10 +141,10 @@ export function createTreasureCoastLandingPage(config) {
       telephone: KMJK_PHONE_DIGITS,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '43 SW Osceola St',
-        addressLocality: 'Stuart',
+        streetAddress: '1301 SE Francis Street',
+        addressLocality: 'Jensen Beach',
         addressRegion: 'FL',
-        postalCode: '34994',
+        postalCode: '34957',
         addressCountry: 'US',
       },
       areaServed: serviceArea?.items,
@@ -280,6 +280,11 @@ export function createTreasureCoastLandingPage(config) {
                   </Button>
                 </a>
               </div>
+              {hero.note && (
+                <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
+                  {hero.note}
+                </p>
+              )}
               {hero.tagline && (
                 <p className="text-sm uppercase tracking-[0.3em] text-gray-300 mt-6">
                   {hero.tagline}
@@ -482,8 +487,8 @@ export function createTreasureCoastLandingPage(config) {
 
         <LocalPresenceSection
           businessName="KMJK Home Improvement"
-          addressLines={["Stuart Design Studio", '43 SW Osceola St', 'Stuart, FL 34994']}
-          serviceAreas={serviceArea?.items || ['Palm City', 'Sewall’s Point', 'Sailfish Point', 'Hutchinson Island']}
+          addressLines={["Jensen Beach Operations Hub", '1301 SE Francis Street', 'Jensen Beach, FL 34957']}
+          serviceAreas={serviceArea?.items || ['Palm City', "Sewall's Point", 'Sailfish Point', 'Hutchinson Island']}
         />
 
         {faqs.length > 0 && (
@@ -708,3 +713,5 @@ export function createTreasureCoastLandingPage(config) {
 
   return TreasureCoastLandingPage
 }
+
+

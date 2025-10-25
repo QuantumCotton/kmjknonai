@@ -1,20 +1,11 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Check, Star, Clock, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, DollarSign } from 'lucide-react'
+import { MessageSquare, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
+const bathroomHero = new URL('../../pics/bathroom/Phoenixbathroomafter.png', import.meta.url).href
+
 function HandymanLandingWithPricing() {
-  const [jobsCompleted, setJobsCompleted] = useState(47)
-
-  // Simulate real-time job counter
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setJobsCompleted(prev => (prev >= 50 ? 47 : prev + 1))
-    }, 30000)
-    return () => clearInterval(interval)
-  }, [])
-
   const services = [
     { icon: Wrench, title: 'General Repairs', description: 'Doors, locks, drywall, trim' },
     { icon: Zap, title: 'Electrical', description: 'Outlets, switches, fixtures, fans' },
@@ -28,35 +19,35 @@ function HandymanLandingWithPricing() {
     {
       category: '🔧 Assembly & Installation',
       items: [
-        { name: 'TV Mounting (up to 65")', price: 'Starting at $150' },
-        { name: 'Furniture Assembly', price: 'Starting at $125' },
-        { name: 'Ceiling Fan Installation', price: 'Starting at $175' },
-        { name: 'Garbage Disposal Replacement', price: 'Starting at $150' },
+        { name: 'TV Mounting (up to 75")', price: 'Starting at $399' },
+        { name: 'Furniture Assembly', price: 'Starting at $225' },
+        { name: 'Ceiling Fan Installation', price: 'Starting at $375' },
+        { name: 'Garbage Disposal Replacement', price: 'Starting at $200' },
       ]
     },
     {
       category: '🔨 Repairs & Maintenance',
       items: [
-        { name: 'Drywall Patching (small holes)', price: 'Starting at $150' },
-        { name: 'Leaky Faucet Repair', price: 'Starting at $125' },
-        { name: 'Re-caulking Tub/Shower', price: 'Starting at $150' },
-        { name: 'Gutter Cleaning', price: 'Starting at $175' },
+        { name: 'Drywall Patching (small holes)', price: 'Starting at $375 minimum visit' },
+        { name: 'Leaky Faucet Repair', price: 'Starting at $375 minimum visit' },
+        { name: 'Re-caulking Tub/Shower', price: 'Starting at $375 minimum visit' },
+        { name: 'Gutter Cleaning', price: 'Starting at $425' },
       ]
     },
     {
       category: '🪚 Carpentry & Finishing',
       items: [
-        { name: 'Baseboard/Trim Installation', price: 'Starting at $300/room' },
-        { name: 'Door Hardware Replacement', price: 'Starting at $85' },
-        { name: 'Picture & Mirror Hanging', price: '$125/hour' },
+        { name: 'Baseboard/Trim Installation', price: 'Starting at $450/room' },
+        { name: 'Door Hardware Replacement', price: 'Starting at $200' },
+        { name: 'Picture & Mirror Hanging', price: 'Starting at $225' },
       ]
     },
     {
       category: '🎨 Painting & Outdoor',
       items: [
-        { name: 'Interior Room Painting', price: 'Starting at $450' },
-        { name: 'Pressure Washing', price: 'Starting at $200' },
-        { name: 'Deck Staining', price: 'Starting at $150 per 100 sq ft' },
+        { name: 'Interior Room Painting', price: 'Starting at $675' },
+        { name: 'Pressure Washing', price: 'Starting at $350' },
+        { name: 'Deck Staining', price: 'Starting at $275 per 100 sq ft' },
       ]
     }
   ]
@@ -64,8 +55,12 @@ function HandymanLandingWithPricing() {
   return (
     <div className="pt-20">
       {/* Hero Section - Urgent & Action-Oriented */}
-      <section className="bg-gradient-to-r from-[var(--deep-charcoal)] to-[var(--brushed-bronze)] text-white py-16">
-        <div className="max-w-6xl mx-auto px-4">
+      <section
+        className="relative min-h-[70vh] flex items-center text-white py-16 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bathroomHero})` }}
+      >
+        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="relative max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
             <div className="inline-block bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-md animate-pulse">
               ⚡ AVAILABLE TODAY • Same-Day Service!
@@ -75,7 +70,7 @@ function HandymanLandingWithPricing() {
               We're On It Today!
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200">
-              Licensed, insured, background-checked handymen ready to tackle your to-do list. No job too small!
+              Licensed, insured, background-checked handymen ready to tackle your to-do list. $375 minimum visit—bundle punch-list items to maximize value.
             </p>
           </div>
 
@@ -97,14 +92,7 @@ function HandymanLandingWithPricing() {
               </div>
             </Link>
           </div>
-
-          <div className="text-center mt-8 space-y-2">
-            <div className="inline-flex items-center gap-2 bg-white/10 px-6 py-3 rounded-full">
-              <Clock className="text-green-400" size={24} />
-              <span className="text-lg font-semibold">Jobs Completed Today: {jobsCompleted}</span>
-            </div>
-            <p className="text-sm text-gray-200">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
-          </div>
+          <p className="text-center mt-6 text-sm text-gray-200">Prefer email? Reach {KMJK_CONTACT_NAME} at <a className="underline" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a></p>
         </div>
       </section>
 
@@ -187,9 +175,9 @@ function HandymanLandingWithPricing() {
 
           <div className="mt-12 text-center bg-[var(--warm-off-white)] p-8 rounded-lg">
             <h3 className="text-2xl font-bold mb-4">Don't See Your Project?</h3>
-            <p className="text-lg text-gray-700 mb-6">
-              We handle 50+ home services! Call or text photos of your project for an instant, accurate quote.
-            </p>
+            <div className="text-lg text-gray-700 mb-6">
+              We handle 50+ home services! Minimum visit is $375—text photos and we’ll bundle tasks for the best value.
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href={KMJK_PHONE_SMS_LINK}>
                 <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">

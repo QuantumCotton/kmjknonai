@@ -25,12 +25,12 @@ function BathroomRepairsLanding() {
   }
 
   const services = [
-    { title: 'Shower & Tub Re-Caulking', price: '$175-300', turnaround: 'Same Day', icon: Droplets },
-    { title: 'Faucet Repair/Replacement', price: '$150-275', turnaround: 'Same Day', icon: Wrench },
-    { title: 'Toilet Repair/Replace', price: '$200-450', turnaround: 'Same Day', icon: Wrench },
-    { title: 'Tile Patching & Grout Repair', price: '$250-500', turnaround: '1-2 Days', icon: Shield },
-    { title: 'Vanity Replacement', price: '$400-800', turnaround: '1 Day', icon: Sparkles },
-    { title: 'Grab Bar Installation (ADA)', price: '$150-250', turnaround: 'Same Day', icon: Shield },
+    { title: 'Shower & Tub Re-Caulking', price: '$375 minimum visit', turnaround: 'Same Day', icon: Droplets },
+    { title: 'Faucet Repair/Replacement', price: '$375 minimum visit', turnaround: 'Same Day', icon: Wrench },
+    { title: 'Toilet Repair/Replace', price: '$375 minimum visit', turnaround: 'Same Day', icon: Wrench },
+    { title: 'Tile Patching & Grout Repair', price: '$375+ (per area)', turnaround: '1-2 Days', icon: Shield },
+    { title: 'Vanity Replacement', price: '$550-950', turnaround: '1 Day', icon: Sparkles },
+    { title: 'Grab Bar Installation (ADA)', price: '$375 minimum visit', turnaround: 'Same Day', icon: Shield },
   ]
 
   const handleImageUpload = (e) => {
@@ -118,7 +118,7 @@ function BathroomRepairsLanding() {
               Done Right. Done Fast.
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
-              From leaky faucets to full vanity replacement. Licensed pros who specialize in bathroom work!
+              From leaky faucets to full vanity replacement. Licensed pros who specialize in bathroom work! $375 minimum visit—bundle fixtures to save.
             </p>
           </div>
 
@@ -146,6 +146,9 @@ function BathroomRepairsLanding() {
               </div>
             </button>
           </div>
+          <p className="mt-6 text-center text-sm text-gray-200">
+            Emergency dispatch available after-hours for an additional surcharge. Bundle multiple bathroom punch-list items in one $375 visit to maximize savings.
+          </p>
         </div>
       </section>
 
