@@ -33,8 +33,17 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
     if (!lastAssistant) return
     if (lastAssistantIdRef.current === lastAssistant.id) return
 
+    const fullContent = lastAssistant.content || ''
+    const initialVisible = fullContent.slice(0, Math.min(2, fullContent.length))
+
     lastAssistantIdRef.current = lastAssistant.id
-    setStreamingState({ id: lastAssistant.id, full: lastAssistant.content || '', visible: '' })
+    if (fullContent.length === 0) {
+      setStreamingState(null)
+    } else if (initialVisible.length === fullContent.length) {
+      setStreamingState({ id: lastAssistant.id, full: fullContent, visible: fullContent })
+    } else {
+      setStreamingState({ id: lastAssistant.id, full: fullContent, visible: initialVisible })
+    }
   }, [conversation?.messages])
 
   useEffect(() => {
@@ -47,10 +56,11 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
     const timeout = setTimeout(() => {
       setStreamingState((prev) => {
         if (!prev) return null
-        const nextLength = Math.min(prev.visible.length + 2, prev.full.length)
+        const increment = prev.full.length > 400 ? 4 : prev.full.length > 160 ? 3 : 2
+        const nextLength = Math.min(prev.visible.length + increment, prev.full.length)
         return { ...prev, visible: prev.full.slice(0, nextLength) }
       })
-    }, 18)
+    }, 14)
 
     return () => clearTimeout(timeout)
   }, [streamingState])

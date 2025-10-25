@@ -88,11 +88,15 @@ function extractContactDetails(input, leadData) {
     updated.zip = zipMatch[0]
   }
 
-  const nameMatch = input.match(/(?:my name is|this is|i'm|i am)\s+([A-Za-z][A-Za-z\s'.-]{1,40})/i)
+  const nameMatch = input.match(/(?:my name is|this is|i'm|i am)\s+([A-Za-z][A-Za-z\s'.-]{1,60})/i)
   if (nameMatch && !updated.name) {
-    const name = nameMatch[1].trim()
-    if (name.split(' ').length <= 4) {
-      updated.name = name
+    const rawName = nameMatch[1].trim()
+    const extracted = rawName.match(/[A-Za-z][A-Za-z'.-]*(?:\s+[A-Za-z][A-Za-z'.-]*){0,3}/)
+    if (extracted) {
+      const cleanedName = extracted[0].trim()
+      if (cleanedName.split(' ').length <= 4) {
+        updated.name = cleanedName
+      }
     }
   }
 
@@ -247,14 +251,14 @@ Visitor just said: "${userInput}"
 Service catalog reference: ${serviceOverview}
 
 Goals:
-- Gather name, phone/email, service type (choose from the catalog), location, timeline, budget, and detailed project scope.
+- Gather name, phone/email, service type (choose from the catalog), location, timeline, budget (invite a ballpark if they have one, reassure them if they don’t), and detailed project scope.
 - Keep responses to 2-3 sentences, natural and friendly.
 - Always acknowledge their prior message before asking the next question.
-- If contact info is missing, ask for it conversationally.
+- If contact info is missing, ask for it conversationally; if they’ve already shared it, thank them and don’t repeat the request.
 - If service type is unknown, explicitly ask which of the catalog options fits best.
 - After capturing the service category, request scope details: rooms/areas, size, materials, pain points, and any photos or inspiration they can share.
 - Offer to schedule a consultation when enough info is gathered.
-- Encourage sharing site photos or inspiration and mention they can email or text them for faster quoting.
+- Encourage sharing site photos or inspiration and mention they can email or text them to info@kmjk.pro or 772-777-0622 to speed quoting.
 - If they mention areas outside Palm City, Sailfish Point, Sewall's Point, or Hutchinson Island, confirm if they are on the Treasure Coast.
 - If qualification score >= 60 and you have contact info, wrap up, promise a call/text within 1 business day, and confirm a follow-up email from info@kmjk.pro or call/text from 772-777-0622.
 `
@@ -293,11 +297,11 @@ function buildFallbackResponse(conversation, userInput) {
   const missing = []
 
   if (!leadData.name) missing.push('your name')
-  if (!leadData.phone && !leadData.email) missing.push('a phone or email')
+  if (!leadData.phone && !leadData.email) missing.push('a phone number or email')
   if (!leadData.projectType) missing.push('which service you need (kitchen, bathroom, handyman, epoxy, or TV/AV)')
-  if (!leadData.scopeNotes || leadData.scopeNotes.length === 0) missing.push('project details or photos')
-  if (!leadData.timeline) missing.push('timeline expectations')
-  if (!leadData.budget) missing.push('an investment range you have in mind')
+  if (!leadData.scopeNotes || leadData.scopeNotes.length === 0) missing.push('any project details or photos')
+  if (!leadData.timeline) missing.push('when you’d like the work done')
+  if (!leadData.budget) missing.push('a rough investment range (totally fine if it’s just a ballpark)')
 
   const suffix = missing.length
     ? `Could you share ${formatMissingItems(missing)} so I can hand everything to Chris right now?`
@@ -308,8 +312,8 @@ function buildFallbackResponse(conversation, userInput) {
     : 'Thanks for reaching out about your project. '
 
   const encouragement = leadData.scopeNotes && leadData.scopeNotes.length > 0
-    ? 'Feel free to tap “Here are the project details” if anything else comes to mind.'
-    : 'You can tap “Here are the project details” to add photos, room sizes, or punch lists.'
+    ? 'If anything else comes to mind, drop it here or send photos to info@kmjk.pro for faster quoting.'
+    : 'If you have dimensions, notes, or photos, you can share them here or email/text them to info@kmjk.pro for faster quoting.'
 
   return {
     text: `${serviceHint}${suffix} ${encouragement}`.trim(),
