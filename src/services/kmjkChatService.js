@@ -5,40 +5,37 @@ const OPENAI_ENDPOINT = '/.netlify/functions/kmjk-openai'
 const LEAD_EMAIL_ENDPOINT = '/.netlify/functions/kmjk-send-lead'
 const OPENAI_TIMEOUT_MS = 45000
 
-const serviceKeywords = [
-  'kitchen',
-  'bathroom',
-  'handyman',
-  'epoxy',
-  'flooring',
-  'remodel',
-  'renovation',
-  'tv mounting',
-  'mounting',
-  'repair',
-  'paint',
-  'tile',
-  'countertop',
-  'cabinet',
-  'island',
-  'plumbing',
-  'lighting',
-  'appliance',
-  'carpet',
-  'vinyl',
-  'luxury vinyl plank',
-  'lvp',
-  'lanai',
-  'outdoor kitchen',
-  'garage',
+const serviceCatalog = [
+  {
+    category: 'Kitchen Remodel',
+    quickReply: 'Kitchen remodel',
+    keywords: ['kitchen', 'cooktop', 'pantry', 'island', 'cabinet', 'backsplash', 'countertop', 'appliance'],
+  },
+  {
+    category: 'Bathroom Remodel',
+    quickReply: 'Bathroom remodel',
+    keywords: ['bathroom', 'shower', 'tub', 'vanity', 'steam', 'powder room', 'wet room'],
+  },
+  {
+    category: 'Handyman Services',
+    quickReply: 'Handyman visit',
+    keywords: ['handyman', 'repair', 'fix', 'punch list', 'fan', 'disposal', 'door', 'maintenance', 'touchup'],
+  },
+  {
+    category: 'Epoxy Flooring',
+    quickReply: 'Epoxy flooring',
+    keywords: ['epoxy', 'garage', 'flake', 'polyaspartic', 'concrete coating', 'hangar', 'floor coating'],
+  },
+  {
+    category: 'TV Mounting & AV',
+    quickReply: 'TV mounting / AV',
+    keywords: ['tv mounting', 'tv', 'mount', 'soundbar', 'av', 'media room', 'projector'],
+  },
 ]
 
 const defaultQuickReplies = [
-  'Kitchen project',
-  'Bathroom project',
-  'Handyman help',
-  'Epoxy flooring',
-  'TV mounting',
+  ...serviceCatalog.map((service) => service.quickReply),
+  'Share project photos',
   'Timeline & pricing',
 ]
 
@@ -52,12 +49,12 @@ function createInitialConversation(conversationId) {
         id: `msg_${now.getTime()}`,
         role: 'assistant',
         content:
-          "Hey there! I'm Atlas with KMJK Home Improvement. What's your name and the best way to reach you (phone or email)?",
+          "Hey there! I'm Atlas with KMJK Home Improvement. What's your name, the best way to reach you (phone or email), and which type of project are you planning — kitchen remodel, bathroom remodel, handyman visit, epoxy flooring, or TV/AV setup?",
         timestamp: now,
         quickReplies: defaultQuickReplies,
       },
     ],
-    leadData: {},
+    leadData: { scopeNotes: [] },
     qualificationScore: 0,
     stage: 'greeting',
     isQualified: false,
@@ -102,18 +99,51 @@ function extractContactDetails(input, leadData) {
   return updated
 }
 
-function detectServiceType(input, leadData) {
-  if (leadData.projectType) {
-    return leadData
+function captureScopeDetails(input, leadData) {
+  const text = input.trim()
+  if (!text) return leadData
+
+  const lower = text.toLowerCase()
+  const updated = { ...leadData }
+  const hasServiceContext = Boolean(updated.projectType) || serviceCatalog.some((service) =>
+    service.keywords.some((keyword) => lower.includes(keyword))
+  )
+
+  if (!hasServiceContext) {
+    return updated
   }
 
+  const indicatesDetail = text.length >= 30 || /\d/.test(text)
+  if (!indicatesDetail) {
+    return updated
+  }
+
+  const note = text.slice(0, 600)
+  const existingNotes = Array.isArray(updated.scopeNotes) ? [...updated.scopeNotes] : []
+
+  if (!existingNotes.includes(note)) {
+    existingNotes.push(note)
+    updated.scopeNotes = existingNotes.slice(-6)
+    if (!updated.projectSummary) {
+      updated.projectSummary = note
+    }
+  }
+
+  return updated
+}
+
+function detectServiceType(input, leadData) {
   const lower = input.toLowerCase()
   const updated = { ...leadData }
 
-  for (const keyword of serviceKeywords) {
-    if (lower.includes(keyword)) {
-      updated.projectType = keyword
-      updated.details = input
+  for (const service of serviceCatalog) {
+    if (service.keywords.some((keyword) => lower.includes(keyword))) {
+      updated.projectType = service.category
+      updated.serviceCategory = service.category
+      updated.serviceKeyword = service.keywords[0]
+      if (!updated.projectSummary) {
+        updated.projectSummary = input
+      }
       break
     }
   }
@@ -161,12 +191,16 @@ function detectBudget(input, leadData) {
 
 function updateQualificationScore(leadData) {
   let score = 0
-  if (leadData.projectType) score += 20
+  if (leadData.projectType || leadData.serviceCategory) score += 20
   if (leadData.timeline) score += 15
   if (leadData.budget) score += 15
   if (leadData.zip) score += 15
   if (leadData.email) score += 20
   if (leadData.phone) score += 15
+
+  if (leadData.scopeNotes && leadData.scopeNotes.length > 0) {
+    score += 10
+  }
 
   if (leadData.budget && /(50|75|100)k/i.test(leadData.budget)) {
     score += 10
@@ -192,30 +226,37 @@ function generateQuickReplies(leadData) {
     replies.add('Here is my phone number')
   }
   if (!leadData.projectType) {
-    replies.add('Kitchen remodel')
-    replies.add('Bathroom remodel')
+    serviceCatalog.forEach((service) => replies.add(service.quickReply))
+  }
+  if (!leadData.scopeNotes || leadData.scopeNotes.length === 0) {
+    replies.add('Here are the project details')
   }
 
   return Array.from(replies)
 }
 
 function buildPrompt(conversation, userInput) {
-  return `You are Atlas, an AI concierge for KMJK Home Improvement serving kitchen, bathroom, handyman, TV mounting, and epoxy flooring projects along Florida's Treasure Coast.
+  const serviceOverview = serviceCatalog.map((service) => `${service.category}: ${service.keywords.join(', ')}`).join(' | ')
+
+  return `You are Atlas, an AI concierge for KMJK Home Improvement serving kitchen, bathroom, handyman, TV/AV, and epoxy flooring projects along Florida's Treasure Coast.
 
 Current lead data: ${JSON.stringify(conversation.leadData)}
 Qualification score: ${conversation.qualificationScore}
 Intake questions asked: ${conversation.intake.askedQuestions.join(', ') || 'none'}
 Visitor just said: "${userInput}"
+Service catalog reference: ${serviceOverview}
 
 Goals:
-- Gather name, phone/email, service type, location, timeline, budget, project details.
+- Gather name, phone/email, service type (choose from the catalog), location, timeline, budget, and detailed project scope.
 - Keep responses to 2-3 sentences, natural and friendly.
 - Always acknowledge their prior message before asking the next question.
 - If contact info is missing, ask for it conversationally.
+- If service type is unknown, explicitly ask which of the catalog options fits best.
+- After capturing the service category, request scope details: rooms/areas, size, materials, pain points, and any photos or inspiration they can share.
 - Offer to schedule a consultation when enough info is gathered.
-- Encourage sharing site photos or inspiration.
+- Encourage sharing site photos or inspiration and mention they can email or text them for faster quoting.
 - If they mention areas outside Palm City, Sailfish Point, Sewall's Point, or Hutchinson Island, confirm if they are on the Treasure Coast.
-- If qualification score >= 60 and you have contact info, wrap up and promise a call/text within 1 business day.
+- If qualification score >= 60 and you have contact info, wrap up, promise a call/text within 1 business day, and confirm a follow-up email from info@kmjk.pro or call/text from 772-777-0622.
 `
 }
 
@@ -244,6 +285,8 @@ async function notifyNewLead(conversation) {
       leadData: conversation.leadData,
       qualificationScore: conversation.qualificationScore,
       conversationId: conversation.id,
+      serviceCategory: conversation.leadData.serviceCategory,
+      scopeNotes: conversation.leadData.scopeNotes,
     })
     return true
   } catch (error) {
@@ -278,6 +321,7 @@ export async function sendKmjkMessage(conversation, userInput) {
   updatedConversation.leadData = detectServiceType(userInput, updatedConversation.leadData)
   updatedConversation.leadData = detectTimeline(userInput, updatedConversation.leadData)
   updatedConversation.leadData = detectBudget(userInput, updatedConversation.leadData)
+  updatedConversation.leadData = captureScopeDetails(userInput, updatedConversation.leadData)
   updatedConversation.qualificationScore = updateQualificationScore(updatedConversation.leadData)
 
   const chatMessages = updatedConversation.messages

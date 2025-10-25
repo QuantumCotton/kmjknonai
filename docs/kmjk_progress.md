@@ -15,6 +15,8 @@
   - Palm City / Sailfish Point / Hutchinson Island bathroom landing pages → Upload prompts added, 3D mention removed
   - Bathroom Remodel Sewall’s Point → Upload CTA, pricing tiers, localized testimonial
   - Global contact/address sweep → Standardized to 1301 SE Francis Street, Jensen Beach, FL 34957
+  - Palm City / Sailfish Point / Sewall’s Point / Hutchinson Island kitchen pages → Removed 3D promises, added upload prompts & pricing cues
+  - Atlas chat concierge → Service catalog prompts, scope capture, richer lead notifications
 - **In Progress / Next Up**
   - Bathroom Remodel Elite → Remove financing language, add monthly context ✅
   - Bathroom Repairs Landing → Note $375 minimum, bundling, emergency surcharge ✅
@@ -22,9 +24,11 @@
   - Handyman Services With Pricing → Add hero image, update pricing, drop daily jobs counter ✅
   - Treasure Coast Handyman / TV Mounting / Epoxy pages → Apply CTA + pricing alignment and refreshed imagery ✅
   - Palm City / Sailfish Point / Hutchinson Island bathroom landing pages → Remove 3D mention, add upload prompt under consultation CTA ✅
+  - Palm City / Sailfish Point / Sewall’s Point / Hutchinson Island kitchen landing pages → Remove 3D mention, add upload prompt under consultation CTA ✅
   - Global contact/address → Update to 1301 SE Francis Street, Jensen Beach, FL 34957 ✅
   - Bathroom Remodel Sewall’s Point → Add pricing tiers + local testimonial ✅
   - Form modernization plan → Budget presets, upload component, SMS prompts ⏳
+  - Atlas chat → Verify Netlify function email payload includes service + scope details ⏳
 
 ## Phase Overview
 | Phase | Focus | Key Outcomes | Status |

@@ -42,7 +42,7 @@ const kitchenSellingPoints = [
   {
     title: 'Design That Reflects Your Lifestyle',
     items: [
-      '3D kitchen renderings tailored to your Palm City or island home',
+      'Designer mood boards and layout previews tailored to your Palm City or island home',
       'Appliance, cabinet, and surface guidance that fits your cooking style',
       'Dedicated design concierge to coordinate selections and deliveries',
       'Coastal-inspired palettes that stand up to salt air and humidity',
@@ -103,6 +103,7 @@ const buildKitchenPage = ({
   neighborhoods,
   testimonial,
   caseStudies,
+  heroNote,
 }) =>
   createTreasureCoastLandingPage({
     componentName: `KitchenRenovation${cityName.replace(/\s/g, '')}`,
@@ -113,18 +114,21 @@ const buildKitchenPage = ({
       badge: `${cityName}, FL • Custom Kitchens`,
       heading: `${cityName}'s Luxury Kitchen Renovation Team`,
       subheading:
-        'Experience concierge design-build service with detailed 3D previews, fixed budgets, and craftsman finishes built for Treasure Coast living.',
+        'Experience concierge design-build service with curated layout previews, fixed budgets, and craftsman finishes built for Treasure Coast living.',
       backgroundImage: heroImage,
       backgroundPosition: heroPosition,
       alt: heroAlt,
       tagline: 'Treasure Coast • Custom Kitchens • KMJK',
+      note:
+        heroNote ||
+        'Text Chris kitchen photos or measurements so we can prep cabinetry samples and pricing ranges before your consultation.',
     },
     statHighlights: kitchenStats,
     intro: {
       title: `Kitchens Crafted for ${cityName} Families`,
       paragraphs: [
         `From morning coffee rituals to sunset dinner parties, your ${cityName} kitchen deserves purposeful flow, premium materials, and craftsmanship that lasts. KMJK handles every detail—from HOA approvals to appliance delivery—so you can stay focused on life while we transform your space.`,
-        'Our in-house designers, cabinetmakers, and field supervisors collaborate under one roof, eliminating finger-pointing and change-order games. You receive clear pricing, dependable timelines, and a renovation experience centered on communication and respect for your home.',
+        'Our in-house designers, cabinetmakers, and field supervisors collaborate under one roof, eliminating finger-pointing and change-order games. Text or email your wish list and current kitchen photos so we can stage samples, confirm logistics, and align pricing before we step on site.',
       ],
     },
     sellingPoints: kitchenSellingPoints,
@@ -137,7 +141,7 @@ const buildKitchenPage = ({
     },
     finalCta: {
       heading: `Ready to design your ${cityName} kitchen?`,
-      subheading: 'Book a complimentary in-home consultation or 3D design session with Chris and the KMJK team.',
+      subheading: 'Book a complimentary in-home consultation. Share photos and dimensions for tailored pricing and sample prep.',
     },
     caseStudies,
     faqs: kitchenFaqs,
@@ -149,6 +153,8 @@ export const KitchenRenovationPalmCity = buildKitchenPage({
   heroImage: palmCityKitchenHero,
   heroAlt: 'Palm City kitchen renovation with quartz waterfall island and custom cabinetry',
   heroPosition: 'center center',
+  heroNote:
+    'Text Chris your Palm City kitchen photos or measurements so we can queue cabinetry samples and tiered pricing before we arrive.',
   neighborhoods: [
     'Monarch Country Club',
     'Palm Cove Golf & Yacht Club',
@@ -181,6 +187,8 @@ export const KitchenRenovationSailfishPoint = buildKitchenPage({
   heroImage: sailfishPointKitchenHero,
   heroAlt: 'Sailfish Point kitchen with navy cabinetry and coastal brass fixtures',
   heroPosition: 'center 35%',
+  heroNote:
+    'Share Sailfish Point kitchen photos or layout notes with our concierge desk so we can stage marine-grade finishes and HOA-ready logistics.',
   neighborhoods: [
     'Sailfish Point Oceanfront Residences',
     'Sailfish Point Marina Villas',
@@ -211,6 +219,8 @@ export const KitchenRenovationSewallsPoint = buildKitchenPage({
   heroImage: sewallsPointKitchenHero,
   heroAlt: 'Sewall’s Point kitchen featuring coastal white cabinetry and rattan stools',
   heroPosition: 'center 40%',
+  heroNote:
+    'Send inspiration photos or existing layout images so we can respect your Sewall’s Point architecture while planning cabinetry and finishes.',
   neighborhoods: [
     "South Sewall's Point",
     'High Point',
@@ -242,6 +252,8 @@ export const KitchenRenovationHutchinsonIsland = buildKitchenPage({
   heroImage: hutchinsonIslandKitchenHero,
   heroAlt: 'Hutchinson Island condo kitchen with ocean-view breakfast bar',
   heroPosition: 'center 45%',
+  heroNote:
+    'Upload condo kitchen photos or measurements so we can coordinate elevator timing and salt-air safe finishes for Hutchinson Island installs.',
   neighborhoods: [
     'Ocean Club',
     'Inlet Village',
