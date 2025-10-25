@@ -52,7 +52,7 @@ export const handler = async (event) => {
       const base = (process.env.OPENAI_BASE_URL || '').trim()
       if (!base) return DEFAULT_OPENAI_URL
 
-      const normalized = base.replace(/\/+/g, '')
+      const normalized = base.replace(/\/+$/, '')
       if (/\/(v\d+|chat|responses)/i.test(normalized)) {
         return normalized
       }
@@ -106,7 +106,9 @@ export const handler = async (event) => {
         verbosity: 'low',
       }
 
-      if (!useDefaultTemperature) {
+      const disallowCustomTemperature = /gpt-5/i.test(model)
+
+      if (!useDefaultTemperature && !disallowCustomTemperature) {
         payload.temperature = temperature
       }
 
