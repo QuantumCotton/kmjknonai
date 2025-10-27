@@ -14,8 +14,8 @@ KMJK_LEAD_FROM=atlas@kmjk.pro
 KMJK_LEAD_RECIPIENTS=info@kmjk.pro
 
 # AWS S3 image uploads
-AWS_ACCESS_KEY_ID=<paste-aws-access-key-id>
-AWS_SECRET_ACCESS_KEY=<paste-aws-secret-access-key>
+KMJK_AWS_ACCESS_KEY_ID=<paste-aws-access-key-id>
+KMJK_AWS_SECRET_ACCESS_KEY=<paste-aws-secret-access-key>
 KMJK_S3_BUCKET=kmjk.pro
 KMJK_S3_REGION=us-west-1
 ```
