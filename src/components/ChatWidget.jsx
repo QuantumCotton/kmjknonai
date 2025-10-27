@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageCircle, X, Send, Minimize2 } from 'lucide-react'
+import { MessageCircle, X, Send, Minimize2, Paperclip } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import { startKmjkConversation, sendKmjkMessage } from '@/services/kmjkChatService.js'
+import { startKmjkConversation, sendKmjkMessage, registerPhotoUpload } from '@/services/kmjkChatService.js'
+import { uploadChatPhoto } from '@/services/kmjkUploadService.js'
 
 const defaultPosition = 'bottom-right'
 const defaultColor = 'var(--brushed-gold)'
@@ -12,10 +13,12 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   const [conversation, setConversation] = useState(null)
   const [inputValue, setInputValue] = useState('')
   const [isSending, setIsSending] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const messagesEndRef = useRef(null)
-  const streamingMessageRef = useRef(null)
   const lastAssistantIdRef = useRef(null)
   const [streamingState, setStreamingState] = useState(null)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     if (isOpen && !conversation) {
@@ -85,9 +88,47 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
     setInputValue('')
     setIsSending(true)
 
-    const { conversation: updatedConversation } = await sendKmjkMessage(conversation, content)
-    setConversation(updatedConversation)
-    setIsSending(false)
+    try {
+      const { conversation: updatedConversation } = await sendKmjkMessage(conversation, content)
+      setConversation(updatedConversation)
+    } finally {
+      setIsSending(false)
+    }
+  }
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileSelection = async (event) => {
+    const files = Array.from(event.target.files || [])
+    if (!files.length) return
+    if (!conversation) {
+      event.target.value = ''
+      return
+    }
+
+    setUploadError('')
+    for (const file of files) {
+      await uploadPhoto(file)
+    }
+
+    event.target.value = ''
+  }
+
+  const uploadPhoto = async (file) => {
+    if (!conversation || !file) return
+
+    setIsUploading(true)
+    try {
+      const meta = await uploadChatPhoto(file, conversation.id)
+      setConversation((prev) => registerPhotoUpload(prev, { ...meta, name: file.name, size: file.size, type: file.type }))
+    } catch (error) {
+      console.error('[ChatWidget] Photo upload failed:', error)
+      setUploadError(error?.message || 'Upload failed. Please try again in a moment.')
+    } finally {
+      setIsUploading(false)
+    }
   }
 
   const handleKeyPress = (event) => {
@@ -170,6 +211,24 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
                       <span className="inline-block w-2 h-4 bg-gray-300 align-baseline animate-pulse ml-1" />
                     )}
 
+                    {msg.photo && (msg.photo.viewUrl || msg.photo.fileUrl) && (
+                      <div className="mt-3 space-y-2">
+                        <img
+                          src={msg.photo.viewUrl || msg.photo.fileUrl}
+                          alt={msg.photo.name || 'Uploaded project photo'}
+                          className="rounded-lg max-h-48 object-cover border border-gray-200"
+                        />
+                        <a
+                          href={msg.photo.viewUrl || msg.photo.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-[var(--deep-charcoal)] underline"
+                        >
+                          View full size
+                        </a>
+                      </div>
+                    )}
+
                     {shouldShowQuickReplies && (
                       <div className="flex flex-wrap gap-2 mt-3">
                         {msg.quickReplies.map((reply) => (
@@ -204,6 +263,23 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
           <div className="p-4 border-t bg-white">
             <div className="flex gap-2">
               <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={handleFileSelection}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleUploadClick}
+                disabled={isUploading || isSending}
+                className="px-3"
+              >
+                <Paperclip size={18} />
+              </Button>
+              <input
                 type="text"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
@@ -219,6 +295,12 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
                 <Send size={18} />
               </Button>
             </div>
+            {isUploading && (
+              <p className="text-xs text-gray-500 mt-2 text-center">Uploading photo…</p>
+            )}
+            {uploadError && (
+              <p className="text-xs text-red-500 mt-1 text-center">{uploadError}</p>
+            )}
             <p className="text-xs text-gray-500 mt-2 text-center">Powered by KMJK Home Improvement</p>
           </div>
         </>

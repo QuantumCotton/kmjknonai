@@ -54,7 +54,7 @@ function createInitialConversation(conversationId) {
         quickReplies: defaultQuickReplies,
       },
     ],
-    leadData: { scopeNotes: [] },
+    leadData: { scopeNotes: [], photos: [] },
     qualificationScore: 0,
     stage: 'greeting',
     isQualified: false,
@@ -340,6 +340,52 @@ async function notifyNewLead(conversation) {
 export async function startKmjkConversation() {
   const conversationId = uuidv4()
   return createInitialConversation(conversationId)
+}
+
+export function registerPhotoUpload(conversation, photoMeta) {
+  if (!conversation) return conversation
+
+  const timestamp = new Date()
+  const safeMeta = {
+    url: photoMeta?.url || photoMeta?.fileUrl || photoMeta?.viewUrl || '',
+    viewUrl: photoMeta?.viewUrl || photoMeta?.url || photoMeta?.fileUrl || '',
+    fileUrl: photoMeta?.fileUrl || photoMeta?.url || photoMeta?.viewUrl || '',
+    key: photoMeta?.key,
+    name: photoMeta?.name || 'Project photo',
+    size: photoMeta?.size,
+    type: photoMeta?.type,
+    uploadedAt: photoMeta?.uploadedAt || timestamp.toISOString(),
+  }
+
+  const scopeNotes = Array.isArray(conversation.leadData?.scopeNotes)
+    ? [...conversation.leadData.scopeNotes]
+    : []
+
+  const noteLabel = `Photo uploaded: ${safeMeta.name}`
+  const noteValue = `${noteLabel} (${safeMeta.viewUrl || safeMeta.url})`
+
+  if (!scopeNotes.some((existing) => existing.includes(safeMeta.viewUrl || safeMeta.url))) {
+    scopeNotes.push(noteValue)
+  }
+
+  return {
+    ...conversation,
+    messages: [
+      ...conversation.messages,
+      {
+        id: `msg_photo_${timestamp.getTime()}`,
+        role: 'user',
+        content: `${noteLabel}\n${safeMeta.viewUrl || safeMeta.url}`.trim(),
+        timestamp,
+        photo: safeMeta,
+      },
+    ],
+    leadData: {
+      ...conversation.leadData,
+      scopeNotes: scopeNotes.slice(-6),
+      photos: [...(conversation.leadData?.photos || []), safeMeta],
+    },
+  }
 }
 
 export async function sendKmjkMessage(conversation, userInput) {

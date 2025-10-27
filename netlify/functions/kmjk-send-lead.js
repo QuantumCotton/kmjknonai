@@ -132,6 +132,16 @@ function buildTextEmail(leadData, qualificationScore, conversationId) {
     lines.push(leadData.projectSummary)
   }
 
+  if (leadData.photos?.length) {
+    lines.push('')
+    lines.push('Project Photos:')
+    leadData.photos.forEach((photo, index) => {
+      const label = photo?.name ? `${index + 1}. ${photo.name}` : `${index + 1}. Photo`
+      const link = photo?.viewUrl || photo?.fileUrl || photo?.url || 'n/a'
+      lines.push(`${label}: ${link}`)
+    })
+  }
+
   return lines.join('\n')
 }
 
@@ -158,6 +168,16 @@ function buildHtmlEmail(leadData, qualificationScore, conversationId) {
 
   const scopeList = (leadData.scopeNotes || [])
     .map((note) => `<li>${safe(note)}</li>`)
+    .join('')
+
+  const photoList = (leadData.photos || [])
+    .map((photo, index) => {
+      const href = safe(photo?.viewUrl || photo?.fileUrl || photo?.url || '')
+      const label = safe(photo?.name || `Photo ${index + 1}`)
+      return href
+        ? `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a></li>`
+        : `<li>${label}</li>`
+    })
     .join('')
 
   return `<!DOCTYPE html>
@@ -192,6 +212,7 @@ function buildHtmlEmail(leadData, qualificationScore, conversationId) {
     ${leadData.projectSummary ? `<h3>Project Summary</h3><p>${safe(leadData.projectSummary)}</p>` : ''}
 
     ${scopeList ? `<h3>Scope Notes</h3><ul>${scopeList}</ul>` : ''}
+    ${photoList ? `<h3>Project Photos</h3><ul>${photoList}</ul>` : ''}
   </body>
 </html>`
 }
