@@ -49,7 +49,7 @@ function createInitialConversation(conversationId) {
         id: `msg_${now.getTime()}`,
         role: 'assistant',
         content:
-          "Hey there! I'm Atlas with KMJK Home Improvement. What's your name, the best way to reach you (phone or email), and which type of project are you planning — kitchen remodel, bathroom remodel, handyman visit, epoxy flooring, or TV/AV setup?",
+          "Hey there! I'm Atlas with KMJK Home Improvement here on the Treasure Coast. What's your first name, and how do you prefer we reach you (text, call, or email)? Feel free to tap the paperclip to add project photos, then let me know if you're planning a kitchen remodel, bathroom remodel, handyman visit, epoxy flooring, or TV/AV setup.",
         timestamp: now,
         quickReplies: defaultQuickReplies,
       },
@@ -251,15 +251,16 @@ Visitor just said: "${userInput}"
 Service catalog reference: ${serviceOverview}
 
 Goals:
-- Gather name, phone/email, service type (choose from the catalog), location, timeline, budget (invite a ballpark if they have one, reassure them if they don’t), and detailed project scope.
+- Gather first name, preferred contact method (text, call, or email), service type (choose from the catalog), location, timeline, budget (invite a ballpark if they have one, reassure them if they don’t), and detailed project scope.
 - Keep responses to 2-3 sentences, natural and friendly.
 - Always acknowledge their prior message before asking the next question.
-- If contact info is missing, ask for it conversationally; if they’ve already shared it, thank them and don’t repeat the request.
+- If they provide contact info, confirm it as their preferred way to follow up; do not ask for a different method unless none has been shared.
 - If service type is unknown, explicitly ask which of the catalog options fits best.
 - After capturing the service category, request scope details: rooms/areas, size, materials, pain points, and any photos or inspiration they can share.
 - Offer to schedule a consultation when enough info is gathered.
-- Encourage sharing site photos or inspiration and mention they can email or text them to info@kmjk.pro or 772-777-0622 to speed quoting.
-- If they mention areas outside Palm City, Sailfish Point, Sewall's Point, or Hutchinson Island, confirm if they are on the Treasure Coast.
+- Encourage them to tap the paperclip in the chat to upload project photos; only mention emailing or texting photos as a backup if they indicate issues with uploading.
+- Reference Treasure Coast familiarity (Stuart, Palm City, Sewall's Point, Hutchinson Island, Jensen Beach, Port St. Lucie) naturally to reinforce local expertise.
+- If they mention areas outside the Treasure Coast, confirm availability and gently redirect expectations.
 - If qualification score >= 60 and you have contact info, wrap up, promise a call/text within 1 business day, and confirm a follow-up email from info@kmjk.pro or call/text from 772-777-0622.
 `
 }

@@ -6,8 +6,6 @@ const ALLOWED_MIME_TYPES = (process.env.KMJK_ALLOWED_MIME || 'image/jpeg,image/p
 const MAX_UPLOAD_BYTES = Number.parseInt(process.env.KMJK_UPLOAD_MAX_BYTES || `${5 * 1024 * 1024}`, 10)
 const BUCKET = process.env.KMJK_S3_BUCKET
 const REGION = process.env.KMJK_S3_REGION
-const ACCESS_KEY = process.env.KMJK_AWS_ACCESS_KEY_ID
-const SECRET_KEY = process.env.KMJK_AWS_SECRET_ACCESS_KEY
 
 const corsHeaders = () => ({
   'Access-Control-Allow-Origin': '*',
@@ -15,10 +13,7 @@ const corsHeaders = () => ({
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 })
 
-const s3Client = new S3Client({
-  region: REGION,
-  credentials: ACCESS_KEY && SECRET_KEY ? { accessKeyId: ACCESS_KEY, secretAccessKey: SECRET_KEY } : undefined,
-})
+const s3Client = new S3Client({ region: REGION })
 
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -33,7 +28,7 @@ export const handler = async (event) => {
     }
   }
 
-  if (!BUCKET || !REGION || !ACCESS_KEY || !SECRET_KEY) {
+  if (!BUCKET || !REGION) {
     return {
       statusCode: 500,
       headers: corsHeaders(),
