@@ -33,12 +33,6 @@ const serviceCatalog = [
   },
 ]
 
-const defaultQuickReplies = [
-  ...serviceCatalog.map((service) => service.quickReply),
-  'Share project photos',
-  'Timeline & pricing',
-]
-
 function createInitialConversation(conversationId) {
   const now = new Date()
   return {
@@ -51,7 +45,7 @@ function createInitialConversation(conversationId) {
         content:
           "Hey there! I'm Atlas with KMJK Home Improvement here on the Treasure Coast. What's your first name, and how do you prefer we reach you (text, call, or email)? Feel free to tap the paperclip to add project photos, then let me know if you're planning a kitchen remodel, bathroom remodel, handyman visit, epoxy flooring, or TV/AV setup.",
         timestamp: now,
-        quickReplies: defaultQuickReplies,
+        quickReplies: [],
       },
     ],
     leadData: { scopeNotes: [], photos: [] },
@@ -218,7 +212,7 @@ function updateQualificationScore(leadData) {
 }
 
 function generateQuickReplies(leadData) {
-  const replies = new Set(defaultQuickReplies)
+  const replies = new Set()
 
   if (!leadData.name) {
     replies.add('My name is...')
@@ -242,7 +236,7 @@ function generateQuickReplies(leadData) {
 function buildPrompt(conversation, userInput) {
   const serviceOverview = serviceCatalog.map((service) => `${service.category}: ${service.keywords.join(', ')}`).join(' | ')
 
-  return `You are Atlas, an AI concierge for KMJK Home Improvement serving kitchen, bathroom, handyman, TV/AV, and epoxy flooring projects along Florida's Treasure Coast.
+  return `You are Atlas, an AI concierge for KMJK Home Improvement serving kitchen, bathroom, handyman, TV/AV, and epoxy flooring projects along Florida's Treasure Coast. Embrace the "Stuart Artisan" persona: knowledgeable, calm, proudly local, and steeped in the area's history of craftsmanship, resilience, and respect for the river.
 
 Current lead data: ${JSON.stringify(conversation.leadData)}
 Qualification score: ${conversation.qualificationScore}
@@ -260,6 +254,7 @@ Goals:
 - Offer to schedule a consultation when enough info is gathered.
 - Encourage them to tap the paperclip in the chat to upload project photos; only mention emailing or texting photos as a backup if they indicate issues with uploading.
 - Reference Treasure Coast familiarity (Stuart, Palm City, Sewall's Point, Hutchinson Island, Jensen Beach, Port St. Lucie) naturally to reinforce local expertise.
+- Sprinkle in authentic local touches drawn from Stuart history when helpful: pineapple pioneers like the Stypmann brothers, the resilience after the 1895 freeze, the downtown Lyric Theatre, the Sailfish Capital legacy, or House of Refuge durability metaphors. Use them only when they reinforce a point (e.g., durability, hospitality, local pride).
 - If they mention areas outside the Treasure Coast, confirm availability and gently redirect expectations.
 - If qualification score >= 60 and you have contact info, wrap up, promise a call/text within 1 business day, and confirm a follow-up email from info@kmjk.pro or call/text from 772-777-0622.
 `
@@ -309,12 +304,12 @@ function buildFallbackResponse(conversation, userInput) {
     : 'I have what I need to brief Chris. Expect a follow-up from 772-777-0622 or info@kmjk.pro within one business day.'
 
   const serviceHint = leadData.projectType
-    ? `Thanks for confirming your ${leadData.projectType.toLowerCase()} plans. `
-    : 'Thanks for reaching out about your project. '
+    ? `Appreciate the details on your ${leadData.projectType.toLowerCase()} plans. `
+    : 'Appreciate you reaching out about the project. '
 
   const encouragement = leadData.scopeNotes && leadData.scopeNotes.length > 0
-    ? 'If anything else comes to mind, drop it here or send photos to info@kmjk.pro for faster quoting.'
-    : 'If you have dimensions, notes, or photos, you can share them here or email/text them to info@kmjk.pro for faster quoting.'
+    ? 'If anything else comes to mind, share it here or tap the paperclip to add photos—whatever helps me brief Chris before he reaches out.'
+    : 'If you have dimensions, notes, or photos, you can drop them in chat with the paperclip or email/text them to info@kmjk.pro for faster quoting.'
 
   return {
     text: `${serviceHint}${suffix} ${encouragement}`.trim(),
@@ -449,13 +444,20 @@ export async function sendKmjkMessage(conversation, userInput) {
 
   updatedConversation.messages = [...updatedConversation.messages, assistantMessage]
 
-  if (
-    !updatedConversation.leadNotificationSent &&
-    updatedConversation.qualificationScore >= 60 &&
-    (updatedConversation.leadData.email || updatedConversation.leadData.phone)
-  ) {
+  const hasContact = Boolean(updatedConversation.leadData.email || updatedConversation.leadData.phone)
+  const hasProjectContext = Boolean(
+    updatedConversation.leadData.serviceCategory ||
+      updatedConversation.leadData.projectType ||
+      (Array.isArray(updatedConversation.leadData.scopeNotes) && updatedConversation.leadData.scopeNotes.length > 0) ||
+      updatedConversation.leadData.projectSummary
+  )
+
+  if (!updatedConversation.leadNotificationSent && hasContact && hasProjectContext) {
     const notified = await notifyNewLead(updatedConversation)
     updatedConversation.leadNotificationSent = notified
+    if (notified) {
+      updatedConversation.leadNotificationSentAt = new Date().toISOString()
+    }
   }
 
   return {
