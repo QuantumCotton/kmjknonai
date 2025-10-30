@@ -16,7 +16,7 @@ import bathroomLuxurySpa from './assets/bathroom_luxury_spa.jpg'
 import customEntertainment from './assets/custom_entertainment.jpg'
 import kitchenTimberlineChefSuite from './assets/portfolio/kitchen-timberline-chef-suite.jpg'
 import kitchenSculptedMarbleGathering from './assets/portfolio/kitchen-sculpted-marble-gathering.jpg'
-import bathroomLightFilledSpaSuite from './assets/portfolio/bathroom-light-filled-spa-suite.jpg'
+import bathroomMarbleAndOakSpa from './assets/portfolio/bathroom-marble-and-oak-spa.jpg'
 
 // Import landing pages
 import BathroomLanding from './pages/BathroomLanding.jsx'
@@ -295,9 +295,9 @@ function PortfolioPage() {
       description: 'A monolithic waterfall island and continuous slab backsplash wrap this minimalist space in veined marble and soft uplighting.',
     },
     {
-      title: 'Light-Filled Spa Suite Bath',
-      image: bathroomLightFilledSpaSuite,
-      description: 'A freestanding soaking tub, oversized shower, and illuminated mirrors transform this spacious suite into a calming retreat.',
+      title: 'Marble & Oak Spa Bathroom',
+      image: bathroomMarbleAndOakSpa,
+      description: 'Elegant marble surfaces paired with warm oak accents create a sophisticated spa-like retreat with timeless appeal.',
     },
   ]
 
