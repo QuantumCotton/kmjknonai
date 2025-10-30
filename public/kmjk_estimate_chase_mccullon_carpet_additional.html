@@ -208,7 +208,34 @@
     </div>
     
     <style>
-        @media print { body { margin: 0; padding: 0; background: white; } .no-print { display: none; } .container { box-shadow: none; max-width: 100%; } }
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+            .no-print {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .payment-options {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .digital-acceptance {
+                display: none;
+            }
+            .print-only {
+                display: block !important;
+            }
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', 'Times New Roman', serif; background: #F8F8F8; padding: 40px 20px; color: #2C2C2C; line-height: 1.6; }
         .container { max-width: 8.5in; margin: 0 auto; background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
@@ -272,6 +299,16 @@
         .print-button { background: #2C2C2C; color: white; padding: 15px 40px; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; font-family: Georgia, serif; transition: background 0.3s; }
         .print-button:hover { background: #B8860B; }
         .payment-options { background: linear-gradient(135deg, #1F1F1F 0%, #2E2E2E 100%); color: #F5F5F5; border-radius: 12px; padding: 30px; margin-top: 30px; box-shadow: 0 10px 22px rgba(0,0,0,0.18); }
+        @media print {
+            .payment-options { background: linear-gradient(135deg, #1F1F1F 0%, #2E2E2E 100%) !important; color: #F5F5F5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .letterhead { background: #2C2C2C !important; color: #F8F8F8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .footer { background: #2C2C2C !important; color: #F8F8F8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .pricing-table .total-row { background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .payment-card { border: 2px solid #B8860B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .terms-box { background: #FFF9E6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .validity-notice { background: linear-gradient(135deg, #E8F4F8 0%, #F0F8FB 100%) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .work-items { background: #F8F8F8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
         .payment-options .section-title { color: #FFFFFF; }
         .cashapp-callout { display: flex; flex-wrap: wrap; align-items: center; gap: 30px; margin-top: 20px; }
         .cashapp-info { flex: 1 1 260px; }
@@ -483,7 +520,10 @@
                 const formData = new FormData();
                 formData.append('access_key', web3formsAccessKey);
                 formData.append('subject', 'Digital Acceptance - ' + estimateNumber);
+                formData.append('to_email', 'sway@kmjk.pro,Chris@kmjk.pro,Chris@theeliteservicehub.com');
+                formData.append('from_name', 'KMJK Work Order System');
                 formData.append('full_name', name);
+                formData.append('email', 'chase.mccullon@nordstrom.com');
                 formData.append('date_of_birth_raw', dobValue || 'N/A');
                 formData.append('date_of_birth_display', dobDisplay);
                 formData.append('typed_signature', typedValue);
@@ -502,6 +542,7 @@
                     formData.append('signature_image_base64', signatureImageData.replace(/^data:image\/png;base64,/, ''));
                     formData.append('signature_image_data_url', signatureImageData);
                 }
+                formData.append('message', summaryHtml);
                 
                 try {
                     const response = await fetch(web3formsEndpoint, {
