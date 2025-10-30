@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KMJK - Project Estimate</title>
+    <title>KMJK - Paid Receipt</title>
     <style>
         @media print {
             body {
@@ -52,6 +52,21 @@
             margin: 0 auto;
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 160%;
+            height: 160%;
+            background: url('../information/KMJK PAID STAMP.png') center/contain no-repeat;
+            opacity: 0.24;
+            pointer-events: none;
+            transform: translate(-50%, -50%) rotate(-12deg);
         }
         
         /* Letterhead */
