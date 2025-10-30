@@ -297,6 +297,26 @@
             color: #B8860B;
             font-size: 1.3em;
         }
+
+        .paid-stamp-text {
+            position: relative;
+            display: inline-block;
+            padding: 2px 6px;
+            color: #1F7A4D;
+            font-weight: 700;
+            z-index: 0;
+        }
+
+        .paid-stamp-text::after {
+            content: "";
+            position: absolute;
+            inset: -12px -22px;
+            background: url('../information/KMJK PAID STAMP.png') center/contain no-repeat;
+            opacity: 0.42;
+            pointer-events: none;
+            transform: rotate(-15deg);
+            z-index: -1;
+        }
         
         /* Payment Schedule */
         .payment-schedule {
@@ -953,13 +973,16 @@
         <div class="doc-header">
             <div class="doc-header-top">
                 <div>
-                    <h1 class="doc-title">Nordstrom Carpet Re-Tension Estimate</h1>
+                    <h1 class="doc-title">Paid Receipt</h1>
+                    <div style="margin-top: 8px; font-size: 0.95em; letter-spacing: 0.08em; text-transform: uppercase; color: #1F7A4D; font-weight: 600;">Status: Paid in Full</div>
                 </div>
                 <div class="estimate-number">
-                    <div class="estimate-label">Estimate #</div>
+                    <div class="estimate-label">Receipt #</div>
                     <div class="estimate-value">KMJK-2025-1021</div>
-                    <div class="estimate-label" style="margin-top: 10px;">Date Issued</div>
+                    <div class="estimate-label" style="margin-top: 10px;">Payment Date</div>
                     <div style="font-weight: 600; color: #2C2C2C;">October 21, 2025</div>
+                    <div class="estimate-label" style="margin-top: 10px;">Payment Time</div>
+                    <div style="font-weight: 600; color: #2C2C2C;">To Be Determined</div>
                 </div>
             </div>
             
@@ -980,7 +1003,7 @@
         </div>
         
         <!-- Content -->
-        <div class="content">
+        <div class="content">            
             <!-- Project Snapshot -->
             <div class="section">
                 <h2 class="section-title">
@@ -1052,99 +1075,76 @@
                         <tr>
                             <td><strong>Carpet Re-Tension &amp; Finish Reset</strong></td>
                             <td>Protection, base removal &amp; reinstall, power-stretching, seam/transition refresh, final grooming</td>
-                            <td>$794.39</td>
+                            <td><span class="paid-stamp-text">$794.39</span></td>
                         </tr>
                         <tr class="tax-row">
                             <td colspan="2">Florida Sales Tax (7%)</td>
-                            <td>$55.61</td>
+                            <td><span class="paid-stamp-text">$55.61</span></td>
                         </tr>
                         <tr class="total-row">
                             <td colspan="2"><strong>Total Project Investment</strong></td>
-                            <td class="total-amount">$850.00</td>
+                            <td class="total-amount"><span class="paid-stamp-text">$850.00</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
-            <!-- Payment Schedule -->
+            <!-- Payment Details -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">💳</span>
-                    Payment Schedule
+                    Payment Details
                 </h2>
                 <div class="payment-schedule">
                     <div class="payment-card">
-                        <div class="payment-number">1</div>
-                        <div class="payment-title">Project Investment</div>
-                        <div class="payment-detail"><strong>When:</strong> Due in full prior to mobilization</div>
-                        <div class="payment-detail"><strong>Includes:</strong> Labor, materials, and tax</div>
-                        <div class="payment-amount">$850.00</div>
+                        <div class="payment-number">✔</div>
+                        <div class="payment-title">Payment Received</div>
+                        <div class="payment-detail"><strong>Date:</strong> October 21, 2025</div>
+                        <div class="payment-detail"><strong>Time:</strong> To Be Determined</div>
+                        <div class="payment-detail"><strong>Method:</strong> Cash App ($kmjkhomerenov)</div>
+                        <div class="payment-amount"><span class="paid-stamp-text">$850.00</span></div>
                     </div>
                     <div class="payment-card">
-                        <div class="payment-number">2</div>
-                        <div class="payment-title">Optional Cash App Convenience</div>
-                        <div class="payment-detail"><strong>When:</strong> Only if paying via Cash App</div>
-                        <div class="payment-detail"><strong>Adjustment:</strong> 5% processing consideration</div>
-                        <div class="payment-detail"><strong>Total via Cash App:</strong> $892.50</div>
-                        <div class="payment-amount">$42.50</div>
+                        <div class="payment-number">0</div>
+                        <div class="payment-title">Remaining Balance</div>
+                        <div class="payment-detail"><strong>Status:</strong> Paid in Full</div>
+                        <div class="payment-detail"><strong>Amount Due:</strong> None</div>
+                        <div class="payment-amount"><span class="paid-stamp-text">$0.00</span></div>
                     </div>
                 </div>
                 
                 <div style="background: #E8F4F8; padding: 15px; border-radius: 6px; margin-top: 20px; text-align: center;">
-                    <p style="color: #2C2C2C; margin: 0;"><strong>Accepted Payment Methods:</strong> Check, ACH, Zelle, Credit/Debit Card. Cash App welcomed with the 5% convenience adjustment noted above.</p>
+                    <p style="color: #2C2C2C; margin: 0;"><strong>Payment Confirmation:</strong> Thank you for your prompt payment.</p>
                 </div>
             </div>
             
-            <div class="section payment-options">
-                <h2 class="section-title">
-                    <span class="section-icon">$</span>
-                    Pay Securely
-                </h2>
-                <div class="cashapp-callout">
-                    <div class="cashapp-info">
-                        <p>For fast processing, you can submit your payment through Cash App directly to KMJK Home Improvement.</p>
-                        <p><strong>Cash App Handle:</strong> $kmjkhomerenov</p>
-                        <a class="cashapp-link" href="https://cash.app/$kmjkhomerenov" target="_blank" rel="noopener">Open Cash App</a>
-                        <p style="margin-top: 16px; color: #444;">Cash App payments carry a gentle 5% convenience adjustment ($42.50) to cover platform fees. Prefer another route? We’re happy to take checks, ACH, Zelle, or cards.</p>
-                        <p style="margin-top: 16px; color: #DADADA;">Need help? Contact Josue Lopez at 772-323-3776 for payment support.</p>
-                    </div>
-                    <div class="cashapp-qr">
-                        <img src="$kmjkhomerenov.png" alt="Updated Cash App QR code for KMJK Home Improvement">
-                        <span>Scan to pay with Cash App</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Terms & Conditions -->
+            <!-- Receipt Notes -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">📄</span>
-                    Terms & Conditions
+                    Receipt Notes
                 </h2>
                 <div class="terms-box">
-                    <h4>Project Terms:</h4>
+                    <h4>Summary:</h4>
                     <ul>
-                        <li>This estimate is valid for 30 days from the date of issue</li>
-                        <li>Full project investment is due prior to construction mobilization to secure scheduling</li>
-                        <li>KMJK mobilizes before store opening and coordinates quietly with Nordstrom management</li>
-                        <li>All work performed by licensed and insured professionals; COI available upon request</li>
-                        <li>KMJK carries full liability insurance and workers' compensation coverage</li>
-                        <li>Any scope adjustments or schedule changes must be approved in writing and may affect pricing</li>
-                        <li>Client provides clear access, removes sensitive merchandise as needed, and secures landlord approvals</li>
+                        <li>Work completed and confirmed as described in original scope.</li>
+                        <li>Full payment of $850.00 received via Cash App on October 21, 2025.</li>
+                        <li>No remaining balance is due at this time.</li>
+                        <li>For any post-project questions, contact Josue Lopez at 772-323-3776.</li>
                     </ul>
                 </div>
             </div>
             
-            <!-- Validity Notice -->
+            <!-- Current Balance -->
             <div class="validity-notice">
-                <p>This estimate is valid until:</p>
-                <p class="validity-date">November 7, 2025</p>
+                <p>Current balance on this receipt:</p>
+                <p class="validity-date"><span class="paid-stamp-text">$0.00</span></p>
             </div>
             
             <!-- Signature Section (Print Version) -->
             <div class="section signature-section print-only">
                 <p style="font-size: 1.1em; color: #2C2C2C; margin-bottom: 20px; text-align: center;">
-                    <strong>By signing below, you authorize KMJK to proceed with the work described in this estimate.</strong>
+                    <strong>By signing below, you acknowledge receipt of payment in full for the services listed above.</strong>
                 </p>
                 
                 <div class="signature-grid">
@@ -1168,62 +1168,24 @@
                 </div>
             </div>
             
-            <!-- Digital Acceptance -->
-            <div class="section digital-acceptance no-print">
+            <!-- Digital Authorization Summary -->
+            <div class="section">
                 <h2 class="section-title">
-                    <span class="section-icon">&#9998;</span>
-                    Digital Project Authorization
+                    <span class="section-icon">✎</span>
+                    Digital Authorization Summary
                 </h2>
-                <p style="margin-top: 12px; color: #444;">Complete the electronic authorization below to approve the scope of work and payment schedule outlined in this estimate.</p>
+                <p style="margin-top: 12px; color: #444;">The following electronic authorization has been captured for this project and is attached here for your records.</p>
                 
-                <form id="signatureForm" class="signature-form" novalidate>
-                    <div class="form-grid">
-                        <div class="form-field">
-                            <label for="signerName">Full Name</label>
-                            <input type="text" id="signerName" name="signerName" placeholder="Enter your legal name" autocomplete="name" required>
-                        </div>
-                        <div class="form-field">
-                            <label for="signerDob">Date of Birth</label>
-                            <input type="date" id="signerDob" name="signerDob" required>
-                        </div>
-                        <div class="form-field">
-                            <label for="typedSignature">Type Your Signature</label>
-                            <input type="text" id="typedSignature" name="typedSignature" placeholder="Re-type your name to sign" autocomplete="name" required>
-                        </div>
-                    </div>
-                    
-                    <div class="signature-pad">
-                        <p>Optional: Draw your signature below using your mouse, stylus, or touch device.</p>
-                        <canvas id="signatureCanvas" aria-label="Draw your signature"></canvas>
-                        <div class="signature-actions">
-                            <button type="button" id="clearSignature">Clear Signature</button>
-                        </div>
-                    </div>
-                    
-                    <label class="acceptance-checkbox">
-                        <input type="checkbox" id="acceptTerms">
-                        <span>I, <span id="agreeNamePreview">your name</span>, certify that I am the person named above and authorize KMJK Home Improvement to proceed with the services described.</span>
-                    </label>
-                    
-                    <button type="submit" id="acceptButton" class="accept-button" disabled>
-                        I Accept &amp; Sign
-                    </button>
-                    
-                    <div id="formStatus" class="form-status hidden"></div>
-                </form>
-                
-                <div id="thankYouCard" class="thank-you-card">
-                    <h3>Thank you, <span id="thankYouName"></span>!</h3>
-                    <p>We&rsquo;ve recorded your authorization and prepared an email confirmation for the KMJK team.</p>
-                    <div class="thank-you-summary">
-                        <div><strong>Signed On:</strong> <span id="thankYouTimestamp"></span></div>
-                        <div><strong>Date of Birth:</strong> <span id="thankYouDob"></span></div>
-                        <div><strong>Typed Signature:</strong> <span id="thankYouTyped"></span></div>
-                        <div><strong>Drawn Signature:</strong> <span id="thankYouSketch"></span></div>
-                    </div>
-                    <div class="thank-you-actions">
-                        <a id="signatureDownload" class="hidden" download="kmjk-digital-signature.png">Download Signature</a>
-                        <button type="button" id="printReceiptButton">Print Confirmation</button>
+                <div style="background: white; border: 1px solid #E0E0E0; border-radius: 8px; padding: 25px; margin-top: 20px;">
+                    <h3 style="font-size: 1.2em; font-weight: 600; color: #2C2C2C; margin-bottom: 20px;">Digital Authorization Summary</h3>
+                    <div style="display: grid; gap: 12px; font-size: 0.95em;">
+                        <div><strong style="color: #B8860B;">Estimate:</strong> KMJK-2025-1021</div>
+                        <div><strong style="color: #B8860B;">Client Name:</strong> Chase McCullon</div>
+                        <div><strong style="color: #B8860B;">Date of Birth:</strong> March 25, 1994</div>
+                        <div><strong style="color: #B8860B;">Typed Signature:</strong> Chase McCullon</div>
+                        <div><strong style="color: #B8860B;">Project Total:</strong> <span style="color: #1F7A4D; font-weight: 700;">$850.00</span></div>
+                        <div><strong style="color: #B8860B;">Signed On:</strong> October 21, 2025 at 7:33 PM</div>
+                        <div><strong style="color: #B8860B;">Drawn Signature:</strong> Captured</div>
                     </div>
                 </div>
             </div>
