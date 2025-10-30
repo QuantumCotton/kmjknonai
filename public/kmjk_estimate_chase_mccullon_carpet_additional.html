@@ -281,6 +281,180 @@
         .cashapp-qr { flex: 0 0 200px; text-align: center; }
         .cashapp-qr img { max-width: 200px; width: 100%; border-radius: 12px; box-shadow: 0 8px 18px rgba(0,0,0,0.25); background: #FFFFFF; }
         .cashapp-qr span { display: block; margin-top: 10px; font-size: 0.85em; color: #CFCFCF; letter-spacing: 0.04em; }
+        .digital-acceptance { margin-top: 50px; padding: 30px; background: linear-gradient(135deg, #FFFFFF 0%, #F4F4F4 100%); border: 1px solid #E0E0E0; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .signature-form { display: grid; gap: 24px; margin-top: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .form-field label { display: block; font-size: 0.85em; letter-spacing: 0.05em; text-transform: uppercase; color: #666; margin-bottom: 6px; }
+        .form-field input { width: 100%; padding: 12px 14px; border: 1px solid #D0D0D0; border-radius: 6px; font-size: 1em; font-family: 'Georgia', 'Times New Roman', serif; background: #FFFFFF; color: #2C2C2C; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+        .form-field input:focus { outline: none; border-color: #B8860B; box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.2); }
+        .signature-pad { background: #FFFFFF; border: 1px dashed #B8860B; border-radius: 8px; padding: 16px; }
+        .signature-pad canvas { width: 100%; height: 170px; background: #FFFFFF; border: 1px solid #E0E0E0; border-radius: 6px; box-shadow: inset 0 1px 4px rgba(0,0,0,0.08); cursor: crosshair; touch-action: none; }
+        .signature-pad p { font-size: 0.8em; color: #666; margin-bottom: 10px; }
+        .signature-actions { display: flex; justify-content: flex-end; margin-top: 10px; }
+        .signature-actions button { background: transparent; border: none; color: #B8860B; font-size: 0.9em; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; }
+        .signature-actions button:hover { text-decoration: underline; }
+        .acceptance-checkbox { display: flex; align-items: flex-start; gap: 12px; font-size: 0.95em; color: #2C2C2C; line-height: 1.6; }
+        .acceptance-checkbox input { margin-top: 2px; width: 22px; height: 22px; accent-color: #B8860B; flex-shrink: 0; }
+        .acceptance-checkbox span { display: block; }
+        .accept-button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 24px; background: linear-gradient(135deg, #B8860B 0%, #D9B45B 100%); color: #FFFFFF; border: none; border-radius: 30px; font-size: 1em; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease; box-shadow: 0 6px 14px rgba(184, 134, 11, 0.3); }
+        .accept-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 18px rgba(184, 134, 11, 0.35); }
+        .accept-button:disabled { cursor: not-allowed; opacity: 0.65; box-shadow: none; }
+        .thank-you-card { display: none; margin-top: 30px; padding: 30px; background: #FFFFFF; border-radius: 12px; border: 1px solid #E0E0E0; box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+        .thank-you-card.active { display: block; }
+        .thank-you-card h3 { font-size: 1.5em; color: #2C2C2C; margin-bottom: 10px; }
+        .thank-you-card p { color: #555; margin-bottom: 20px; }
+        .thank-you-summary { display: grid; row-gap: 10px; font-size: 0.95em; color: #2C2C2C; }
+        .thank-you-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 25px; }
+        .thank-you-actions a, .thank-you-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 18px; border-radius: 24px; border: 1px solid #B8860B; background: transparent; color: #B8860B; font-size: 0.9em; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+        .thank-you-actions button { border: none; }
+        .thank-you-actions a:hover, .thank-you-actions button:hover { background: #B8860B; color: #FFFFFF; }
+        .form-status { font-size: 0.9em; margin-top: 14px; letter-spacing: 0.03em; }
+        .form-status.pending { color: #B8860B; }
+        .form-status.success { color: #1F7A4D; }
+        .form-status.error { color: #B00020; }
+        .no-print { display: block; }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('signatureForm');
+            if (!form) return;
+            
+            const signerName = document.getElementById('signerName');
+            const signerDob = document.getElementById('signerDob');
+            const typedSignature = document.getElementById('typedSignature');
+            const acceptTerms = document.getElementById('acceptTerms');
+            const acceptButton = document.getElementById('acceptButton');
+            const agreeNamePreview = document.getElementById('agreeNamePreview');
+            const thankYouCard = document.getElementById('thankYouCard');
+            const thankYouName = document.getElementById('thankYouName');
+            const thankYouTimestamp = document.getElementById('thankYouTimestamp');
+            const thankYouDob = document.getElementById('thankYouDob');
+            const thankYouTyped = document.getElementById('thankYouTyped');
+            const thankYouSketch = document.getElementById('thankYouSketch');
+            const printReceiptButton = document.getElementById('printReceiptButton');
+            const formStatus = document.getElementById('formStatus');
+            
+            const canvas = document.getElementById('signatureCanvas');
+            const clearSignatureButton = document.getElementById('clearSignature');
+            let hasDrawnSignature = false;
+            let isDrawing = false;
+            let ctx = null;
+            
+            if (canvas && canvas.getContext) {
+                ctx = canvas.getContext('2d');
+                const prepareCanvas = function () {
+                    const rect = canvas.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = '#2C2C2C';
+                };
+                
+                const getPosition = function (event) {
+                    const rect = canvas.getBoundingClientRect();
+                    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+                };
+                
+                const stopDrawing = function (event) {
+                    if (!isDrawing) return;
+                    isDrawing = false;
+                    ctx.closePath();
+                };
+                
+                prepareCanvas();
+                canvas.addEventListener('pointerdown', function (event) {
+                    if (!ctx) return;
+                    isDrawing = true;
+                    const position = getPosition(event);
+                    ctx.beginPath();
+                    ctx.moveTo(position.x, position.y);
+                    hasDrawnSignature = true;
+                    event.preventDefault();
+                });
+                
+                canvas.addEventListener('pointermove', function (event) {
+                    if (!isDrawing || !ctx) return;
+                    const position = getPosition(event);
+                    ctx.lineTo(position.x, position.y);
+                    ctx.stroke();
+                    event.preventDefault();
+                });
+                
+                canvas.addEventListener('pointerup', stopDrawing);
+                canvas.addEventListener('pointerleave', stopDrawing);
+                
+                if (clearSignatureButton) {
+                    clearSignatureButton.addEventListener('click', function () {
+                        prepareCanvas();
+                        hasDrawnSignature = false;
+                    });
+                }
+            }
+            
+            const updateNamePreview = function () {
+                const value = signerName.value.trim();
+                agreeNamePreview.textContent = value || 'your name';
+                typedSignature.value = value;
+            };
+            
+            const updateButtonState = function () {
+                const valid = signerName.value.trim().length > 0 && signerDob.value && typedSignature.value.trim().length > 0 && acceptTerms.checked;
+                acceptButton.disabled = !valid;
+            };
+            
+            signerName.addEventListener('input', function () {
+                updateNamePreview();
+                updateButtonState();
+            });
+            
+            signerDob.addEventListener('change', updateButtonState);
+            acceptTerms.addEventListener('change', updateButtonState);
+            
+            updateNamePreview();
+            updateButtonState();
+            
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                updateButtonState();
+                if (acceptButton.disabled) return;
+                
+                acceptButton.disabled = true;
+                
+                const name = signerName.value.trim();
+                const dobValue = signerDob.value;
+                const signedDate = new Date();
+                const signedDisplay = signedDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' });
+                let dobDisplay = 'N/A';
+                if (dobValue) {
+                    const dobDate = new Date(dobValue + 'T00:00:00');
+                    if (!Number.isNaN(dobDate.getTime())) {
+                        dobDisplay = dobDate.toLocaleDateString(undefined, { dateStyle: 'long' });
+                    }
+                }
+                
+                thankYouName.textContent = name;
+                thankYouTimestamp.textContent = signedDisplay;
+                thankYouDob.textContent = dobDisplay;
+                thankYouTyped.textContent = typedSignature.value.trim();
+                thankYouSketch.textContent = hasDrawnSignature ? 'Captured' : 'Not provided';
+                
+                thankYouCard.classList.add('active');
+                
+                Array.prototype.forEach.call(form.elements, function (element) {
+                    if (element === printReceiptButton) return;
+                    element.disabled = true;
+                });
+            });
+            
+            if (printReceiptButton) {
+                printReceiptButton.addEventListener('click', function () {
+                    window.print();
+                });
+            }
+        });
+    </script>
 </body>
 </html>
