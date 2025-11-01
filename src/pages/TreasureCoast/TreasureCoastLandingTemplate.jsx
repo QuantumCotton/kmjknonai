@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Calendar, Check, Star, MapPin, Mail } from 'lucide-react'
+import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Phone, Loader2, Upload } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
   Dialog,
@@ -12,7 +12,16 @@ import {
 } from '@/components/ui/dialog.jsx'
 import { LocalPresenceSection } from '@/components/LocalPresenceSection.jsx'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_DIGITS, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import {
+  KMJK_CONTACT_NAME,
+  KMJK_PHONE_DISPLAY,
+  KMJK_PHONE_DIGITS,
+  KMJK_PHONE_SMS_LINK,
+  KMJK_EMAIL,
+  SWAY_CONTACT_NAME,
+  SWAY_PHONE_DISPLAY,
+  SWAY_PHONE_CALL_LINK,
+} from '@/constants/contact.js'
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
@@ -46,6 +55,7 @@ export function createTreasureCoastLandingPage(config) {
       timeline: '',
       budget: '',
       projectDetails: '',
+      files: [],
     })
 
     useEffect(() => {
@@ -67,15 +77,21 @@ export function createTreasureCoastLandingPage(config) {
         name: '',
         email: '',
         phone: '',
-        address: '',
-        timeline: '',
-        budget: '',
-        projectDetails: '',
-      })
+      address: '',
+      timeline: '',
+      budget: '',
+      projectDetails: '',
+      files: [],
+    })
     }
 
     const handleFormChange = (field, value) => {
       setFormData((prev) => ({ ...prev, [field]: value }))
+    }
+
+    const handleFileChange = (event) => {
+      const files = Array.from(event.target.files || []).slice(0, 5)
+      setFormData((prev) => ({ ...prev, files }))
     }
 
     const handleSubmit = async (event) => {
@@ -94,10 +110,13 @@ export function createTreasureCoastLandingPage(config) {
         payload.append('timeline', formData.timeline)
         payload.append('budget', formData.budget)
         payload.append('message', formData.projectDetails)
-        payload.append('service_type', serviceType || 'Treasure Coast Service')
-        payload.append('city', cityName || hero?.badge || '')
-        payload.append('button_context', buttonContext || 'Treasure Coast Landing')
-        payload.append('source_url', window.location.href)
+       payload.append('service_type', serviceType || 'Treasure Coast Service')
+       payload.append('city', cityName || hero?.badge || '')
+       payload.append('button_context', buttonContext || 'Treasure Coast Landing')
+       payload.append('source_url', window.location.href)
+        formData.files.forEach((file, index) => {
+          payload.append(`attachment_${index}`, file)
+        })
 
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -250,35 +269,57 @@ export function createTreasureCoastLandingPage(config) {
                   {hero.subheading}
                 </p>
               )}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  onClick={() => openForm('Hero - Schedule Consultation')}
-                  className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
-                >
-                  <Calendar className="mr-2" size={22} />
-                  Schedule Consultation
-                </Button>
-                <a href={KMJK_PHONE_CALL_LINK}>
+              <div className="space-y-4">
+                <div className="mx-auto w-full max-w-sm overflow-hidden rounded-lg border border-white/60 bg-transparent text-white shadow-md">
+                  <div className="flex">
+                    <a
+                      href={SWAY_PHONE_CALL_LINK}
+                      title={`${SWAY_CONTACT_NAME}: ${SWAY_PHONE_DISPLAY}`}
+                      className="flex flex-1 items-center justify-center gap-2 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/10 sm:text-sm"
+                    >
+                      <Phone size={16} />
+                      <span>Call {SWAY_CONTACT_NAME}</span>
+                    </a>
+                    <a
+                      href={KMJK_PHONE_SMS_LINK}
+                      title={`${KMJK_CONTACT_NAME}: ${KMJK_PHONE_DISPLAY}`}
+                      className="flex flex-1 items-center justify-center gap-2 bg-transparent px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/10 sm:text-sm"
+                    >
+                      <MessageSquare size={16} />
+                      <span>Text {KMJK_CONTACT_NAME}</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    size="lg"
+                    onClick={() => openForm('Hero - Schedule Consultation')}
+                    className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
+                  >
+                    <Calendar className="mr-2" size={22} />
+                    Schedule Consultation
+                  </Button>
                   <Button
                     size="lg"
                     variant="outline"
+                    onClick={() => openForm('Hero - Upload Inspiration')}
                     className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
                   >
-                    <MessageSquare className="mr-2" size={22} />
-                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
+                    <Upload className="mr-2" size={22} />
+                    Upload Inspiration
                   </Button>
-                </a>
-                <a href={`mailto:${KMJK_EMAIL}`}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
-                  >
-                    <Mail className="mr-2" size={22} />
-                    Email {KMJK_EMAIL}
-                  </Button>
-                </a>
+                  <a href={`mailto:${KMJK_EMAIL}`}>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
+                    >
+                      <Mail className="mr-2" size={22} />
+                      Email {KMJK_EMAIL}
+                    </Button>
+                  </a>
+                </div>
               </div>
               {hero.note && (
                 <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
@@ -544,27 +585,43 @@ export function createTreasureCoastLandingPage(config) {
               {finalCta.subheading && (
                 <p className="text-lg md:text-xl text-gray-200">{finalCta.subheading}</p>
               )}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg"
-                  onClick={() => openForm('Footer - Book Consultation')}
-                >
-                  <Calendar className="mr-2" size={22} />
-                  Book Consultation
-                </Button>
-                <a href={KMJK_PHONE_CALL_LINK}>
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
-                    <MessageSquare className="mr-2" size={22} />
-                    Call {KMJK_PHONE_DISPLAY}
+              <div className="space-y-4">
+                <div className="mx-auto w-full max-w-sm overflow-hidden rounded-lg border border-white/60 bg-white/5 text-white shadow-md">
+                  <div className="flex">
+                    <a
+                      href={SWAY_PHONE_CALL_LINK}
+                      title={`${SWAY_CONTACT_NAME}: ${SWAY_PHONE_DISPLAY}`}
+                      className="flex flex-1 items-center justify-center gap-2 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/20 sm:text-sm"
+                    >
+                      <Phone size={16} />
+                      <span>Call {SWAY_CONTACT_NAME}</span>
+                    </a>
+                    <a
+                      href={KMJK_PHONE_SMS_LINK}
+                      title={`${KMJK_CONTACT_NAME}: ${KMJK_PHONE_DISPLAY}`}
+                      className="flex flex-1 items-center justify-center gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/20 sm:text-sm"
+                    >
+                      <MessageSquare size={16} />
+                      <span>Text {KMJK_CONTACT_NAME}</span>
+                    </a>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    size="lg"
+                    className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg"
+                    onClick={() => openForm('Footer - Book Consultation')}
+                  >
+                    <Calendar className="mr-2" size={22} />
+                    Book Consultation
                   </Button>
-                </a>
-                <a href={`mailto:${KMJK_EMAIL}`}>
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
-                    <Mail className="mr-2" size={22} />
-                    Email {KMJK_EMAIL}
-                  </Button>
-                </a>
+                  <a href={`mailto:${KMJK_EMAIL}`}>
+                    <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
+                      <Mail className="mr-2" size={22} />
+                      Email {KMJK_EMAIL}
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           </section>
@@ -693,12 +750,35 @@ export function createTreasureCoastLandingPage(config) {
                   />
                 </div>
 
+                <div>
+                  <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
+                    Upload inspiration photos or existing bath images (max 5)
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*,.pdf"
+                    multiple
+                    onChange={handleFileChange}
+                    className="w-full cursor-pointer rounded-md border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-600 transition focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]/60 file:mr-4 file:rounded-md file:border-0 file:bg-[var(--deep-charcoal)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-black"
+                  />
+                  <p className="mt-2 text-xs text-gray-500">
+                    We review every file before your call so we can discuss layouts, finishes, and investment with precision.
+                  </p>
+                </div>
+
                 <DialogFooter className="pt-2">
                   <Button type="button" variant="ghost" onClick={closeForm} disabled={isSubmitting}>
                     Cancel
                   </Button>
                   <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Sending...' : 'Send Project Details'}
+                    {isSubmitting ? (
+                      <span className="inline-flex items-center gap-2">
+                        <Loader2 className="animate-spin" size={18} />
+                        Sending…
+                      </span>
+                    ) : (
+                      'Send Project Details'
+                    )}
                   </Button>
                 </DialogFooter>
               </form>

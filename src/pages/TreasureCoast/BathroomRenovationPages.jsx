@@ -17,9 +17,9 @@ const bathroomFaqs = [
       'Most Treasure Coast bathroom remodels wrap in 3–4 weeks once materials are on site. Powder rooms and refresh projects can finish in under two weeks.',
   },
   {
-    question: 'Do you provide design selections and 3D renderings?',
+    question: 'Do you help with finish selections for the project?',
     answer:
-      'Yes. Our designer curates tile, plumbing, and lighting packages, then delivers renderings so you can approve every detail before demo begins.',
+      'Yes. Our designer curates tile, plumbing, lighting, and hardware packages so you can sign off on every detail before demo begins.',
   },
   {
     question: 'Can you remodel while we are out of state?',
@@ -30,7 +30,7 @@ const bathroomFaqs = [
 
 const bathroomStats = [
   { value: '250+', label: 'Luxury Baths Delivered' },
-  { value: '3D', label: 'Design Renderings' },
+  { value: '24/7', label: 'Project Updates' },
   { value: '21', label: 'Day Average Build' },
   { value: '100%', label: 'Licensed & Insured' },
 ]
