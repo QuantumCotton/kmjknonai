@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, Check, Star, Shield, Droplets, Wrench, Sparkles, Upload, Loader2 } from 'lucide-react'
+import { Phone, MessageSquare, Check, Star, Shield, Droplets, Wrench, Sparkles, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import CallTeamButtons from '@/components/CallTeamButtons.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 import bathroomLuxury from '../assets/bathroom_luxury_spa.jpg'
 
 function BathroomRepairsLanding() {
@@ -131,16 +131,19 @@ function BathroomRepairsLanding() {
                 <div className="text-sm mt-2">Guaranteed same-day response</div>
               </div>
             </Link>
-            <div className="bg-[var(--brushed-gold)] text-white p-6 rounded-lg text-center shadow-lg">
-              <Phone className="mx-auto mb-3" size={40} />
-              <div className="text-2xl font-bold mb-2 uppercase tracking-wide">Call Our Team</div>
-              <p className="text-sm opacity-90">Share photos for fastest quote</p>
-              <CallTeamButtons
-                className="mt-4"
-                iconSize={20}
-                primaryClassName="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100"
-                secondaryClassName="bg-black/40 hover:bg-black/60 text-white border border-white/30"
-              />
+            <div className="bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] p-6 rounded-lg text-center shadow-lg">
+              <MessageSquare className="mx-auto mb-3" size={40} />
+              <div className="text-2xl font-bold mb-2 uppercase tracking-wide">Need Help Now?</div>
+              <div className="text-3xl font-extrabold">{KMJK_PHONE_DISPLAY}</div>
+              <p className="text-sm opacity-90">Tap to text photos or call either project lead instantly.</p>
+              <CallTeamButtons className="mt-4 mx-auto max-w-sm" />
+              <a
+                href={KMJK_PHONE_SMS_LINK}
+                className="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-[var(--deep-charcoal)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-black"
+              >
+                <MessageSquare size={16} />
+                Prefer to text? Tap here
+              </a>
             </div>
             <button onClick={() => openModalWithContext('Hero Section - Get Quote')} className="block w-full">
               <div className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105 h-full">
@@ -400,19 +403,23 @@ function BathroomRepairsLanding() {
           <p className="text-xl mb-8">
             Small repairs now prevent expensive problems later. Let's get it fixed TODAY!
           </p>
-          <div className="flex flex-col gap-4 justify-center mb-6">
-            <CallTeamButtons className="sm:justify-center" iconSize={24} />
-            <div className="flex justify-center">
-              <Button
-                onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')}
-                size="lg"
-                className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100"
-              >
-                <Upload className="mr-2" size={24} />
-                Send Photos & Get Quote
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4">
+            <a href={KMJK_PHONE_SMS_LINK}>
+              <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+                <MessageSquare className="mr-2" size={24} />
+                Text {KMJK_PHONE_DISPLAY}
               </Button>
-            </div>
+            </a>
+            <Button 
+              onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')}
+              size="lg" 
+              className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100"
+            >
+              <Upload className="mr-2" size={24} />
+              Send Photos & Get Quote
+            </Button>
           </div>
+          <CallTeamButtons className="mx-auto mb-2 max-w-lg" />
           <p className="text-sm">
             ✓ Same-Day Service • ✓ Licensed & Insured • ✓ Flat-Rate Pricing • ✓ 15+ Years Experience
           </p>

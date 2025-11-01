@@ -1,35 +1,43 @@
 import { Phone } from 'lucide-react'
-import { Button } from '@/components/ui/button.jsx'
 import { CALL_TEAM } from '@/constants/contact.js'
 
 export default function CallTeamButtons({
   className = '',
-  buttonClassName = '',
-  size = 'lg',
   showNumbers = true,
-  iconSize = 20,
-  primaryClassName,
-  secondaryClassName,
+  iconSize = 18,
+  tone = 'gold',
 }) {
-  const themes = [
-    primaryClassName || 'bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white',
-    secondaryClassName || 'bg-[var(--deep-charcoal)] hover:bg-black text-white border border-white/10',
+  const baseWrapper =
+    'flex w-full overflow-hidden rounded-lg border border-white/10 bg-[var(--deep-charcoal)] text-white shadow-lg'
+
+  const halves = [
+    {
+      wrapper:
+        tone === 'gold'
+          ? 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]'
+          : 'bg-[var(--deep-charcoal)] text-white hover:bg-black',
+      border: 'border-r border-white/20',
+    },
+    {
+      wrapper:
+        tone === 'gold'
+          ? 'bg-[var(--deep-charcoal)] text-white hover:bg-black'
+          : 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]',
+      border: '',
+    },
   ]
 
   return (
-    <div className={`flex flex-col sm:flex-row gap-4 ${className}`}>
+    <div className={`${baseWrapper} ${className}`}>
       {CALL_TEAM.map(({ name, phoneDisplay, callLink }, idx) => (
-        <a key={name} href={callLink} className="flex-1">
-          <Button
-            size={size}
-            className={`w-full flex items-center justify-center gap-2 ${themes[idx] || themes[themes.length - 1]} ${buttonClassName}`}
-          >
-            <Phone size={iconSize} />
-            <span className="font-semibold uppercase tracking-wide text-sm md:text-base">Call {name}</span>
-            {showNumbers && (
-              <span className="text-xs md:text-sm opacity-90 whitespace-nowrap">({phoneDisplay})</span>
-            )}
-          </Button>
+        <a
+          key={name}
+          href={callLink}
+          className={`flex flex-1 items-center justify-center gap-2 py-3 px-4 text-xs font-semibold uppercase tracking-wide transition-colors sm:text-sm ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
+        >
+          <Phone size={iconSize} />
+          <span>Call {name}</span>
+          {showNumbers && <span className="opacity-80 whitespace-nowrap">({phoneDisplay})</span>}
         </a>
       ))}
     </div>

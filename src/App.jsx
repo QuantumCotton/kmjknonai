@@ -7,6 +7,7 @@ import {
   KMJK_CONTACT_NAME,
   KMJK_PHONE_DISPLAY,
   KMJK_PHONE_CALL_LINK,
+  KMJK_PHONE_SMS_LINK,
   KMJK_EMAIL,
   SWAY_CONTACT_NAME,
   SWAY_PHONE_DISPLAY,
@@ -235,7 +236,13 @@ function HomePage() {
           <h1 className="tagline">Exceptional Craftsmanship. A Seamless Experience.</h1>
           <div className="flex flex-col gap-4 justify-center mt-8">
             <CallTeamButtons className="sm:justify-center" />
-            <div className="flex justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a href={KMJK_PHONE_SMS_LINK}>
+                <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+                  <MessageSquare className="mr-2" size={20} />
+                  Text {KMJK_CONTACT_NAME}
+                </Button>
+              </a>
               <Link to="/contact">
                 <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] hover:text-white border-2 border-white">
                   Schedule Consultation

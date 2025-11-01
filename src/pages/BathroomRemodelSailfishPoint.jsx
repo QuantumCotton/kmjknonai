@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { Calendar, Upload, Check } from 'lucide-react'
+import { Calendar, Upload, Check, MessageSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import CallTeamButtons from '@/components/CallTeamButtons.jsx'
 import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
-import { KMJK_PHONE_CALL_LINK } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 export default function BathroomRemodelSailfishPoint(){
   useEffect(() => {
@@ -33,9 +33,15 @@ export default function BathroomRemodelSailfishPoint(){
           </div>
           <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Sailfish Point, FL</h1>
           <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex flex-col gap-3">
-            <CallTeamButtons className="sm:justify-center" iconSize={20} />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-6 flex flex-col gap-4">
+            <CallTeamButtons className="mx-auto max-w-md" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a href={KMJK_PHONE_SMS_LINK}>
+                <Button size="lg" className="w-full bg-[var(--brushed-gold)] text-white hover:bg-[var(--brushed-bronze)]">
+                  <MessageSquare className="mr-2" size={20} />
+                  Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
+                </Button>
+              </a>
               <a href="/contact">
                 <Button size="lg" className="w-full bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                   <Calendar className="mr-2" size={20} />
