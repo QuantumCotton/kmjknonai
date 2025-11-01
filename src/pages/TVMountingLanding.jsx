@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
 import customBuiltin from '../assets/custom_builtin.jpg'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function TVMountingLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -116,13 +116,13 @@ function TVMountingLanding() {
           </p>
           
           <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button 
                 size="lg" 
                 className="text-xl px-10 py-7 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white shadow-2xl"
               >
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME} Now
+                Call {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
             <Button 
@@ -462,10 +462,10 @@ function TVMountingLanding() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_PHONE_DISPLAY}
+                Call {KMJK_PHONE_DISPLAY}
               </Button>
             </a>
             <Button 

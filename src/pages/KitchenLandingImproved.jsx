@@ -4,7 +4,7 @@ import { MessageSquare, Check, Star, Calendar, Heart, Upload, Loader2, X } from 
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import kitchenModern from '../assets/kitchen_modern.jpg'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function KitchenLandingImproved() {
   const [projectSize, setProjectSize] = useState('full')
@@ -124,10 +124,10 @@ function KitchenLandingImproved() {
             Transform your kitchen into the heart of your home. Fixed pricing. Zero surprises. Financing available.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-6 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME}
+                Call {KMJK_CONTACT_NAME}
               </Button>
             </a>
             <Button onClick={() => openModalWithContext('Hero Section - Start Consultation')} size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
@@ -378,10 +378,10 @@ function KitchenLandingImproved() {
             Get your free in-home consultation and detailed quote. No pressure, just possibilities!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_PHONE_DISPLAY} for Quick Quote
+                Call {KMJK_PHONE_DISPLAY} for Quick Quote
               </Button>
             </a>
             <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">

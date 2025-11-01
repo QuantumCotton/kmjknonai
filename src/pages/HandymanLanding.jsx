@@ -1,7 +1,16 @@
 import { Link } from 'react-router-dom'
-import { MessageSquare, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, Calendar } from 'lucide-react'
+import { Phone, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import CallTeamButtons from '@/components/CallTeamButtons.jsx'
+import {
+  KMJK_CONTACT_NAME,
+  KMJK_PHONE_DISPLAY,
+  KMJK_PHONE_CALL_LINK,
+  KMJK_EMAIL,
+  SWAY_CONTACT_NAME,
+  SWAY_PHONE_DISPLAY,
+  SWAY_PHONE_CALL_LINK,
+} from '@/constants/contact.js'
 
 const bathroomHero = new URL('../../pics/bathroom/Phoenixbathroomafter.png', import.meta.url).href
 
@@ -38,14 +47,21 @@ function HandymanLanding() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK} className="block">
-              <div className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
-                <MessageSquare className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Text {KMJK_CONTACT_NAME}</div>
-                <div className="text-3xl font-bold">{KMJK_PHONE_DISPLAY}</div>
-                <div className="text-sm mt-2">Share photos for the fastest quote</div>
+            <div className="bg-[var(--brushed-gold)] text-white p-6 rounded-lg text-center shadow-lg">
+              <Phone className="mx-auto mb-3" size={40} />
+              <div className="text-2xl font-bold mb-2 uppercase tracking-wide">Call Our Team Now</div>
+              <p className="text-sm opacity-90">Tap to connect instantly</p>
+              <CallTeamButtons
+                className="mt-4"
+                iconSize={20}
+                primaryClassName="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100"
+                secondaryClassName="bg-black/40 hover:bg-black/60 text-white border border-white/40"
+                buttonClassName="uppercase tracking-wide"
+              />
+              <div className="text-xs mt-4 opacity-80">
+                Prefer texting? Email details to <a className="underline text-white" href={`mailto:${KMJK_EMAIL}`}>{KMJK_EMAIL}</a>
               </div>
-            </a>
+            </div>
             <Link to="/contact" className="block">
               <div className="bg-white text-[var(--deep-charcoal)] p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
                 <Calendar className="mx-auto mb-3" size={40} />
@@ -108,11 +124,13 @@ function HandymanLanding() {
           </div>
           <div className="text-center mt-8">
             <p className="text-lg font-semibold mb-4">Don't see what you need? Ask us!</p>
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                Text {KMJK_CONTACT_NAME} for Custom Quote
-              </Button>
-            </a>
+            <div className="max-w-2xl mx-auto">
+              <CallTeamButtons
+                className="sm:justify-center"
+                size="lg"
+                buttonClassName="text-sm md:text-base"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -132,24 +150,24 @@ function HandymanLanding() {
             <div className="bg-green-100 border-4 border-green-500 p-6 rounded-lg text-center animate-pulse">
               <div className="text-2xl font-bold text-green-700 mb-2">2:00 PM</div>
               <div className="text-sm text-green-600 font-semibold">AVAILABLE NOW!</div>
-              <a href={KMJK_PHONE_SMS_LINK}>
+              <a href={KMJK_PHONE_CALL_LINK}>
                 <Button className="mt-3 bg-green-600 hover:bg-green-700 text-white">
-                  Text to Book
+                  Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
                 </Button>
               </a>
             </div>
             <div className="bg-yellow-100 border-2 border-yellow-500 p-6 rounded-lg text-center">
               <div className="text-2xl font-bold text-yellow-700 mb-2">5:00 PM</div>
               <div className="text-sm text-yellow-600">1 Spot Left</div>
-              <a href={KMJK_PHONE_SMS_LINK}>
+              <a href={SWAY_PHONE_CALL_LINK}>
                 <Button className="mt-3 bg-yellow-600 hover:bg-yellow-700 text-white">
-                  Text to Reserve
+                  Call {SWAY_CONTACT_NAME} ({SWAY_PHONE_DISPLAY})
                 </Button>
               </a>
             </div>
           </div>
           <p className="text-center text-sm text-gray-500 mt-6">
-            ⏰ Slots fill up fast! Text us now to secure your time.
+            ⏰ Slots fill up fast! Call us now to secure your time.
           </p>
         </div>
       </section>
@@ -280,21 +298,18 @@ function HandymanLanding() {
             Stop Procrastinating. Let's Fix It Today!
           </h2>
           <p className="text-xl mb-8">
-            Licensed, insured, and ready to tackle your to-do list. Call or text for same-day service!
+            Licensed, insured, and ready to tackle your to-do list. Call now for same-day service!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME} for Instant Quote
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Calendar className="mr-2" size={24} />
-                Schedule a Call-Back
-              </Button>
-            </Link>
+          <div className="flex flex-col gap-4 justify-center mb-6">
+            <CallTeamButtons className="sm:justify-center" iconSize={24} />
+            <div className="flex justify-center">
+              <Link to="/contact">
+                <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
+                  <Calendar className="mr-2" size={24} />
+                  Schedule a Call-Back
+                </Button>
+              </Link>
+            </div>
           </div>
           <p className="text-sm">
             ✓ Same-Day Service Available • ✓ Licensed & Insured • ✓ Background Checked • ✓ No Job Too Small

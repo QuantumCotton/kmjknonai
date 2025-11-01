@@ -3,7 +3,7 @@ import { MessageSquare, Check, Star, Calendar, ChefHat, Upload, Loader2, ArrowRi
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import kitchenModern from '../assets/kitchen_modern.jpg'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function KitchenRenovationElite() {
   const [projectSize, setProjectSize] = useState('full')
@@ -45,7 +45,7 @@ function KitchenRenovationElite() {
 
   const smsLinkForPackage = (pkgLabel) => {
     const body = `Hi ${KMJK_CONTACT_NAME}, I'm interested in the ${pkgLabel} kitchen package. Can we review details?`
-    return `${KMJK_PHONE_SMS_LINK}?body=${encodeURIComponent(body)}`
+    return `${KMJK_PHONE_CALL_LINK}?body=${encodeURIComponent(body)}`
   }
 
   const openModalWithContext = (context) => {
@@ -187,10 +187,10 @@ function KitchenRenovationElite() {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-8 py-7 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full shadow-2xl transform hover:scale-105 transition-all">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME} Now
+                Call {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
             
@@ -436,7 +436,7 @@ function KitchenRenovationElite() {
                 
                 <a href={smsLinkForPackage(key)}>
                   <Button className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white py-4 text-lg font-semibold">
-                    Text {KMJK_CONTACT_NAME} to Start
+                    Call {KMJK_CONTACT_NAME} to Start
                   </Button>
                 </a>
               </div>
@@ -642,10 +642,10 @@ function KitchenRenovationElite() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-xl px-12 py-8 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 shadow-2xl transform hover:scale-105 transition-all">
                 <MessageSquare className="mr-3" size={28} />
-                Text {KMJK_PHONE_DISPLAY}
+                Call {KMJK_PHONE_DISPLAY}
               </Button>
             </a>
 

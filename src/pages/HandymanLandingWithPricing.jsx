@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { MessageSquare, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Lightbulb, DollarSign } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 const bathroomHero = new URL('../../pics/bathroom/Phoenixbathroomafter.png', import.meta.url).href
 
@@ -75,10 +75,10 @@ function HandymanLandingWithPricing() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK} className="block">
+            <a href={KMJK_PHONE_CALL_LINK} className="block">
               <div className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
                 <MessageSquare className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Text {KMJK_CONTACT_NAME}</div>
+                <div className="text-2xl font-bold mb-2">Call {KMJK_CONTACT_NAME}</div>
                 <div className="text-3xl font-bold">{KMJK_PHONE_DISPLAY}</div>
                 <div className="text-sm mt-2">Share photos for fastest quote</div>
               </div>
@@ -179,10 +179,10 @@ function HandymanLandingWithPricing() {
               We handle 50+ home services! Minimum visit is $375—text photos and we’ll bundle tasks for the best value.
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href={KMJK_PHONE_SMS_LINK}>
+              <a href={KMJK_PHONE_CALL_LINK}>
                 <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
                   <MessageSquare className="mr-2" size={20} />
-                  Text {KMJK_CONTACT_NAME} for Custom Quote
+                  Call {KMJK_CONTACT_NAME} for Custom Quote
                 </Button>
               </a>
               <Link to="/contact">
@@ -210,7 +210,7 @@ function HandymanLandingWithPricing() {
             <div className="bg-green-100 border-4 border-green-500 p-6 rounded-lg text-center animate-pulse">
               <div className="text-2xl font-bold text-green-700 mb-2">2:00 PM</div>
               <div className="text-sm text-green-600 font-semibold">AVAILABLE NOW!</div>
-              <a href={KMJK_PHONE_SMS_LINK}>
+              <a href={KMJK_PHONE_CALL_LINK}>
                 <Button className="mt-3 bg-green-600 hover:bg-green-700 text-white">
                   Text to Book
                 </Button>
@@ -219,7 +219,7 @@ function HandymanLandingWithPricing() {
             <div className="bg-yellow-100 border-2 border-yellow-500 p-6 rounded-lg text-center">
               <div className="text-2xl font-bold text-yellow-700 mb-2">5:00 PM</div>
               <div className="text-sm text-yellow-600">1 Spot Left</div>
-              <a href={KMJK_PHONE_SMS_LINK}>
+              <a href={KMJK_PHONE_CALL_LINK}>
                 <Button className="mt-3 bg-yellow-600 hover:bg-yellow-700 text-white">
                   Text to Reserve
                 </Button>
@@ -302,10 +302,10 @@ function HandymanLandingWithPricing() {
             Licensed, insured, and ready to tackle your to-do list. Call or text for same-day service!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME} Now
+                Call {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
             <Link to="/contact">

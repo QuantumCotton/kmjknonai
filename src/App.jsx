@@ -6,9 +6,13 @@ import './App.css'
 import {
   KMJK_CONTACT_NAME,
   KMJK_PHONE_DISPLAY,
-  KMJK_PHONE_SMS_LINK,
+  KMJK_PHONE_CALL_LINK,
   KMJK_EMAIL,
+  SWAY_CONTACT_NAME,
+  SWAY_PHONE_DISPLAY,
+  SWAY_PHONE_CALL_LINK,
 } from '@/constants/contact.js'
+import CallTeamButtons from '@/components/CallTeamButtons.jsx'
 
 // Import images
 import kitchenModern from './assets/kitchen_modern.jpg'
@@ -111,11 +115,11 @@ function Navigation() {
           {/* Contact Info */}
           <div className="hidden lg:flex items-center space-x-4 text-sm">
             <a
-              href={KMJK_PHONE_SMS_LINK}
+              href={KMJK_PHONE_CALL_LINK}
               className="flex items-center space-x-1 hover:text-[var(--brushed-gold)] transition-colors"
             >
               <Phone size={16} />
-              <span>Text {KMJK_PHONE_DISPLAY}</span>
+              <span>Call {KMJK_PHONE_DISPLAY}</span>
             </a>
           </div>
 
@@ -144,9 +148,9 @@ function Navigation() {
               </Link>
             ))}
             <div className="mt-4 pt-4 border-t border-gray-600">
-              <a href={KMJK_PHONE_SMS_LINK} className="flex items-center space-x-2 py-2">
+              <a href={KMJK_PHONE_CALL_LINK} className="flex items-center space-x-2 py-2">
                 <Phone size={16} />
-                <span>Text {KMJK_PHONE_DISPLAY}</span>
+                <span>Call {KMJK_PHONE_DISPLAY}</span>
               </a>
               <a href={`mailto:${KMJK_EMAIL}`} className="flex items-center space-x-2 py-2">
                 <Mail size={16} />
@@ -182,11 +186,11 @@ function Footer() {
             <h4 className="font-semibold mb-4">Contact Us</h4>
             <div className="space-y-2 text-sm">
               <a
-                href={KMJK_PHONE_SMS_LINK}
+                href={KMJK_PHONE_CALL_LINK}
                 className="flex items-center space-x-2 hover:text-[var(--brushed-gold)] transition-colors"
               >
                 <Phone size={16} />
-                <span>Text {KMJK_CONTACT_NAME}</span>
+                <span>Call {KMJK_CONTACT_NAME}</span>
               </a>
               <a
                 href={`mailto:${KMJK_EMAIL}`}
@@ -229,18 +233,15 @@ function HomePage() {
           <div className="logo-text">KMJK</div>
           <div className="logo-underline"></div>
           <h1 className="tagline">Exceptional Craftsmanship. A Seamless Experience.</h1>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <Phone className="mr-2" size={20} />
-                Text {KMJK_CONTACT_NAME}
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] hover:text-white border-2 border-white">
-                Schedule Consultation
-              </Button>
-            </Link>
+          <div className="flex flex-col gap-4 justify-center mt-8">
+            <CallTeamButtons className="sm:justify-center" />
+            <div className="flex justify-center">
+              <Link to="/contact">
+                <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] hover:text-white border-2 border-white">
+                  Schedule Consultation
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -696,20 +697,24 @@ function StickyCtaBar() {
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 border-t border-gray-200 shadow-lg md:hidden">
       <div className="max-w-7xl mx-auto px-4 py-2 grid grid-cols-3 gap-2 text-sm">
         <a
-          href={KMJK_PHONE_SMS_LINK}
-          className="text-center py-2 rounded-md bg-[var(--deep-charcoal)] text-white"
-          aria-label="Text KMJK"
+          href={KMJK_PHONE_CALL_LINK}
+          className="text-center py-2 rounded-md bg-[var(--brushed-gold)] text-white font-semibold uppercase tracking-wide"
+          aria-label={`Call ${KMJK_CONTACT_NAME}`}
         >
-          Text
+          Call {KMJK_CONTACT_NAME}
         </a>
         <a
-          href={`mailto:${KMJK_EMAIL}`}
-          className="text-center py-2 rounded-md bg-[var(--brushed-gold)] text-white"
-          aria-label="Email KMJK"
+          href={SWAY_PHONE_CALL_LINK}
+          className="text-center py-2 rounded-md bg-[var(--deep-charcoal)] text-white font-semibold uppercase tracking-wide"
+          aria-label={`Call ${SWAY_CONTACT_NAME}`}
         >
-          Email
+          Call {SWAY_CONTACT_NAME}
         </a>
-        <a href="/contact" className="text-center py-2 rounded-md bg-white border text-[var(--deep-charcoal)]" aria-label="Get a Quote">
+        <a
+          href="/contact"
+          className="text-center py-2 rounded-md bg-white border text-[var(--deep-charcoal)] font-semibold uppercase tracking-wide"
+          aria-label="Get a Quote"
+        >
           Quote
         </a>
       </div>

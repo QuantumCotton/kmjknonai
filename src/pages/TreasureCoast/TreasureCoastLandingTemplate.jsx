@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog.jsx'
 import { LocalPresenceSection } from '@/components/LocalPresenceSection.jsx'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_DIGITS, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_DIGITS, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
@@ -259,14 +259,14 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Schedule Consultation
                 </Button>
-                <a href={KMJK_PHONE_SMS_LINK}>
+                <a href={KMJK_PHONE_CALL_LINK}>
                   <Button
                     size="lg"
                     variant="outline"
                     className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
                   >
                     <MessageSquare className="mr-2" size={22} />
-                    Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
+                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
                   </Button>
                 </a>
                 <a href={`mailto:${KMJK_EMAIL}`}>
@@ -553,10 +553,10 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Book Consultation
                 </Button>
-                <a href={KMJK_PHONE_SMS_LINK}>
+                <a href={KMJK_PHONE_CALL_LINK}>
                   <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
                     <MessageSquare className="mr-2" size={22} />
-                    Text {KMJK_PHONE_DISPLAY}
+                    Call {KMJK_PHONE_DISPLAY}
                   </Button>
                 </a>
                 <a href={`mailto:${KMJK_EMAIL}`}>

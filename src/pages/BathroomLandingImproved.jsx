@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, MessageSquare, Check, Star, Calendar, X, Upload, Loader2 } from 'lucide-react'
+import { Phone, Check, Star, Calendar, X, Upload, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
+import CallTeamButtons from '@/components/CallTeamButtons.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK } from '@/constants/contact.js'
 import bathroomLuxurySpa from '../assets/bathroom_luxury_spa.jpg'
 import bathroomMarble from '../assets/bathroom_marble.jpg'
 
@@ -115,23 +116,24 @@ function BathroomLandingImproved() {
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
             Transform your outdated bathroom into a luxurious sanctuary in just 7 days. Zero stress. Zero surprises. 100% guaranteed.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="text-lg px-6 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white w-full">
-                <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME}
+          <div className="flex flex-col gap-4 max-w-5xl mx-auto">
+            <CallTeamButtons className="sm:justify-center" iconSize={24} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Link to="/contact" className="w-full">
+                <Button size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
+                  <Phone className="mr-2" size={24} />
+                  Request Call Back
+                </Button>
+              </Link>
+              <Button
+                onClick={() => openModalWithContext('Hero Section - Get Free Quote')}
+                size="lg"
+                className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full"
+              >
+                <Upload className="mr-2" size={24} />
+                Get Free Quote
               </Button>
-            </a>
-            <Link to="/contact" className="w-full">
-              <Button size="lg" className="text-lg px-6 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 w-full">
-                <Phone className="mr-2" size={24} />
-                Request Call Back
-              </Button>
-            </Link>
-            <Button onClick={() => openModalWithContext('Hero Section - Get Free Quote')} size="lg" className="text-lg px-6 py-6 bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white w-full">
-              <Upload className="mr-2" size={24} />
-              Get Free Quote
-            </Button>
+            </div>
           </div>
           <p className="mt-6 text-sm">📅 Next Available Start Date: This Week! • ⚡ Same-Day Estimates Available</p>
         </div>
@@ -388,17 +390,18 @@ function BathroomLandingImproved() {
           <p className="text-xl mb-8">
             Schedule your free in-home consultation today. Upload photos and get a detailed quote!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_PHONE_DISPLAY}
+          <div className="flex flex-col gap-4 justify-center">
+            <CallTeamButtons className="sm:justify-center" iconSize={24} />
+            <div className="flex justify-center">
+              <Button
+                onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')}
+                size="lg"
+                className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white"
+              >
+                <Upload className="mr-2" size={24} />
+                Send Photos & Get Quote
               </Button>
-            </a>
-            <Button onClick={() => openModalWithContext('Final CTA - Send Photos & Get Quote')} size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-              <Upload className="mr-2" size={24} />
-              Send Photos & Get Quote
-            </Button>
+            </div>
           </div>
           <p className="mt-6 text-sm">
             ✓ Licensed & Insured • ✓ A+ BBB Rating • ✓ 100% Satisfaction Guarantee

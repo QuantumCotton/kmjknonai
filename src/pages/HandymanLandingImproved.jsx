@@ -4,7 +4,7 @@ import { MessageSquare, Check, Star, Shield, Wrench, Zap, Droplet, Hammer, Light
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
 import customEntertainment from '../assets/custom_entertainment.jpg'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK, KMJK_EMAIL } from '@/constants/contact.js'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_EMAIL } from '@/constants/contact.js'
 
 function HandymanLandingImproved() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -125,10 +125,10 @@ function HandymanLandingImproved() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <a href={KMJK_PHONE_SMS_LINK} className="block">
+            <a href={KMJK_PHONE_CALL_LINK} className="block">
               <div className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white p-6 rounded-lg text-center transition-all shadow-lg hover:shadow-xl transform hover:scale-105">
                 <MessageSquare className="mx-auto mb-3" size={40} />
-                <div className="text-2xl font-bold mb-2">Text {KMJK_CONTACT_NAME}</div>
+                <div className="text-2xl font-bold mb-2">Call {KMJK_CONTACT_NAME}</div>
                 <div className="text-2xl font-bold">{KMJK_PHONE_DISPLAY}</div>
                 <div className="text-sm mt-2">Send photos for priority scheduling</div>
               </div>
@@ -330,12 +330,12 @@ function HandymanLandingImproved() {
           </div>
           <div className="text-center mt-8">
             <p className="text-lg font-semibold mb-4">Don't see what you need? Ask us!</p>
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button 
                 size="lg" 
                 className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white"
               >
-                Text {KMJK_CONTACT_NAME} for Custom Quote
+                Call {KMJK_CONTACT_NAME} for Custom Quote
               </Button>
             </a>
           </div>
@@ -412,10 +412,10 @@ function HandymanLandingImproved() {
             $375 minimum gets 2-3 tasks done TODAY. Licensed, insured pros who actually show up. Let's go!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <a href={KMJK_PHONE_SMS_LINK}>
+            <a href={KMJK_PHONE_CALL_LINK}>
               <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
                 <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME} Now
+                Call {KMJK_CONTACT_NAME} Now
               </Button>
             </a>
             <Button 

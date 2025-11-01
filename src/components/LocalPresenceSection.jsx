@@ -1,15 +1,20 @@
 import { Phone, MapPin, Clock } from 'lucide-react'
-import { KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
+import {
+  KMJK_PHONE_DISPLAY,
+  KMJK_PHONE_CALL_LINK,
+  SWAY_PHONE_DISPLAY,
+  SWAY_PHONE_CALL_LINK,
+  KMJK_CONTACT_NAME,
+  SWAY_CONTACT_NAME,
+} from '@/constants/contact.js'
 
 export function LocalPresenceSection({
   businessName = 'KMJK Home Improvement',
   addressLines = ['1301 SE Francis Street', 'Jensen Beach, FL 34957'],
-  phone = KMJK_PHONE_DISPLAY,
   hours = ['Mon-Fri: 8am - 6pm', 'Sat: By appointment', 'Sun: Closed'],
   serviceAreas = ['Palm City', 'Sewall\'s Point', 'Sailfish Point', 'Hutchinson Island'],
   mapEmbedUrl = 'https://www.google.com/maps?q=1301%20SE%20Francis%20Street%2C%20Jensen%20Beach%2C%20FL%2034957&output=embed',
 }) {
-  const smsLink = KMJK_PHONE_SMS_LINK
   return (
     <section className="py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4 grid gap-10 lg:grid-cols-[1.15fr_1fr] items-start">
@@ -41,10 +46,21 @@ export function LocalPresenceSection({
               <div className="flex items-start gap-3">
                 <Phone className="text-[var(--brushed-gold)]" size={22} />
                 <div>
-                  <p className="font-semibold text-[var(--deep-charcoal)]">Text Concierge</p>
-                  <a href={smsLink} className="text-gray-600 hover:text-[var(--deep-charcoal)]">
-                    {phone}
-                  </a>
+                  <p className="font-semibold text-[var(--deep-charcoal)]">Call Concierge</p>
+                  <div className="flex flex-col text-gray-600">
+                    <a
+                      href={KMJK_PHONE_CALL_LINK}
+                      className="hover:text-[var(--deep-charcoal)]"
+                    >
+                      {KMJK_CONTACT_NAME}: {KMJK_PHONE_DISPLAY}
+                    </a>
+                    <a
+                      href={SWAY_PHONE_CALL_LINK}
+                      className="hover:text-[var(--deep-charcoal)]"
+                    >
+                      {SWAY_CONTACT_NAME}: {SWAY_PHONE_DISPLAY}
+                    </a>
+                  </div>
                 </div>
               </div>
 

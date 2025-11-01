@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Check, Star, Calendar, MessageSquare, Heart } from 'lucide-react'
+import { Check, Star, Calendar, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
+import CallTeamButtons from '@/components/CallTeamButtons.jsx'
+import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK } from '@/constants/contact.js'
 
 const heroKitchenImage = new URL(
   '../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
@@ -39,19 +40,16 @@ function KitchenLanding() {
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
             Transform your kitchen into the heart of your home with concierge design-build service. Fixed pricing. Zero surprises.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_CONTACT_NAME}
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
-                <Calendar className="mr-2" size={24} />
-                Schedule Design Consultation
-              </Button>
-            </Link>
+          <div className="flex flex-col gap-4 justify-center">
+            <CallTeamButtons className="sm:justify-center" iconSize={24} />
+            <div className="flex justify-center">
+              <Link to="/contact">
+                <Button size="lg" className="text-lg px-8 py-6 bg-white text-[var(--deep-charcoal)] hover:bg-gray-100">
+                  <Calendar className="mr-2" size={24} />
+                  Schedule Design Consultation
+                </Button>
+              </Link>
+            </div>
           </div>
           <p className="mt-4 text-sm">🏆 2024 Best Kitchen Remodeler - Treasure Coast • ⭐ 4.9/5 Stars (237 Reviews)</p>
         </div>
@@ -111,13 +109,11 @@ function KitchenLanding() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-8">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] text-white">
-                Text {KMJK_CONTACT_NAME} for Your Quote
-              </Button>
-            </a>
-            <p className="text-sm text-gray-600 mt-3">📸 Upload your kitchen photos via text: {KMJK_PHONE_DISPLAY}</p>
+          <div className="text-center mt-8 space-y-3">
+            <div className="max-w-2xl mx-auto">
+              <CallTeamButtons className="sm:justify-center" iconSize={20} />
+            </div>
+            <p className="text-sm text-gray-600">📸 Email or text your kitchen photos so we can prep an accurate quote.</p>
           </div>
         </div>
       </section>
@@ -268,19 +264,16 @@ function KitchenLanding() {
           <p className="text-xl mb-8">
             Get your free in-home consultation and see your new kitchen in 3D. No pressure, just possibilities!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href={KMJK_PHONE_SMS_LINK}>
-              <Button size="lg" className="text-lg px-8 py-6 bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
-                <MessageSquare className="mr-2" size={24} />
-                Text {KMJK_PHONE_DISPLAY} for Quick Quote
-              </Button>
-            </a>
-            <Link to="/contact">
-              <Button size="lg" className="text-lg px-8 py-6 bg-transparent border-2 border-white text-white hover:bg-white hover:text-[var(--deep-charcoal)]">
-                <Calendar className="mr-2" size={24} />
-                Schedule Online
-              </Button>
-            </Link>
+          <div className="flex flex-col gap-4 justify-center">
+            <CallTeamButtons className="sm:justify-center" iconSize={24} />
+            <div className="flex justify-center">
+              <Link to="/contact">
+                <Button size="lg" className="text-lg px-8 py-6 bg-transparent border-2 border-white text-white hover:bg-white hover:text-[var(--deep-charcoal)]">
+                  <Calendar className="mr-2" size={24} />
+                  Schedule Online
+                </Button>
+              </Link>
+            </div>
           </div>
           <p className="mt-6 text-sm">
             ✓ Licensed & Insured • ✓ A+ BBB Rating • ✓ Financing Available • ✓ 100% Satisfaction Guarantee
