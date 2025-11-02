@@ -84,8 +84,8 @@ export default createTreasureCoastLandingPage({
   ],
   testimonials: [
     {
-      quote: 'We trusted KMJK with our Sewall's Point remodel while we were up north. The project app and daily photo updates made it stress-free. We came back to a completely transformed space.',
-      author: 'Thomas & Linda H., Sewall's Point',
+      quote: 'We trusted KMJK with our Sewall\'s Point remodel while we were up north. The project app and daily photo updates made it stress-free. We came back to a completely transformed space.',
+      author: 'Thomas & Linda H., Sewall\'s Point',
       detail: 'Full Spa Retreat • $58k • 3.5 Weeks',
       rating: 5,
     },
@@ -94,7 +94,7 @@ export default createTreasureCoastLandingPage({
     title: `Where We Renovate in Sewall's Point`,
     description: `Serving Sewall's Point estates, waterfront residences, and historic properties with tailored bathroom renovations.`,
     items: [
-      "South Sewall's Point",
+      "South Sewall\'s Point",
       'High Point',
       'Mandarin Isle',
       'Archipelago',
