@@ -1,4 +1,7 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
+
+// Re-export the function so other files can import it
+export { createTreasureCoastLandingPage }
 const palmCityBathroomHero = new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href
 const sailfishPointBathroomHero = new URL('../../../pics/bathroom/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
 const sewallsPointBathroomHero = new URL('../../../pics/bathroom/bai_11-uXYAcnvq.jpg', import.meta.url).href
