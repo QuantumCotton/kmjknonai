@@ -1,5 +1,5 @@
-import { Phone } from 'lucide-react'
-import { CALL_TEAM } from '@/constants/contact.js'
+import { MessageSquare, Phone } from 'lucide-react'
+import { CALL_TEAM, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
 
 export default function CallTeamButtons({
   className = '',
@@ -43,17 +43,23 @@ export default function CallTeamButtons({
 
   return (
     <div className={`${baseWrapper} ${className}`}>
-      {CALL_TEAM.map(({ name, phoneDisplay, callLink }, idx) => (
-        <a
-          key={name}
-          href={callLink}
-          className={`flex flex-1 items-center justify-center gap-2 py-4 px-6 text-sm font-semibold uppercase tracking-wide transition-colors sm:text-base ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
-        >
-          <Phone size={iconSize} />
-          <span>Call {name}</span>
-          {showNumbers && <span className="opacity-80 whitespace-nowrap">({phoneDisplay})</span>}
-        </a>
-      ))}
+      {CALL_TEAM.map(({ name, phoneDisplay, callLink }, idx) => {
+        const isFirst = idx === 0
+        const href = isFirst ? KMJK_PHONE_SMS_LINK : callLink
+        const Icon = isFirst ? MessageSquare : Phone
+
+        return (
+          <a
+            key={name}
+            href={href}
+            className={`flex flex-1 items-center justify-center gap-2 py-4 px-6 text-sm font-semibold uppercase tracking-wide transition-colors sm:text-base ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
+          >
+            <Icon size={iconSize} />
+            <span>{isFirst ? 'Text' : 'Call'} {name}</span>
+            {showNumbers && <span className="opacity-80 whitespace-nowrap">({phoneDisplay})</span>}
+          </a>
+        )
+      })}
     </div>
   )
 }
