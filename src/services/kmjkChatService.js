@@ -5,6 +5,11 @@ const OPENAI_ENDPOINT = '/.netlify/functions/kmjk-openai'
 const LEAD_EMAIL_ENDPOINT = '/.netlify/functions/kmjk-send-lead'
 const OPENAI_TIMEOUT_MS = 45000
 
+const DIGEST_REASON_LABELS = {
+  inactivity: 'Inactivity timeout',
+  'manual-close': 'Manual close',
+}
+
 const serviceCatalog = [
   {
     category: 'Kitchen Remodel',
@@ -32,6 +37,31 @@ const serviceCatalog = [
     keywords: ['tv mounting', 'tv', 'mount', 'soundbar', 'av', 'media room', 'projector'],
   },
 ]
+
+function normalizeTimestamp(value) {
+  if (!value) return null
+  if (value instanceof Date) return value.toISOString()
+  if (typeof value === 'string') {
+    const parsed = new Date(value)
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toISOString()
+    }
+    return value
+  }
+  const parsed = new Date(value)
+  if (!Number.isNaN(parsed.getTime())) {
+    return parsed.toISOString()
+  }
+  return null
+}
+
+function mapMessagesForTranscript(messages = []) {
+  return messages.map((msg) => ({
+    role: msg.role,
+    content: msg.content,
+    timestamp: normalizeTimestamp(msg.timestamp),
+  }))
+}
 
 function createInitialConversation(conversationId) {
   const now = new Date()
@@ -65,6 +95,8 @@ function createInitialConversation(conversationId) {
     },
     leadNotificationSent: false,
     conversationDigestSent: false,
+    conversationDigestReason: null,
+    conversationDigestSentAt: null,
   }
 }
 
@@ -345,6 +377,7 @@ export function registerPhotoUpload(conversation, photoMeta) {
   if (!conversation) return conversation
 
   const timestamp = new Date()
+  const isoTimestamp = timestamp.toISOString()
   const safeMeta = {
     url: photoMeta?.url || photoMeta?.fileUrl || photoMeta?.viewUrl || '',
     viewUrl: photoMeta?.viewUrl || photoMeta?.url || photoMeta?.fileUrl || '',
@@ -353,7 +386,7 @@ export function registerPhotoUpload(conversation, photoMeta) {
     name: photoMeta?.name || 'Project photo',
     size: photoMeta?.size,
     type: photoMeta?.type,
-    uploadedAt: photoMeta?.uploadedAt || timestamp.toISOString(),
+    uploadedAt: photoMeta?.uploadedAt || isoTimestamp,
   }
 
   const scopeNotes = Array.isArray(conversation.leadData?.scopeNotes)
@@ -375,7 +408,7 @@ export function registerPhotoUpload(conversation, photoMeta) {
         id: `msg_photo_${timestamp.getTime()}`,
         role: 'user',
         content: `${noteLabel}\n${safeMeta.viewUrl || safeMeta.url}`.trim(),
-        timestamp,
+        timestamp: isoTimestamp,
         photo: safeMeta,
       },
     ],
@@ -384,6 +417,48 @@ export function registerPhotoUpload(conversation, photoMeta) {
       scopeNotes: scopeNotes.slice(-6),
       photos: [...(conversation.leadData?.photos || []), safeMeta],
     },
+    lastActivityAt: isoTimestamp,
+    conversationDigestSent: false,
+    conversationDigestReason: null,
+    conversationDigestSentAt: null,
+  }
+}
+
+export async function sendConversationDigest(conversation, reason = 'inactivity') {
+  if (!conversation) {
+    return { conversation, sent: false }
+  }
+
+  const transcript = mapMessagesForTranscript(conversation.messages)
+  const digest = {
+    reason,
+    reasonLabel: DIGEST_REASON_LABELS[reason] || reason,
+    startedAt: conversation.startedAt,
+    lastActivityAt: conversation.lastActivityAt,
+    messageCount: transcript.length,
+    transcript,
+  }
+
+  try {
+    await axios.post(LEAD_EMAIL_ENDPOINT, {
+      leadData: conversation.leadData || {},
+      qualificationScore: conversation.qualificationScore,
+      conversationId: conversation.id,
+      conversationDigest: digest,
+    })
+
+    const sentAt = new Date().toISOString()
+    const updatedConversation = {
+      ...conversation,
+      conversationDigestSent: true,
+      conversationDigestReason: reason,
+      conversationDigestSentAt: sentAt,
+    }
+
+    return { conversation: updatedConversation, sent: true }
+  } catch (error) {
+    console.error('[KMJK Chat] Conversation digest email failed:', error)
+    return { conversation, sent: false, error }
   }
 }
 
@@ -392,16 +467,22 @@ export async function sendKmjkMessage(conversation, userInput) {
     return { conversation: null }
   }
 
+  const userTimestamp = new Date()
+  const userIso = userTimestamp.toISOString()
   const userMessage = {
-    id: `msg_user_${Date.now()}`,
+    id: `msg_user_${userTimestamp.getTime()}`,
     role: 'user',
     content: userInput,
-    timestamp: new Date(),
+    timestamp: userIso,
   }
 
   const updatedConversation = {
     ...conversation,
     messages: [...conversation.messages, userMessage],
+    lastActivityAt: userIso,
+    conversationDigestSent: false,
+    conversationDigestReason: null,
+    conversationDigestSentAt: null,
   }
 
   updatedConversation.leadData = extractContactDetails(userInput, updatedConversation.leadData)
@@ -437,15 +518,18 @@ export async function sendKmjkMessage(conversation, userInput) {
     }
   }
 
+  const assistantTimestamp = new Date()
+  const assistantIso = assistantTimestamp.toISOString()
   const assistantMessage = {
-    id: `msg_assistant_${Date.now()}`,
+    id: `msg_assistant_${assistantTimestamp.getTime()}`,
     role: 'assistant',
     content: assistantResponse.text,
-    timestamp: new Date(),
+    timestamp: assistantIso,
     quickReplies: assistantResponse.quickReplies,
   }
 
   updatedConversation.messages = [...updatedConversation.messages, assistantMessage]
+  updatedConversation.lastActivityAt = assistantIso
 
   const hasContact = Boolean(updatedConversation.leadData.email || updatedConversation.leadData.phone)
   const hasProjectContext = Boolean(
