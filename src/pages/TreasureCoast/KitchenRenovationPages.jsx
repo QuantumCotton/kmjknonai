@@ -3,7 +3,10 @@ const palmCityKitchenHero = new URL(
   '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
   import.meta.url
 ).href
-const sailfishPointKitchenHero = new URL('../../../pics/kitchen/JRLyuKDlSF7l-CDMJYmNl.jpg', import.meta.url).href
+const sailfishPointKitchenHero = new URL(
+  '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
+  import.meta.url
+).href
 const sewallsPointKitchenHero = new URL('../../../pics/kitchen/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
 const hutchinsonIslandKitchenHero = new URL('../../../pics/kitchen/hp_17-ya0s-vNX.jpg', import.meta.url).href
 
@@ -185,7 +188,7 @@ export const KitchenRenovationPalmCity = buildKitchenPage({
 export const KitchenRenovationSailfishPoint = buildKitchenPage({
   cityName: 'Sailfish Point',
   heroImage: sailfishPointKitchenHero,
-  heroAlt: 'Sailfish Point kitchen with navy cabinetry and coastal brass fixtures',
+  heroAlt: 'Contemporary Sailfish Point kitchen with wood beams, modern pendants, and sleek cabinetry',
   heroPosition: 'center 35%',
   heroNote:
     'Share Sailfish Point kitchen photos or layout notes with our concierge desk so we can stage marine-grade finishes and HOA-ready logistics.',
@@ -209,7 +212,7 @@ export const KitchenRenovationSailfishPoint = buildKitchenPage({
         'Designed a dual-island layout with marine-rated cabinetry, integrated wine tower, and telescoping doors to the lanai for effortless entertaining.',
       metrics: ['HOA approvals managed', 'Outdoor passthrough station', 'Custom Control4 integration'],
       image: sailfishPointKitchenHero,
-      alt: 'Luxury Sailfish Point kitchen with dual islands and ocean view',
+      alt: 'Contemporary Sailfish Point kitchen renovation with vaulted ceiling beams and a spacious island',
     },
   ],
 })
