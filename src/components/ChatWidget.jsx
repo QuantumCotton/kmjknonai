@@ -15,6 +15,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   const [isSending, setIsSending] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
+  const [uploadNotice, setUploadNotice] = useState('')
   const messagesEndRef = useRef(null)
   const lastAssistantIdRef = useRef(null)
   const [streamingState, setStreamingState] = useState(null)
@@ -97,8 +98,16 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   }
 
   const handleUploadClick = () => {
-    fileInputRef.current?.click()
+    setUploadError('')
+    setUploadNotice('📎 Image upload is in testing and coming soon. Feature temporarily unavailable for security.')
   }
+
+  useEffect(() => {
+    if (!uploadNotice) return
+
+    const timeout = setTimeout(() => setUploadNotice(''), 6000)
+    return () => clearTimeout(timeout)
+  }, [uploadNotice])
 
   const handleFileSelection = async (event) => {
     const files = Array.from(event.target.files || [])
@@ -269,6 +278,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
                 multiple
                 className="hidden"
                 onChange={handleFileSelection}
+                disabled
               />
               <Button
                 type="button"
@@ -298,10 +308,14 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
             {isUploading && (
               <p className="text-xs text-gray-500 mt-2 text-center">Uploading photo…</p>
             )}
+            {uploadNotice && (
+              <p className="text-xs text-gray-600 mt-2 text-center">{uploadNotice}</p>
+            )}
             {uploadError && (
               <p className="text-xs text-red-500 mt-1 text-center">{uploadError}</p>
             )}
-            <p className="text-xs text-gray-500 mt-2 text-center">Powered by KMJK Home Improvement</p>
+            <p className="text-xs text-gray-500 mt-2 text-center">New concierge features are currently in testing. Image upload capability is coming soon.</p>
+            <p className="text-xs text-gray-500 mt-1 text-center">Powered by KMJK Home Improvement</p>
           </div>
         </>
       )}
