@@ -331,7 +331,7 @@ export function createTreasureCoastLandingPage(config) {
           }
         }
 
-        // Also submit to Web3Forms for email backup (without files)
+        // Also submit to Web3Forms for email backup (WITHOUT any file references)
         const payload = new FormData()
         payload.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912')
         payload.append('name', formData.name)
@@ -341,11 +341,8 @@ export function createTreasureCoastLandingPage(config) {
         payload.append('timeline', formData.timeline)
         payload.append('budget', formData.budget)
         
-        let message = formData.projectDetails
-        if (hasFiles) {
-          message += '\n\n📎 Files to be uploaded to Slack: ' + formData.files.map(f => f.name).join(', ')
-        }
-        payload.append('message', message)
+        // Only send project details, NO file information to avoid Web3Forms Pro feature error
+        payload.append('message', formData.projectDetails || 'No project details provided')
         payload.append('service_type', serviceType || 'Treasure Coast Service')
         payload.append('city', cityName || hero?.badge || '')
         payload.append('button_context', buttonContext || 'Treasure Coast Landing')

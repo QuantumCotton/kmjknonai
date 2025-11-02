@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Your webhook URL from environment variables (most secure)
+    // Your existing webhook URL from environment variables (already configured for chatbot)
     const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL
     
     if (!SLACK_WEBHOOK_URL) {
