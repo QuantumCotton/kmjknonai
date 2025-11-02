@@ -313,7 +313,7 @@ export function createTreasureCoastLandingPage(config) {
           ]
         }
 
-        // Send lead info via secure backend
+        // Send lead info via backend
         const backendUrl = '/api/slack-proxy' // Backend endpoint
         
         if (slackPayload) {

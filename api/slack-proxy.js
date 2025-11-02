@@ -1,5 +1,5 @@
-// Secure Slack Webhook Proxy with Image Upload Support
-// This sends both text notifications and images to Slack via webhook
+// Backend API endpoint for form submissions
+// Handles text notifications and file attachments
 
 export default async function handler(req, res) {
   // Only allow POST requests
@@ -8,17 +8,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Webhook URL from environment variables
-    const WEBHOOK_URL = process.env.WEBHOOK_ENDPOINT_URL
+    // Endpoint URL from environment variables
+    const ENDPOINT_URL = process.env.WEBHOOK_ENDPOINT_URL
     
-    if (!WEBHOOK_URL) {
-      throw new Error('Webhook endpoint not configured')
+    if (!ENDPOINT_URL) {
+      throw new Error('Endpoint not configured')
     }
     
     const { messageData, attachments, customerInfo } = req.body
 
-    // Send formatted lead notification
-    const notificationResponse = await fetch(WEBHOOK_URL, {
+    // Send formatted notification
+    const notificationResponse = await fetch(ENDPOINT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
             ]
           }
 
-          const attachmentResponse = await fetch(WEBHOOK_URL, {
+          const attachmentResponse = await fetch(ENDPOINT_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
