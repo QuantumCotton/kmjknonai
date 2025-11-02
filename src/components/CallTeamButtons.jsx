@@ -7,25 +7,39 @@ export default function CallTeamButtons({
   iconSize = 18,
   tone = 'gold',
 }) {
-  const baseWrapper =
-    'flex w-full overflow-hidden rounded-lg border border-white/10 bg-[var(--deep-charcoal)] text-white shadow-lg'
+  const isTransparent = tone === 'transparent'
 
-  const halves = [
-    {
-      wrapper:
-        tone === 'gold'
-          ? 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]'
-          : 'bg-[var(--deep-charcoal)] text-white hover:bg-black',
-      border: 'border-r border-white/20',
-    },
-    {
-      wrapper:
-        tone === 'gold'
-          ? 'bg-[var(--deep-charcoal)] text-white hover:bg-black'
-          : 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]',
-      border: '',
-    },
-  ]
+  const baseWrapper = isTransparent
+    ? 'flex w-full overflow-hidden rounded-md border border-white/60 bg-transparent text-white backdrop-blur-sm'
+    : 'flex w-full overflow-hidden rounded-lg border border-white/10 bg-[var(--deep-charcoal)] text-white shadow-lg'
+
+  const halves = isTransparent
+    ? [
+        {
+          wrapper: 'bg-transparent text-white hover:bg-white/10 transition-colors',
+          border: 'border-r border-white/40',
+        },
+        {
+          wrapper: 'bg-transparent text-white hover:bg-white/10 transition-colors',
+          border: '',
+        },
+      ]
+    : [
+        {
+          wrapper:
+            tone === 'gold'
+              ? 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]'
+              : 'bg-[var(--deep-charcoal)] text-white hover:bg-black',
+          border: 'border-r border-white/20',
+        },
+        {
+          wrapper:
+            tone === 'gold'
+              ? 'bg-[var(--deep-charcoal)] text-white hover:bg-black'
+              : 'bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-[var(--brushed-bronze)]',
+          border: '',
+        },
+      ]
 
   return (
     <div className={`${baseWrapper} ${className}`}>
