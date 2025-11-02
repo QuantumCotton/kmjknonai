@@ -37,7 +37,7 @@ export const handler = async (event) => {
   }
 
   try {
-    const { leadData = {}, qualificationScore, conversationId } = JSON.parse(event.body || '{}')
+    const { leadData = {}, qualificationScore, conversationId, conversationDigest } = JSON.parse(event.body || '{}')
 
     const recipients = recipientsEnv
       .split(',')
@@ -52,9 +52,9 @@ export const handler = async (event) => {
       }
     }
 
-    const subject = buildSubject(leadData, qualificationScore)
-    const textBody = buildTextEmail(leadData, qualificationScore, conversationId)
-    const htmlBody = buildHtmlEmail(leadData, qualificationScore, conversationId)
+    const subject = buildSubject(leadData, qualificationScore, conversationId, conversationDigest)
+    const textBody = buildTextEmail(leadData, qualificationScore, conversationId, conversationDigest)
+    const htmlBody = buildHtmlEmail(leadData, qualificationScore, conversationId, conversationDigest)
 
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -96,17 +96,27 @@ export const handler = async (event) => {
   }
 }
 
-function buildSubject(leadData, qualificationScore) {
+function buildSubject(leadData, qualificationScore, conversationId, conversationDigest) {
+  if (conversationDigest) {
+    const reason = conversationDigest.reasonLabel || conversationDigest.reason || 'Chat Digest'
+    const name = leadData.name || 'Visitor'
+    return `KMJK Chat Digest • ${reason} • ${name}`
+  }
+
   const service = leadData.serviceCategory || leadData.projectType || 'Project Inquiry'
   const name = leadData.name || 'Unknown contact'
   const score = typeof qualificationScore === 'number' ? `• Score ${qualificationScore}` : ''
   return `KMJK Lead • ${service} • ${name} ${score}`.trim()
 }
 
-function buildTextEmail(leadData, qualificationScore, conversationId) {
+function buildTextEmail(leadData, qualificationScore, conversationId, conversationDigest) {
   const lines = []
 
-  lines.push('New KMJK Concierge Lead')
+  if (conversationDigest) {
+    lines.push('KMJK Concierge Chat Digest')
+  } else {
+    lines.push('New KMJK Concierge Lead')
+  }
   lines.push('')
   lines.push(`Service: ${leadData.serviceCategory || leadData.projectType || 'n/a'}`)
   lines.push(`Name: ${leadData.name || 'n/a'}`)
@@ -142,10 +152,29 @@ function buildTextEmail(leadData, qualificationScore, conversationId) {
     })
   }
 
+  if (conversationDigest) {
+    lines.push('')
+    lines.push(`Digest Reason: ${conversationDigest.reasonLabel || conversationDigest.reason || 'n/a'}`)
+    lines.push(`Started At: ${conversationDigest.startedAt || 'n/a'}`)
+    lines.push(`Last Activity: ${conversationDigest.lastActivityAt || 'n/a'}`)
+    lines.push(`Total Messages: ${conversationDigest.messageCount ?? 'n/a'}`)
+
+    if (conversationDigest.transcript?.length) {
+      lines.push('')
+      lines.push('Conversation Transcript:')
+      conversationDigest.transcript.forEach((entry, index) => {
+        const stamp = entry.timestamp || 'unknown time'
+        lines.push(`${index + 1}. [${entry.role}] ${stamp}`)
+        lines.push(entry.content || '(no content)')
+        lines.push('')
+      })
+    }
+  }
+
   return lines.join('\n')
 }
 
-function buildHtmlEmail(leadData, qualificationScore, conversationId) {
+function buildHtmlEmail(leadData, qualificationScore, conversationId, conversationDigest) {
   const safe = (value) =>
     (value || '')
       .toString()
@@ -180,6 +209,22 @@ function buildHtmlEmail(leadData, qualificationScore, conversationId) {
     })
     .join('')
 
+  const transcriptRows = (conversationDigest?.transcript || [])
+    .map((entry, index) => {
+      const role = safe(entry.role || 'unknown')
+      const timestamp = safe(entry.timestamp || '')
+      const content = safe(entry.content || '(no content)')
+      return `
+        <tr>
+          <td style="vertical-align:top; padding: 6px 8px; border-bottom: 1px solid #e5e7eb;"><strong>${index + 1}.</strong></td>
+          <td style="vertical-align:top; padding: 6px 8px; border-bottom: 1px solid #e5e7eb;">
+            <div><strong>${role}</strong> <span style="color:#6b7280;">${timestamp}</span></div>
+            <div style="margin-top:4px; white-space:pre-wrap;">${content}</div>
+          </td>
+        </tr>`
+    })
+    .join('')
+
   return `<!DOCTYPE html>
 <html>
   <head>
@@ -193,7 +238,7 @@ function buildHtmlEmail(leadData, qualificationScore, conversationId) {
     </style>
   </head>
   <body>
-    <h2>New KMJK Concierge Lead</h2>
+    <h2>${conversationDigest ? 'KMJK Concierge Chat Digest' : 'New KMJK Concierge Lead'}</h2>
     <table>
       <tbody>
         ${rows
@@ -213,6 +258,17 @@ function buildHtmlEmail(leadData, qualificationScore, conversationId) {
 
     ${scopeList ? `<h3>Scope Notes</h3><ul>${scopeList}</ul>` : ''}
     ${photoList ? `<h3>Project Photos</h3><ul>${photoList}</ul>` : ''}
+
+    ${conversationDigest ? `
+      <h3>Conversation Digest</h3>
+      <p><strong>Reason:</strong> ${safe(conversationDigest.reasonLabel || conversationDigest.reason || 'n/a')}</p>
+      <p><strong>Started At:</strong> ${safe(conversationDigest.startedAt || 'n/a')}</p>
+      <p><strong>Last Activity:</strong> ${safe(conversationDigest.lastActivityAt || 'n/a')}</p>
+      <p><strong>Total Messages:</strong> ${safe(conversationDigest.messageCount ?? 'n/a')}</p>
+      ${transcriptRows
+        ? `<table style="width:100%; margin-top:12px; border-collapse: collapse;">${transcriptRows}</table>`
+        : '<p>No transcript available.</p>'}
+    ` : ''}
   </body>
 </html>`
 }

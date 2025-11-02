@@ -107,7 +107,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
 
   const handleUploadClick = () => {
     setUploadError('')
-    setUploadNotice('📎 Image upload is in testing and coming soon. Feature temporarily unavailable for security.')
+    setUploadNotice('📎 Image upload is returning soon. Feature temporarily unavailable for security.')
   }
 
   useEffect(() => {
@@ -387,7 +387,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
             {uploadError && (
               <p className="text-xs text-red-500 mt-1 text-center">{uploadError}</p>
             )}
-            <p className="text-xs text-gray-500 mt-2 text-center">New concierge features are currently in testing. Image upload capability is coming soon.</p>
+            <p className="text-xs text-gray-500 mt-2 text-center">Some concierge features are temporarily unavailable due to security. Image upload will return soon.</p>
             <p className="text-xs text-gray-500 mt-1 text-center">Powered by KMJK Home Improvement</p>
           </div>
         </>
