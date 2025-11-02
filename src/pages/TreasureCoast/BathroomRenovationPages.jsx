@@ -186,8 +186,8 @@ export const BathroomRenovationSailfishPoint = buildBathroomPage({
   ],
   testimonial: {
     quote:
-      'Our primary bath now feels like the spa at the club. KMJK coordinated every trade, handled the HOA paperwork, and delivered exactly when promised.',
-    author: 'Carina & James P., Sailfish Point',
+      'Our primary bath now feels like the spa at the club. KMJK coordinated every trade, complied with the HOA effortlessly, and delivered exactly when promised.',
+    author: 'C. & J. P., Sailfish Point',
     detail: 'Elite Primary Suite • $96k • 5 Weeks',
   },
   caseStudies: [

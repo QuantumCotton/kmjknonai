@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Phone, Loader2, Upload } from 'lucide-react'
+import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
   Dialog,
@@ -16,11 +16,8 @@ import {
   KMJK_CONTACT_NAME,
   KMJK_PHONE_DISPLAY,
   KMJK_PHONE_DIGITS,
-  KMJK_PHONE_SMS_LINK,
+  KMJK_PHONE_CALL_LINK,
   KMJK_EMAIL,
-  SWAY_CONTACT_NAME,
-  SWAY_PHONE_DISPLAY,
-  SWAY_PHONE_CALL_LINK,
 } from '@/constants/contact.js'
 
 export function createTreasureCoastLandingPage(config) {
@@ -269,57 +266,35 @@ export function createTreasureCoastLandingPage(config) {
                   {hero.subheading}
                 </p>
               )}
-              <div className="space-y-4">
-                <div className="mx-auto w-full max-w-sm overflow-hidden rounded-lg border border-white/60 bg-transparent text-white shadow-md">
-                  <div className="flex">
-                    <a
-                      href={SWAY_PHONE_CALL_LINK}
-                      title={`${SWAY_CONTACT_NAME}: ${SWAY_PHONE_DISPLAY}`}
-                      className="flex flex-1 items-center justify-center gap-2 bg-white/5 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/10 sm:text-sm"
-                    >
-                      <Phone size={16} />
-                      <span>Call {SWAY_CONTACT_NAME}</span>
-                    </a>
-                    <a
-                      href={KMJK_PHONE_SMS_LINK}
-                      title={`${KMJK_CONTACT_NAME}: ${KMJK_PHONE_DISPLAY}`}
-                      className="flex flex-1 items-center justify-center gap-2 bg-transparent px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/10 sm:text-sm"
-                    >
-                      <MessageSquare size={16} />
-                      <span>Text {KMJK_CONTACT_NAME}</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    size="lg"
-                    onClick={() => openForm('Hero - Schedule Consultation')}
-                    className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
-                  >
-                    <Calendar className="mr-2" size={22} />
-                    Schedule Consultation
-                  </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  onClick={() => openForm('Hero - Schedule Consultation')}
+                  className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
+                >
+                  <Calendar className="mr-2" size={22} />
+                  Schedule Consultation
+                </Button>
+                <a href={KMJK_PHONE_CALL_LINK}>
                   <Button
                     size="lg"
                     variant="outline"
-                    onClick={() => openForm('Hero - Upload Inspiration')}
                     className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
                   >
-                    <Upload className="mr-2" size={22} />
-                    Upload Inspiration
+                    <MessageSquare className="mr-2" size={22} />
+                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
                   </Button>
-                  <a href={`mailto:${KMJK_EMAIL}`}>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
-                    >
-                      <Mail className="mr-2" size={22} />
-                      Email {KMJK_EMAIL}
-                    </Button>
-                  </a>
-                </div>
+                </a>
+                <a href={`mailto:${KMJK_EMAIL}`}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
+                  >
+                    <Mail className="mr-2" size={22} />
+                    Email {KMJK_EMAIL}
+                  </Button>
+                </a>
               </div>
               {hero.note && (
                 <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
@@ -585,43 +560,27 @@ export function createTreasureCoastLandingPage(config) {
               {finalCta.subheading && (
                 <p className="text-lg md:text-xl text-gray-200">{finalCta.subheading}</p>
               )}
-              <div className="space-y-4">
-                <div className="mx-auto w-full max-w-sm overflow-hidden rounded-lg border border-white/60 bg-white/5 text-white shadow-md">
-                  <div className="flex">
-                    <a
-                      href={SWAY_PHONE_CALL_LINK}
-                      title={`${SWAY_CONTACT_NAME}: ${SWAY_PHONE_DISPLAY}`}
-                      className="flex flex-1 items-center justify-center gap-2 bg-white/10 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/20 sm:text-sm"
-                    >
-                      <Phone size={16} />
-                      <span>Call {SWAY_CONTACT_NAME}</span>
-                    </a>
-                    <a
-                      href={KMJK_PHONE_SMS_LINK}
-                      title={`${KMJK_CONTACT_NAME}: ${KMJK_PHONE_DISPLAY}`}
-                      className="flex flex-1 items-center justify-center gap-2 px-4 py-3 text-xs font-semibold uppercase tracking-wide transition-colors hover:bg-white/20 sm:text-sm"
-                    >
-                      <MessageSquare size={16} />
-                      <span>Text {KMJK_CONTACT_NAME}</span>
-                    </a>
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    size="lg"
-                    className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg"
-                    onClick={() => openForm('Footer - Book Consultation')}
-                  >
-                    <Calendar className="mr-2" size={22} />
-                    Book Consultation
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg"
+                  onClick={() => openForm('Footer - Book Consultation')}
+                >
+                  <Calendar className="mr-2" size={22} />
+                  Book Consultation
+                </Button>
+                <a href={KMJK_PHONE_CALL_LINK}>
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
+                    <MessageSquare className="mr-2" size={22} />
+                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
                   </Button>
-                  <a href={`mailto:${KMJK_EMAIL}`}>
-                    <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
-                      <Mail className="mr-2" size={22} />
-                      Email {KMJK_EMAIL}
-                    </Button>
-                  </a>
-                </div>
+                </a>
+                <a href={`mailto:${KMJK_EMAIL}`}>
+                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
+                    <Mail className="mr-2" size={22} />
+                    Email {KMJK_EMAIL}
+                  </Button>
+                </a>
               </div>
             </div>
           </section>
