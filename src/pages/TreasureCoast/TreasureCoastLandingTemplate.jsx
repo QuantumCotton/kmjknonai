@@ -42,7 +42,7 @@ const DualContactButton = ({ variant = 'dark', className = '' }) => {
 
   return (
     <div
-      className={`flex overflow-hidden rounded-full border px-0 text-base sm:text-lg ${palette.container} ${className}`}
+      className={`flex overflow-hidden rounded-md border px-0 text-base sm:text-lg ${palette.container} ${className}`}
       role="group"
       aria-label="Call Sway or text Chris"
     >
@@ -158,8 +158,8 @@ export function createTreasureCoastLandingPage(config) {
        payload.append('city', cityName || hero?.badge || '')
        payload.append('button_context', buttonContext || 'Treasure Coast Landing')
        payload.append('source_url', window.location.href)
-        formData.files.forEach((file, index) => {
-          payload.append(`attachment_${index}`, file)
+        formData.files.forEach((file) => {
+          payload.append('files[]', file)
         })
 
         const response = await fetch('https://api.web3forms.com/submit', {
