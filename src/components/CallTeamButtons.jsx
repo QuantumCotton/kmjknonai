@@ -47,7 +47,7 @@ export default function CallTeamButtons({
         <a
           key={name}
           href={callLink}
-          className={`flex flex-1 items-center justify-center gap-2 py-3 px-4 text-xs font-semibold uppercase tracking-wide transition-colors sm:text-sm ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
+          className={`flex flex-1 items-center justify-center gap-2 py-4 px-6 text-sm font-semibold uppercase tracking-wide transition-colors sm:text-base ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
         >
           <Phone size={iconSize} />
           <span>Call {name}</span>

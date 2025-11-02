@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
-import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare } from 'lucide-react'
+import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare, Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
 import {
@@ -235,16 +235,23 @@ function HomePage() {
           <div className="logo-underline"></div>
           <h1 className="tagline">Exceptional Craftsmanship. A Seamless Experience.</h1>
           <div className="flex flex-col gap-4 justify-center mt-8">
-            <CallTeamButtons className="sm:justify-center" />
+            <CallTeamButtons className="sm:justify-center max-w-xl" tone="transparent" iconSize={20} showNumbers={false} />
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a href={KMJK_PHONE_SMS_LINK}>
-                <Button size="lg" className="bg-[var(--brushed-gold)] hover:bg-[var(--brushed-bronze)] text-white">
+                <Button
+                  size="lg"
+                  className="border border-white/60 bg-transparent text-white hover:bg-white/10 px-8 py-6 text-lg"
+                >
                   <MessageSquare className="mr-2" size={20} />
                   Text {KMJK_CONTACT_NAME}
                 </Button>
               </a>
               <Link to="/contact">
-                <Button size="lg" className="bg-white text-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)] hover:text-white border-2 border-white">
+                <Button
+                  size="lg"
+                  className="bg-white text-[var(--deep-charcoal)] hover:bg-gray-100 px-8 py-6 text-lg border border-white/60"
+                >
+                  <Calendar className="mr-2" size={20} />
                   Schedule Consultation
                 </Button>
               </Link>
