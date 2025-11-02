@@ -1,5 +1,5 @@
-// Secure Slack Webhook Proxy
-// This hides your webhook URL from the frontend
+// Secure Slack Webhook Proxy with Image Upload Support
+// This sends both text notifications and images to Slack via webhook
 
 export default async function handler(req, res) {
   // Only allow POST requests
@@ -8,18 +8,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Your existing webhook URL from environment variables (already configured for chatbot)
-    const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL
+    // Webhook URL from environment variables
+    const WEBHOOK_URL = process.env.NOTIFICATIONS_WEBHOOK_URL
     
-    if (!SLACK_WEBHOOK_URL) {
-      throw new Error('Slack webhook URL not configured in environment variables')
+    if (!WEBHOOK_URL) {
+      throw new Error('Notification webhook URL not configured in environment variables')
     }
     
-    // Get the Slack payload from the request body
-    const slackPayload = req.body
+    const { slackPayload, images, leadInfo } = req.body
 
-    // Send to Slack
-    const response = await fetch(SLACK_WEBHOOK_URL, {
+    // Send formatted lead notification to Slack
+    const notificationResponse = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,12 +26,56 @@ export default async function handler(req, res) {
       body: JSON.stringify(slackPayload)
     })
 
-    if (!response.ok) {
-      throw new Error(`Slack API error: ${response.status}`)
+    if (!notificationResponse.ok) {
+      throw new Error(`Slack notification error: ${notificationResponse.status}`)
+    }
+
+    // Handle image uploads if provided (send as separate messages)
+    let uploadResults = []
+    if (images && images.length > 0) {
+      for (const image of images) {
+        try {
+          // Send image info as follow-up message
+          const imageMessage = {
+            text: `📎 *Image Ready for Download:* ${image.name}`,
+            blocks: [
+              {
+                type: "section",
+                text: {
+                  type: "mrkdwn",
+                  text: `📎 *Image from ${leadInfo.name}*\n*File:* ${image.name}\n*Size:* ${formatFileSize(image.size)}\n*Type:* ${image.type || 'Unknown'}\n\n👉 _Customer uploaded this file - download link will be provided separately_`
+                }
+              }
+            ]
+          }
+
+          const imageResponse = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(imageMessage)
+          })
+
+          if (imageResponse.ok) {
+            uploadResults.push({ success: true, fileName: image.name })
+          } else {
+            throw new Error(`Failed to send image notification`)
+          }
+        } catch (uploadError) {
+          console.error('Failed to send image notification:', uploadError)
+          uploadResults.push({ error: uploadError.message, fileName: image.name })
+        }
+      }
     }
 
     // Return success response
-    res.status(200).json({ success: true, message: 'Slack notification sent' })
+    res.status(200).json({ 
+      success: true, 
+      message: 'Slack notification sent',
+      imagesProcessed: uploadResults.length,
+      uploadResults: uploadResults
+    })
 
   } catch (error) {
     console.error('Slack proxy error:', error)
@@ -41,4 +84,13 @@ export default async function handler(req, res) {
       message: error.message 
     })
   }
+}
+
+// Helper function to format file size
+function formatFileSize(bytes) {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }

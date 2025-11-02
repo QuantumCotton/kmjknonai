@@ -313,17 +313,32 @@ export function createTreasureCoastLandingPage(config) {
           ]
         }
 
-        // Send to Slack via secure proxy (webhook URL is now hidden in backend)
+        // Send to Slack via secure proxy (images + lead info)
         const slackProxyUrl = '/api/slack-proxy' // Secure backend endpoint
         
         if (slackPayload) {
           try {
+            // Prepare lead info for Slack
+            const leadInfo = {
+              name: formData.name,
+              email: formData.email,
+              serviceType: serviceType || 'Treasure Coast Service',
+              cityName: cityName || 'Unknown'
+            }
+
+            // Send to Slack with images if they exist
+            const slackRequestData = {
+              slackPayload: slackPayload,
+              leadInfo: leadInfo,
+              images: hasFiles ? formData.files : []
+            }
+
             await fetch(slackProxyUrl, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(slackPayload)
+              body: JSON.stringify(slackRequestData)
             })
           } catch (slackError) {
             console.error('Slack notification failed:', slackError)
@@ -366,7 +381,7 @@ export function createTreasureCoastLandingPage(config) {
 
           // Show appropriate success message
           if (hasFiles) {
-            alert('✅ Form submitted successfully! \n\nNext steps:\n1. Join our project Slack channel: [SLACK_CHANNEL_LINK]\n2. Upload your photos/files there\n3. We\'ll review everything and contact you soon!\n\nOr text us at 772-777-0622 for immediate assistance.')
+            alert('✅ Form submitted successfully!\n\n📧 Your contact info has been sent to our team via email\n📎 Your images have been sent to our Slack workspace\n\nWe\'ll review everything and contact you soon!\n\nOr text us at 772-777-0622 for immediate assistance.')
           } else {
             setSubmitSuccess(true)
             setTimeout(() => {
@@ -954,7 +969,7 @@ export function createTreasureCoastLandingPage(config) {
                     className="w-full cursor-pointer rounded-md border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-600 transition focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]/60 file:mr-4 file:rounded-md file:border-0 file:bg-[var(--deep-charcoal)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-black"
                   />
                   <p className="mt-2 text-xs text-gray-500">
-                    📎 Select files here, then submit the form. We'll send you a link to our Slack workspace where you can upload photos directly. It's free and instant!
+                    📎 Upload photos here - they'll be sent directly to our team via Slack. Your contact info goes to email for quick follow-up!
                   </p>
                 </div>
 
