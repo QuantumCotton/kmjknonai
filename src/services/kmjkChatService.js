@@ -35,16 +35,18 @@ const serviceCatalog = [
 
 function createInitialConversation(conversationId) {
   const now = new Date()
+  const timestamp = now.toISOString()
   return {
     id: conversationId,
-    startedAt: now,
+    startedAt: timestamp,
+    lastActivityAt: timestamp,
     messages: [
       {
         id: `msg_${now.getTime()}`,
         role: 'assistant',
         content:
           "Hey there! I'm Atlas with KMJK Home Improvement here on the Treasure Coast. What's your first name, and how do you prefer we reach you (text, call, or email)? Feel free to tap the paperclip to add project photos, then let me know if you're planning a kitchen remodel, bathroom remodel, handyman visit, epoxy flooring, or TV/AV setup.",
-        timestamp: now,
+        timestamp,
         quickReplies: [],
       },
     ],
@@ -62,6 +64,7 @@ function createInitialConversation(conversationId) {
       questionCount: 0,
     },
     leadNotificationSent: false,
+    conversationDigestSent: false,
   }
 }
 
