@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Loader2, Phone } from 'lucide-react'
+import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Loader2, Phone, PartyPopper } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
   Dialog,
@@ -91,6 +91,7 @@ export function createTreasureCoastLandingPage(config) {
     const [buttonContext, setButtonContext] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitSuccess, setSubmitSuccess] = useState(false)
+    const [successDetails, setSuccessDetails] = useState({ hasFiles: false, name: '', cityDisplay: '' })
     const [formData, setFormData] = useState({
       name: '',
       email: '',
@@ -117,6 +118,7 @@ export function createTreasureCoastLandingPage(config) {
       setIsFormOpen(false)
       setButtonContext('')
       setSubmitSuccess(false)
+      setSuccessDetails({ hasFiles: false, name: '', cityDisplay: '' })
       setFormData({
         name: '',
         email: '',
@@ -357,7 +359,14 @@ export function createTreasureCoastLandingPage(config) {
         payload.append('budget', formData.budget)
         
         // Only send project details, NO file information to avoid Web3Forms Pro feature error
-        payload.append('message', formData.projectDetails || 'No project details provided')
+        let messageBody = formData.projectDetails || 'No project details provided'
+
+        if (hasFiles && formData.files?.length) {
+          const fileNames = formData.files.map((file) => file.name).join(', ')
+          messageBody += `\n\n[Customer noted ${formData.files.length === 1 ? '1 file' : `${formData.files.length} files`} attached on site: ${fileNames}]`
+        }
+
+        payload.append('message', messageBody)
         payload.append('service_type', serviceType || 'Treasure Coast Service')
         payload.append('city', cityName || hero?.badge || '')
         payload.append('button_context', buttonContext || 'Treasure Coast Landing')
@@ -379,15 +388,24 @@ export function createTreasureCoastLandingPage(config) {
             })
           }
 
-          // Show appropriate success message
-          if (hasFiles) {
-            alert('✅ Form submitted successfully!\n\n📧 Your contact info has been sent to our team via email\n📎 Your images have been sent to our Slack workspace\n\nWe\'ll review everything and contact you soon!\n\nOr text us at 772-777-0622 for immediate assistance.')
-          } else {
-            setSubmitSuccess(true)
-            setTimeout(() => {
-              closeForm()
-            }, 2500)
-          }
+          setSuccessDetails({
+            hasFiles,
+            name: formData.name,
+            cityDisplay: cityName || hero?.badge || 'the Treasure Coast',
+          })
+
+          setSubmitSuccess(true)
+
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            address: '',
+            timeline: '',
+            budget: '',
+            projectDetails: '',
+            files: [],
+          })
         } else {
           throw new Error(data.message || 'Failed to submit form')
         }
@@ -532,7 +550,7 @@ export function createTreasureCoastLandingPage(config) {
                 <Button
                   size="lg"
                   onClick={() => openForm('Hero - Schedule Consultation')}
-                  className="bg-white/90 text-[var(--deep-charcoal)] hover:bg-white px-8 py-6 text-lg border border-white/60"
+                  className="border-white/60 text-white bg-transparent hover:bg-white/10 px-8 py-6 text-lg"
                 >
                   <Calendar className="mr-2" size={22} />
                   Schedule Consultation
@@ -855,12 +873,56 @@ export function createTreasureCoastLandingPage(config) {
             </DialogHeader>
 
             {submitSuccess ? (
-              <div className="py-10 text-center space-y-3">
-                <div className="text-5xl">✅</div>
-                <p className="text-xl font-semibold text-[var(--deep-charcoal)]">We received your request!</p>
-                <p className="text-gray-600">
-                  Chris and the KMJK team will follow up shortly to schedule your consultation.
-                </p>
+              <div className="py-8 text-center space-y-6">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--brushed-gold)]/15 text-[var(--brushed-gold)]">
+                  <PartyPopper size={36} />
+                </div>
+                <div className="space-y-2">
+                  <p className="text-2xl font-semibold text-[var(--deep-charcoal)]">
+                    Thank you! Your home is one step closer to holiday-ready comfort.
+                  </p>
+                  <p className="text-base text-gray-600">
+                    We received your details{successDetails.name ? `, ${successDetails.name},` : ''} and will reach out within one business day to plan a cozy seasonal sanctuary in {successDetails.cityDisplay}.
+                  </p>
+                </div>
+                <div className="rounded-lg border border-[var(--brushed-gold)]/30 bg-[var(--warm-ivory)]/40 p-5 text-left space-y-3">
+                  <div className="flex items-start gap-3">
+                    <Check className="mt-1 h-5 w-5 text-[var(--brushed-gold)]" />
+                    <p className="text-sm text-gray-700">
+                      Your consultation request is confirmed. Expect a call or text from Chris soon.
+                    </p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="mt-1 h-5 w-5 text-[var(--brushed-gold)]" />
+                    <p className="text-sm text-gray-700">
+                      A confirmation email is on its way with next steps and ways to share inspiration.
+                    </p>
+                  </div>
+                  {successDetails.hasFiles ? (
+                    <div className="flex items-start gap-3">
+                      <MessageSquare className="mt-1 h-5 w-5 text-[var(--brushed-gold)]" />
+                      <p className="text-sm text-gray-700">
+                        We received your photos—our design team will review them as we plan your holiday-perfect retreat.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3">
+                      <MessageSquare className="mt-1 h-5 w-5 text-[var(--brushed-gold)]" />
+                      <p className="text-sm text-gray-700">
+                        Have inspiration photos? Reply to the confirmation email or text them to {KMJK_PHONE_DISPLAY} any time.
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <p>Wishing you a warm, memorable holiday season—your spa-worthy sanctuary is on the horizon.</p>
+                  <p>
+                    Need us sooner? Call or text <a href={KMJK_PHONE_CALL_LINK} className="font-semibold text-[var(--deep-charcoal)] underline">{KMJK_PHONE_DISPLAY}</a> for immediate assistance.
+                  </p>
+                </div>
+                <Button size="lg" className="mx-auto" onClick={closeForm}>
+                  Close &amp; explore more
+                </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
