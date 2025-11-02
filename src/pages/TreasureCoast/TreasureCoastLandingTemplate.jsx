@@ -177,151 +177,148 @@ export function createTreasureCoastLandingPage(config) {
           timestamp: new Date().toISOString()
         }
 
-        // Send to Slack webhook 
-        // TO FIND YOUR WEBHOOK: 
-        // 1. Go to slack.com/apps → Search "Incoming Webhooks" → Add to Slack
-        // 2. Choose your channel (e.g., #new-leads) → Copy the Webhook URL
-        // 3. Replace 'YOUR_SLACK_WEBHOOK_URL_HERE' below with your actual URL
-        const slackWebhookUrl = 'https://hooks.slack.com/services/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' // Your actual webhook URL
-        
-        if (slackWebhookUrl && slackWebhookUrl.startsWith('https://hooks.slack.com/')) {
-          try {
-            const slackPayload = {
-              text: `🚨 NEW LEAD: ${slackSubmission.serviceType} - ${slackSubmission.cityName}`,
-              blocks: [
+        // Prepare Slack payload (hidden from frontend)
+        const slackPayload = {
+          text: `🚨 NEW LEAD: ${slackSubmission.serviceType} - ${slackSubmission.cityName}`,
+          blocks: [
+            {
+              type: "header",
+              text: {
+                type: "plain_text",
+                text: `🚨 NEW LEAD ALERT: ${slackSubmission.serviceType}`,
+                emoji: true
+              }
+            },
+            {
+              type: "context",
+              elements: [
                 {
-                  type: "header",
+                  type: "mrkdwn",
+                  text: `📍 *Location:* ${slackSubmission.cityName} | 🏷️ *Service:* ${slackSubmission.serviceType} | ⏰ ${new Date().toLocaleString()}`
+                }
+              ]
+            },
+            {
+              type: "divider"
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*👤 CUSTOMER INFORMATION*"
+              }
+            },
+            {
+              type: "section",
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: "*📛 Name:*\n" + (slackSubmission.name || "Not provided")
+                },
+                {
+                  type: "mrkdwn",
+                  text: "*📧 Email:*\n" + (slackSubmission.email || "Not provided")
+                },
+                {
+                  type: "mrkdwn",
+                  text: "*📱 Phone:*\n" + (slackSubmission.phone || "Not provided")
+                },
+                {
+                  type: "mrkdwn",
+                  text: "*🏠 Address:*\n" + (slackSubmission.address || "Not provided")
+                }
+              ]
+            },
+            {
+              type: "divider"
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*💰 PROJECT DETAILS*"
+              }
+            },
+            {
+              type: "section",
+              fields: [
+                {
+                  type: "mrkdwn",
+                  text: "*⏳ Timeline:*\n" + (slackSubmission.timeline || "Not specified")
+                },
+                {
+                  type: "mrkdwn",
+                  text: "*💵 Budget:*\n" + (slackSubmission.budget || "Not specified")
+                }
+              ]
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*📝 Project Description:*\n" + (slackSubmission.projectDetails || "No details provided")
+              }
+            },
+            ...(hasFiles ? [{
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*📎 FILES READY FOR UPLOAD:*\n" + 
+                      "```" + slackSubmission.fileNames.join(', ') + "```" + 
+                      "\n👉 _Customer will upload these to the Slack channel_"
+              }
+            }] : []),
+            {
+              type: "divider"
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*🔗 SOURCE & TRACKING*"
+              }
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `🌐 <${slackSubmission.sourceUrl}|View Source Page> | 🎯 *Button:* ${slackSubmission.buttonContext}`
+                }
+              ]
+            },
+            {
+              type: "actions",
+              elements: [
+                {
+                  type: "button",
                   text: {
                     type: "plain_text",
-                    text: `🚨 NEW LEAD ALERT: ${slackSubmission.serviceType}`,
+                    text: "📞 Call Customer",
                     emoji: true
-                  }
+                  },
+                  url: `tel:${slackSubmission.phone}`
                 },
                 {
-                  type: "context",
-                  elements: [
-                    {
-                      type: "mrkdwn",
-                      text: `📍 *Location:* ${slackSubmission.cityName} | 🏷️ *Service:* ${slackSubmission.serviceType} | ⏰ ${new Date().toLocaleString()}`
-                    }
-                  ]
-                },
-                {
-                  type: "divider"
-                },
-                {
-                  type: "section",
+                  type: "button",
                   text: {
-                    type: "mrkdwn",
-                    text: "*👤 CUSTOMER INFORMATION*"
-                  }
-                },
-                {
-                  type: "section",
-                  fields: [
-                    {
-                      type: "mrkdwn",
-                      text: "*📛 Name:*\n" + (slackSubmission.name || "Not provided")
-                    },
-                    {
-                      type: "mrkdwn",
-                      text: "*📧 Email:*\n" + (slackSubmission.email || "Not provided")
-                    },
-                    {
-                      type: "mrkdwn",
-                      text: "*📱 Phone:*\n" + (slackSubmission.phone || "Not provided")
-                    },
-                    {
-                      type: "mrkdwn",
-                      text: "*🏠 Address:*\n" + (slackSubmission.address || "Not provided")
-                    }
-                  ]
-                },
-                {
-                  type: "divider"
-                },
-                {
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: "*💰 PROJECT DETAILS*"
-                  }
-                },
-                {
-                  type: "section",
-                  fields: [
-                    {
-                      type: "mrkdwn",
-                      text: "*⏳ Timeline:*\n" + (slackSubmission.timeline || "Not specified")
-                    },
-                    {
-                      type: "mrkdwn",
-                      text: "*💵 Budget:*\n" + (slackSubmission.budget || "Not specified")
-                    }
-                  ]
-                },
-                {
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: "*📝 Project Description:*\n" + (slackSubmission.projectDetails || "No details provided")
-                  }
-                },
-                ...(hasFiles ? [{
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: "*📎 FILES READY FOR UPLOAD:*\n" + 
-                          "```" + slackSubmission.fileNames.join(', ') + "```" + 
-                          "\n👉 _Customer will upload these to the Slack channel_"
-                  }
-                }] : []),
-                {
-                  type: "divider"
-                },
-                {
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: "*🔗 SOURCE & TRACKING*"
-                  }
-                },
-                {
-                  type: "context",
-                  elements: [
-                    {
-                      type: "mrkdwn",
-                      text: `🌐 <${slackSubmission.sourceUrl}|View Source Page> | 🎯 *Button:* ${slackSubmission.buttonContext}`
-                    }
-                  ]
-                },
-                {
-                  type: "actions",
-                  elements: [
-                    {
-                      type: "button",
-                      text: {
-                        type: "plain_text",
-                        text: "📞 Call Customer",
-                        emoji: true
-                      },
-                      url: `tel:${slackSubmission.phone}`
-                    },
-                    {
-                      type: "button",
-                      text: {
-                        type: "plain_text",
-                        text: "📧 Email Customer",
-                        emoji: true
-                      },
-                      url: `mailto:${slackSubmission.email}`
-                    }
-                  ]
+                    type: "plain_text",
+                    text: "📧 Email Customer",
+                    emoji: true
+                  },
+                  url: `mailto:${slackSubmission.email}`
                 }
               ]
             }
+          ]
+        }
 
-            await fetch(slackWebhookUrl, {
+        // Send to Slack via secure proxy (webhook URL is now hidden in backend)
+        const slackProxyUrl = '/api/slack-proxy' // Secure backend endpoint
+        
+        if (slackPayload) {
+          try {
+            await fetch(slackProxyUrl, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
