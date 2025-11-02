@@ -1,89 +1,138 @@
-import { useEffect } from 'react'
-import { Check, MessageSquare } from 'lucide-react'
-import { Button } from '@/components/ui/button.jsx'
-import CallTeamButtons from '@/components/CallTeamButtons.jsx'
-import bathroomSpa from '../assets/bathroom_luxury_spa.jpg'
-import { KMJK_CONTACT_NAME, KMJK_PHONE_DISPLAY, KMJK_PHONE_CALL_LINK, KMJK_PHONE_SMS_LINK } from '@/constants/contact.js'
+import { createTreasureCoastLandingPage } from './TreasureCoast/BathroomRenovationPages.jsx'
 
-export default function BathroomRemodelStuart(){
-  useEffect(() => {
-    document.title = 'Bathroom Remodel in Stuart, FL | KMJK Home Improvement'
-    const faq = {
-      '@context': 'https://schema.org', '@type': 'FAQPage',
-      mainEntity: [
-        { '@type': 'Question', name: 'How long does a bathroom remodel take?', acceptedAnswer: { '@type': 'Answer', text: 'Typical projects take 7–21 days depending on scope.' } },
-        { '@type': 'Question', name: 'Do you offer design help?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. We include design consultation and material guidance.' } },
-        { '@type': 'Question', name: 'Are you licensed and insured?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, fully licensed and insured in Florida.' } }
-      ]
-    }
-    const s = document.createElement('script'); s.type='application/ld+json'; s.textContent = JSON.stringify(faq); document.head.appendChild(s)
-    return () => { document.head.removeChild(s) }
-  }, [])
-
-  return (
-    <div className="pt-20">
-      <section className="relative min-h-[70vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${bathroomSpa})` }}>
-        <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl font-bold mb-3">Bathroom Remodel in Stuart, FL</h1>
-          <p className="text-lg opacity-90">Luxury finishes. Reliable timelines. A seamless experience from design to install.</p>
-          <div className="mt-6 flex flex-col gap-4">
-            <CallTeamButtons className="mx-auto max-w-md" />
-            <div className="flex flex-wrap gap-3 justify-center">
-              <a href={KMJK_PHONE_SMS_LINK}>
-                <Button size="lg" className="bg-[var(--brushed-gold)] text-white hover:bg-[var(--brushed-bronze)]">
-                  <MessageSquare className="mr-2" size={18} />
-                  Text {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
-                </Button>
-              </a>
-              <a href="/contact">
-                <Button size="lg" variant="outline" className="bg-white text-[var(--deep-charcoal)]">
-                  Free Consultation
-                </Button>
-              </a>
-              <Button
-                type="button"
-                onClick={() => (window.location.href = KMJK_PHONE_CALL_LINK)}
-                size="lg"
-                className="bg-[var(--deep-charcoal)] text-white"
-              >
-                <MessageSquare className="mr-2" size={18} />
-                Request Quick Call
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-white">
-        <div className="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-8">
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Why KMJK</h2>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start"><Check className="text-[var(--brushed-gold)] mr-2"/>Licensed and insured</li>
-              <li className="flex items-start"><Check className="text-[var(--brushed-gold)] mr-2"/>Dedicated project manager</li>
-              <li className="flex items-start"><Check className="text-[var(--brushed-gold)] mr-2"/>Premium tile, fixtures, and cabinetry</li>
-              <li className="flex items-start"><Check className="text-[var(--brushed-gold)] mr-2"/>Clear timelines and daily cleanup</li>
-            </ul>
-          </div>
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Typical Investment</h2>
-            <div className="rounded-lg border p-4">
-              <p className="mb-2"><strong>Refresh:</strong> $12k–$20k</p>
-              <p className="mb-2"><strong>Full Remodel:</strong> $25k–$45k</p>
-              <p className="mb-2"><strong>Luxury:</strong> $50k+</p>
-              <p className="text-sm text-gray-600">Financing available; ask during consultation.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl font-semibold mb-4">Stuart Service Area</h2>
-          <p className="text-gray-700">Proudly serving Stuart and the Treasure Coast including Jensen Beach and Palm City.</p>
-        </div>
-      </section>
-    </div>
-  )
-}
+export default createTreasureCoastLandingPage({
+  componentName: 'BathroomRemodelStuart',
+  cityName: 'Stuart',
+  serviceType: 'Bathroom Renovation',
+  metaTitle: 'Stuart, FL Bathroom Renovation | KMJK Home Improvement',
+  hero: {
+    badge: 'Stuart, FL • Luxury Bathrooms',
+    heading: 'Stuart Bathroom Renovations With Resort-Level Calm',
+    subheading: 'Embrace spa serenity with KMJK. We handle design, permitting, and installation with concierge-level care for Treasure Coast homeowners.',
+    backgroundImage: new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href,
+    backgroundPosition: 'center 40%',
+    alt: 'Stuart luxury bathroom with freestanding tub and custom vanity',
+    tagline: 'Treasure Coast • Luxury Bathrooms • KMJK',
+  },
+  statHighlights: [
+    { value: '250+', label: 'Luxury Baths Delivered' },
+    { value: '24/7', label: 'Project Updates' },
+    { value: '21', label: 'Day Average Build' },
+    { value: '100%', label: 'Licensed & Insured' },
+  ],
+  intro: {
+    title: 'Bathrooms Crafted for Stuart Living',
+    paragraphs: [
+      'From steam showers overlooking the St. Lucie River to guest suites tailored for seasonal visitors, KMJK turns Stuart bathrooms into personal sanctuaries. Our planners coordinate every material and trade so you can enjoy the transformation without the oversight stress.',
+      'Expect transparent communication, protected job sites, and craftsmanship that stands up to coastal conditions. We deliver magazine-worthy finishes inside tidy, organized project timelines.',
+    ],
+  },
+  sellingPoints: [
+    {
+      title: 'Spa-Level Design & Finish',
+      items: [
+        'Floor-to-ceiling tile, steam showers, and soaking tubs matched to your home style',
+        'Vanity and lighting plans curated by KMJK\'s in-house designer',
+        'Impact-rated windows, ventilation, and waterproofing engineered for coastal humidity',
+        'Fixture packages from Brizo, Kohler, Delta, and more with concierge selection support',
+      ],
+    },
+    {
+      title: 'A Clean, Organized Build',
+      items: [
+        'Personal project manager providing daily updates—even if you are seasonal residents',
+        'Dust control, floor coverings, and HEPA filtration keep the rest of your home pristine',
+        'Licensed trades for plumbing, electrical, and glass installation',
+        'Punch list walkthrough and white-glove turnover to ensure every detail is perfect',
+      ],
+    },
+  ],
+  pricingOptions: [
+    {
+      name: 'Signature Refresh',
+      range: '$18k - $32k',
+      monthly: '$725/mo',
+      features: [
+        'Tile surround, new vanity + quartz top',
+        'Updated plumbing & lighting fixtures',
+        'Professional painting & glass upgrades',
+        '1-week turnaround with meticulous clean-up',
+      ],
+    },
+    {
+      name: 'Full Spa Retreat',
+      range: '$38k - $62k',
+      monthly: '$1,495/mo',
+      features: [
+        'Custom tile shower systems with linear drains',
+        'Freestanding tubs or built-in bench seating',
+        'Heated floors, niches, and luxury hardware',
+        'Dedicated project coordinator + designer',
+      ],
+    },
+    {
+      name: 'Elite Primary Suite',
+      range: '$70k+',
+      monthly: '$2,450/mo',
+      features: [
+        'Layout reconfiguration with structural moves and new plumbing routes',
+        'Custom vanities built by KMJK cabinetmakers',
+        'Smart lighting, AV integration, and automated shades',
+        'Post-project maintenance kit + seasonal check-ins',
+      ],
+    },
+  ],
+  testimonials: [
+    {
+      quote: 'KMJK transformed our Stuart downtown historic home bathroom into a modern spa while preserving the character. Their attention to detail and respect for our home\'s architecture was impressive.',
+      author: 'Jennifer & Robert K., Stuart',
+      detail: 'Full Spa Retreat • $48k • 3 Weeks',
+      rating: 5,
+    },
+  ],
+  serviceArea: {
+    title: 'Where We Renovate in Stuart',
+    description: 'Serving Stuart neighborhoods, historic districts, and waterfront communities with tailored bathroom renovations.',
+    items: [
+      'Downtown Stuart Historic District',
+      'Stuart Riverfront',
+      'The Landing at Stuart',
+      'Sailfish Point',
+      'Palm City',
+      'Jensen Beach',
+    ],
+  },
+  caseStudies: [
+    {
+      title: 'Historic Downtown Stuart Spa Retreat',
+      location: 'Stuart, FL',
+      description: 'Restored a 1920s bathroom with modern amenities while preserving historic charm, including clawfoot tub conversion and period-appropriate tilework.',
+      metrics: ['Historic preservation compliance', 'Modern luxury integration', 'Period-appropriate fixtures'],
+      image: new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href,
+      alt: 'Stuart historic bathroom renovation with modern spa features',
+    },
+  ],
+  faqs: [
+    {
+      question: 'How long does a KMJK bathroom renovation typically take?',
+      answer: 'Most Treasure Coast bathroom remodels wrap in 3–4 weeks once materials are on site. Powder rooms and refresh projects can finish in under two weeks.',
+    },
+    {
+      question: 'Do you help with finish selections for the project?',
+      answer: 'Yes. Our designer curates tile, plumbing, lighting, and hardware packages so you can sign off on every detail before demo begins.',
+    },
+    {
+      question: 'Can you remodel while we are out of state?',
+      answer: 'Absolutely. We coordinate key handoff, provide daily photo updates, and manage inspections so seasonal residents can return to a finished spa retreat.',
+    },
+  ],
+  relatedLinks: [
+    { label: 'Palm City Kitchen Renovation', href: '/palm-city-kitchen-renovation' },
+    { label: 'Treasure Coast Handyman Concierge', href: '/palm-city-handyman-services' },
+    { label: 'Hutchinson Island Epoxy Floors', href: '/hutchinson-island-epoxy-flooring' },
+  ],
+  finalCta: {
+    heading: 'Design your Stuart spa sanctuary with KMJK',
+    subheading: 'Schedule a consultation with Chris to review layouts, materials, and project investment options.',
+  },
+})
