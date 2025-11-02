@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Loader2 } from 'lucide-react'
+import { MessageSquare, Calendar, Check, Star, MapPin, Mail, Loader2, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import {
   Dialog,
@@ -17,8 +17,55 @@ import {
   KMJK_PHONE_DISPLAY,
   KMJK_PHONE_DIGITS,
   KMJK_PHONE_CALL_LINK,
+  KMJK_PHONE_SMS_LINK,
   KMJK_EMAIL,
+  SWAY_CONTACT_NAME,
+  SWAY_PHONE_DISPLAY,
+  SWAY_PHONE_CALL_LINK,
 } from '@/constants/contact.js'
+
+const DualContactButton = ({ variant = 'dark', className = '' }) => {
+  const palettes = {
+    dark: {
+      container: 'border-white/60 text-white bg-transparent',
+      hover: 'hover:bg-white/10',
+      separator: 'bg-white/40',
+    },
+    light: {
+      container: 'border-[var(--deep-charcoal)] text-[var(--deep-charcoal)] bg-transparent',
+      hover: 'hover:bg-[var(--deep-charcoal)]/10',
+      separator: 'bg-[var(--deep-charcoal)]/20',
+    },
+  }
+
+  const palette = palettes[variant] || palettes.dark
+
+  return (
+    <div
+      className={`flex overflow-hidden rounded-full border px-0 text-base sm:text-lg ${palette.container} ${className}`}
+      role="group"
+      aria-label="Call Sway or text Chris"
+    >
+      <a
+        href={SWAY_PHONE_CALL_LINK}
+        className={`flex flex-1 items-center justify-center gap-2 px-6 py-4 font-medium transition-colors sm:px-7 sm:py-5 ${palette.hover}`}
+      >
+        <Phone size={18} />
+        <span>Call {SWAY_CONTACT_NAME}</span>
+        <span className="sr-only">({SWAY_PHONE_DISPLAY})</span>
+      </a>
+      <span className={`w-px ${palette.separator}`} aria-hidden="true" />
+      <a
+        href={KMJK_PHONE_SMS_LINK}
+        className={`flex flex-1 items-center justify-center gap-2 px-6 py-4 font-medium transition-colors sm:px-7 sm:py-5 ${palette.hover}`}
+      >
+        <MessageSquare size={18} />
+        <span>Text {KMJK_CONTACT_NAME}</span>
+        <span className="sr-only">({KMJK_PHONE_DISPLAY})</span>
+      </a>
+    </div>
+  )
+}
 
 export function createTreasureCoastLandingPage(config) {
   const TreasureCoastLandingPage = () => {
@@ -275,16 +322,7 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Schedule Consultation
                 </Button>
-                <a href={KMJK_PHONE_CALL_LINK}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg"
-                  >
-                    <MessageSquare className="mr-2" size={22} />
-                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
-                  </Button>
-                </a>
+                <DualContactButton variant="dark" className="w-full sm:w-auto" />
                 <a href={`mailto:${KMJK_EMAIL}`}>
                   <Button
                     size="lg"
@@ -569,12 +607,7 @@ export function createTreasureCoastLandingPage(config) {
                   <Calendar className="mr-2" size={22} />
                   Book Consultation
                 </Button>
-                <a href={KMJK_PHONE_CALL_LINK}>
-                  <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
-                    <MessageSquare className="mr-2" size={22} />
-                    Call {KMJK_CONTACT_NAME} ({KMJK_PHONE_DISPLAY})
-                  </Button>
-                </a>
+                <DualContactButton variant="dark" className="w-full sm:w-auto" />
                 <a href={`mailto:${KMJK_EMAIL}`}>
                   <Button size="lg" variant="outline" className="border-white/60 text-white hover:bg-white/10 bg-transparent px-8 py-6 text-lg">
                     <Mail className="mr-2" size={22} />
@@ -752,5 +785,3 @@ export function createTreasureCoastLandingPage(config) {
 
   return TreasureCoastLandingPage
 }
-
-
