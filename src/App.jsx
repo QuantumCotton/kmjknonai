@@ -399,25 +399,25 @@ function ProcessPage() {
       number: '01',
       title: 'Consultation & Design',
       description: 'We begin by understanding your vision, needs, and budget through an in-depth consultation and collaborative design process.',
-      icon: 'ðŸ’¡',
+      icon: '💡',
     },
     {
       number: '02',
       title: 'Meticulous Planning',
       description: 'Every detail is carefully planned, from materials selection to project timeline, ensuring a smooth and predictable renovation experience.',
-      icon: 'ðŸ“‹',
+      icon: '📋',
     },
     {
       number: '03',
       title: 'Professional Execution',
       description: 'Our skilled craftsmen bring the design to life with precision and care, maintaining open communication throughout the build.',
-      icon: 'ðŸ”¨',
+      icon: '🔨',
     },
     {
       number: '04',
       title: 'The Final Walkthrough',
       description: 'We conduct a comprehensive walkthrough to ensure every element meets our exacting standards and exceeds your expectations.',
-      icon: 'âœ“',
+      icon: '✓',
     },
   ]
 
