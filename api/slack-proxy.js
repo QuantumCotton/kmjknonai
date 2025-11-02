@@ -8,8 +8,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Your actual webhook URL (now hidden in server code)
-    const SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+    // Your webhook URL from environment variables (most secure)
+    const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL
+    
+    if (!SLACK_WEBHOOK_URL) {
+      throw new Error('Slack webhook URL not configured in environment variables')
+    }
     
     // Get the Slack payload from the request body
     const slackPayload = req.body
