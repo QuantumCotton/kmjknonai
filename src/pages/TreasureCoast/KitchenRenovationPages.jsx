@@ -8,7 +8,7 @@ const sailfishPointKitchenHero = new URL(
   import.meta.url
 ).href
 const sewallsPointKitchenHero = new URL('../../../pics/kitchen/3K4vyXWior7q-BKCyA90P.jpeg', import.meta.url).href
-const hutchinsonIslandKitchenHero = new URL('../../../pics/kitchen/hp_17-ya0s-vNX.jpg', import.meta.url).href
+const hutchinsonIslandKitchenHero = new URL('../../../pics/kitchen/hp_16-C7ix_NF5.jpg', import.meta.url).href
 
 const kitchenRelatedLinks = [
   { label: 'Palm City Bathroom Renovation', href: '/palm-city-bathroom-renovation' },
