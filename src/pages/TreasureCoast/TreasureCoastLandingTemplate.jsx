@@ -135,7 +135,18 @@ export function createTreasureCoastLandingPage(config) {
 
     const handleFileChange = (event) => {
       const files = Array.from(event.target.files || []).slice(0, 5)
-      setFormData((prev) => ({ ...prev, files }))
+      
+      // Validate file sizes (max 10MB per file)
+      const maxSize = 10 * 1024 * 1024 // 10MB in bytes
+      const validFiles = files.filter(file => {
+        if (file.size > maxSize) {
+          alert(`File "${file.name}" is too large. Please choose files under 10MB each.`)
+          return false
+        }
+        return true
+      })
+      
+      setFormData((prev) => ({ ...prev, files: validFiles }))
     }
 
     const handleSubmit = async (event) => {
@@ -145,6 +156,185 @@ export function createTreasureCoastLandingPage(config) {
       setIsSubmitting(true)
 
       try {
+        // Check if files are attached
+        const hasFiles = formData.files && formData.files.length > 0
+        
+        // Prepare submission data for Slack
+        const slackSubmission = {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          address: formData.address,
+          timeline: formData.timeline,
+          budget: formData.budget,
+          projectDetails: formData.projectDetails,
+          serviceType: serviceType || 'Treasure Coast Service',
+          cityName: cityName || 'Unknown',
+          buttonContext: buttonContext || 'Form Submission',
+          sourceUrl: window.location.href,
+          hasFiles: hasFiles,
+          fileNames: hasFiles ? formData.files.map(f => f.name) : [],
+          timestamp: new Date().toISOString()
+        }
+
+        // Send to Slack webhook 
+        // TO FIND YOUR WEBHOOK: 
+        // 1. Go to slack.com/apps → Search "Incoming Webhooks" → Add to Slack
+        // 2. Choose your channel (e.g., #new-leads) → Copy the Webhook URL
+        // 3. Replace 'YOUR_SLACK_WEBHOOK_URL_HERE' below with your actual URL
+        const slackWebhookUrl = 'https://hooks.slack.com/services/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' // Your actual webhook URL
+        
+        if (slackWebhookUrl && slackWebhookUrl.startsWith('https://hooks.slack.com/')) {
+          try {
+            const slackPayload = {
+              text: `🚨 NEW LEAD: ${slackSubmission.serviceType} - ${slackSubmission.cityName}`,
+              blocks: [
+                {
+                  type: "header",
+                  text: {
+                    type: "plain_text",
+                    text: `🚨 NEW LEAD ALERT: ${slackSubmission.serviceType}`,
+                    emoji: true
+                  }
+                },
+                {
+                  type: "context",
+                  elements: [
+                    {
+                      type: "mrkdwn",
+                      text: `📍 *Location:* ${slackSubmission.cityName} | 🏷️ *Service:* ${slackSubmission.serviceType} | ⏰ ${new Date().toLocaleString()}`
+                    }
+                  ]
+                },
+                {
+                  type: "divider"
+                },
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: "*👤 CUSTOMER INFORMATION*"
+                  }
+                },
+                {
+                  type: "section",
+                  fields: [
+                    {
+                      type: "mrkdwn",
+                      text: "*📛 Name:*\n" + (slackSubmission.name || "Not provided")
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: "*📧 Email:*\n" + (slackSubmission.email || "Not provided")
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: "*📱 Phone:*\n" + (slackSubmission.phone || "Not provided")
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: "*🏠 Address:*\n" + (slackSubmission.address || "Not provided")
+                    }
+                  ]
+                },
+                {
+                  type: "divider"
+                },
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: "*💰 PROJECT DETAILS*"
+                  }
+                },
+                {
+                  type: "section",
+                  fields: [
+                    {
+                      type: "mrkdwn",
+                      text: "*⏳ Timeline:*\n" + (slackSubmission.timeline || "Not specified")
+                    },
+                    {
+                      type: "mrkdwn",
+                      text: "*💵 Budget:*\n" + (slackSubmission.budget || "Not specified")
+                    }
+                  ]
+                },
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: "*📝 Project Description:*\n" + (slackSubmission.projectDetails || "No details provided")
+                  }
+                },
+                ...(hasFiles ? [{
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: "*📎 FILES READY FOR UPLOAD:*\n" + 
+                          "```" + slackSubmission.fileNames.join(', ') + "```" + 
+                          "\n👉 _Customer will upload these to the Slack channel_"
+                  }
+                }] : []),
+                {
+                  type: "divider"
+                },
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: "*🔗 SOURCE & TRACKING*"
+                  }
+                },
+                {
+                  type: "context",
+                  elements: [
+                    {
+                      type: "mrkdwn",
+                      text: `🌐 <${slackSubmission.sourceUrl}|View Source Page> | 🎯 *Button:* ${slackSubmission.buttonContext}`
+                    }
+                  ]
+                },
+                {
+                  type: "actions",
+                  elements: [
+                    {
+                      type: "button",
+                      text: {
+                        type: "plain_text",
+                        text: "📞 Call Customer",
+                        emoji: true
+                      },
+                      url: `tel:${slackSubmission.phone}`
+                    },
+                    {
+                      type: "button",
+                      text: {
+                        type: "plain_text",
+                        text: "📧 Email Customer",
+                        emoji: true
+                      },
+                      url: `mailto:${slackSubmission.email}`
+                    }
+                  ]
+                }
+              ]
+            }
+
+            await fetch(slackWebhookUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(slackPayload)
+            })
+          } catch (slackError) {
+            console.error('Slack notification failed:', slackError)
+            // Continue with form submission even if Slack fails
+          }
+        }
+
+        // Also submit to Web3Forms for email backup (without files)
         const payload = new FormData()
         payload.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912')
         payload.append('name', formData.name)
@@ -153,14 +343,16 @@ export function createTreasureCoastLandingPage(config) {
         payload.append('address', formData.address)
         payload.append('timeline', formData.timeline)
         payload.append('budget', formData.budget)
-        payload.append('message', formData.projectDetails)
-       payload.append('service_type', serviceType || 'Treasure Coast Service')
-       payload.append('city', cityName || hero?.badge || '')
-       payload.append('button_context', buttonContext || 'Treasure Coast Landing')
-       payload.append('source_url', window.location.href)
-        formData.files.forEach((file) => {
-          payload.append('files[]', file)
-        })
+        
+        let message = formData.projectDetails
+        if (hasFiles) {
+          message += '\n\n📎 Files to be uploaded to Slack: ' + formData.files.map(f => f.name).join(', ')
+        }
+        payload.append('message', message)
+        payload.append('service_type', serviceType || 'Treasure Coast Service')
+        payload.append('city', cityName || hero?.badge || '')
+        payload.append('button_context', buttonContext || 'Treasure Coast Landing')
+        payload.append('source_url', window.location.href)
 
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -178,16 +370,30 @@ export function createTreasureCoastLandingPage(config) {
             })
           }
 
-          setSubmitSuccess(true)
-          setTimeout(() => {
-            closeForm()
-          }, 2500)
+          // Show appropriate success message
+          if (hasFiles) {
+            alert('✅ Form submitted successfully! \n\nNext steps:\n1. Join our project Slack channel: [SLACK_CHANNEL_LINK]\n2. Upload your photos/files there\n3. We\'ll review everything and contact you soon!\n\nOr text us at 772-777-0622 for immediate assistance.')
+          } else {
+            setSubmitSuccess(true)
+            setTimeout(() => {
+              closeForm()
+            }, 2500)
+          }
         } else {
           throw new Error(data.message || 'Failed to submit form')
         }
       } catch (error) {
         console.error('[Treasure Coast Form] submission error:', error)
-        alert(`We could not submit the form right now. Please text us at ${KMJK_PHONE_DISPLAY} or email ${KMJK_EMAIL}.`)
+        
+        let errorMessage = 'We could not submit the form right now. Please text us at 772-777-0622 or email info@kmjk.pro.'
+        
+        if (error.message && error.message.includes('Pro feature')) {
+          errorMessage = 'Please submit your contact info here, then share photos via our Slack channel or text us at 772-777-0622.'
+        } else if (error.message && error.message.includes('network')) {
+          errorMessage = 'Network connection issue. Please check your internet connection and try again, or text us at 772-777-0622.'
+        }
+        
+        alert(errorMessage)
       } finally {
         setIsSubmitting(false)
       }
@@ -744,7 +950,7 @@ export function createTreasureCoastLandingPage(config) {
 
                 <div>
                   <label className="block text-sm font-medium text-[var(--deep-charcoal)] mb-1">
-                    Upload inspiration photos or existing bath images (max 5)
+                    Upload inspiration photos or existing bath images (max 5 files, 10MB each)
                   </label>
                   <input
                     type="file"
@@ -754,7 +960,7 @@ export function createTreasureCoastLandingPage(config) {
                     className="w-full cursor-pointer rounded-md border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-600 transition focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]/60 file:mr-4 file:rounded-md file:border-0 file:bg-[var(--deep-charcoal)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-black"
                   />
                   <p className="mt-2 text-xs text-gray-500">
-                    We review every file before your call so we can discuss layouts, finishes, and investment with precision.
+                    📎 Select files here, then submit the form. We'll send you a link to our Slack workspace where you can upload photos directly. It's free and instant!
                   </p>
                 </div>
 
