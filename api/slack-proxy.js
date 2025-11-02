@@ -9,10 +9,10 @@ export default async function handler(req, res) {
 
   try {
     // Webhook URL from environment variables
-    const WEBHOOK_URL = process.env.NOTIFICATIONS_WEBHOOK_URL
+    const WEBHOOK_URL = process.env.WEBHOOK_ENDPOINT_URL
     
     if (!WEBHOOK_URL) {
-      throw new Error('Notification webhook URL not configured in environment variables')
+      throw new Error('Webhook endpoint not configured')
     }
     
     const { slackPayload, images, leadInfo } = req.body
