@@ -15,56 +15,56 @@ export default async function handler(req, res) {
       throw new Error('Webhook endpoint not configured')
     }
     
-    const { slackPayload, images, leadInfo } = req.body
+    const { messageData, attachments, customerInfo } = req.body
 
-    // Send formatted lead notification to Slack
+    // Send formatted lead notification
     const notificationResponse = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(slackPayload)
+      body: JSON.stringify(messageData)
     })
 
     if (!notificationResponse.ok) {
-      throw new Error(`Slack notification error: ${notificationResponse.status}`)
+      throw new Error(`Notification error: ${notificationResponse.status}`)
     }
 
-    // Handle image uploads if provided (send as separate messages)
+    // Handle attachments if provided
     let uploadResults = []
-    if (images && images.length > 0) {
-      for (const image of images) {
+    if (attachments && attachments.length > 0) {
+      for (const attachment of attachments) {
         try {
-          // Send image info as follow-up message
-          const imageMessage = {
-            text: `📎 *Image Ready for Download:* ${image.name}`,
+          // Send attachment info as follow-up message
+          const attachmentMessage = {
+            text: `📎 *File Received:* ${attachment.name}`,
             blocks: [
               {
                 type: "section",
                 text: {
                   type: "mrkdwn",
-                  text: `📎 *Image from ${leadInfo.name}*\n*File:* ${image.name}\n*Size:* ${formatFileSize(image.size)}\n*Type:* ${image.type || 'Unknown'}\n\n👉 _Customer uploaded this file - download link will be provided separately_`
+                  text: `📎 *File from ${customerInfo.name}*\n*File:* ${attachment.name}\n*Size:* ${formatFileSize(attachment.size)}\n*Type:* ${attachment.type || 'Unknown'}\n\n👉 _Customer uploaded this file_`
                 }
               }
             ]
           }
 
-          const imageResponse = await fetch(WEBHOOK_URL, {
+          const attachmentResponse = await fetch(WEBHOOK_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(imageMessage)
+            body: JSON.stringify(attachmentMessage)
           })
 
-          if (imageResponse.ok) {
-            uploadResults.push({ success: true, fileName: image.name })
+          if (attachmentResponse.ok) {
+            uploadResults.push({ success: true, fileName: attachment.name })
           } else {
-            throw new Error(`Failed to send image notification`)
+            throw new Error(`Failed to send attachment notification`)
           }
         } catch (uploadError) {
-          console.error('Failed to send image notification:', uploadError)
-          uploadResults.push({ error: uploadError.message, fileName: image.name })
+          console.error('Failed to send attachment notification:', uploadError)
+          uploadResults.push({ error: uploadError.message, fileName: attachment.name })
         }
       }
     }
@@ -72,15 +72,15 @@ export default async function handler(req, res) {
     // Return success response
     res.status(200).json({ 
       success: true, 
-      message: 'Slack notification sent',
-      imagesProcessed: uploadResults.length,
-      uploadResults: uploadResults
+      message: 'Notification sent successfully',
+      filesProcessed: uploadResults.length,
+      results: uploadResults
     })
 
   } catch (error) {
-    console.error('Slack proxy error:', error)
+    console.error('Backend proxy error:', error)
     res.status(500).json({ 
-      error: 'Failed to send Slack notification',
+      error: 'Failed to send notification',
       message: error.message 
     })
   }

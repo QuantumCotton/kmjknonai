@@ -313,8 +313,8 @@ export function createTreasureCoastLandingPage(config) {
           ]
         }
 
-        // Send to Slack via secure proxy (images + lead info)
-        const slackProxyUrl = '/api/slack-proxy' // Secure backend endpoint
+        // Send lead info via secure backend
+        const backendUrl = '/api/slack-proxy' // Backend endpoint
         
         if (slackPayload) {
           try {
@@ -326,23 +326,23 @@ export function createTreasureCoastLandingPage(config) {
               cityName: cityName || 'Unknown'
             }
 
-            // Send to Slack with images if they exist
-            const slackRequestData = {
-              slackPayload: slackPayload,
-              leadInfo: leadInfo,
-              images: hasFiles ? formData.files : []
+            // Send to backend with images if they exist
+            const requestData = {
+              messageData: slackPayload,
+              customerInfo: leadInfo,
+              attachments: hasFiles ? formData.files : []
             }
 
-            await fetch(slackProxyUrl, {
+            await fetch(backendUrl, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify(slackRequestData)
+              body: JSON.stringify(requestData)
             })
-          } catch (slackError) {
-            console.error('Slack notification failed:', slackError)
-            // Continue with form submission even if Slack fails
+          } catch (backendError) {
+            console.error('Backend notification failed:', backendError)
+            // Continue with form submission even if backend fails
           }
         }
 
