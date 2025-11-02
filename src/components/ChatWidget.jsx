@@ -1,11 +1,12 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { MessageCircle, X, Send, Minimize2, Paperclip } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import { startKmjkConversation, sendKmjkMessage, registerPhotoUpload } from '@/services/kmjkChatService.js'
+import { startKmjkConversation, sendKmjkMessage, registerPhotoUpload, sendConversationDigest } from '@/services/kmjkChatService.js'
 import { uploadChatPhoto } from '@/services/kmjkUploadService.js'
 
 const defaultPosition = 'bottom-right'
 const defaultColor = 'var(--brushed-gold)'
+const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000
 
 export default function ChatWidget({ position = defaultPosition, primaryColor = defaultColor }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,12 +21,19 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
   const lastAssistantIdRef = useRef(null)
   const [streamingState, setStreamingState] = useState(null)
   const fileInputRef = useRef(null)
+  const inactivityTimerRef = useRef(null)
+  const digestInFlightRef = useRef(false)
+  const conversationRef = useRef(null)
 
   useEffect(() => {
     if (isOpen && !conversation) {
       initConversation()
     }
   }, [isOpen, conversation])
+
+  useEffect(() => {
+    conversationRef.current = conversation
+  }, [conversation])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -147,6 +155,70 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
     }
   }
 
+  const triggerConversationDigest = useCallback(
+    async (reason) => {
+      const currentConversation = conversationRef.current
+      if (
+        !currentConversation ||
+        currentConversation.conversationDigestSent ||
+        currentConversation.leadNotificationSent ||
+        digestInFlightRef.current
+      ) {
+        return
+      }
+
+      digestInFlightRef.current = true
+      try {
+        const { conversation: updatedConversation, sent } = await sendConversationDigest(currentConversation, reason)
+        if (sent) {
+          setConversation(updatedConversation || { ...currentConversation, conversationDigestSent: true })
+        }
+      } finally {
+        digestInFlightRef.current = false
+      }
+    },
+    [setConversation]
+  )
+
+  useEffect(() => {
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current)
+      inactivityTimerRef.current = null
+    }
+
+    if (
+      !conversation ||
+      conversation.conversationDigestSent ||
+      conversation.leadNotificationSent ||
+      !conversation.lastActivityAt
+    ) {
+      return
+    }
+
+    const lastActivityTime = new Date(conversation.lastActivityAt).getTime()
+    if (Number.isNaN(lastActivityTime)) {
+      return
+    }
+
+    const now = Date.now()
+    const elapsed = now - lastActivityTime
+
+    if (elapsed >= INACTIVITY_TIMEOUT_MS) {
+      triggerConversationDigest('inactivity')
+      return
+    }
+
+    const remaining = INACTIVITY_TIMEOUT_MS - elapsed
+    inactivityTimerRef.current = setTimeout(() => triggerConversationDigest('inactivity'), remaining)
+
+    return () => {
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current)
+        inactivityTimerRef.current = null
+      }
+    }
+  }, [conversation?.lastActivityAt, conversation?.conversationDigestSent, conversation?.leadNotificationSent, triggerConversationDigest, conversation])
+
   if (!isOpen) {
     return (
       <button
@@ -185,6 +257,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
           </button>
           <button
             onClick={() => {
+              triggerConversationDigest('manual-close')
               setIsOpen(false)
               setIsMinimized(false)
             }}
