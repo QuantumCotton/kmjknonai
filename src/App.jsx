@@ -1,6 +1,20 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
-import { Menu, X, Phone, Mail, Home as HomeIcon, Briefcase, Image, Users, MessageSquare, Calendar } from 'lucide-react'
+import {
+  Menu,
+  X,
+  Phone,
+  Mail,
+  Home as HomeIcon,
+  Briefcase,
+  Image,
+  Users,
+  MessageSquare,
+  Calendar,
+  UtensilsCrossed,
+  Bath,
+  Hammer,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
 import {
@@ -298,7 +312,8 @@ function PortfolioPage() {
     {
       title: 'Sculpted Marble Gathering Kitchen',
       image: kitchenSculptedMarbleGathering,
-      description: 'A monolithic waterfall island and continuous slab backsplash wrap this minimalist space in veined marble and soft uplighting.',
+      description:
+        'High-performance Ballistix epoxy pours mimic marble across the waterfall island and backsplashes, and we completed the coordinating bathroom below—including the shower—for the same client.',
     },
     {
       title: 'Marble & Oak Spa Bathroom',
@@ -346,18 +361,21 @@ function ServicesPage() {
   const services = [
     {
       title: 'Full Kitchen Remodels',
-      description: 'From concept to completion, we transform kitchens into functional, beautiful spaces that become the heart of your home. Our comprehensive approach includes design consultation, custom cabinetry, countertop selection, appliance installation, and finishing touches.',
-      icon: 'ðŸ³',
+      description:
+        'From concept to completion, we transform kitchens into functional, beautiful spaces that become the heart of your home. Our comprehensive approach includes design consultation, custom cabinetry, countertop selection, appliance installation, and finishing touches.',
+      icon: UtensilsCrossed,
     },
     {
       title: 'Luxury Bathroom Renovations',
-      description: 'Create your personal spa retreat with our luxury bathroom renovation services. We specialize in high-end finishes, custom tile work, modern fixtures, and thoughtful layouts that maximize both style and functionality.',
-      icon: 'ðŸ›',
+      description:
+        'Create your personal spa retreat with our luxury bathroom renovation services. We specialize in high-end finishes, custom tile work, modern fixtures, and thoughtful layouts that maximize both style and functionality.',
+      icon: Bath,
     },
     {
       title: 'Custom Cabinetry & Millwork',
-      description: 'Our master craftsmen create bespoke cabinetry and millwork that seamlessly integrates with your home\'s architecture. From built-in bookcases to custom closets, we bring your vision to life with precision and artistry.',
-      icon: 'ðŸªµ',
+      description:
+        "Our master craftsmen create bespoke cabinetry and millwork that seamlessly integrates with your home's architecture. From built-in bookcases to custom closets, we bring your vision to life with precision and artistry.",
+      icon: Hammer,
     },
   ]
 
@@ -373,7 +391,9 @@ function ServicesPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <div key={index} className="bg-[var(--warm-off-white)] p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <div className="text-6xl mb-4 text-center">{service.icon}</div>
+                <div className="mb-4 text-center">
+                  <service.icon className="mx-auto text-[var(--brushed-gold)]" size={56} strokeWidth={1.5} />
+                </div>
                 <h3 className="text-2xl font-semibold mb-4 text-center gold-accent">{service.title}</h3>
                 <p className="text-gray-700 leading-relaxed">{service.description}</p>
               </div>
@@ -539,6 +559,7 @@ function ContactPage() {
         alert('Submission error: ' + (data.message || 'Please try again.'))
       }
     } catch (error) {
+      console.error('Contact form submission failed', error)
       alert('Network error. Please try again.')
     }
   }
