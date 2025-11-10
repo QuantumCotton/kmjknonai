@@ -107,7 +107,8 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
 
   const handleUploadClick = () => {
     setUploadError('')
-    setUploadNotice('📎 Image upload is returning soon. Feature temporarily unavailable for security.')
+    setUploadNotice('')
+    fileInputRef.current?.click()
   }
 
   useEffect(() => {
@@ -351,7 +352,6 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
                 multiple
                 className="hidden"
                 onChange={handleFileSelection}
-                disabled
               />
               <Button
                 type="button"
@@ -387,7 +387,7 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
             {uploadError && (
               <p className="text-xs text-red-500 mt-1 text-center">{uploadError}</p>
             )}
-            <p className="text-xs text-gray-500 mt-2 text-center">Some concierge features are temporarily unavailable due to security. Image upload will return soon.</p>
+            <p className="text-xs text-gray-500 mt-2 text-center">Tap the paperclip to upload project photos (JPG, PNG, WebP, HEIC)</p>
             <p className="text-xs text-gray-500 mt-1 text-center">Powered by KMJK Home Improvement</p>
           </div>
         </>
