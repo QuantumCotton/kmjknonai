@@ -1,5 +1,6 @@
 const WEB3FORMS_ACCESS_KEY = '8e63e7e3-ab53-43a9-80c5-ebc113c25912'
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+const SLACK_WEBHOOK_URL = process.env.WEBHOOK_ENDPOINT_URL
 
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -93,6 +94,16 @@ export const handler = async (event) => {
       }
     }
 
+    // Also send to Slack if webhook is configured
+    if (SLACK_WEBHOOK_URL) {
+      try {
+        await sendToSlack(leadData, qualificationScore, conversationId, conversationDigest)
+      } catch (slackError) {
+        console.error('[kmjk-send-lead] Slack notification failed (non-critical):', slackError)
+        // Don't fail the request if Slack fails - Web3Forms is the primary notification
+      }
+    }
+
     return {
       statusCode: 200,
       headers: corsHeaders(),
@@ -105,6 +116,97 @@ export const handler = async (event) => {
       headers: corsHeaders(),
       body: JSON.stringify({ error: 'Unexpected server error', detail: error.message }),
     }
+  }
+}
+
+async function sendToSlack(leadData, qualificationScore, conversationId, conversationDigest) {
+  if (!SLACK_WEBHOOK_URL) return
+
+  const sessionId = conversationId || 'unknown'
+  const reason = conversationDigest?.reasonLabel || conversationDigest?.reason || 'chat_completed'
+  const messageCount = conversationDigest?.messageCount ?? 0
+  const duration = calculateDuration(conversationDigest?.startedAt, conversationDigest?.lastActivityAt)
+  
+  // Build formatted transcript for Slack
+  let transcriptText = `*KMJK Atlas Chat Transcript*\n`
+  transcriptText += `Session: \`${sessionId}\`\n`
+  transcriptText += `Reason: \`${reason}\`\n`
+  transcriptText += `Final: yes\n`
+  transcriptText += `Messages: ${messageCount}\n`
+  transcriptText += `Duration: ${duration}\n`
+  transcriptText += `Part 1/1\n\n`
+  
+  // Add lead info if available
+  if (leadData.name) {
+    transcriptText += `*Lead:* ${leadData.name}\n`
+  }
+  if (leadData.email) {
+    transcriptText += `*Email:* ${leadData.email}\n`
+  }
+  if (leadData.phone) {
+    transcriptText += `*Phone:* ${leadData.phone}\n`
+  }
+  if (leadData.serviceCategory || leadData.projectType) {
+    transcriptText += `*Service:* ${leadData.serviceCategory || leadData.projectType}\n`
+  }
+  if (leadData.budget) {
+    transcriptText += `*Budget:* ${leadData.budget}\n`
+  }
+  if (leadData.timeline) {
+    transcriptText += `*Timeline:* ${leadData.timeline}\n`
+  }
+  transcriptText += `*Score:* ${qualificationScore ?? 'n/a'}\n\n`
+  
+  // Add conversation transcript
+  if (conversationDigest?.transcript && conversationDigest.transcript.length > 0) {
+    conversationDigest.transcript.forEach((entry) => {
+      const role = entry.role === 'assistant' ? '*Atlas*' : '*You*'
+      transcriptText += `${role}: ${entry.content}\n`
+    })
+  }
+  
+  // Add photos if available
+  if (leadData.photos && leadData.photos.length > 0) {
+    transcriptText += `\n*Photos:*\n`
+    leadData.photos.forEach((photo, idx) => {
+      const url = photo.viewUrl || photo.fileUrl || photo.url
+      if (url) {
+        transcriptText += `${idx + 1}. ${url}\n`
+      }
+    })
+  }
+
+  const slackPayload = {
+    text: transcriptText,
+    username: 'KMJK Atlas Bot',
+    icon_emoji: ':robot_face:',
+  }
+
+  const slackResponse = await fetch(SLACK_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(slackPayload),
+  })
+
+  if (!slackResponse.ok) {
+    throw new Error(`Slack webhook failed with status ${slackResponse.status}`)
+  }
+}
+
+function calculateDuration(startedAt, lastActivityAt) {
+  if (!startedAt || !lastActivityAt) return '<1m'
+  
+  try {
+    const start = new Date(startedAt)
+    const end = new Date(lastActivityAt)
+    const diffMs = end - start
+    const diffMin = Math.floor(diffMs / 60000)
+    
+    if (diffMin < 1) return '<1m'
+    if (diffMin === 1) return '1m'
+    return `${diffMin}m`
+  } catch {
+    return '<1m'
   }
 }
 
