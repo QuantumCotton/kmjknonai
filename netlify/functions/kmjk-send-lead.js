@@ -1,4 +1,5 @@
-const FROM_EMAIL = process.env.KMJK_LEAD_FROM || 'atlas@kmjk.pro'
+const WEB3FORMS_ACCESS_KEY = '8e63e7e3-ab53-43a9-80c5-ebc113c25912'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
 
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -17,67 +18,78 @@ export const handler = async (event) => {
     }
   }
 
-  const apiKey = process.env.RESEND_API_KEY
-  const recipientsEnv = process.env.KMJK_LEAD_RECIPIENTS
-
-  if (!apiKey) {
-    return {
-      statusCode: 500,
-      headers: corsHeaders(),
-      body: JSON.stringify({ error: 'Missing RESEND_API_KEY environment variable.' }),
-    }
-  }
-
-  if (!recipientsEnv) {
-    return {
-      statusCode: 500,
-      headers: corsHeaders(),
-      body: JSON.stringify({ error: 'Missing KMJK_LEAD_RECIPIENTS environment variable.' }),
-    }
-  }
-
   try {
     const { leadData = {}, qualificationScore, conversationId, conversationDigest } = JSON.parse(event.body || '{}')
 
-    const recipients = recipientsEnv
-      .split(',')
-      .map((address) => address.trim())
-      .filter(Boolean)
-
-    if (recipients.length === 0) {
-      return {
-        statusCode: 400,
-        headers: corsHeaders(),
-        body: JSON.stringify({ error: 'KMJK_LEAD_RECIPIENTS must contain at least one email.' }),
-      }
-    }
-
     const subject = buildSubject(leadData, qualificationScore, conversationId, conversationDigest)
-    const textBody = buildTextEmail(leadData, qualificationScore, conversationId, conversationDigest)
     const htmlBody = buildHtmlEmail(leadData, qualificationScore, conversationId, conversationDigest)
 
-    const response = await fetch('https://api.resend.com/emails', {
+    // Build the complete conversation transcript for the message field
+    const fullTranscript = buildFullTranscript(leadData, qualificationScore, conversationId, conversationDigest)
+
+    // Prepare Web3Forms payload
+    const formData = new FormData()
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY)
+    formData.append('subject', subject)
+    formData.append('from_name', 'KMJK Chatbot Concierge')
+    
+    // Add lead data fields
+    formData.append('lead_name', leadData.name || 'Not provided')
+    formData.append('lead_email', leadData.email || 'Not provided')
+    formData.append('lead_phone', leadData.phone || 'Not provided')
+    formData.append('service_category', leadData.serviceCategory || leadData.projectType || 'Not provided')
+    formData.append('timeline', leadData.timeline || 'Not provided')
+    formData.append('budget', leadData.budget || 'Not provided')
+    formData.append('zip_code', leadData.zip || 'Not provided')
+    formData.append('qualification_score', String(qualificationScore ?? 'n/a'))
+    formData.append('conversation_id', conversationId || 'n/a')
+    
+    // Add project summary
+    if (leadData.projectSummary) {
+      formData.append('project_summary', leadData.projectSummary)
+    }
+    
+    // Add scope notes
+    if (leadData.scopeNotes && leadData.scopeNotes.length > 0) {
+      formData.append('scope_notes', leadData.scopeNotes.join('\n\n'))
+    }
+    
+    // Add photo URLs
+    if (leadData.photos && leadData.photos.length > 0) {
+      const photoUrls = leadData.photos
+        .map((photo, idx) => `Photo ${idx + 1}: ${photo.viewUrl || photo.fileUrl || photo.url || 'n/a'}`)
+        .join('\n')
+      formData.append('project_photos', photoUrls)
+    }
+    
+    // Add conversation digest info if present
+    if (conversationDigest) {
+      formData.append('digest_reason', conversationDigest.reasonLabel || conversationDigest.reason || 'n/a')
+      formData.append('started_at', conversationDigest.startedAt || 'n/a')
+      formData.append('last_activity', conversationDigest.lastActivityAt || 'n/a')
+      formData.append('message_count', String(conversationDigest.messageCount ?? 'n/a'))
+    }
+    
+    // THE MOST IMPORTANT FIELD - Full conversation transcript
+    formData.append('full_conversation_transcript', fullTranscript)
+    formData.append('message', htmlBody)
+
+    const response = await fetch(WEB3FORMS_ENDPOINT, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: recipients,
-        subject,
-        html: htmlBody,
-        text: textBody,
-      }),
+      body: formData,
     })
 
-    if (!response.ok) {
-      const detail = await response.text()
-      console.error('[kmjk-send-lead] Resend error:', detail)
+    const result = await response.json()
+
+    if (!response.ok || !result.success) {
+      console.error('[kmjk-send-lead] Web3Forms error:', result)
       return {
-        statusCode: response.status,
+        statusCode: response.status || 500,
         headers: corsHeaders(),
-        body: JSON.stringify({ error: 'Failed to send email via Resend.', detail }),
+        body: JSON.stringify({ error: 'Failed to send via Web3Forms.', detail: result.message || 'Unknown error' }),
       }
     }
 
@@ -96,6 +108,89 @@ export const handler = async (event) => {
   }
 }
 
+function buildFullTranscript(leadData, qualificationScore, conversationId, conversationDigest) {
+  const lines = []
+  
+  lines.push('=' .repeat(80))
+  lines.push('COMPLETE CHATBOT CONVERSATION TRANSCRIPT')
+  lines.push('=' .repeat(80))
+  lines.push('')
+  
+  // Lead Information
+  lines.push('LEAD INFORMATION:')
+  lines.push(`  Name: ${leadData.name || 'Not provided'}`)
+  lines.push(`  Email: ${leadData.email || 'Not provided'}`)
+  lines.push(`  Phone: ${leadData.phone || 'Not provided'}`)
+  lines.push(`  Service: ${leadData.serviceCategory || leadData.projectType || 'Not provided'}`)
+  lines.push(`  Timeline: ${leadData.timeline || 'Not provided'}`)
+  lines.push(`  Budget: ${leadData.budget || 'Not provided'}`)
+  lines.push(`  ZIP Code: ${leadData.zip || 'Not provided'}`)
+  lines.push(`  Qualification Score: ${qualificationScore ?? 'n/a'}`)
+  lines.push(`  Conversation ID: ${conversationId || 'n/a'}`)
+  lines.push('')
+  
+  // Project Details
+  if (leadData.projectSummary) {
+    lines.push('PROJECT SUMMARY:')
+    lines.push(`  ${leadData.projectSummary}`)
+    lines.push('')
+  }
+  
+  if (leadData.scopeNotes && leadData.scopeNotes.length > 0) {
+    lines.push('SCOPE NOTES:')
+    leadData.scopeNotes.forEach((note, idx) => {
+      lines.push(`  ${idx + 1}. ${note}`)
+    })
+    lines.push('')
+  }
+  
+  if (leadData.photos && leadData.photos.length > 0) {
+    lines.push('PROJECT PHOTOS:')
+    leadData.photos.forEach((photo, idx) => {
+      const url = photo.viewUrl || photo.fileUrl || photo.url || 'n/a'
+      lines.push(`  ${idx + 1}. ${photo.name || 'Photo'}: ${url}`)
+    })
+    lines.push('')
+  }
+  
+  // Conversation Transcript
+  if (conversationDigest && conversationDigest.transcript && conversationDigest.transcript.length > 0) {
+    lines.push('=' .repeat(80))
+    lines.push('FULL CONVERSATION TRANSCRIPT')
+    lines.push('=' .repeat(80))
+    lines.push('')
+    lines.push(`Started: ${conversationDigest.startedAt || 'n/a'}`)
+    lines.push(`Last Activity: ${conversationDigest.lastActivityAt || 'n/a'}`)
+    lines.push(`Total Messages: ${conversationDigest.messageCount ?? 0}`)
+    lines.push(`Conversation Ended: ${conversationDigest.reasonLabel || conversationDigest.reason || 'n/a'}`)
+    lines.push('')
+    lines.push('-' .repeat(80))
+    lines.push('')
+    
+    conversationDigest.transcript.forEach((entry, idx) => {
+      const role = entry.role === 'assistant' ? '🤖 ATLAS (Bot)' : '👤 VISITOR'
+      const timestamp = entry.timestamp || 'unknown time'
+      const content = entry.content || '(no content)'
+      
+      lines.push(`Message ${idx + 1} | ${role} | ${timestamp}`)
+      lines.push(content)
+      lines.push('')
+      lines.push('-' .repeat(80))
+      lines.push('')
+    })
+  } else {
+    lines.push('CONVERSATION TRANSCRIPT:')
+    lines.push('  No transcript available (conversation may still be active)')
+    lines.push('')
+  }
+  
+  lines.push('=' .repeat(80))
+  lines.push('END OF TRANSCRIPT')
+  lines.push('=' .repeat(80))
+  
+  return lines.join('\n')
+}
+
 function buildSubject(leadData, qualificationScore, conversationId, conversationDigest) {
   if (conversationDigest) {
     const reason = conversationDigest.reasonLabel || conversationDigest.reason || 'Chat Digest'
@@ -107,71 +202,6 @@ function buildSubject(leadData, qualificationScore, conversationId, conversation
   const name = leadData.name || 'Unknown contact'
   const score = typeof qualificationScore === 'number' ? `• Score ${qualificationScore}` : ''
   return `KMJK Lead • ${service} • ${name} ${score}`.trim()
-}
-
-function buildTextEmail(leadData, qualificationScore, conversationId, conversationDigest) {
-  const lines = []
-
-  if (conversationDigest) {
-    lines.push('KMJK Concierge Chat Digest')
-  } else {
-    lines.push('New KMJK Concierge Lead')
-  }
-  lines.push('')
-  lines.push(`Service: ${leadData.serviceCategory || leadData.projectType || 'n/a'}`)
-  lines.push(`Name: ${leadData.name || 'n/a'}`)
-  lines.push(`Email: ${leadData.email || 'n/a'}`)
-  lines.push(`Phone: ${leadData.phone || 'n/a'}`)
-  lines.push(`Timeline: ${leadData.timeline || 'n/a'}`)
-  lines.push(`Budget: ${leadData.budget || 'n/a'}`)
-  lines.push(`ZIP: ${leadData.zip || 'n/a'}`)
-  lines.push(`Qualification Score: ${qualificationScore ?? 'n/a'}`)
-  lines.push(`Conversation ID: ${conversationId || 'n/a'}`)
-
-  if (leadData.scopeNotes?.length) {
-    lines.push('')
-    lines.push('Scope Notes:')
-    leadData.scopeNotes.forEach((note, index) => {
-      lines.push(`${index + 1}. ${note}`)
-    })
-  }
-
-  if (leadData.projectSummary) {
-    lines.push('')
-    lines.push('Project Summary:')
-    lines.push(leadData.projectSummary)
-  }
-
-  if (leadData.photos?.length) {
-    lines.push('')
-    lines.push('Project Photos:')
-    leadData.photos.forEach((photo, index) => {
-      const label = photo?.name ? `${index + 1}. ${photo.name}` : `${index + 1}. Photo`
-      const link = photo?.viewUrl || photo?.fileUrl || photo?.url || 'n/a'
-      lines.push(`${label}: ${link}`)
-    })
-  }
-
-  if (conversationDigest) {
-    lines.push('')
-    lines.push(`Digest Reason: ${conversationDigest.reasonLabel || conversationDigest.reason || 'n/a'}`)
-    lines.push(`Started At: ${conversationDigest.startedAt || 'n/a'}`)
-    lines.push(`Last Activity: ${conversationDigest.lastActivityAt || 'n/a'}`)
-    lines.push(`Total Messages: ${conversationDigest.messageCount ?? 'n/a'}`)
-
-    if (conversationDigest.transcript?.length) {
-      lines.push('')
-      lines.push('Conversation Transcript:')
-      conversationDigest.transcript.forEach((entry, index) => {
-        const stamp = entry.timestamp || 'unknown time'
-        lines.push(`${index + 1}. [${entry.role}] ${stamp}`)
-        lines.push(entry.content || '(no content)')
-        lines.push('')
-      })
-    }
-  }
-
-  return lines.join('\n')
 }
 
 function buildHtmlEmail(leadData, qualificationScore, conversationId, conversationDigest) {
