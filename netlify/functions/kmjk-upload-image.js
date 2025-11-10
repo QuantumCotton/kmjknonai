@@ -1,11 +1,10 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import crypto from 'crypto'
 
 const ALLOWED_MIME_TYPES = (process.env.KMJK_ALLOWED_MIME || 'image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif').split(',')
 const MAX_UPLOAD_BYTES = Number.parseInt(process.env.KMJK_UPLOAD_MAX_BYTES || `${5 * 1024 * 1024}`, 10)
-const BUCKET = process.env.KMJK_S3_BUCKET
-const REGION = process.env.KMJK_S3_REGION
+const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
+const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY
+const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET
 
 const corsHeaders = () => ({
   'Access-Control-Allow-Origin': '*',
@@ -13,7 +12,19 @@ const corsHeaders = () => ({
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 })
 
-const s3Client = new S3Client({ region: REGION })
+function generateCloudinarySignature(params, apiSecret) {
+  const timestamp = Math.round(Date.now() / 1000)
+  params.timestamp = timestamp
+  
+  // Sort parameters alphabetically
+  const sortedParams = Object.keys(params)
+    .sort()
+    .map(key => `${key}=${params[key]}`)
+    .join('&')
+  
+  const stringToSign = sortedParams + apiSecret
+  return crypto.createHash('sha1').update(stringToSign).digest('hex')
+}
 
 export const handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -28,11 +39,11 @@ export const handler = async (event) => {
     }
   }
 
-  if (!BUCKET || !REGION) {
+  if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
     return {
       statusCode: 500,
       headers: corsHeaders(),
-      body: JSON.stringify({ error: 'Missing S3 configuration on server.' }),
+      body: JSON.stringify({ error: 'Missing Cloudinary configuration on server.' }),
     }
   }
 
@@ -64,29 +75,50 @@ export const handler = async (event) => {
       }
     }
 
+    // Generate unique filename
     const safeName = String(fileName).trim().replace(/[^a-zA-Z0-9._-]+/g, '_') || 'upload'
     const extension = safeName.includes('.') ? safeName.substring(safeName.lastIndexOf('.')) : ''
-    const baseKey = safeName.replace(extension, '')
-    const folder = conversationId ? conversationId : 'general'
-    const objectKey = `chat-uploads/${folder}/${baseKey}-${crypto.randomUUID()}${extension}`
+    const baseName = safeName.replace(extension, '')
+    const folder = conversationId ? `kmjk-chat/${conversationId}` : 'kmjk-chat/general'
+    const publicId = `${folder}/${baseName}-${crypto.randomUUID().slice(0, 8)}`
 
-    const putCommand = new PutObjectCommand({
-      Bucket: BUCKET,
-      Key: objectKey,
-      ContentType: fileType,
-    })
+    // Prepare Cloudinary upload parameters
+    const uploadParams = {
+      public_id: publicId,
+      folder: 'kmjk-chat',
+      resource_type: 'auto',
+      format: extension ? extension.slice(1) : undefined,
+    }
 
-    const uploadUrl = await getSignedUrl(s3Client, putCommand, { expiresIn: 900 })
+    // Generate signature
+    const signature = generateCloudinarySignature(uploadParams, CLOUDINARY_API_SECRET)
 
-    const getCommand = new GetObjectCommand({ Bucket: BUCKET, Key: objectKey })
-    const viewUrl = await getSignedUrl(s3Client, getCommand, { expiresIn: 60 * 60 * 24 * 7 })
+    // Build upload URL and payload
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`
+    
+    const uploadPayload = {
+      file: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=',
+      api_key: CLOUDINARY_API_KEY,
+      timestamp: uploadParams.timestamp,
+      signature: signature,
+      public_id: publicId,
+    }
 
-    const fileUrl = `https://${BUCKET}.s3.${REGION}.amazonaws.com/${objectKey}`
+    // Generate view URL (what the uploaded image will be accessible at)
+    const viewUrl = `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.${extension ? extension.slice(1) : 'jpg'}`
+    const fileUrl = viewUrl
 
     return {
       statusCode: 200,
       headers: corsHeaders(),
-      body: JSON.stringify({ uploadUrl, fileUrl, viewUrl, key: objectKey }),
+      body: JSON.stringify({ 
+        uploadUrl, 
+        uploadPayload,
+        fileUrl, 
+        viewUrl, 
+        key: publicId,
+        method: 'POST'
+      }),
     }
   } catch (error) {
     console.error('[kmjk-upload-image] error:', error)

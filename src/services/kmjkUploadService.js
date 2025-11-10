@@ -27,18 +27,29 @@ export async function uploadChatPhoto(file, conversationId) {
     conversationId,
   })
 
+  // Convert file to base64 for Cloudinary upload
+  const base64File = await fileToBase64(file)
+  
+  // Update the payload with actual file data
+  const uploadPayload = {
+    ...meta.uploadPayload,
+    file: base64File,
+  }
+
   const uploadResponse = await fetch(meta.uploadUrl, {
-    method: 'PUT',
+    method: 'POST',
     headers: {
-      'Content-Type': file.type || 'application/octet-stream',
+      'Content-Type': 'application/json',
     },
-    body: file,
+    body: JSON.stringify(uploadPayload),
   })
 
   if (!uploadResponse.ok) {
     const detail = await uploadResponse.text()
     throw new Error(detail || `Failed to upload file (${uploadResponse.status})`)
   }
+
+  const uploadResult = await uploadResponse.json()
 
   return {
     key: meta.key,
@@ -48,5 +59,15 @@ export async function uploadChatPhoto(file, conversationId) {
     size: file.size,
     type: file.type,
     uploadedAt: new Date().toISOString(),
+    cloudinaryPublicId: uploadResult.public_id,
   }
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = error => reject(error)
+  })
 }
