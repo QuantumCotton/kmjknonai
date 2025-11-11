@@ -1,9 +1,14 @@
 import crypto from 'crypto'
 
+// eslint-disable-next-line no-undef
 const ALLOWED_MIME_TYPES = (process.env.KMJK_ALLOWED_MIME || 'image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif').split(',')
+// eslint-disable-next-line no-undef
 const MAX_UPLOAD_BYTES = Number.parseInt(process.env.KMJK_UPLOAD_MAX_BYTES || `${5 * 1024 * 1024}`, 10)
+// eslint-disable-next-line no-undef
 const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME
+// eslint-disable-next-line no-undef
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY
+// eslint-disable-next-line no-undef
 const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET
 
 const corsHeaders = () => ({
