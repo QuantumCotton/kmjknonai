@@ -1,13 +1,24 @@
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
-const OPENAI_ENDPOINT = '/.netlify/functions/kmjk-openai'
-const LEAD_EMAIL_ENDPOINT = '/.netlify/functions/kmjk-send-lead'
+// Detect if running in Node.js (testing) vs browser
+const isNode = typeof window === 'undefined'
+const BASE_URL = isNode ? (process.env.NETLIFY_DEV_URL || 'http://localhost:8888') : ''
+
+const OPENAI_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-openai`
+const LEAD_EMAIL_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-send-lead`
 const OPENAI_TIMEOUT_MS = 45000
 
 const DIGEST_REASON_LABELS = {
   inactivity: 'Inactivity timeout',
   'manual-close': 'Manual close',
+}
+
+// Phrase variation for natural conversation
+const phraseBanks = {
+  curiosity: ['Just curious', 'Wondering', 'Quick question', 'Thinking aloud'],
+  agreement: ['Absolutely', 'For sure', 'Definitely', 'Love that', "That's great", 'Perfect'],
+  transition: ['So', 'Okay', 'Got it', 'Alright', 'Makes sense'],
 }
 
 const serviceCatalog = [
@@ -37,6 +48,31 @@ const serviceCatalog = [
     keywords: ['tv mounting', 'tv', 'mount', 'soundbar', 'av', 'media room', 'projector'],
   },
 ]
+
+// Detect emotional cues in user input
+function detectEmotion(input) {
+  const lower = input.toLowerCase()
+  if (/frustrat|annoying|hate|upset|angry|difficult/.test(lower)) {
+    return 'frustrated'
+  }
+  if (/excit|can't wait|love|amazing|awesome|thrilled/.test(lower)) {
+    return 'excited'
+  }
+  if (/overwhelm|confus|unsure|not sure|don't know|lost/.test(lower)) {
+    return 'overwhelmed'
+  }
+  if (/nervous|worried|concern|anxious|stress/.test(lower)) {
+    return 'nervous'
+  }
+  return null
+}
+
+// Get random phrase from bank for variation
+function getRandomPhrase(bankName) {
+  const bank = phraseBanks[bankName]
+  if (!bank || bank.length === 0) return ''
+  return bank[Math.floor(Math.random() * bank.length)]
+}
 
 function normalizeTimestamp(value) {
   if (!value) return null
@@ -97,6 +133,8 @@ function createInitialConversation(conversationId) {
     conversationDigestSent: false,
     conversationDigestReason: null,
     conversationDigestSentAt: null,
+    turnCount: 0,
+    stageTurnCount: 0,
   }
 }
 
@@ -246,6 +284,29 @@ function updateQualificationScore(leadData) {
   return Math.min(Math.max(score, 0), 100)
 }
 
+// Determine conversation stage based on collected data
+function determineStage(conversation) {
+  const { stage, leadData, qualificationScore, stageTurnCount } = conversation;
+  if (stage === 'wrap_up') return stage;
+  if (stage === 'greeting') {
+    if (leadData.projectType || leadData.serviceCategory) return 'dreaming';
+    return stage;
+  }
+  if (stage === 'dreaming') {
+    // Require minimum 3 turns in dreaming phase before advancing
+    const hasMinTurns = stageTurnCount >= 3;
+    const hasScopeNotes = Array.isArray(leadData.scopeNotes) && leadData.scopeNotes.length > 0;
+    if (hasMinTurns && hasScopeNotes) return 'logistics';
+    return stage;
+  }
+  if (stage === 'logistics') {
+    const hasContact = Boolean(leadData.email || leadData.phone);
+    if (qualificationScore >= 60 && hasContact) return 'wrap_up';
+    return stage;
+  }
+  return stage;
+}
+
 function generateQuickReplies(leadData) {
   const replies = new Set()
 
@@ -270,6 +331,9 @@ function generateQuickReplies(leadData) {
 
 function buildPrompt(conversation, userInput) {
   const serviceOverview = serviceCatalog.map((service) => `${service.category}: ${service.keywords.join(', ')}`).join(' | ')
+  const detectedEmotion = detectEmotion(userInput)
+  const randomCuriosity = getRandomPhrase('curiosity')
+  const randomAgreement = getRandomPhrase('agreement')
 
   return `<role_and_personality>
 You are Atlas, a friendly home improvement consultant with KMJK on the Treasure Coast. You're genuinely excited about helping homeowners bring their vision to life. You're conversational, curious, and collaborative—you ask thoughtful questions to understand what they really want, then help them explore possibilities. You embrace the "Stuart Artisan" persona: knowledgeable, warm, proudly local, and passionate about craftsmanship.
@@ -283,10 +347,15 @@ Your goal is to:
 </role_and_personality>
 
 <context>
+Stage: ${conversation.stage}
+Stage turn count: ${conversation.stageTurnCount} (minimum 3 turns required in dreaming phase)
 Current lead data: ${JSON.stringify(conversation.leadData)}
 Qualification score: ${conversation.qualificationScore}
+Intake asked questions: ${conversation.intake.askedQuestions.join(', ') || 'none'}
 Visitor just said: "${userInput}"
+Detected emotion: ${detectedEmotion || 'neutral'}
 Available services: ${serviceOverview}
+Phrase suggestions for variety: "${randomCuriosity}" / "${randomAgreement}"
 </context>
 
 <conversation_flow>
@@ -317,11 +386,17 @@ As the conversation progresses, casually gather:
 
 Only ask for photos if relevant: "Got any photos of the space? Feel free to tap the paperclip—that would help me visualize this better."
 
-**Phase 4: Next Steps**
+**Inspiration Hooks (use when appropriate):**
+- For kitchen projects: "Have any inspiration pics from Pinterest or Houzz? Tap the paperclip to share, or text them to 772-777-0622!"
+- For any project: "If you've seen something you love in a friend's house or online, I'd love to see it—helps me get on the same page with your vision"
+- Offer to help them explore: "Want me to describe a few popular styles so you can pick what resonates?"
+
+**Phase 4: Next Steps (wrap_up stage)**
 When you have enough information (qualification score >= 60 and contact info):
-- Summarize their vision warmly
-- Wrap up naturally: "This sounds like an amazing project! Chris from our team will reach out within 1 business day via [their preferred method]. You'll hear from 772-777-0622 or info@kmjk.pro."
-- Confirm their contact preference
+- Summarize their vision warmly and enthusiastically
+- Propose a specific next step with day/time options: "This sounds like an amazing project! I'll have Chris reach out within 24 hours. Quick question: does Tuesday or Wednesday afternoon work better for a free in-home consultation? He usually has 2pm or 4pm slots available."
+- Confirm contact: "You'll hear from 772-777-0622 or info@kmjk.pro—[their preferred method: text/call/email]"
+- End with confidence and excitement about their project
 </conversation_flow>
 
 <conversation_style>
@@ -330,7 +405,7 @@ CRITICAL RULES:
 - **ONE question at a time**: Don't list multiple questions. Let the conversation breathe.
 - **Build on their answers**: Reference what they said earlier to show you're listening
 - **Share micro-ideas**: Drop small suggestions based on what they share to keep it collaborative
-- **Vary your phrasing**: Never repeat the same questions or patterns
+- **Vary your phrasing**: Use the phrase suggestions provided or create your own natural variations
 - **Match their energy**: If they're detailed, go deep. If they're brief, keep it light
 - **Use their name** occasionally after they share it
 - **Be a consultant, not a form**: You're exploring together, not filling out paperwork
@@ -339,6 +414,13 @@ CRITICAL RULES:
 - **Never ask for information they've already provided**
 - **If they're vague or uncertain**, help them explore options with gentle questions
 </conversation_style>
+
+<empathy_responses>
+If detected emotion is "frustrated": Start with empathy like "I totally get how frustrating that must be" or "That can be so annoying"
+If detected emotion is "excited": Match their energy with "Love the excitement!" or "This is going to be amazing!"
+If detected emotion is "overwhelmed": Reassure with "No worries—let's break it down together, one step at a time" or "I hear you. Let's keep it simple"
+If detected emotion is "nervous": Comfort with "Totally normal to feel that way. We'll walk through this together" or "I get it—big decisions can feel stressful"
+</empathy_responses>
 
 <information_to_gather>
 Throughout the conversation, naturally collect:
@@ -375,10 +457,20 @@ BUT: Gather these through natural conversation, not interrogation. Let it flow.
 <critical_reminders>
 - Act like a helpful friend who knows home improvement, not a data collection bot
 - Let the conversation develop naturally—don't rush to the next question
-- Help them dream and explore before diving into logistics
+- Help them dream and explore before diving into logistics (minimum 3 turns in dreaming stage)
+- Stage rules (STRICTLY FOLLOW):
+  - greeting → focus on rapport and project vision
+  - dreaming → ask vision-clarifying questions; do NOT ask budget, timeline, or zip (minimum 3 turns here)
+  - logistics → now you may ask budget, timeline, zip/location if still missing
+  - wrap_up → summarize and propose concrete appointment with day/time options
+- Never re-ask for information already in lead data or listed in Intake asked questions
 - Show you're listening by referencing their earlier messages
 - Adapt your approach based on how they respond
-- Photo uploads: Encourage the paperclip feature, only mention email/text as backup
+- Respond to detected emotions with empathy first, then continue the conversation
+- Use phrase variation to sound natural and avoid repetition
+- Photo uploads: Encourage the paperclip feature, mention texting to 772-777-0622 as alternative
+- In wrap_up stage: End with specific appointment scheduling question (days/times)
+- If project is kitchen/bathroom: Occasionally suggest sharing inspiration photos or mood boards
 </critical_reminders>
 `
 }
@@ -579,6 +671,21 @@ export async function sendKmjkMessage(conversation, userInput) {
   updatedConversation.leadData = detectBudget(userInput, updatedConversation.leadData)
   updatedConversation.leadData = captureScopeDetails(userInput, updatedConversation.leadData)
   updatedConversation.qualificationScore = updateQualificationScore(updatedConversation.leadData)
+  
+  // Increment turn counters
+  const previousStage = updatedConversation.stage
+  updatedConversation.turnCount = (updatedConversation.turnCount || 0) + 1
+  updatedConversation.stageTurnCount = (updatedConversation.stageTurnCount || 0) + 1
+  
+  // Update conversation stage based on latest info
+  const newStage = determineStage(updatedConversation)
+  
+  // Reset stageTurnCount if stage changed
+  if (newStage !== previousStage) {
+    updatedConversation.stageTurnCount = 0
+  }
+  
+  updatedConversation.stage = newStage
 
   const chatMessages = updatedConversation.messages
     .filter((msg) => msg.content?.trim())
