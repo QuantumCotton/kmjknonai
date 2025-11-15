@@ -63,7 +63,7 @@ import {
   KitchenRenovationSewallsPoint,
   KitchenRenovationHutchinsonIsland,
 } from './pages/TreasureCoast/KitchenRenovationPages.jsx'
-import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovation.jsx'
+import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovationFixed.jsx'
 import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationFixed.jsx'
 import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenovationFixed.jsx'
 import {
