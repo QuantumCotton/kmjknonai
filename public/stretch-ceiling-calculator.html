@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stretch Ceiling Cost Calculator | KMJK Professional Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--kmjk-charcoal) 0%, #1a1a1a 100%);
+            color: var(--kmjk-white);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border-bottom: 3px solid var(--kmjk-gold);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(212, 175, 55, 0.1) 50%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.2em;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding-bottom: 120px;
+            background: #000000;
+            position: relative;
+        }
+        
+        .main-content::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .customer-info {
+            background: linear-gradient(135deg, var(--kmjk-charcoal) 0%, #2a2a2a 100%);
+            padding: 30px;
+            margin: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-group {
+            margin-bottom: 20px;
+        }
+        
+        .info-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 400;
+            color: var(--kmjk-gold);
+            font-size: 1em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .info-group input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.4s ease;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--kmjk-white);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-group input:focus {
+            outline: none;
+            border-color: var(--kmjk-gold);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2), 0 4px 20px rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .info-group input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+        
+        .products-section {
+            padding: 0 20px;
+        }
+        
+        .category-section {
+            margin-bottom: 30px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, var(--kmjk-charcoal) 0%, #2a2a2a 100%);
+            border-radius: 10px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .category-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--kmjk-gold) 0%, #b8860b 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .category-header:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+        }
+        
+        .category-title {
+            font-size: 1.5em;
+            font-weight: 300;
+            color: var(--kmjk-white);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .product-card {
+            background: linear-gradient(135deg, var(--kmjk-charcoal) 0%, #2a2a2a 100%);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(10px);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+        
+        .product-card.active {
+            border-color: var(--kmjk-gold);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, var(--kmjk-charcoal) 100%);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        
+        .product-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .product-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--kmjk-gold) 0%, #b8860b 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.5);
+        }
+        
+        .product-details {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 400;
+            color: var(--kmjk-white);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .unit-info {
+            font-size: 0.9em;
+            color: var(--kmjk-light-gray);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        
+        .price {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--kmjk-gold);
+            font-family: 'Georgia', 'Times New Roman', serif;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .quantity-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .quantity-label {
+            font-weight: 400;
+            color: var(--kmjk-white);
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background: #5a67d8;
+            transform: scale(1.05);
+        }
+        
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .quantity-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #343a40;
+        }
+        
+        .row-total {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1em;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        :root {
+            --kmjk-dark: #2f343a;
+            --kmjk-charcoal: #333;
+            --kmjk-white: #fff;
+            --kmjk-gold: #d4af37;
+            --kmjk-border: #444;
+            --kmjk-light-gray: #f8f8f8;
+        }
+        
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--kmjk-charcoal);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+            padding: 20px;
+            z-index: 1000;
+            border-top: 2px solid var(--kmjk-gold);
+        }
+        
+        .totals-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .totals-info {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        
+        .total-item {
+            text-align: left;
+        }
+        
+        .total-label {
+            font-size: 0.85em;
+            color: var(--kmjk-light-gray);
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+        
+        .total-amount {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--kmjk-white);
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .grand-total {
+            color: var(--kmjk-gold);
+            font-size: 1.5em;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: var(--kmjk-gold);
+            color: var(--kmjk-dark);
+            border: 1px solid var(--kmjk-gold);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--kmjk-gold);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .customer-info {
+                margin: 15px;
+                padding: 15px;
+            }
+            
+            .products-section {
+                padding: 0 15px;
+            }
+            
+            .totals-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .totals-info {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .action-buttons {
+                width: 100%;
+            }
+            
+            .btn-primary {
+                flex: 1;
+            }
+            
+            .bottom-bar {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Stretch Ceiling Cost Calculator | KMJK</h1>
+            <p>Professional Pricing Calculator for Premium Stretch Ceiling Services</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="customer-info">
+                <div class="info-group">
+                    <label for="customer-name">Customer Name</label>
+                    <input type="text" id="customer-name" placeholder="Enter customer name">
+                </div>
+                <div class="info-group">
+                    <label for="customer-address">Address</label>
+                    <input type="text" id="customer-address" placeholder="Enter customer address">
+                </div>
+            </div>
+            
+            <div class="products-section">
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-icon">🏠</div>
+                        <div class="category-title">Membrane Products</div>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card" data-product="basic-mate">
+                            <div class="product-header">
+                                <div class="product-icon">📄</div>
+                                <div class="product-details">
+                                    <div class="product-name">Basic mate membrane (pvc)</div>
+                                    <div class="unit-info">Any color (Square foot)</div>
+                                    <div class="price">$17.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="glossy-membrane">
+                            <div class="product-header">
+                                <div class="product-icon">✨</div>
+                                <div class="product-details">
+                                    <div class="product-name">Glossy membrane installation (pvc)</div>
+                                    <div class="unit-info">Any color (Square foot)</div>
+                                    <div class="price">$17.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="printed-membrane">
+                            <div class="product-header">
+                                <div class="product-icon">🎨</div>
+                                <div class="product-details">
+                                    <div class="product-name">Printed membrane (pvc)</div>
+                                    <div class="unit-info">Square foot</div>
+                                    <div class="price">$20.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="mirror-finish">
+                            <div class="product-header">
+                                <div class="product-icon">🪞</div>
+                                <div class="product-details">
+                                    <div class="product-name">Mirror-finish membrane (pvc)</div>
+                                    <div class="unit-info">Square foot</div>
+                                    <div class="price">$35.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="acoustic-ceiling">
+                            <div class="product-header">
+                                <div class="product-icon">🔊</div>
+                                <div class="product-details">
+                                    <div class="product-name">Acoustic stretch ceiling (pvc)</div>
+                                    <div class="unit-info">Any color (Square foot)</div>
+                                    <div class="price">$35.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="star-ceiling">
+                            <div class="product-header">
+                                <div class="product-icon">⭐</div>
+                                <div class="product-details">
+                                    <div class="product-name">"Star ceiling" membrane (pvc)</div>
+                                    <div class="unit-info">Square foot</div>
+                                    <div class="price">$100.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="translucent-ceiling">
+                            <div class="product-header">
+                                <div class="product-icon">💡</div>
+                                <div class="product-details">
+                                    <div class="product-name">Translucent ceiling membrane (pvc)</div>
+                                    <div class="unit-info">Any color (Square foot)</div>
+                                    <div class="price">$25.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-icon">💡</div>
+                        <div class="category-title">Lighting Products</div>
+                    </div>
+                    <div class="products-grid">
+                        <div class="product-card" data-product="cove-lighting">
+                            <div class="product-header">
+                                <div class="product-icon">🌅</div>
+                                <div class="product-details">
+                                    <div class="product-name">Cove lighting</div>
+                                    <div class="unit-info">Linear foot</div>
+                                    <div class="price">$90.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="linear-lighting">
+                            <div class="product-header">
+                                <div class="product-icon">📏</div>
+                                <div class="product-details">
+                                    <div class="product-name">Linear lighting</div>
+                                    <div class="unit-info">Linear foot</div>
+                                    <div class="price">$90.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="niche-lighting">
+                            <div class="product-header">
+                                <div class="product-icon">🏮</div>
+                                <div class="product-details">
+                                    <div class="product-name">Niche lighting</div>
+                                    <div class="unit-info">Linear foot</div>
+                                    <div class="price">$90.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="luminous-lighting">
+                            <div class="product-header">
+                                <div class="product-icon">✨</div>
+                                <div class="product-details">
+                                    <div class="product-name">Luminous lighting</div>
+                                    <div class="unit-info">Linear foot</div>
+                                    <div class="price">$90.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="floating-shapes">
+                            <div class="product-header">
+                                <div class="product-icon">🎈</div>
+                                <div class="product-details">
+                                    <div class="product-name">Floating shapes</div>
+                                    <div class="unit-info">Linear foot</div>
+                                    <div class="price">$100.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="fiber-optic">
+                            <div class="product-header">
+                                <div class="product-icon">🌌</div>
+                                <div class="product-details">
+                                    <div class="product-name">Fiber optic lights</div>
+                                    <div class="unit-info">Square foot (8-12 fiber optic lights per square foot)</div>
+                                    <div class="price">$60.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                        
+                        <div class="product-card" data-product="custom-lighting">
+                            <div class="product-header">
+                                <div class="product-icon">⚙️</div>
+                                <div class="product-details">
+                                    <div class="product-name">Any other lighting requested by the client</div>
+                                    <div class="unit-info">Square foot/Linear foot</div>
+                                    <div class="price">$90.00</div>
+                                </div>
+                            </div>
+                            <div class="quantity-section">
+                                <span class="quantity-label">Quantity:</span>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus">−</button>
+                                    <span class="quantity-display">0</span>
+                                    <button class="quantity-btn plus">+</button>
+                                </div>
+                            </div>
+                            <div class="row-total">$0.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-bar">
+            <div class="totals-container">
+                <div class="totals-info">
+                    <div class="total-item">
+                        <div class="total-label">Subtotal</div>
+                        <div class="total-amount" id="subtotal">$0.00</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-label">Tax (10%)</div>
+                        <div class="total-amount" id="tax">$0.00</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-label">Total</div>
+                        <div class="total-amount grand-total" id="grand-total">$0.00</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="clearAll()">Clear All</button>
+                    <button class="btn-primary" onclick="generateQuote()">Generate Quote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="quantityWheel" class="quantity-wheel">
+        <div id="wheelValues" class="wheel-values">
+            <div class="wheel-value">0</div>
+            <div class="wheel-value">1</div>
+            <div class="wheel-value">2</div>
+            <div class="wheel-value">3</div>
+            <div class="wheel-value">4</div>
+            <div class="wheel-value">5</div>
+            <div class="wheel-value">6</div>
+            <div class="wheel-value">7</div>
+            <div class="wheel-value">8</div>
+            <div class="wheel-value">9</div>
+            <div class="wheel-value">10</div>
+            <div class="wheel-value">11</div>
+            <div class="wheel-value">12</div>
+            <div class="wheel-value">13</div>
+            <div class="wheel-value">14</div>
+            <div class="wheel-value">15</div>
+            <div class="wheel-value">16</div>
+            <div class="wheel-value">17</div>
+            <div class="wheel-value">18</div>
+            <div class="wheel-value">19</div>
+            <div class="wheel-value">20</div>
+        </div>
+        <button class="btn-primary" onclick="confirmQuantity()">Confirm</button>
+        <button class="btn-primary" onclick="closeQuantityWheel()">Cancel</button>
+    </div>
+    
+    <script>
+        // Product data with prices
+        const productData = {
+            'basic-mate': 17.00,
+            'glossy-membrane': 17.00,
+            'printed-membrane': 20.00,
+            'mirror-finish': 35.00,
+            'acoustic-ceiling': 35.00,
+            'star-ceiling': 100.00,
+            'translucent-ceiling': 25.00,
+            'cove-lighting': 90.00,
+            'linear-lighting': 90.00,
+            'niche-lighting': 90.00,
+            'luminous-lighting': 90.00,
+            'floating-shapes': 100.00,
+            'fiber-optic': 60.00,
+            'custom-lighting': 90.00
+        };
+        
+        const subtotalElement = document.getElementById('subtotal');
+        const taxElement = document.getElementById('tax');
+        const grandTotalElement = document.getElementById('grand-total');
+        const quantityWheel = document.getElementById('quantityWheel');
+        const wheelValues = document.getElementById('wheelValues');
+        
+        let currentProductId = null;
+        let currentQuantity = 0;
+        let wheelPosition = 0;
+        let isScrolling = false;
+        let startY = 0;
+        let startScrollTop = 0;
+        
+        function formatCurrency(amount) {
+            return '$' + amount.toFixed(2);
+        }
+        
+        function updateProductQuantity(productId, quantity) {
+            const card = document.querySelector(`[data-product="${productId}"]`);
+            const quantityDisplay = card.querySelector('.quantity-display');
+            const rowTotalElement = card.querySelector('.row-total');
+            const price = productData[productId];
+            
+            quantityDisplay.textContent = quantity;
+            const rowTotal = quantity * price;
+            rowTotalElement.textContent = formatCurrency(rowTotal);
+            
+            // Update card active state
+            if (quantity > 0) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        }
+        
+        function calculateTotals() {
+            let subtotal = 0;
+            
+            Object.keys(productData).forEach(productId => {
+                const card = document.querySelector(`[data-product="${productId}"]`);
+                const quantityDisplay = card.querySelector('.quantity-display');
+                const quantity = parseInt(quantityDisplay.textContent) || 0;
+                const price = productData[productId];
+                const rowTotal = quantity * price;
+                subtotal += rowTotal;
+            });
+            
+            const tax = subtotal * 0.10;
+            const grandTotal = subtotal + tax;
+            
+            subtotalElement.textContent = formatCurrency(subtotal);
+            taxElement.textContent = formatCurrency(tax);
+            grandTotalElement.textContent = formatCurrency(grandTotal);
+        }
+        
+        function openQuantityWheel(productId) {
+            currentProductId = productId;
+            const card = document.querySelector(`[data-product="${productId}"]`);
+            const quantityDisplay = card.querySelector('.quantity-display');
+            currentQuantity = parseInt(quantityDisplay.textContent) || 0;
+            
+            // Set wheel position to current quantity
+            wheelPosition = currentQuantity;
+            updateWheelPosition();
+            
+            // Show wheel with animation
+            quantityWheel.classList.add('active');
+            
+            // Add touch/mouse events for scrolling
+            setupWheelScrolling();
+        }
+        
+        function setupWheelScrolling() {
+            let isDragging = false;
+            let startClientY = 0;
+            let startWheelPosition = 0;
+            
+            const handleStart = (clientY) => {
+                isDragging = true;
+                startClientY = clientY;
+                startWheelPosition = wheelPosition;
+                wheelValues.style.transition = 'none';
+            };
+            
+            const handleMove = (clientY) => {
+                if (!isDragging) return;
+                
+                const deltaY = startClientY - clientY;
+                const deltaItems = Math.round(deltaY / 40);
+                const newPosition = Math.max(0, Math.min(200, startWheelPosition + deltaItems));
+                
+                wheelPosition = newPosition;
+                updateWheelPosition();
+            };
+            
+            const handleEnd = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                wheelValues.style.transition = 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            };
+            
+            // Mouse events
+            wheelValues.addEventListener('mousedown', (e) => handleStart(e.clientY));
+            document.addEventListener('mousemove', (e) => handleMove(e.clientY));
+            document.addEventListener('mouseup', handleEnd);
+            
+            // Touch events
+            wheelValues.addEventListener('touchstart', (e) => handleStart(e.touches[0].clientY));
+            document.addEventListener('touchmove', (e) => handleMove(e.touches[0].clientY));
+            document.addEventListener('touchend', handleEnd);
+            
+            // Scroll wheel support
+            wheelValues.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? 1 : -1;
+                wheelPosition = Math.max(0, Math.min(200, wheelPosition + delta));
+                updateWheelPosition();
+            });
+        }
+        
+        function updateWheelPosition() {
+            const offset = wheelPosition * 40;
+            wheelValues.style.transform = `translate(-50%, calc(-50% - ${offset}px))`;
+            
+            // Update selected state
+            const values = wheelValues.querySelectorAll('.wheel-value');
+            values.forEach((value, index) => {
+                if (index === wheelPosition) {
+                    value.classList.add('selected');
+                } else {
+                    value.classList.remove('selected');
+                }
+            });
+        }
+        
+        function closeQuantityWheel() {
+            quantityWheel.classList.remove('active');
+            currentProductId = null;
+        }
+        
+        function confirmQuantity() {
+            if (currentProductId) {
+                updateProductQuantity(currentProductId, wheelPosition);
+                calculateTotals();
+            }
+            closeQuantityWheel();
+        }
+        
+        function clearAll() {
+            Object.keys(productData).forEach(productId => {
+                updateProductQuantity(productId, 0);
+            });
+            calculateTotals();
+        }
+        
+        function generateQuote() {
+            const customerName = document.getElementById('customer-name').value;
+            const customerAddress = document.getElementById('customer-address').value;
+            
+            if (!customerName) {
+                alert('Please enter customer name');
+                return;
+            }
+            
+            let quoteText = `QUOTE FOR: ${customerName}\n`;
+            if (customerAddress) quoteText += `Address: ${customerAddress}\n\n`;
+            quoteText += `ITEMS:\n`;
+            
+            let hasItems = false;
+            Object.keys(productData).forEach(productId => {
+                const card = document.querySelector(`[data-product="${productId}"]`);
+                const quantity = parseInt(card.querySelector('.quantity-display').textContent) || 0;
+                if (quantity > 0) {
+                    const price = productData[productId];
+                    const productName = card.querySelector('.product-name').textContent;
+                    const total = quantity * price;
+                    quoteText += `${productName}: ${quantity} x ${formatCurrency(price)} = ${formatCurrency(total)}\n`;
+                    hasItems = true;
+                }
+            });
+            
+            if (!hasItems) {
+                alert('Please add at least one item to the quote');
+                return;
+            }
+            
+            quoteText += `\nSUBTOTAL: ${subtotalElement.textContent}\n`;
+            quoteText += `TAX (10%): ${taxElement.textContent}\n`;
+            quoteText += `TOTAL: ${grandTotalElement.textContent}`;
+            
+            // Create a modal with the quote
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 30px;
+                border-radius: 16px;
+                max-width: 500px;
+                max-height: 80vh;
+                overflow-y: auto;
+                white-space: pre-line;
+                font-family: inherit;
+            `;
+            content.textContent = quoteText;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Close';
+            closeBtn.className = 'btn-primary';
+            closeBtn.style.marginTop = '20px';
+            closeBtn.onclick = () => document.body.removeChild(modal);
+            
+            content.appendChild(closeBtn);
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+        
+        function printQuote() {
+            const customerName = document.getElementById('customer-name').value;
+            const customerAddress = document.getElementById('customer-address').value;
+            
+            if (!customerName) {
+                alert('Please enter customer name');
+                return;
+            }
+            
+            let items = [];
+            let hasItems = false;
+            Object.keys(productData).forEach(productId => {
+                const card = document.querySelector(`[data-product="${productId}"]`);
+                const quantity = parseInt(card.querySelector('.quantity-display').textContent) || 0;
+                if (quantity > 0) {
+                    const price = productData[productId];
+                    const productName = card.querySelector('.product-name').textContent;
+                    const total = quantity * price;
+                    items.push({ name: productName, quantity, price, total });
+                    hasItems = true;
+                }
+            });
+            
+            if (!hasItems) {
+                alert('Please add at least one item to the quote');
+                return;
+            }
+            
+            const subtotal = parseFloat(subtotalElement.textContent.replace('$', ''));
+            const tax = parseFloat(taxElement.textContent.replace('$', ''));
+            const grandTotal = parseFloat(grandTotalElement.textContent.replace('$', ''));
+            
+            // Create print container
+            const printContainer = document.createElement('div');
+            printContainer.className = 'print-container';
+            
+            const currentDate = new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            printContainer.innerHTML = `
+                <div class="print-header">
+                    <h1>STRETCH CEILING QUOTE</h1>
+                    <p>Professional Stretch Ceiling Services</p>
+                    <p>Quote Date: ${currentDate}</p>
+                </div>
+                
+                <div class="print-customer">
+                    <h3>CUSTOMER INFORMATION</h3>
+                    <p><strong>Name:</strong> ${customerName}</p>
+                    ${customerAddress ? `<p><strong>Address:</strong> ${customerAddress}</p>` : ''}
+                </div>
+                
+                <div class="print-items">
+                    <h3>ITEM DETAILS</h3>
+                    <table class="print-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${items.map(item => `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${formatCurrency(item.price)}</td>
+                                    <td>${formatCurrency(item.total)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="print-totals">
+                    <div>Subtotal: ${formatCurrency(subtotal)}</div>
+                    <div>Tax (10%): ${formatCurrency(tax)}</div>
+                    <div class="print-total">Total: ${formatCurrency(grandTotal)}</div>
+                </div>
+                
+                <div style="margin-top: 40px; text-align: center; font-size: 12px; color: #666;">
+                    <p>Thank you for your business!</p>
+                    <p>This quote is valid for 30 days.</p>
+                </div>
+            `;
+            
+            document.body.appendChild(printContainer);
+            
+            // Print and then cleanup
+            window.print();
+            setTimeout(() => {
+                document.body.removeChild(printContainer);
+            }, 100);
+        }
+        
+        function setupQuantityControls() {
+            document.querySelectorAll('.product-card').forEach(card => {
+                const productId = card.dataset.product;
+                const minusBtn = card.querySelector('.minus');
+                const plusBtn = card.querySelector('.plus');
+                const quantityDisplay = card.querySelector('.quantity-display');
+                
+                minusBtn.addEventListener('click', () => {
+                    const quantity = parseInt(quantityDisplay.textContent) || 0;
+                    if (quantity > 0) {
+                        updateProductQuantity(productId, quantity - 1);
+                        calculateTotals();
+                    }
+                });
+                
+                plusBtn.addEventListener('click', () => {
+                    const quantity = parseInt(quantityDisplay.textContent) || 0;
+                    updateProductQuantity(productId, quantity + 1);
+                    calculateTotals();
+                });
+                
+                // Click on quantity to open wheel
+                quantityDisplay.addEventListener('click', () => {
+                    openQuantityWheel(productId);
+                });
+            });
+        }
+        
+        // Initialize
+        setupQuantityControls();
+        calculateTotals();
+    </script>
+</body>
+</html>

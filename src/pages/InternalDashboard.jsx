@@ -90,6 +90,7 @@ const staticFileEntries = [
   { label: 'Estimate Template – Signature (Paid)', file: 'kmjk_estimate_template_signature_paid.html' },
   { label: 'Agreement – KMJK', file: 'kmjkagreementesh.html' },
   { label: 'Calculator – Foresh2C', file: 'calculatorforesh2c.html' },
+  { label: 'Stretch Ceiling Cost Calculator', file: 'stretch-ceiling-calculator.html' },
   { label: 'Partnership – NH Kitchen', file: 'nh-kitchen-partnership.html' },
   { label: 'Partnership – Skyline', file: 'skyline-partnership.html' },
   { label: 'Trent Sundrop PDF', file: 'trent sundrop.pdf' },
