@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Calendar, Upload, Check, MessageSquare, Phone, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog.jsx'
-import homeRenovationHero from '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png'
+import homeRenovationHero from '../assets/kitchen_modern.jpg'
 import {
   KMJK_CONTACT_NAME,
   KMJK_PHONE_DISPLAY,
