@@ -135,3 +135,5 @@ const BathroomRemodelSewallsPoint = createTreasureCoastLandingPage({
     subheading: 'Schedule a consultation with Chris to review layouts, materials, and project investment options.',
   },
 })
+
+export default BathroomRemodelSewallsPoint

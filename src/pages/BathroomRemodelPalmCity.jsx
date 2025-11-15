@@ -1,6 +1,6 @@
 import { createTreasureCoastLandingPage } from './TreasureCoast/constants.js'
 
-export default createTreasureCoastLandingPage({
+const BathroomRemodelPalmCity = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelPalmCity',
   cityName: 'Palm City',
   serviceType: 'Bathroom Renovation',
@@ -136,3 +136,5 @@ export default createTreasureCoastLandingPage({
     subheading: 'Schedule a consultation with Chris to review layouts, materials, and project investment options.',
   },
 })
+
+export default BathroomRemodelPalmCity

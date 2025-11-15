@@ -1,6 +1,6 @@
 import { createTreasureCoastLandingPage } from './TreasureCoast/constants.js'
 
-export default createTreasureCoastLandingPage({
+const BathroomRemodelHutchinsonIsland = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelHutchinsonIsland',
   cityName: 'Hutchinson Island',
   serviceType: 'Bathroom Renovation',
@@ -136,3 +136,5 @@ export default createTreasureCoastLandingPage({
     subheading: 'Schedule a consultation with Chris to review layouts, materials, and project investment options.',
   },
 })
+
+export default BathroomRemodelHutchinsonIsland
