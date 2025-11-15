@@ -28,6 +28,7 @@ import {
   SWAY_PHONE_CALL_LINK,
 } from '@/constants/contact.js'
 import CallTeamButtons from '@/components/CallTeamButtons.jsx'
+import ContactForm from '@/components/ContactForm.jsx'
 
 // Import images
 import kitchenModern from './assets/kitchen_modern.jpg'
@@ -62,6 +63,7 @@ import {
   KitchenRenovationSewallsPoint,
   KitchenRenovationHutchinsonIsland,
 } from './pages/TreasureCoast/KitchenRenovationPages.jsx'
+import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovation.jsx'
 import {
   BathroomRenovationPalmCity,
   BathroomRenovationSailfishPoint,
@@ -514,126 +516,22 @@ function AboutPage() {
 }
 
 function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
-
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormData((previous) => ({ ...previous, [name]: value }))
-  }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    const formDataToSend = new FormData()
-    formDataToSend.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912')
-    formDataToSend.append('name', formData.name)
-    formDataToSend.append('email', formData.email)
-    formDataToSend.append('phone', formData.phone)
-    formDataToSend.append('message', formData.message)
-    formDataToSend.append('subject', 'New Website Inquiry')
-    formDataToSend.append('Source URL', window.location.href)
-
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formDataToSend
-      })
-      const data = await response.json()
-
-      if (data.success) {
-        if (window.gtag) {
-          window.gtag('event', 'generate_lead', {
-            service: 'General Inquiry',
-            source: 'Contact Page',
-            value: 1
-          })
-        }
-        alert("Thanks! We'll be in touch shortly.")
-        setFormData({ name: '', email: '', phone: '', message: '' })
-      } else {
-        alert('Submission error: ' + (data.message || 'Please try again.'))
-      }
-    } catch (error) {
-      console.error('Contact form submission failed', error)
-      alert('Network error. Please try again.')
-    }
-  }
-
   return (
     <div className="pt-20">
       <section className="py-16 bg-[var(--warm-off-white)]">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="section-title mb-8">Contact Us</h1>
-          <div className="bg-white shadow-xl rounded-xl p-8 space-y-6">
-            <p className="text-gray-600">
-              Tell us a little about your project and our team will reach out to schedule a consultation.
-            </p>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-1">
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-1">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium mb-1">
-                  Phone *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-1">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows="5"
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]"
-                ></textarea>
-              </div>
-              <Button type="submit" size="lg" className="w-full bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
-                Send Message
-              </Button>
-            </form>
+          <div className="bg-white shadow-xl rounded-xl p-8">
+            <ContactForm 
+              title="Start Your Home Improvement Project"
+              subtitle="Tell us about your project goals and we'll prepare a personalized consultation plan."
+              serviceType="General Inquiry"
+              subject="New Website Inquiry"
+              buttonContext="Contact Page Form"
+              onSubmit={() => {
+                // Additional handling if needed
+              }}
+            />
           </div>
         </div>
       </section>
@@ -679,6 +577,8 @@ function App() {
           <Route path="/sailfish-point-kitchen-renovation" element={<KitchenRenovationSailfishPoint />} />
           <Route path="/sewalls-point-kitchen-renovation" element={<KitchenRenovationSewallsPoint />} />
           <Route path="/hutchinson-island-kitchen-renovation" element={<KitchenRenovationHutchinsonIsland />} />
+          {/* Treasure Coast - Complete Home Renovations */}
+          <Route path="/treasure-coast-home-renovation" element={<TreasureCoastHomeRenovation />} />
           {/* Treasure Coast - Bathroom Renovations */}
           <Route path="/palm-city-bathroom-renovation" element={<BathroomRenovationPalmCity />} />
           <Route path="/sailfish-point-bathroom-renovation" element={<BathroomRenovationSailfishPoint />} />
