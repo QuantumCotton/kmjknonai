@@ -63,9 +63,9 @@ import {
   KitchenRenovationSewallsPoint,
   KitchenRenovationHutchinsonIsland,
 } from './pages/TreasureCoast/KitchenRenovationPages.jsx'
-import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovationFixed.jsx'
-import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationFixed.jsx'
-import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenovationFixed.jsx'
+import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovationClean.jsx'
+import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationClean.jsx'
+import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenovationClean.jsx'
 import {
   BathroomRenovationPalmCity,
   BathroomRenovationSailfishPoint,
