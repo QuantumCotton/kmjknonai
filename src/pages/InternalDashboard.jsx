@@ -5,6 +5,15 @@ import { LayoutDashboard, ExternalLink, FileText, MapPinned, FileSpreadsheet } f
 
 const treasureCoastSections = [
   {
+    title: 'Treasure Coast Area',
+    icon: MapPinned,
+    pages: [
+      { label: 'Treasure Coast Home Renovation', path: '/treasure-coast-home-renovation' },
+      { label: 'Treasure Coast Kitchen Renovation', path: '/treasure-coast-kitchen-renovation' },
+      { label: 'Treasure Coast Bathroom Renovation', path: '/treasure-coast-bathroom-renovation' },
+    ],
+  },
+  {
     title: 'Kitchen Renovation',
     icon: MapPinned,
     pages: [

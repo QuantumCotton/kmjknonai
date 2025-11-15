@@ -64,6 +64,8 @@ import {
   KitchenRenovationHutchinsonIsland,
 } from './pages/TreasureCoast/KitchenRenovationPages.jsx'
 import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovation.jsx'
+import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationFixed.jsx'
+import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenovationFixed.jsx'
 import {
   BathroomRenovationPalmCity,
   BathroomRenovationSailfishPoint,
@@ -579,6 +581,8 @@ function App() {
           <Route path="/hutchinson-island-kitchen-renovation" element={<KitchenRenovationHutchinsonIsland />} />
           {/* Treasure Coast - Complete Home Renovations */}
           <Route path="/treasure-coast-home-renovation" element={<TreasureCoastHomeRenovation />} />
+          <Route path="/treasure-coast-kitchen-renovation" element={<TreasureCoastKitchenRenovation />} />
+          <Route path="/treasure-coast-bathroom-renovation" element={<TreasureCoastBathroomRenovation />} />
           {/* Treasure Coast - Bathroom Renovations */}
           <Route path="/palm-city-bathroom-renovation" element={<BathroomRenovationPalmCity />} />
           <Route path="/sailfish-point-bathroom-renovation" element={<BathroomRenovationSailfishPoint />} />
