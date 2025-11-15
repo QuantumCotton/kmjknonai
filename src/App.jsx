@@ -62,6 +62,7 @@ import {
   KitchenRenovationSailfishPoint,
   KitchenRenovationSewallsPoint,
   KitchenRenovationHutchinsonIsland,
+  KitchenRenovationTreasureCoast,
 } from './pages/TreasureCoast/KitchenRenovationPages.jsx'
 import TreasureCoastHomeRenovation from './pages/TreasureCoastHomeRenovationClean.jsx'
 import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationClean.jsx'
@@ -71,6 +72,7 @@ import {
   BathroomRenovationSailfishPoint,
   BathroomRenovationSewallsPoint,
   BathroomRenovationHutchinsonIsland,
+  BathroomRenovationTreasureCoast,
 } from './pages/TreasureCoast/BathroomRenovationPages.jsx'
 import {
   HandymanPalmCity,
@@ -581,8 +583,8 @@ function App() {
           <Route path="/hutchinson-island-kitchen-renovation" element={<KitchenRenovationHutchinsonIsland />} />
           {/* Treasure Coast - Complete Home Renovations */}
           <Route path="/treasure-coast-home-renovation" element={<TreasureCoastHomeRenovation />} />
-          <Route path="/treasure-coast-kitchen-renovation" element={<TreasureCoastKitchenRenovation />} />
-          <Route path="/treasure-coast-bathroom-renovation" element={<TreasureCoastBathroomRenovation />} />
+          <Route path="/treasure-coast-kitchen-renovation" element={<KitchenRenovationTreasureCoast />} />
+          <Route path="/treasure-coast-bathroom-renovation" element={<BathroomRenovationTreasureCoast />} />
           {/* Treasure Coast - Bathroom Renovations */}
           <Route path="/palm-city-bathroom-renovation" element={<BathroomRenovationPalmCity />} />
           <Route path="/sailfish-point-bathroom-renovation" element={<BathroomRenovationSailfishPoint />} />

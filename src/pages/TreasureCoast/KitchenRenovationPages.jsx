@@ -64,6 +64,17 @@ const kitchenSellingPoints = [
 
 const kitchenPricing = [
   {
+    name: 'Resurfacing',
+    range: '$3,500',
+    monthly: '$150/mo',
+    features: [
+      'Cabinet refacing with new doors and hardware',
+      'Countertop resurfacing or replacement',
+      'Updated backsplash tile',
+      'Minor fixture updates',
+    ],
+  },
+  {
     name: 'Signature Refresh',
     range: '$25k - $45k',
     monthly: '$975/mo',
@@ -150,6 +161,45 @@ const buildKitchenPage = ({
     faqs: kitchenFaqs,
     relatedLinks: kitchenRelatedLinks,
   })
+
+const treasureCoastKitchenHero = new URL(
+  '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
+  import.meta.url
+).href
+
+export const KitchenRenovationTreasureCoast = buildKitchenPage({
+  cityName: 'Treasure Coast',
+  heroImage: treasureCoastKitchenHero,
+  heroAlt: 'Contemporary Treasure Coast kitchen with modern finishes and coastal design',
+  heroPosition: 'center center',
+  heroNote:
+    'Share Treasure Coast kitchen photos or layout notes with our concierge desk so we can stage marine-grade finishes and coastal-ready logistics.',
+  neighborhoods: [
+    'Stuart Historic District',
+    'Jensen Beach Oceanfront',
+    'Palm City Golf Communities',
+    'Sewall\'s Point Waterfront',
+    'Hutchinson Island Condos',
+    'Port St. Lucie Estates',
+  ],
+  testimonial: {
+    quote:
+      'KMJK transformed our Stuart kitchen into the perfect space for family gatherings. The team handled everything from design to final installation with incredible attention to detail.',
+    author: 'The Martinez Family, Stuart',
+    detail: 'Full Custom Kitchen • $85k • 6 Weeks',
+  },
+  caseStudies: [
+    {
+      title: 'Jensen Beach Coastal Kitchen',
+      location: 'Jensen Beach, FL',
+      description:
+        'Created a beach-inspired kitchen with custom cabinetry, quartz countertops, and a large island perfect for entertaining while maintaining coastal durability.',
+      metrics: ['Marine-grade finishes', 'Custom island seating', 'Coastal lighting design'],
+      image: treasureCoastKitchenHero,
+      alt: 'Jensen Beach kitchen renovation with coastal design and large island',
+    },
+  ],
+})
 
 export const KitchenRenovationPalmCity = buildKitchenPage({
   cityName: 'Palm City',

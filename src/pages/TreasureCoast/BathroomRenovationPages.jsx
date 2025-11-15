@@ -1,7 +1,5 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
 
-// Re-export the function so other files can import it
-export { createTreasureCoastLandingPage }
 const palmCityBathroomHero = new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href
 const sailfishPointBathroomHero = new URL('../../../pics/bathroom/MI5TctlhvPw5-CaDCl6Sx.jpeg', import.meta.url).href
 const sewallsPointBathroomHero = new URL('../../../pics/bathroom/bai_11-uXYAcnvq.jpg', import.meta.url).href
@@ -61,6 +59,17 @@ const bathroomSellingPoints = [
 
 const bathroomPricing = [
   {
+    name: 'Resurfacing',
+    range: '$3,500',
+    monthly: '$150/mo',
+    features: [
+      'Vanity refacing with new doors and hardware',
+      'Countertop resurfacing or replacement',
+      'Shower/tub refinishing',
+      'Updated fixtures and lighting',
+    ],
+  },
+  {
     name: 'Signature Refresh',
     range: '$18k - $32k',
     monthly: '$725/mo',
@@ -87,10 +96,10 @@ const bathroomPricing = [
     range: '$70k+',
     monthly: '$2,450/mo',
     features: [
-      'Layout reconfiguration with structural moves and new plumbing routes',
-      'Custom vanities built by KMJK cabinetmakers',
-      'Smart lighting, AV integration, and automated shades',
-      'Post-project maintenance kit + seasonal check-ins',
+      'His-and-hers vanities with custom millwork',
+      'Steam showers, body sprays, and smart controls',
+      'Walk-in closets and dressing areas',
+      'Automated lighting, AV, and privacy glass',
     ],
   },
 ]
@@ -143,6 +152,40 @@ const buildBathroomPage = ({
     faqs: bathroomFaqs,
     relatedLinks: bathroomRelatedLinks,
   })
+
+const treasureCoastBathroomHero = new URL('../../../pics/bathroom/Spa-Inspired Walk-In Shower Remodel – West Seattle.png', import.meta.url).href
+
+export const BathroomRenovationTreasureCoast = buildBathroomPage({
+  cityName: 'Treasure Coast',
+  heroImage: treasureCoastBathroomHero,
+  heroAlt: 'Treasure Coast luxury bathroom with spa features and coastal design',
+  heroPosition: 'center center',
+  neighborhoods: [
+    'Stuart Historic District',
+    'Jensen Beach Oceanfront',
+    'Palm City Golf Communities',
+    'Sewall\'s Point Waterfront',
+    'Hutchinson Island Condos',
+    'Port St. Lucie Estates',
+  ],
+  testimonial: {
+    quote:
+      'Our Treasure Coast bathroom renovation exceeded all expectations. KMJK transformed our outdated space into a luxurious spa retreat while keeping everything clean and organized.',
+    author: 'Dana & William L., Stuart',
+    detail: 'Full Spa Retreat • $45k • 3 Weeks',
+  },
+  caseStudies: [
+    {
+      title: 'Jensen Beach Coastal Spa',
+      location: 'Jensen Beach, FL',
+      description:
+        'Created a beach-inspired bathroom with custom tile work, freestanding tub, and walk-in shower perfect for coastal living.',
+      metrics: ['Marine-grade finishes', 'Custom tile design', 'Spa-level features'],
+      image: treasureCoastBathroomHero,
+      alt: 'Jensen Beach bathroom renovation with coastal spa design',
+    },
+  ],
+})
 
 export const BathroomRenovationPalmCity = buildBathroomPage({
   cityName: 'Palm City',
