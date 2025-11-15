@@ -154,12 +154,12 @@ export default function TreasureCoastHomeRenovationFixed(){
                 Schedule Private Design Call
               </Button>
               <Button
-                onClick={() => openModalWithContext('Upload Home Photos')}
+                onClick={() => openModalWithContext('Upload Estate Photos')}
                 size="lg"
                 className="w-full bg-[var(--deep-charcoal)] text-white hover:bg-[var(--brushed-gold)]"
               >
                 <Upload className="mr-2" size={20} />
-                Upload Home Photos
+                Upload Estate Photos
               </Button>
               <a href="/contact">
                 <Button size="lg" className="w-full bg-white/10 text-white hover:bg-white hover:text-[var(--deep-charcoal)]">
@@ -169,7 +169,7 @@ export default function TreasureCoastHomeRenovationFixed(){
             </div>
           </div>
           <p className="mt-4 text-sm opacity-80">
-            Share inspiration shots or existing home photos when you text us for Treasure Coast scheduling priority.
+            Share inspiration shots or punch lists when you text us for Treasure Coast scheduling priority.
           </p>
         </div>
       </section>
