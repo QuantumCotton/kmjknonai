@@ -1,6 +1,6 @@
-import { createTreasureCoastLandingPage } from './TreasureCoast/BathroomRenovationPages.jsx'
+import { createTreasureCoastLandingPage } from './TreasureCoast/constants.js'
 
-export default createTreasureCoastLandingPage({
+const BathroomRemodelSewallsPoint = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelSewallsPoint',
   cityName: "Sewall's Point",
   serviceType: 'Bathroom Renovation',
@@ -94,7 +94,7 @@ export default createTreasureCoastLandingPage({
     title: `Where We Renovate in Sewall's Point`,
     description: `Serving Sewall's Point estates, waterfront residences, and historic properties with tailored bathroom renovations.`,
     items: [
-      "South Sewall\'s Point",
+      "South Sewall's Point",
       'High Point',
       'Mandarin Isle',
       'Archipelago',

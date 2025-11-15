@@ -1,4 +1,4 @@
-import { createTreasureCoastLandingPage } from './TreasureCoast/BathroomRenovationPages.jsx'
+import { createTreasureCoastLandingPage } from './TreasureCoast/constants.js'
 
 export default createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelStuart',
