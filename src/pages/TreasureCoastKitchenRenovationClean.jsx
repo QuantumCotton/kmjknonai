@@ -41,6 +41,14 @@ export default function TreasureCoastKitchenRenovationClean(){
   }, [])
 
   const openModalWithContext = (context) => {
+    // Track Meta Pixel Contact event for consultation scheduling
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Contact', {
+        contact_type: 'Schedule Consultation',
+        button_context: context,
+        content_name: context
+      })
+    }
     setButtonContext(context)
     setIsModalOpen(true)
   }

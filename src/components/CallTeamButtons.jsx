@@ -9,6 +9,17 @@ export default function CallTeamButtons({
 }) {
   const isTransparent = tone === 'transparent'
 
+  const handleContactClick = (contactType, contactName) => {
+    // Track Meta Pixel Contact event
+    if (typeof fbq !== 'undefined') {
+      fbq('track', 'Contact', {
+        contact_type: contactType,
+        contact_name: contactName,
+        content_name: `${contactType} ${contactName}`
+      })
+    }
+  }
+
   const baseWrapper = isTransparent
     ? 'flex w-full overflow-hidden rounded-md border border-white/60 bg-transparent text-white backdrop-blur-sm'
     : 'flex w-full overflow-hidden rounded-lg border border-white/10 bg-[var(--deep-charcoal)] text-white shadow-lg'
@@ -52,6 +63,7 @@ export default function CallTeamButtons({
           <a
             key={name}
             href={href}
+            onClick={() => handleContactClick(isFirst ? 'Text' : 'Call', name)}
             className={`flex flex-1 items-center justify-center gap-2 py-4 px-6 text-sm font-semibold uppercase tracking-wide transition-colors sm:text-base ${halves[idx]?.wrapper || halves[halves.length - 1].wrapper} ${idx === 0 ? halves[idx]?.border : ''}`}
           >
             <Icon size={iconSize} />
