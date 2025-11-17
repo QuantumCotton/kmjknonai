@@ -85,6 +85,21 @@ export default function ContactForm({
           })
         }
 
+        // Track Meta Pixel Lead event
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'Lead', {
+            service_type: serviceType,
+            button_context: buttonContext || 'Contact Form Submission',
+            content_name: title
+          })
+          
+          fbq('track', 'Contact', {
+            service_type: serviceType,
+            button_context: buttonContext || 'Contact Form Submission',
+            content_name: title
+          })
+        }
+
         setSubmitSuccess(true)
         setFormData({
           name: '',

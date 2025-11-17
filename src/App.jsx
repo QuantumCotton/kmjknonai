@@ -57,6 +57,7 @@ import BathroomRemodelHutchinsonIsland from './pages/BathroomRemodelHutchinsonIs
 import BathroomRemodelStuart from './pages/BathroomRemodelStuart.jsx'
 import InternalDashboard from './pages/InternalDashboard.jsx'
 import ChatWidget from './components/ChatWidget.jsx'
+import MetaPixelTracker from './components/MetaPixelTracker.jsx'
 import {
   KitchenRenovationPalmCity,
   KitchenRenovationSailfishPoint,
@@ -549,6 +550,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen">
+        <MetaPixelTracker />
         <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />
