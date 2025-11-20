@@ -1,7 +1,7 @@
 import { createTreasureCoastLandingPage } from './TreasureCoastLandingTemplate.jsx'
 
 const treasureCoastHomeHero = new URL(
-  '../../../pics/kitchen/Contemporary Kitchen Remodel with Modern Finishes – West Seattle.png',
+  '../../../pics/kitchen/hp_16-C7ix_NF5.jpg',
   import.meta.url
 ).href
 
