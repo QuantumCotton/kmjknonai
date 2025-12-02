@@ -1644,24 +1644,41 @@
                 const formData = new FormData();
                 formData.append('access_key', web3formsAccessKey);
                 formData.append('subject', 'Digital Acceptance - ' + estimateNumber);
-                formData.append('full_name', name);
-                formData.append('date_of_birth_raw', dobValue || 'N/A');
-                formData.append('date_of_birth_display', dobDisplay);
-                formData.append('typed_signature', typedValue);
-                formData.append('typed_signature_matches_name', typedValue.toLowerCase() === name.toLowerCase() ? 'Yes' : 'No');
-                formData.append('drawn_signature_provided', hasDrawnSignature ? 'Yes' : 'No');
-                formData.append('signed_on', signedDate.toISOString());
-                formData.append('signed_on_display', signedDisplay);
+                formData.append('name', name);
+                formData.append('email', 'sway@kmjk.pro');
+                formData.append('message', `
+Estimate: ${estimateNumber}
+Client Name: ${name}
+Date of Birth: ${dobDisplay}
+Typed Signature: ${typedValue}
+Drawn Signature: ${hasDrawnSignature ? 'Yes - Captured' : 'Not provided'}
+Signed On: ${signedDisplay}
+${projectTotal ? `Project Total: ${projectTotal}` : ''}
+Location: ${window.location.href}
+                `.trim());
+                formData.append('from_name', name);
                 formData.append('estimate_number', estimateNumber);
+                formData.append('date_of_birth', dobDisplay);
+                formData.append('typed_signature', typedValue);
+                formData.append('drawn_signature_provided', hasDrawnSignature ? 'Yes' : 'No');
+                formData.append('signed_on', signedDisplay);
                 if (projectTotal) {
                     formData.append('project_total', projectTotal);
                 }
-                formData.append('summary_text', summaryText);
-                formData.append('summary_html', summaryHtml);
-                formData.append('source_url', window.location.href);
                 if (signatureImageData) {
-                    formData.append('signature_image_base64', signatureImageData.replace(/^data:image\/png;base64,/, ''));
-                    formData.append('signature_image_data_url', signatureImageData);
+                    // Create a smaller signature image for email
+                    const canvas = document.getElementById('signatureCanvas');
+                    if (canvas) {
+                        const smallCanvas = document.createElement('canvas');
+                        const smallCtx = smallCanvas.getContext('2d');
+                        smallCanvas.width = 300;
+                        smallCanvas.height = 150;
+                        smallCtx.fillStyle = 'white';
+                        smallCtx.fillRect(0, 0, smallCanvas.width, smallCanvas.height);
+                        smallCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 300, 150);
+                        const smallSignatureData = smallCanvas.toDataURL('image/jpeg', 0.7);
+                        formData.append('signature_image', smallSignatureData);
+                    }
                 }
                 
                 try {
