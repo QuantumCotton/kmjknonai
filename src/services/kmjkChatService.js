@@ -138,33 +138,93 @@ function createInitialConversation(conversationId) {
   }
 }
 
+const STORAGE_KEY = 'kmjk_chat_conversation_v1'
+
+export function loadConversationFromStorage() {
+  if (isNode) return null
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return null
+    const parsed = JSON.parse(stored)
+    // Simple validation to ensure it's not stale (> 24 hours)
+    const lastActivity = new Date(parsed.lastActivityAt).getTime()
+    if (Date.now() - lastActivity > 24 * 60 * 60 * 1000) {
+      localStorage.removeItem(STORAGE_KEY)
+      return null
+    }
+    return parsed
+  } catch (error) {
+    console.error('Failed to load conversation from storage:', error)
+    return null
+  }
+}
+
+function saveConversationToStorage(conversation) {
+  if (isNode || !conversation) return
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(conversation))
+  } catch (error) {
+    console.error('Failed to save conversation to storage:', error)
+  }
+}
+
+export function clearConversationStorage() {
+  if (isNode) return
+  try {
+    localStorage.removeItem(STORAGE_KEY)
+  } catch (error) {
+    console.error('Failed to clear conversation storage:', error)
+  }
+}
+
+export async function startKmjkConversation() {
+  // Try to load existing conversation first
+  const existing = loadConversationFromStorage()
+  if (existing) return existing
+
+  const conversationId = uuidv4()
+  const newConv = createInitialConversation(conversationId)
+  saveConversationToStorage(newConv)
+  return newConv
+}
+
 function extractContactDetails(input, leadData) {
   const updated = { ...leadData }
-  const emailMatch = input.match(/[\w.-]+@[\w.-]+\.[A-Za-z]{2,}/)
+
+  // Enhanced Email Regex (more permissive domain)
+  const emailMatch = input.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)
   if (emailMatch && !updated.email) {
     updated.email = emailMatch[0]
   }
 
-  const phoneMatch = input.match(/\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/)
+  // Enhanced Phone Regex (handles dots, dashes, spaces, parenthesis)
+  const phoneMatch = input.match(/(?:\+?1[-.\s]?)?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})/)
   if (phoneMatch && !updated.phone) {
     updated.phone = phoneMatch[0]
   }
 
-  const zipMatch = input.match(/\b\d{5}\b/)
+  const zipMatch = input.match(/\b\d{5}(?:-\d{4})?\b/)
   if (zipMatch && !updated.zip) {
     updated.zip = zipMatch[0]
   }
 
-  const nameMatch = input.match(/(?:my name is|this is|i'm|i am)\s+([A-Za-z][A-Za-z\s'.-]{1,60})/i)
-  if (nameMatch && !updated.name) {
-    const rawName = nameMatch[1].trim()
-    const extracted = rawName.match(/[A-Za-z][A-Za-z'.-]*(?:\s+[A-Za-z][A-Za-z'.-]*){0,3}/)
-    if (extracted) {
-      const cleanedName = extracted[0].trim()
-      if (cleanedName.split(' ').length <= 4) {
-        updated.name = cleanedName
-      }
+  // Enhanced Name Regex (looks for capitalization patterns or self-introductions)
+  // 1. "I am [Name]" / "My name is [Name]"
+  const introMatch = input.match(/(?:my name is|this is|i'm|i am)\s+([A-Za-z][A-Za-z\s'.-]{1,50})/i)
+  if (introMatch && !updated.name) {
+    const rawName = introMatch[1].trim().replace(/[!.?,]+$/, '') // Strip trailing punctuation
+    if (rawName.split(' ').length <= 4) {
+      updated.name = rawName
     }
+  }
+
+  // 2. Fallback: specific check if they just typed a name-like string in response to a name question
+  // (This would require context awareness of the last question, which is handled in the prompt,
+  // but here we can be opportunistic if the input is short and looks like a name)
+  if (!updated.name && input.split(' ').length <= 3 && /^[A-Z][a-z]+(?:\s[A-Z][a-z]+)*$/.test(input.trim())) {
+    // Riskier, but effective for single inputs like "John Doe"
+    // Only apply if we don't have a name yet.
+    updated.name = input.trim()
   }
 
   return updated
@@ -580,7 +640,7 @@ export function registerPhotoUpload(conversation, photoMeta) {
     scopeNotes.push(noteValue)
   }
 
-  return {
+  const updated = {
     ...conversation,
     messages: [
       ...conversation.messages,
@@ -602,6 +662,9 @@ export function registerPhotoUpload(conversation, photoMeta) {
     conversationDigestReason: null,
     conversationDigestSentAt: null,
   }
+
+  saveConversationToStorage(updated)
+  return updated
 }
 
 export async function sendConversationDigest(conversation, reason = 'inactivity') {
@@ -741,6 +804,8 @@ export async function sendKmjkMessage(conversation, userInput) {
       updatedConversation.leadNotificationSentAt = new Date().toISOString()
     }
   }
+
+  saveConversationToStorage(updatedConversation)
 
   return {
     conversation: updatedConversation,
