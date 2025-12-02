@@ -1646,40 +1646,33 @@
                 formData.append('subject', 'Digital Acceptance - ' + estimateNumber);
                 formData.append('name', name);
                 formData.append('email', 'sway@kmjk.pro');
-                formData.append('message', `
-Estimate: ${estimateNumber}
+                
+                // Put ALL information in the message field for Web3Forms
+                const fullMessage = `
+DIGITAL ACCEPTANCE - ESTIMATE SIGNED
+
+ESTIMATE DETAILS:
+Estimate Number: ${estimateNumber}
+Project Total: ${projectTotal || 'N/A'}
+Location: ${window.location.href}
+
+CLIENT INFORMATION:
 Client Name: ${name}
 Date of Birth: ${dobDisplay}
+Email: sway@kmjk.pro
+
+SIGNATURE DETAILS:
 Typed Signature: ${typedValue}
 Drawn Signature: ${hasDrawnSignature ? 'Yes - Captured' : 'Not provided'}
 Signed On: ${signedDisplay}
-${projectTotal ? `Project Total: ${projectTotal}` : ''}
-Location: ${window.location.href}
-                `.trim());
-                formData.append('from_name', name);
-                formData.append('estimate_number', estimateNumber);
-                formData.append('date_of_birth', dobDisplay);
-                formData.append('typed_signature', typedValue);
-                formData.append('drawn_signature_provided', hasDrawnSignature ? 'Yes' : 'No');
-                formData.append('signed_on', signedDisplay);
-                if (projectTotal) {
-                    formData.append('project_total', projectTotal);
-                }
-                if (signatureImageData) {
-                    // Create a smaller signature image for email
-                    const canvas = document.getElementById('signatureCanvas');
-                    if (canvas) {
-                        const smallCanvas = document.createElement('canvas');
-                        const smallCtx = smallCanvas.getContext('2d');
-                        smallCanvas.width = 300;
-                        smallCanvas.height = 150;
-                        smallCtx.fillStyle = 'white';
-                        smallCtx.fillRect(0, 0, smallCanvas.width, smallCanvas.height);
-                        smallCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 300, 150);
-                        const smallSignatureData = smallCanvas.toDataURL('image/jpeg', 0.7);
-                        formData.append('signature_image', smallSignatureData);
-                    }
-                }
+
+VERIFICATION:
+- Client certified they are the person named above
+- Authorization to proceed with services confirmed
+- Terms and conditions accepted
+                `.trim();
+                
+                formData.append('message', fullMessage);
                 
                 try {
                     const response = await fetch(web3formsEndpoint, {
