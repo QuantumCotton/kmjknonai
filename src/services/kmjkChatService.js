@@ -608,10 +608,6 @@ async function notifyNewLead(conversation) {
   }
 }
 
-export async function startKmjkConversation() {
-  const conversationId = uuidv4()
-  return createInitialConversation(conversationId)
-}
 
 export function registerPhotoUpload(conversation, photoMeta) {
   if (!conversation) return conversation
