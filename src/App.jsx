@@ -16,6 +16,8 @@ import {
   Hammer,
   Zap,
   Shield,
+  Layers,
+  Lightbulb,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
@@ -75,6 +77,8 @@ import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenova
 import ChristmasLightsLanding from './pages/ChristmasLightsLanding.jsx'
 import GutterGuardLanding from './pages/GutterGuardLanding.jsx'
 import RoofingLanding from './pages/RoofingLanding.jsx'
+import CoatingsLanding from './pages/CoatingsLanding.jsx'
+import EnergyRebatesLanding from './pages/EnergyRebatesLanding.jsx'
 import {
   BathroomRenovationPalmCity,
   BathroomRenovationSailfishPoint,
@@ -334,6 +338,30 @@ function PortfolioPage() {
       image: bathroomMarbleAndOakSpa,
       description: 'Elegant marble surfaces paired with warm oak accents create a sophisticated spa-like retreat with timeless appeal.',
     },
+    {
+      title: 'Commercial & Garage Coatings',
+      image: '/images/coatings/garage_luxury_car_1.jpg',
+      description: 'Industrial-strength polyaspartic coatings delivering showroom-quality finishes for garages, warehouses, and commercial spaces.',
+      link: '/coatings'
+    },
+    {
+      title: 'Architectural Holiday Lighting',
+      image: '/images/christmas/xMOlBro1eft6.jpg',
+      description: 'Professional, custom-designed holiday lighting installations that transform homes into festive masterpieces with safety and precision.',
+      link: '/christmas-lights'
+    },
+    {
+      title: 'Advanced Roofing Systems',
+      image: '/images/roofing/myRMkVSacYD2.jpg',
+      description: 'GAF Timberline HDZ roofing installations featuring LayerLock technology for infinite wind speed protection and superior durability.',
+      link: '/roofing'
+    },
+    {
+      title: 'Energy Efficiency Upgrades',
+      image: '/images/energy/florida-concept-savings.jpg',
+      description: 'Comprehensive home energy audits and upgrades funded by government incentives. Save up to 50% on HVAC, windows, and insulation costs.',
+      link: '/energy-rebates'
+    },
   ]
 
   return (
@@ -354,9 +382,9 @@ function PortfolioPage() {
                     <h2 className="text-3xl font-semibold mb-4 gold-accent">{project.title}</h2>
                     <p className="text-lg text-gray-700 leading-relaxed">{project.description}</p>
                     <div className="mt-6">
-                      <Link to="/gallery">
+                      <Link to={project.link || '/gallery'}>
                         <Button className="bg-[var(--deep-charcoal)] hover:bg-[var(--brushed-gold)]">
-                          View Full Gallery
+                          {project.link ? 'View Service Details' : 'View Full Gallery'}
                         </Button>
                       </Link>
                     </div>
@@ -409,6 +437,18 @@ function ServicesPage() {
       description: 'GAF Timberline HDZ roofing systems with LayerLock technology and infinite wind speed protection. We provide expert installation, comprehensive warranties, and insurance claim advocacy.',
       icon: HomeIcon,
       link: '/roofing'
+    },
+    {
+      title: 'Garage & Floor Coatings',
+      description: 'Industrial-strength polyaspartic and epoxy coatings for garages, patios, and interiors. 1-day installation, extreme durability, and stunning custom finishes including metallic marble.',
+      icon: Layers,
+      link: '/coatings'
+    },
+    {
+      title: 'Energy Rebates & Incentives',
+      description: 'Maximize your savings with government incentives. We help you access federal tax credits, state grants, and utility rebates for energy-efficient upgrades like HVAC, windows, and insulation.',
+      icon: Lightbulb,
+      link: '/energy-rebates'
     },
   ]
 
@@ -590,6 +630,8 @@ function App() {
           <Route path="/christmas-lights" element={<ChristmasLightsLanding />} />
           <Route path="/gutter-guards" element={<GutterGuardLanding />} />
           <Route path="/roofing" element={<RoofingLanding />} />
+          <Route path="/coatings" element={<CoatingsLanding />} />
+          <Route path="/energy-rebates" element={<EnergyRebatesLanding />} />
           {/* Landing Pages - Improved Versions with Popup Forms */}
           <Route path="/bathroom-remodel" element={<BathroomLandingImproved />} />
           <Route path="/bathrooms-elite" element={<BathroomLandingElite />} />
