@@ -121,7 +121,7 @@ function KitchenLandingImproved() {
             In Your Dream Kitchen
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
-            Transform your kitchen into the heart of your home. Fixed pricing. Zero surprises. Financing available.
+            Transform your kitchen into the heart of your home. We specialize in <strong>Ballistix</strong>, <strong>Bullet Proof</strong>, and <strong>Counter Attack</strong> coatings for custom, durable surfaces. Fixed pricing. Zero surprises.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
             <a href={KMJK_PHONE_CALL_LINK}>

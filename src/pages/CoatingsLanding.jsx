@@ -29,7 +29,7 @@ export default function CoatingsLanding() {
               <span className="text-[var(--brushed-gold)]">Residential Beauty.</span>
             </h1>
             <p className="text-xl text-gray-200 mb-8 font-light leading-relaxed max-w-2xl">
-              Transform your concrete surfaces with high-performance polyaspartic, epoxy, and metallic systems. Engineered for extreme durability and stunning aesthetics.
+              Transform your concrete surfaces with high-performance polyaspartic, epoxy, and metallic systems. We exclusively use <strong>Ballistix</strong>, <strong>Bullet Proof</strong>, and <strong>Counter Attack</strong> products for unmatched dexterity, custom color appeal, and extreme durability.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact">

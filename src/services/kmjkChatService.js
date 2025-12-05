@@ -38,14 +38,34 @@ const serviceCatalog = [
     keywords: ['handyman', 'repair', 'fix', 'punch list', 'fan', 'disposal', 'door', 'maintenance', 'touchup'],
   },
   {
-    category: 'Epoxy Flooring',
-    quickReply: 'Epoxy flooring',
-    keywords: ['epoxy', 'garage', 'flake', 'polyaspartic', 'concrete coating', 'hangar', 'floor coating'],
+    category: 'Epoxy Flooring & Coatings',
+    quickReply: 'Coatings / Epoxy',
+    keywords: ['epoxy', 'garage', 'flake', 'polyaspartic', 'concrete coating', 'hangar', 'floor coating', 'ballistix', 'bullet proof', 'counter attack'],
   },
   {
     category: 'TV Mounting & AV',
     quickReply: 'TV mounting / AV',
     keywords: ['tv mounting', 'tv', 'mount', 'soundbar', 'av', 'media room', 'projector'],
+  },
+  {
+    category: 'Christmas Lighting',
+    quickReply: 'Holiday Lighting',
+    keywords: ['christmas light', 'holiday light', 'festive', 'decoration', 'lights'],
+  },
+  {
+    category: 'Gutter Guards',
+    quickReply: 'Gutter Guards',
+    keywords: ['gutter', 'guard', 'leaf', 'protection', 'clog', 'mesh'],
+  },
+  {
+    category: 'Roofing',
+    quickReply: 'Roofing',
+    keywords: ['roof', 'shingle', 'leak', 'gaf', 'timberline', 'replacement', 'repair'],
+  },
+  {
+    category: 'Energy Rebates',
+    quickReply: 'Energy Rebates',
+    keywords: ['rebate', 'tax credit', 'energy audit', 'incentive', 'efficiency', 'hvac rebate', 'window rebate'],
   },
 ]
 
@@ -429,10 +449,13 @@ This is where you shine. Ask conversational questions that help them clarify the
 - What's inspiring this project? What's not working now? What have they seen that they love?
 - Explore style preferences naturally: "Are you drawn to modern and sleek, or more warm and traditional?"
 - Discuss specific elements based on the project type:
-  - Kitchens: layout, island, storage, entertaining, how they use the space, what frustrates them
-  - Bathrooms: spa-like vs. functional, shower/tub preference, vanity storage
-  - Materials and colors: "Are you thinking light and airy, or rich and dramatic?"
-- React to their answers and build on them: "Oh, a big island for entertaining—I love that! Are you picturing seating on one side, or maybe wrapping around two sides?"
+  - Kitchens & Bathrooms: We focus on using **Ballistix**, **Bullet Proof**, and **Counter Attack** coating systems. Mention these when discussing countertops, backsplashes, or showers. Explain that these allow for incredible dexterity, custom color schemes, and extreme durability compared to traditional materials.
+  - Coatings (Garage/Floors): Highlight our industrial-strength polyaspartic systems and custom metallic finishes using Ballistix/Bullet Proof technology.
+  - Christmas Lights: Ask about their vision—classic white, colorful, roofline only, or wrapped trees? Mention we handle everything from design to storage.
+  - Gutter Guards: Ask about their current cleaning issues. Mention our stainless steel micro-mesh and hydro-lock technology.
+  - Roofing: Ask about age/leaks. Mention GAF Timberline HDZ and our "WindProven" infinite wind speed protection.
+  - Energy Rebates: Ask if they are interested in federal tax credits (30%) or utility rebates for HVAC/Windows.
+- React to their answers and build on them: "Oh, a big island for entertaining—I love that! We could use a Counter Attack metallic pour to make that a real showpiece."
 - Paint a picture based on what they shared: "I'm seeing this... [describe]. Does that feel right?"
 - Help them think through options without overwhelming them
 
@@ -510,8 +533,8 @@ BUT: Gather these through natural conversation, not interrogation. Let it flow.
 - Your name: Atlas
 - Phone: 772-777-0622
 - Email: info@kmjk.pro
-- Contact: Chris Cotton
-- Services: Kitchen remodels, bathroom remodels, handyman services, epoxy flooring, TV/AV installation
+- Contact: Chris Cotton, Josue Lopez (Coatings Lead)
+- Services: Kitchens, Bathrooms, Handyman, Epoxy/Coatings (Ballistix, Bullet Proof, Counter Attack), TV/AV, Christmas Lights, Gutter Guards, Roofing, Energy Rebates
 </company_info>
 
 <critical_reminders>

@@ -114,7 +114,7 @@ function BathroomLandingImproved() {
             Felt Like a Spa Retreat?
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
-            Transform your outdated bathroom into a luxurious sanctuary in just 7 days. Zero stress. Zero surprises. 100% guaranteed.
+            Transform your outdated bathroom into a luxurious sanctuary. Featuring <strong>Ballistix</strong> and <strong>Bullet Proof</strong> coating systems for seamless, waterproof beauty. Zero stress. 100% guaranteed.
           </p>
           <div className="flex flex-col gap-4 max-w-5xl mx-auto">
             <CallTeamButtons className="mx-auto max-w-lg" />
