@@ -20,6 +20,9 @@ export default function RoofingLanding() {
 
         <div className="relative z-10 container max-w-6xl mx-auto px-4 md:px-8 py-20">
           <div className="max-w-2xl">
+            <div className="inline-block px-4 py-1 mb-6 border border-white/30 rounded-full backdrop-blur-sm bg-black/20">
+              <span className="text-[var(--brushed-gold)] font-semibold tracking-wide uppercase text-sm">KMJK Roofing Services</span>
+            </div>
             <h1 className="text-white text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">
               Premium Roofing Built to Last
             </h1>

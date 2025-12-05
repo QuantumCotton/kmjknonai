@@ -21,7 +21,7 @@ export default function GutterGuardLanding() {
           <div className="flex items-center justify-center p-8 lg:p-16">
             <div className="max-w-md">
               <div className="inline-block mb-6 px-4 py-2 bg-[var(--brushed-gold)]/20 border border-[var(--brushed-gold)] rounded-full">
-                <span className="text-[var(--brushed-gold)] font-semibold text-sm">Consumer Report Style Analysis</span>
+                <span className="text-[var(--brushed-gold)] font-semibold text-sm">KMJK Gutter Protection Analysis</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">
                 The Ultimate Gutter Guard Comparison

@@ -21,6 +21,9 @@ export default function ChristmasLightsLanding() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
+              <div className="inline-block px-4 py-1 mb-4 border border-[var(--brushed-gold)] rounded-full">
+                <span className="text-[var(--brushed-gold)] font-semibold tracking-wide uppercase text-sm">KMJK Holiday Lighting</span>
+              </div>
               <h1 className="text-4xl md:text-6xl font-serif font-bold leading-tight">
                 Stop Untangling. <br/>
                 <span className="text-[var(--brushed-gold)]">Start Celebrating.</span>
