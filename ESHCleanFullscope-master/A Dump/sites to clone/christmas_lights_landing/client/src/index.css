@@ -1,0 +1,258 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* Warm Minimalism Design System */
+  --primary: #1B4D3E; /* Forest Green - Trust & Reliability */
+  --primary-foreground: #FFFBF5; /* Warm White */
+  --accent: #D4AF37; /* Warm Gold - Premium CTAs */
+  --accent-foreground: #2C2C2C; /* Dark Charcoal */
+  --secondary: #F5F1E8; /* Warm Cream - Secondary backgrounds */
+  --secondary-foreground: #3E3E3E; /* Warm Brown - Secondary text */
+  --sidebar-primary: #1B4D3E;
+  --sidebar-primary-foreground: #FFFBF5;
+  --chart-1: #D4AF37;
+  --chart-2: #1B4D3E;
+  --chart-3: #F5F1E8;
+  --chart-4: #2C2C2C;
+  --chart-5: #8B7355;
+  --radius: 0.65rem;
+  --background: #FFFBF5; /* Warm White background */
+  --foreground: #2C2C2C; /* Dark Charcoal text */
+  --card: #FFFFFF; /* Pure white for cards */
+  --card-foreground: #2C2C2C; /* Dark Charcoal text on cards */
+  --popover: #FFFFFF;
+  --popover-foreground: #2C2C2C;
+  --muted: #F5F1E8; /* Warm Cream */
+  --muted-foreground: #8B7355; /* Warm Brown */
+  --destructive: #E63946;
+  --destructive-foreground: #FFFBF5;
+  --border: #E8DDD0; /* Subtle warm border */
+  --input: #FFFFFF;
+  --ring: #D4AF37;
+  --sidebar: #FFFBF5;
+  --sidebar-foreground: #2C2C2C;
+  --sidebar-accent: #1B4D3E;
+  --sidebar-accent-foreground: #FFFBF5;
+  --sidebar-border: #E8DDD0;
+  --sidebar-ring: #D4AF37;
+}
+
+.dark {
+  --primary: #D4AF37;
+  --primary-foreground: #1B4D3E;
+  --sidebar-primary: #D4AF37;
+  --sidebar-primary-foreground: #1B4D3E;
+  --background: #1C1C1C;
+  --foreground: #FFFBF5;
+  --card: #2C2C2C;
+  --card-foreground: #FFFBF5;
+  --popover: #2C2C2C;
+  --popover-foreground: #FFFBF5;
+  --secondary: #3E3E3E;
+  --secondary-foreground: #F5F1E8;
+  --muted: #4A4A4A;
+  --muted-foreground: #D4AF37;
+  --accent: #D4AF37;
+  --accent-foreground: #1C1C1C;
+  --destructive: #E63946;
+  --destructive-foreground: #FFFBF5;
+  --border: #4A4A4A;
+  --input: #3E3E3E;
+  --ring: #D4AF37;
+  --chart-1: #D4AF37;
+  --chart-2: #1B4D3E;
+  --chart-3: #F5F1E8;
+  --chart-4: #FFFBF5;
+  --chart-5: #8B7355;
+  --sidebar: #2C2C2C;
+  --sidebar-foreground: #FFFBF5;
+  --sidebar-accent: #D4AF37;
+  --sidebar-accent-foreground: #1C1C1C;
+  --sidebar-border: #4A4A4A;
+  --sidebar-ring: #D4AF37;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+
+  /* Typography System */
+  h1 {
+    @apply font-serif text-5xl md:text-6xl font-bold tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+
+  h2 {
+    @apply font-serif text-4xl md:text-5xl font-bold tracking-tight;
+    font-family: 'Playfair Display', serif;
+  }
+
+  h3 {
+    @apply font-sans text-2xl md:text-3xl font-semibold;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  h4 {
+    @apply font-sans text-xl md:text-2xl font-semibold;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* Warm Gold Gradient Overlay for Images */
+  .image-overlay {
+    position: relative;
+  }
+
+  .image-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    pointer-events: none;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* Premium Button Styles */
+  .btn-gold {
+    @apply bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105;
+  }
+
+  .btn-outline-green {
+    @apply border-2 border-primary text-primary px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  }
+
+  /* Trust Badge Styles */
+  .trust-badge {
+    @apply inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary text-primary-foreground font-bold text-sm text-center;
+  }
+
+  /* Divider Line */
+  .divider-line {
+    @apply h-1 bg-primary my-12 md:my-16;
+    width: 60px;
+  }
+
+  /* Section Spacing */
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-32;
+  }
+
+  /* Fade-in Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+}
+
+@media (min-width: 640px) {
+  h1 {
+    @apply text-6xl;
+  }
+
+  h2 {
+    @apply text-5xl;
+  }
+}

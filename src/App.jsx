@@ -14,6 +14,8 @@ import {
   UtensilsCrossed,
   Bath,
   Hammer,
+  Zap,
+  Shield,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
 import './App.css'
@@ -70,6 +72,9 @@ import {
 } from './pages/TreasureCoast/HomeRenovationPages.jsx'
 import TreasureCoastKitchenRenovation from './pages/TreasureCoastKitchenRenovationClean.jsx'
 import TreasureCoastBathroomRenovation from './pages/TreasureCoastBathroomRenovationClean.jsx'
+import ChristmasLightsLanding from './pages/ChristmasLightsLanding.jsx'
+import GutterGuardLanding from './pages/GutterGuardLanding.jsx'
+import RoofingLanding from './pages/RoofingLanding.jsx'
 import {
   BathroomRenovationPalmCity,
   BathroomRenovationSailfishPoint,
@@ -385,6 +390,25 @@ function ServicesPage() {
       description:
         "Our master craftsmen create bespoke cabinetry and millwork that seamlessly integrates with your home's architecture. From built-in bookcases to custom closets, we bring your vision to life with precision and artistry.",
       icon: Hammer,
+      link: '/portfolio'
+    },
+    {
+      title: 'Christmas Light Installation',
+      description: 'Professional, all-inclusive holiday lighting services. We handle everything from design and installation to maintenance, removal, and climate-controlled storage. Enjoy a spectacular display without the hassle or risk.',
+      icon: Zap,
+      link: '/christmas-lights'
+    },
+    {
+      title: 'Gutter Guard Protection',
+      description: 'Protect your home from water damage with premium stainless steel micro-mesh gutter guards. Our hydro-lock technology ensures 100% water flow while blocking leaves, pine needles, and pests.',
+      icon: Shield,
+      link: '/gutter-guards'
+    },
+    {
+      title: 'Premium Roofing',
+      description: 'GAF Timberline HDZ roofing systems with LayerLock technology and infinite wind speed protection. We provide expert installation, comprehensive warranties, and insurance claim advocacy.',
+      icon: HomeIcon,
+      link: '/roofing'
     },
   ]
 
@@ -399,13 +423,15 @@ function ServicesPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div key={index} className="bg-[var(--warm-off-white)] p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-                <div className="mb-4 text-center">
-                  <service.icon className="mx-auto text-[var(--brushed-gold)]" size={56} strokeWidth={1.5} />
+              <Link key={index} to={service.link || '/contact'} className="block h-full">
+                <div className="bg-[var(--warm-off-white)] p-8 rounded-lg shadow-lg hover:shadow-xl transition-all h-full hover:-translate-y-1 cursor-pointer">
+                  <div className="mb-4 text-center">
+                    <service.icon className="mx-auto text-[var(--brushed-gold)]" size={56} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-4 text-center gold-accent">{service.title}</h3>
+                  <p className="text-gray-700 leading-relaxed">{service.description}</p>
                 </div>
-                <h3 className="text-2xl font-semibold mb-4 text-center gold-accent">{service.title}</h3>
-                <p className="text-gray-700 leading-relaxed">{service.description}</p>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -560,6 +586,10 @@ function App() {
           <Route path="/process" element={<ProcessPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          {/* New Service Landing Pages */}
+          <Route path="/christmas-lights" element={<ChristmasLightsLanding />} />
+          <Route path="/gutter-guards" element={<GutterGuardLanding />} />
+          <Route path="/roofing" element={<RoofingLanding />} />
           {/* Landing Pages - Improved Versions with Popup Forms */}
           <Route path="/bathroom-remodel" element={<BathroomLandingImproved />} />
           <Route path="/bathrooms-elite" element={<BathroomLandingElite />} />
