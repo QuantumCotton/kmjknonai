@@ -6,8 +6,8 @@ const isNode = typeof window === 'undefined'
 const BASE_URL = isNode ? (process.env.NETLIFY_DEV_URL || 'http://localhost:8888') : ''
 
 const OPENAI_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-openai`
-const LEAD_EMAIL_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-send-lead`
-const OPENAI_TIMEOUT_MS = 45000
+// LEAD_EMAIL_ENDPOINT removed as we use Web3Forms directly now
+// const OPENAI_TIMEOUT_MS = 45000
 
 const DIGEST_REASON_LABELS = {
   inactivity: 'Inactivity timeout',

@@ -6,7 +6,7 @@ export default function ContactForm({
   title = "Start Your Project",
   subtitle = "Share your project details and we'll prepare a personalized consultation plan.",
   serviceType = "Home Improvement",
-  subject = "New Project Inquiry",
+  subject = "New Project Inquiry - KMJK",
   showAddress = true,
   showTimeline = true,
   showBudget = true,

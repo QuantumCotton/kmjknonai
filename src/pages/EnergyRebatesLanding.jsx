@@ -91,7 +91,7 @@ export default function EnergyRebatesLanding() {
               </p>
               <div className="flex items-center text-[var(--deep-charcoal)] font-semibold">
                 <Home className="w-5 h-5 mr-2 text-[var(--brushed-gold)]" />
-                Certified installers
+                Expert Installation
               </div>
             </div>
 
@@ -235,8 +235,8 @@ export default function EnergyRebatesLanding() {
               </div>
 
               <Link to="/contact">
-                <Button className="mt-4 bg-[var(--deep-charcoal)] hover:bg-gray-800 text-white text-lg px-8 py-4">
-                  Get Window Quote
+                <Button className="mt-4 bg-[var(--brushed-gold)] hover:bg-[#a0750a] w-fit text-lg px-6 py-3 text-white">
+                  Contact KMJK
                 </Button>
               </Link>
             </div>

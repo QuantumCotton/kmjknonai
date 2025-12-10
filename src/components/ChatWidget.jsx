@@ -6,7 +6,7 @@ import { uploadChatPhoto } from '@/services/kmjkUploadService.js'
 
 const defaultPosition = 'bottom-right'
 const defaultColor = 'var(--brushed-gold)'
-const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000
+const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000 // 5 minutes
 
 export default function ChatWidget({ position = defaultPosition, primaryColor = defaultColor }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -388,7 +388,6 @@ export default function ChatWidget({ position = defaultPosition, primaryColor = 
               <p className="text-xs text-red-500 mt-1 text-center">{uploadError}</p>
             )}
             <p className="text-xs text-gray-500 mt-2 text-center">Tap the paperclip to upload project photos (JPG, PNG, WebP, HEIC)</p>
-            <p className="text-xs text-gray-500 mt-1 text-center">Powered by KMJK Home Improvement</p>
           </div>
         </>
       )}
