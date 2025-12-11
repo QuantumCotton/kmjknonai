@@ -1,0 +1,825 @@
+<!-- 
+    *** KMJK AI GENERATION INSTRUCTIONS ***
+    
+    WHEN USING THIS TEMPLATE TO CREATE A NEW WORK ORDER:
+
+    1. DATA VALIDATION (NO GUESSING):
+       - Populate ALL known fields (Client Name, Address, Scope, Pricing).
+       - If specific contact info (Phone, Email, Address) is missing from the request, do NOT hallucinate it. Use specific placeholders like "[PHONE NUMBER NEEDED]" and EXPLICITLY ASK the user for these details in your final response.
+       - Goal: Reach 100% completion. If you are at 90% because of missing info, generate the file first, then ask for the rest.
+
+    2. INTEGRATIONS MUST BE ACTIVE:
+       - Web3Forms: Ensure the <form> matches the ID/Access Key (8e63e7e3-ab53-43a9-80c5-ebc113c25912).
+       - QuickBooks: The "Pay Deposit Online" button MUST have a link. If a specific invoice link isn't provided, use a placeholder and flagged it to the user.
+
+    3. PRINT LAYOUT (CRITICAL):
+       - Maintain the strict 2-PAGE PRINT limit.
+       - The @media print styles are optimized for this. Do NOT increase padding/margins.
+       - Keep descriptions concise and image heights constrained (max 180px in print) to prevent overflow onto a 3rd page.
+
+    4. STREAMLINED PROCESS:
+       - Duplicate this file -> Fill Data -> Verify Layout -> Check Integrations -> Ask for Missing Info.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK - Work Order</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --primary-gold-light: #E5C158;
+            --primary-gold-dark: #B8941F;
+            --primary-navy: #1A365D;
+            --primary-charcoal: #2D3748;
+            --bg-light: #F7FAFC;
+            --text-dark: #1A202C;
+            --text-gray: #4A5568;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--primary-charcoal);
+        }
+
+        .container {
+            max-width: 8.5in;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top Accent Bar */
+        .top-accent {
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-navy) 0%, var(--primary-charcoal) 100%);
+            position: relative;
+        }
+        .top-accent::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30%;
+            height: 100%;
+            background: var(--primary-gold);
+        }
+
+        /* Header */
+        header {
+            padding: 40px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-area h1 {
+            font-size: 3.5rem;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary-charcoal);
+            margin-bottom: 5px;
+        }
+        
+        .logo-area .tagline {
+            font-size: 0.85rem;
+            color: var(--primary-gold-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 600;
+        }
+
+        .company-details {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .company-details p {
+            margin-bottom: 4px;
+        }
+
+        /* Project Title Section */
+        .project-header {
+            padding: 40px 50px;
+            background: white;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .project-title h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            color: var(--primary-navy);
+        }
+
+        .estimate-badge {
+            background: var(--bg-light);
+            padding: 10px 20px;
+            border-radius: 4px;
+            border-left: 4px solid var(--primary-gold);
+        }
+
+        .estimate-badge .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-gray);
+            margin-bottom: 2px;
+        }
+
+        .estimate-badge .value {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-charcoal);
+        }
+
+        /* Grid Layout */
+        .grid-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 0 50px 40px;
+        }
+
+        .info-card {
+            background: #FAFAFA;
+            padding: 25px;
+            border-radius: 2px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary-gold-dark);
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .info-card p {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+        }
+
+        .info-card .highlight {
+            font-weight: 600;
+            color: var(--primary-navy);
+        }
+
+        /* Scope Section */
+        .section-container {
+            padding: 0 50px 40px;
+        }
+
+        .modern-section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .modern-section-title h2 {
+            font-size: 1.8rem;
+            color: var(--primary-charcoal);
+        }
+
+        .modern-section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .scope-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .scope-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .scope-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--primary-gold);
+            font-weight: 700;
+            line-height: 1;
+            min-width: 30px;
+        }
+
+        .scope-content h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 4px;
+        }
+
+        .scope-content p {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+        }
+
+        /* Image Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .gallery-label {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: white;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--primary-charcoal);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Financials */
+        .financial-grid {
+            background: var(--primary-charcoal);
+            color: white;
+            padding: 40px 50px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .financial-breakdown table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .financial-breakdown th {
+            text-align: left;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.6);
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .financial-breakdown td {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+        }
+
+        .financial-breakdown td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .total-box {
+            background: white;
+            padding: 30px;
+            border-radius: 2px;
+            color: var(--primary-charcoal);
+        }
+
+        .total-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+
+        .total-amount {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-gold-dark);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .payment-schedule-mini {
+            font-size: 0.85rem;
+        }
+
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        /* Buttons */
+        .modern-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            background: var(--primary-gold);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .modern-button:hover {
+            background: var(--primary-gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184, 148, 31, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #F1F1F1;
+            padding: 30px 50px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                font-size: 11pt; /* Slightly smaller font for print */
+            }
+            .container {
+                margin: 0;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            /* Reduce padding for print to save vertical space */
+            header, .project-header, .grid-section, .section-container, .financial-grid {
+                padding-left: 30px;
+                padding-right: 30px;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            .grid-section {
+                 padding-bottom: 20px;
+                 gap: 20px;
+            }
+            .project-header {
+                padding-bottom: 10px;
+            }
+            .logo-area h1 {
+                font-size: 2.5rem; /* Smaller logo title */
+            }
+            .project-title h2 {
+                font-size: 2rem;
+            }
+            .scope-number {
+                font-size: 1.2rem;
+            }
+            .gallery-grid {
+                margin-top: 20px;
+            }
+            .gallery-item img {
+                height: 180px; /* Smaller images */
+                break-inside: avoid;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            footer {
+                display: none; /* Hide footer to save space */
+            }
+
+            .financial-grid {
+                background: white;
+                color: black;
+                border: 1px solid #eee;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }
+            .financial-breakdown td, .financial-breakdown th {
+                border-color: #eee;
+                color: black;
+                padding: 8px 0; /* Tighter table spacing */
+            }
+            .total-box {
+                border: 2px solid #eee;
+                padding: 15px;
+            }
+            .total-amount {
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+            
+            /* Ensure page breaks happen cleanly if needed, but try to avoid */
+            h2, h3 {
+                break-after: avoid;
+            }
+            .info-card, .scope-item {
+                break-inside: avoid;
+            }
+        }
+        
+        /* Form & Signature Styles (Copied & Adapted) */
+        .digital-auth-section {
+            padding: 0 50px 60px;
+            background: #FAFAFA;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .auth-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .modern-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 2px;
+        }
+        
+        .modern-input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+        }
+        
+        .signature-pad-container {
+            background: white;
+            border: 1px dashed var(--primary-charcoal);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            width: 100%;
+            height: 150px;
+            cursor: crosshair;
+            background: #FAFAFA;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-accent"></div>
+        
+        <header>
+            <div class="logo-area">
+                <h1>KMJK</h1>
+                <div class="tagline">Building Excellence</div>
+            </div>
+            <div class="company-details">
+                <p><strong>KMJK Home Improvement</strong></p>
+                <p>Stuart, FL 34997</p>
+                <p>772-323-3776</p>
+                <p>sway@kmjk.pro</p>
+            </div>
+        </header>
+
+        <div class="project-header">
+            <div class="project-meta">
+                <div class="project-title">
+                    <h2>Staircase Revival<br>Project</h2>
+                </div>
+                <div class="estimate-badge">
+                    <div class="label">Estimate Reference</div>
+                    <div class="value">KMJK-2025-SALLY-02</div>
+                </div>
+            </div>
+            <p style="max-width: 600px; color: var(--text-gray);">
+                A comprehensive staircase transformation project focusing on stripping, preparation, and premium finishing to revitalize the central architectural feature of your space.
+            </p>
+        </div>
+
+        <div class="grid-section">
+            <div class="info-card">
+                <h3>Client Details</h3>
+                <p class="highlight">Sally Haddad</p>
+                <p>Nordstrom Store - Boca Raton</p>
+                <p>sally.m.haddad@nordstrom.com</p>
+                <p>+1 (786) 644-9499</p>
+            </div>
+            <div class="info-card">
+                <h3>Project Location</h3>
+                <p class="highlight">Boca Raton Town Center</p>
+                <p>6000 Glades Rd</p>
+                <p>Boca Raton, FL 33431</p>
+                <p>Service Area: Main Staircase</p>
+            </div>
+        </div>
+
+        <div class="section-container">
+            <div class="modern-section-title">
+                <h2>Scope of Work</h2>
+            </div>
+            <div class="scope-list">
+                <div class="scope-item">
+                    <div class="scope-number">01</div>
+                    <div class="scope-content">
+                        <h4>Paint Stripping & Removal</h4>
+                        <p>Complete removal of previous paint layers from three flights of stairs and landings to ensure a pristine base for new application.</p>
+                    </div>
+                </div>
+                <div class="scope-item">
+                    <div class="scope-number">02</div>
+                    <div class="scope-content">
+                        <h4>Surface Preparation</h4>
+                        <p>Comprehensive sanding, priming, and detailed preparation of all surfaces. Includes site protection to safeguard surrounding areas.</p>
+                    </div>
+                </div>
+                <div class="scope-item">
+                    <div class="scope-number">03</div>
+                    <div class="scope-content">
+                        <h4>Premium Painting Application</h4>
+                        <p>Application of high-durability architectural paint to stairs and landings, designed for high-traffic commercial environments.</p>
+                    </div>
+                </div>
+                <div class="scope-item">
+                    <div class="scope-number">04</div>
+                    <div class="scope-content">
+                        <h4>Rail Refinishing</h4>
+                        <p>Luxury palette transformation for handrails using a custom Greige/Charcoal revamp finish.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/stairsbefore.jpeg" alt="Current State">
+                    <div class="gallery-label">Current State</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/afterrailspreview.jpg" alt="Vision">
+                    <div class="gallery-label">Project Vision</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="financial-grid">
+            <div class="financial-breakdown">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Details</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Staircase Revival Package</strong></td>
+                            <td>Full strip, prep, paint (3 flights) + Rail Refinishing</td>
+                            <td>$2,056.07</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Materials & Supplies</strong></td>
+                            <td>Premium paints, strippers, protection materials</td>
+                            <td>Included</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Florida Sales Tax</strong></td>
+                            <td>7% State Tax</td>
+                            <td>$143.93</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="total-box">
+                <div class="total-label">Total Investment</div>
+                <div class="total-amount">$2,200.00</div>
+                
+                <div class="payment-schedule-mini">
+                    <div class="schedule-row">
+                        <span>Deposit (50%)</span>
+                        <strong>$1,100.00</strong>
+                    </div>
+                    <div class="schedule-row" style="border: none;">
+                        <span>Completion (50%)</span>
+                        <strong>$1,100.00</strong>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                     <a href="https://connect.intuit.com/t/scs-v1-6b004fad1ae14b28b934f81196e7d997a79f5ffb978f4107910d3499522a8776ba4d5c1d5794472fa1d2817a8a91f8d6?cta=viewinvoicenow&locale=en_US" 
+                       target="_blank" 
+                       class="modern-button">
+                        Pay Deposit Online
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Digital Acceptance Section -->
+        <div class="digital-auth-section no-print">
+            <div class="modern-section-title">
+                <h2>Digital Authorization</h2>
+            </div>
+            <p style="margin-bottom: 20px; color: var(--text-gray);">Please complete the form below to authorize this work order.</p>
+            
+            <form id="signatureForm" onsubmit="handleSignatureSubmit(event)">
+                <div class="auth-form-grid">
+                    <div>
+                        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: var(--primary-charcoal);">FULL NAME</label>
+                        <input type="text" id="signerName" class="modern-input" placeholder="Legal Name" required>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 5px; color: var(--primary-charcoal);">DATE OF BIRTH</label>
+                        <input type="date" id="signerDob" class="modern-input" required>
+                    </div>
+                </div>
+
+                <div class="signature-pad-container">
+                    <p style="margin-bottom: 10px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-gray);">Draw Signature</p>
+                    <canvas id="signatureCanvas"></canvas>
+                    <button type="button" id="clearSignature" style="background: none; border: none; text-decoration: underline; color: var(--primary-gold-dark); cursor: pointer; font-size: 0.8rem; margin-top: 5px;">Clear Signature</button>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 30px;">
+                    <input type="checkbox" id="acceptTerms" style="margin-top: 4px;" required>
+                    <label for="acceptTerms" style="font-size: 0.9rem; color: var(--text-gray);">
+                        I authorize KMJK Home Improvement to proceed with the services described above and agree to the payment schedule.
+                    </label>
+                </div>
+
+                <button type="submit" class="modern-button" style="max-width: 300px;">Sign & Accept Estimate</button>
+            </form>
+            
+             <div id="thankYouMessage" style="display: none; background: white; padding: 30px; border: 1px solid var(--primary-gold); margin-top: 30px; text-align: center;">
+                <h3 style="color: var(--primary-gold-dark); font-size: 1.5rem; margin-bottom: 10px;">Authorization Received</h3>
+                <p>Thank you. Your acceptance has been recorded.</p>
+                <button onclick="window.print()" class="modern-button" style="margin-top: 20px; width: auto;">Print Confirmation</button>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 KMJK Home Improvement. All Rights Reserved.</p>
+            <p style="margin-top: 5px; font-size: 0.75rem;">Licensed & Insured • Quality Craftsmanship Guaranteed</p>
+        </footer>
+    </div>
+
+    <script>
+        // Canvas Logic for Signature
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            ctx.scale(ratio, ratio);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        setTimeout(resizeCanvas, 100);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = '#2D3748';
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch support
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDrawing(e); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        document.getElementById('clearSignature').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        async function handleSignatureSubmit(e) {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Processing...';
+
+            // Prepare data for Web3Forms
+            const formData = new FormData();
+            formData.append('access_key', '8e63e7e3-ab53-43a9-80c5-ebc113c25912');
+            formData.append('subject', 'Modern Estimate Acceptance - KMJK');
+            formData.append('name', document.getElementById('signerName').value);
+            formData.append('message', `
+                New Estimate Acceptance (Modern Form)
+                Client: ${document.getElementById('signerName').value}
+                DOB: ${document.getElementById('signerDob').value}
+                Total: $2,200.00
+                Estimate: KMJK-2025-SALLY-02
+            `);
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    document.getElementById('signatureForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                } else {
+                    alert('There was an error submitting the form. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Sign & Accept Estimate';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Submission error. Please check your connection.');
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Sign & Accept Estimate';
+            }
+        }
+    </script>
+</body>
+</html>

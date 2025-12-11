@@ -95,6 +95,7 @@ const clientWorkOrders = [
         name: 'Sally Haddad',
         orders: [
            { label: 'Staircase Painting & Revival (Dec 10)', file: 'nordstrom-painting-sally-staircase.html' },
+           { label: 'Nordstrom Template (Staircase Example)', file: 'nordstrom-estimate-template-example.html' },
            { label: 'Painting & Doors Quote (Dec 2)', file: 'nordstrom-painting-sally.html' },
            { label: 'Staircase Project', file: 'nordstrom-stair-sally.html' },
         ]
@@ -139,6 +140,7 @@ const clientWorkOrders = [
 
 const templatesAndForms = [
     { label: 'Contractor Intake Form', file: 'kmjk_contractor_intake_form.html' },
+    { label: 'New Modern Work Order Template', file: 'kmjk-modern-work-order.html' },
     { label: 'Modern Luxe Template', file: 'kmjk_estimate_template_modern_luxe.html' },
     { label: 'Signature Template', file: 'kmjk_estimate_template_signature.html' },
     { label: 'Signature Template (Paid)', file: 'kmjk_estimate_template_signature_paid.html' },
