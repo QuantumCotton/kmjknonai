@@ -245,6 +245,17 @@ export default function InternalDashboard() {
           </div>
         </header>
 
+        {/* PSR Homes Maintenance Section */}
+        <section className="space-y-6">
+            <div className="flex items-center gap-3">
+                <FileInput className="text-[var(--deep-charcoal)]" size={24} />
+                <h2 className="text-2xl font-semibold text-[var(--deep-charcoal)]">PSR Homes Maintenance</h2>
+            </div>
+            <DashboardCard title="Maintenance Proposals" icon={FileText}>
+                <LinkGrid items={maintenanceProposals} />
+            </DashboardCard>
+        </section>
+
         {/* Client Work Orders Section */}
         <section className="space-y-6">
             <div className="flex items-center gap-3">
@@ -306,10 +317,6 @@ export default function InternalDashboard() {
 
                 <DashboardCard title="Partnerships" icon={Handshake}>
                     <LinkGrid items={partnerships} />
-                </DashboardCard>
-
-                <DashboardCard title="Maintenance Proposals" icon={FileText}>
-                    <LinkGrid items={maintenanceProposals} />
                 </DashboardCard>
             </div>
 
