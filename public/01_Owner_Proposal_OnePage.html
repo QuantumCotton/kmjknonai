@@ -233,6 +233,16 @@
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .tierBtn[data-tier="budget"] {
+      opacity: 0.7;
+    }
+
+    .tierBtn[data-tier="premium"] {
+      border-color: var(--brushed-gold);
+      font-weight: 700;
     }
 
     .tierBtn:hover {
@@ -244,6 +254,108 @@
       border-color: var(--brushed-gold);
       background: var(--brushed-gold);
       color: #fff;
+      opacity: 1;
+      font-weight: 700;
+    }
+
+    .tierBtn .badge {
+      display: none;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 9px;
+      padding: 2px 6px;
+      background: #fff;
+      color: var(--brushed-gold);
+      border: 1px solid var(--brushed-gold);
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .tierBtn[data-tier="premium"].active .badge {
+      display: block;
+    }
+
+    .tierComparison {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: -12px;
+      margin-bottom: 20px;
+      padding: 0 16px;
+    }
+
+    .tierContent {
+      display: none;
+    }
+
+    .tierContent.active {
+      display: block;
+    }
+
+    .tierWarning {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tierWarning strong {
+      color: #DC2626;
+    }
+
+    .tierInfo {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tierInfo strong {
+      color: #1D4ED8;
+    }
+
+    .tierSuccess {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .tierSuccess strong {
+      color: #059669;
+    }
+
+    .tierSection {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin: 12px 0;
+      background: #fff;
+    }
+
+    .tierSection h4 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--deep-charcoal);
+    }
+
+    .tierSection ul {
+      margin: 0;
+      padding-left: 16px;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     @media (max-width: 640px) {
@@ -257,6 +369,12 @@
       table { font-size: 13px; }
       th, td { padding: 8px 6px; }
       .tierBtn { padding: 8px 14px; font-size: 12px; }
+      .tierBtn .badge { font-size: 8px; padding: 1px 4px; top: -6px; right: -6px; }
+      .tierComparison { font-size: 10px; }
+      .tierWarning, .tierInfo, .tierSuccess { font-size: 12px; padding: 10px 12px; }
+      .tierSection { padding: 12px; }
+      .tierSection h4 { font-size: 12px; }
+      .tierSection ul { font-size: 12px; }
     }
 
     @media print {
@@ -279,51 +397,189 @@
 
     <div class="tierSwitcher">
       <button class="tierBtn" data-tier="budget" onclick="selectTier('budget')">Budget</button>
-      <button class="tierBtn active" data-tier="standard" onclick="selectTier('standard')">Standard</button>
-      <button class="tierBtn" data-tier="premium" onclick="selectTier('premium')">Premium</button>
+      <button class="tierBtn" data-tier="standard" onclick="selectTier('standard')">Standard</button>
+      <button class="tierBtn active" data-tier="premium" onclick="selectTier('premium')">
+        Premium
+        <span class="badge">RECOMMENDED</span>
+      </button>
     </div>
 
+    <div class="tierComparison" id="tierComparison">Full facilities coverage — risk absorbed.</div>
+
     <div class="number">
-      <div class="kicker" id="kicker">Recommended Monthly Total (All-In)</div>
-      <p class="value" id="monthlyTotal">$10,580 <small>/ month</small></p>
+      <div class="kicker" id="kicker">Premium Option — Full Facilities Coverage (Recommended)</div>
+      <p class="value" id="monthlyTotal">$19,200 <small>/ month</small></p>
       <div class="meta">
         <div>
           <div class="label">Per-Unit Cost</div>
-          <div class="strong" id="perUnitCost">$481 / unit / month (22 units)</div>
+          <div class="strong" id="perUnitCost">$873 / unit / month (22 units)</div>
         </div>
         <div>
           <div class="label">What this buys</div>
-          <div class="strong" id="hoursPerWeek">32 hours/week pooled facilities labor + full landscaping</div>
+          <div class="strong" id="hoursPerWeek">60 hours/week pooled facilities labor + full landscaping</div>
         </div>
       </div>
     </div>
 
-    <div class="grid3">
-      <div class="box">
-        <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
+    <!-- BUDGET TIER CONTENT -->
+    <div class="tierContent" id="budgetContent">
+      <div class="tierSection">
+        <h4>Budget Option — Basic Upkeep (Limited Scope)</h4>
+        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Designed for minimal maintenance only. Overages and emergencies are likely.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
+          <ul>
+            <li>24 hours/week pooled labor</li>
+            <li>Intended for minor repairs only</li>
+            <li>Focused on reactive ticket resolution</li>
+            <li>No proactive system management</li>
+            <li>No renovation or infrastructure work</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Preventive + Compliance <span class="tag">Limited</span></h3>
+          <ul>
+            <li>HVAC drain line service, filter management (as needed)</li>
+            <li>Monthly property walk + safety checks</li>
+            <li>Code/inspection readiness support</li>
+            <li>Photo documentation & monthly summary</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Landscaping <span class="tag">Included</span></h3>
+          <ul>
+            <li>Mow/edge/blow, trimming, debris removal</li>
+            <li>Kept to code-compliant curb appeal standards</li>
+            <li>Portfolio rate: <strong>$850/month included</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tierSection">
+        <h4>Budget Tier Limitations</h4>
         <ul>
-          <li id="hoursPerWeekDetail">32 hours/week pooled labor (approx. 139 hours/month)</li>
-          <li>Used for repairs, preventive maintenance, and minor improvements</li>
-          <li>Emergency response hours can draw from the pool whenever possible</li>
-          <li>Work orders, scheduling, tenant/vendor coordination included</li>
+          <li>❌ No proactive preventive maintenance programs</li>
+          <li>❌ No wall, slab, or concrete access work</li>
+          <li>❌ No leak investigation beyond obvious source</li>
+          <li>❌ No deferred maintenance reduction</li>
+          <li>❌ No renovations or improvements</li>
+          <li>❌ Emergency work likely billed as overage</li>
         </ul>
       </div>
-      <div class="box">
-        <h3>Preventive + Compliance <span class="tag">Included</span></h3>
+
+      <div class="tierWarning">
+        <strong>⚠️ Risk Notice:</strong> This tier keeps basic systems functioning but does not reduce long-term risk. Emergency overages are likely during heavy months.
+      </div>
+    </div>
+
+    <!-- STANDARD TIER CONTENT -->
+    <div class="tierContent" id="standardContent">
+      <div class="tierSection">
+        <h4>Standard Option — Stability & Compliance</h4>
+        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Minimum recommended coverage for compliant operation.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
+          <ul>
+            <li>32 hours/week pooled labor</li>
+            <li>Covers repairs + limited preventive maintenance</li>
+            <li>Suitable for moderate ticket volume</li>
+            <li>Some infrastructure problem-solving</li>
+            <li>Emergency response hours can draw from pool</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Preventive + Compliance <span class="tag">Included</span></h3>
+          <ul>
+            <li>HVAC drain line service, filter management, coil rinsing</li>
+            <li>Monthly property walk + safety checks</li>
+            <li>Code/inspection readiness support</li>
+            <li>Photo documentation & monthly summary</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Landscaping <span class="tag">Included</span></h3>
+          <ul>
+            <li>Mow/edge/blow, trimming, debris removal</li>
+            <li>Kept to code-compliant curb appeal standards</li>
+            <li>Portfolio rate: <strong>$850/month included</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tierSection">
+        <h4>Standard Tier Expectations</h4>
         <ul>
-          <li>HVAC drain line service, filter management, coil rinsing (as needed)</li>
-          <li>Monthly property walk + safety checks (lights, leaks, trip hazards)</li>
-          <li>Code/inspection readiness support (municipal compliance focus)</li>
-          <li>Photo documentation &amp; monthly summary report</li>
+          <li>⚠️ Some overages expected in bad months</li>
+          <li>⚠️ Deferred maintenance addressed gradually</li>
+          <li>⚠️ Improvements are limited and selective</li>
+          <li>Preventive work is limited by available hours</li>
+          <li>Major issues may exceed the pool</li>
         </ul>
       </div>
-      <div class="box">
-        <h3>Landscaping <span class="tag">Included</span></h3>
+
+      <div class="tierInfo">
+        <strong>Note:</strong> Preventive work is limited by available hours. Major issues may exceed the pool. Emergency overages may still occur during heavy months.
+      </div>
+    </div>
+
+    <!-- PREMIUM TIER CONTENT -->
+    <div class="tierContent active" id="premiumContent">
+
+      <div class="tierSection">
+        <h4>Premium Option — Full Facilities Coverage (Recommended)</h4>
+        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Designed to meet the actual needs of the facility.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
+          <ul>
+            <li>60 hours/week pooled labor</li>
+            <li>Covers repairs, prevention, emergencies, and improvements</li>
+            <li>Allows real problem-solving, not just patching</li>
+            <li>Most emergencies absorbed within the pool</li>
+            <li>Work orders, scheduling, tenant/vendor coordination included</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Preventive + Compliance <span class="tag">Full</span></h3>
+          <ul>
+            <li>HVAC drain line service, filter management, coil rinsing</li>
+            <li>Monthly property walk + safety checks</li>
+            <li>Code/inspection readiness support</li>
+            <li>Photo documentation & monthly summary</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Landscaping <span class="tag">Included</span></h3>
+          <ul>
+            <li>Mow/edge/blow, trimming, debris removal</li>
+            <li>Kept to code-compliant curb appeal standards</li>
+            <li>Portfolio rate: <strong>$850/month included</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tierSection">
+        <h4>What Premium Unlocks</h4>
         <ul>
-          <li>Mow/edge/blow, trimming, debris removal</li>
-          <li>Kept to code-compliant curb appeal standards</li>
-          <li>Portfolio rate: <strong>$850/month included</strong></li>
+          <li>✔ Concrete demo & patching for plumbing access</li>
+          <li>✔ Wall opening & repair for leak remediation</li>
+          <li>✔ Moisture & condensation investigation</li>
+          <li>✔ Deferred maintenance paydown</li>
+          <li>✔ Light renovations & unit improvements</li>
+          <li>✔ Priority response & scheduling</li>
         </ul>
+      </div>
+
+      <div class="tierSuccess">
+        <strong>✓ Value Statement:</strong> This tier shifts responsibility from the owner to the facilities team. Most emergencies are absorbed within the pool.
       </div>
     </div>
 
@@ -412,37 +668,54 @@
         monthlyTotal: '$8,100',
         perUnitCost: '$368 / unit / month (22 units)',
         hoursPerWeek: '24 hours/week pooled facilities labor + full landscaping',
-        hoursPerWeekDetail: '24 hours/week pooled labor (approx. 104 hours/month)',
-        kicker: 'Budget Option (Lean)'
+        kicker: 'Budget Option — Basic Upkeep (Limited Scope)',
+        comparison: 'Basic upkeep only — risk retained by owner.',
+        contentId: 'budgetContent'
       },
       standard: {
         monthlyTotal: '$10,580',
         perUnitCost: '$481 / unit / month (22 units)',
         hoursPerWeek: '32 hours/week pooled facilities labor + full landscaping',
-        hoursPerWeekDetail: '32 hours/week pooled labor (approx. 139 hours/month)',
-        kicker: 'Recommended Monthly Total (All-In)'
+        kicker: 'Standard Option — Stability & Compliance',
+        comparison: 'Compliance-focused — some risk remains.',
+        contentId: 'standardContent'
       },
       premium: {
         monthlyTotal: '$19,200',
         perUnitCost: '$873 / unit / month (22 units)',
         hoursPerWeek: '60 hours/week pooled facilities labor + full landscaping',
-        hoursPerWeekDetail: '60 hours/week pooled labor (approx. 260 hours/month)',
-        kicker: 'Premium Option (Full Coverage)'
+        kicker: 'Premium Option — Full Facilities Coverage (Recommended)',
+        comparison: 'Full facilities coverage — risk absorbed.',
+        contentId: 'premiumContent'
       }
     };
 
     function selectTier(tier) {
       const data = tiers[tier];
+      
+      // Update pricing display
       document.getElementById('monthlyTotal').innerHTML = `${data.monthlyTotal} <small>/ month</small>`;
       document.getElementById('perUnitCost').textContent = data.perUnitCost;
       document.getElementById('hoursPerWeek').textContent = data.hoursPerWeek;
-      document.getElementById('hoursPerWeekDetail').textContent = data.hoursPerWeekDetail;
       document.getElementById('kicker').textContent = data.kicker;
+      document.getElementById('tierComparison').textContent = data.comparison;
 
+      // Update button states
       document.querySelectorAll('.tierBtn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tier === tier);
       });
+
+      // Update content visibility
+      document.querySelectorAll('.tierContent').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.getElementById(data.contentId).classList.add('active');
     }
+
+    // Initialize with Premium selected by default
+    document.addEventListener('DOMContentLoaded', () => {
+      selectTier('premium');
+    });
   </script>
 </body>
 </html>
