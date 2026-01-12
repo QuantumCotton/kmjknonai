@@ -158,6 +158,12 @@ const partnerships = [
     { label: 'Skyline Partnership', file: 'skyline-partnership.html' },
 ]
 
+const maintenanceProposals = [
+    { label: 'Owner Proposal One-Page', file: '01_Owner_Proposal_OnePage.html' },
+    { label: 'Add-On Menu Pricing', file: '02_AddOn_Menu_Pricing.html' },
+    { label: 'Josue Internal Pitch Sheet', file: '03_Josue_Internal_PitchSheet.html' },
+]
+
 const DashboardCard = ({ title, children, icon: Icon }) => (
   <div className="bg-white rounded-2xl shadow-lg border border-white/60 overflow-hidden">
     <div className="flex items-center gap-3 px-6 py-4 bg-[var(--deep-charcoal)]/90 text-white">
@@ -300,6 +306,10 @@ export default function InternalDashboard() {
 
                 <DashboardCard title="Partnerships" icon={Handshake}>
                     <LinkGrid items={partnerships} />
+                </DashboardCard>
+
+                <DashboardCard title="Maintenance Proposals" icon={FileText}>
+                    <LinkGrid items={maintenanceProposals} />
                 </DashboardCard>
             </div>
 
