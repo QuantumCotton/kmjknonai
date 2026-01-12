@@ -40,6 +40,7 @@ BEGIN
   ELSIF TG_OP = 'DELETE' THEN
     INSERT INTO audit_log (job_id, action, old_data, client_name, company)
     VALUES (OLD.id, 'delete', row_to_json(OLD), OLD.client_name, OLD.company);
+    RETURN OLD;
   END IF;
   RETURN NEW;
 END;
