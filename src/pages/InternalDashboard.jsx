@@ -61,6 +61,7 @@ const treasureCoastSections = [
       { label: 'Sailfish Point Epoxy Flooring', path: '/sailfish-point-epoxy-flooring' },
       { label: "Sewall's Point Epoxy Flooring", path: '/sewalls-point-epoxy-flooring' },
       { label: 'Hutchinson Island Epoxy Flooring', path: '/hutchinson-island-epoxy-flooring' },
+      { label: 'Treasure Coast Epoxy Flooring', path: '/treasure-coast-epoxy-flooring' },
     ],
   },
 ]

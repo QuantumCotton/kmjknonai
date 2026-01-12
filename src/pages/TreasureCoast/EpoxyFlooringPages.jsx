@@ -178,3 +178,27 @@ export const EpoxyHutchinsonIsland = buildEpoxyPage({
     detail: 'Signature Flake System • 1,050 sq ft',
   },
 })
+
+export const EpoxyTreasureCoast = buildEpoxyPage({
+  cityName: 'Treasure Coast',
+  heroImage: palmCityEpoxyHero,
+  heroNote: 'Text photos and dimensions from any Treasure Coast location. We stage samples and moisture mitigation plans for garages, hangars, and outdoor spaces across the region.',
+  neighborhoods: [
+    'Stuart',
+    'Jensen Beach',
+    'Palm City',
+    'Port St. Lucie',
+    'Hutchinson Island',
+    "Sewall's Point",
+    'Sailfish Point',
+    'Fort Pierce',
+    'Vero Beach',
+    'Hobe Sound',
+  ],
+  testimonial: {
+    quote:
+      'KMJK coated our garage and hangar across two Treasure Coast properties. Consistent quality, fair pricing, and they understand coastal conditions.',
+    author: 'Mark & Lisa D., Treasure Coast',
+    detail: 'Signature Flake System • 1,800 sq ft',
+  },
+})

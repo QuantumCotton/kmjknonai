@@ -215,6 +215,37 @@
 
     .gold { color: var(--brushed-gold); }
 
+    .tierSwitcher {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tierBtn {
+      padding: 10px 20px;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--deep-charcoal);
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tierBtn:hover {
+      border-color: var(--brushed-gold);
+      background: rgba(184,134,11,0.05);
+    }
+
+    .tierBtn.active {
+      border-color: var(--brushed-gold);
+      background: var(--brushed-gold);
+      color: #fff;
+    }
+
     @media (max-width: 640px) {
       html { font-size: 14px; }
       .page { padding: 20px 16px 16px; border-radius: 12px; }
@@ -225,11 +256,13 @@
       .twoCol { grid-template-columns: 1fr; }
       table { font-size: 13px; }
       th, td { padding: 8px 6px; }
+      .tierBtn { padding: 8px 14px; font-size: 12px; }
     }
 
     @media print {
       body { background: #fff; }
       .page { box-shadow: none; max-width: none; margin: 0; }
+      .tierSwitcher { display: none; }
       .box, .section, tr { page-break-inside: avoid; break-inside: avoid; }
     }
   </style>
@@ -244,17 +277,23 @@
       <div class="badge">One-Page Close Sheet</div>
     </div>
 
+    <div class="tierSwitcher">
+      <button class="tierBtn" data-tier="budget" onclick="selectTier('budget')">Budget</button>
+      <button class="tierBtn active" data-tier="standard" onclick="selectTier('standard')">Standard</button>
+      <button class="tierBtn" data-tier="premium" onclick="selectTier('premium')">Premium</button>
+    </div>
+
     <div class="number">
-      <div class="kicker">Recommended Monthly Total (All-In)</div>
-      <p class="value">$10,580 <small>/ month</small></p>
+      <div class="kicker" id="kicker">Recommended Monthly Total (All-In)</div>
+      <p class="value" id="monthlyTotal">$10,580 <small>/ month</small></p>
       <div class="meta">
         <div>
           <div class="label">Per-Unit Cost</div>
-          <div class="strong">$481 / unit / month (22 units)</div>
+          <div class="strong" id="perUnitCost">$481 / unit / month (22 units)</div>
         </div>
         <div>
           <div class="label">What this buys</div>
-          <div class="strong">32 hours/week pooled facilities labor + full landscaping</div>
+          <div class="strong" id="hoursPerWeek">32 hours/week pooled facilities labor + full landscaping</div>
         </div>
       </div>
     </div>
@@ -263,7 +302,7 @@
       <div class="box">
         <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
         <ul>
-          <li>32 hours/week pooled labor (approx. 139 hours/month)</li>
+          <li id="hoursPerWeekDetail">32 hours/week pooled labor (approx. 139 hours/month)</li>
           <li>Used for repairs, preventive maintenance, and minor improvements</li>
           <li>Emergency response hours can draw from the pool whenever possible</li>
           <li>Work orders, scheduling, tenant/vendor coordination included</li>
@@ -362,8 +401,48 @@
       <strong>Prepared by:</strong> KMJK Home Improvement<br>
       751 NE 69th Street, Boca Raton, FL 33487<br>
       Phone: 561-479-7382<br><br>
-      Proposal assumes “mid-condition” systems (not new, not failing everywhere). Valid 30–60 days.
+      Proposal assumes “mid-condition” systems (not new, not failing everywhere). Valid 30–60 days.<br>
+      <strong>Tier Summary:</strong> Budget (24 hrs/week, $8,100/mo) • Standard (32 hrs/week, $10,580/mo) • Premium (60 hrs/week, $19,200/mo)
     </div>
   </div>
+
+  <script>
+    const tiers = {
+      budget: {
+        monthlyTotal: '$8,100',
+        perUnitCost: '$368 / unit / month (22 units)',
+        hoursPerWeek: '24 hours/week pooled facilities labor + full landscaping',
+        hoursPerWeekDetail: '24 hours/week pooled labor (approx. 104 hours/month)',
+        kicker: 'Budget Option (Lean)'
+      },
+      standard: {
+        monthlyTotal: '$10,580',
+        perUnitCost: '$481 / unit / month (22 units)',
+        hoursPerWeek: '32 hours/week pooled facilities labor + full landscaping',
+        hoursPerWeekDetail: '32 hours/week pooled labor (approx. 139 hours/month)',
+        kicker: 'Recommended Monthly Total (All-In)'
+      },
+      premium: {
+        monthlyTotal: '$19,200',
+        perUnitCost: '$873 / unit / month (22 units)',
+        hoursPerWeek: '60 hours/week pooled facilities labor + full landscaping',
+        hoursPerWeekDetail: '60 hours/week pooled labor (approx. 260 hours/month)',
+        kicker: 'Premium Option (Full Coverage)'
+      }
+    };
+
+    function selectTier(tier) {
+      const data = tiers[tier];
+      document.getElementById('monthlyTotal').innerHTML = `${data.monthlyTotal} <small>/ month</small>`;
+      document.getElementById('perUnitCost').textContent = data.perUnitCost;
+      document.getElementById('hoursPerWeek').textContent = data.hoursPerWeek;
+      document.getElementById('hoursPerWeekDetail').textContent = data.hoursPerWeekDetail;
+      document.getElementById('kicker').textContent = data.kicker;
+
+      document.querySelectorAll('.tierBtn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tier === tier);
+      });
+    }
+  </script>
 </body>
 </html>

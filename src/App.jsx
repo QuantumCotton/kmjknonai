@@ -105,6 +105,7 @@ import {
   EpoxySailfishPoint,
   EpoxySewallsPoint,
   EpoxyHutchinsonIsland,
+  EpoxyTreasureCoast,
 } from './pages/TreasureCoast/EpoxyFlooringPages.jsx'
 
 function Navigation() {
@@ -685,6 +686,7 @@ function App() {
           <Route path="/sailfish-point-epoxy-flooring" element={<EpoxySailfishPoint />} />
           <Route path="/sewalls-point-epoxy-flooring" element={<EpoxySewallsPoint />} />
           <Route path="/hutchinson-island-epoxy-flooring" element={<EpoxyHutchinsonIsland />} />
+          <Route path="/treasure-coast-epoxy-flooring" element={<EpoxyTreasureCoast />} />
         </Routes>
         <Footer />
       </div>
