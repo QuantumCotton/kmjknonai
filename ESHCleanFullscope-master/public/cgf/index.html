@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Growth Form – Elite Service Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --esh-black:#000; --esh-gold:#d4af37; --esh-zinc-900:#18181b; --esh-zinc-800:#27272a; --esh-zinc-700:#3f3f46; --esh-zinc-600:#52525b; --esh-zinc-500:#71717a; --esh-zinc-300:#d4d4d8; --esh-white:#fff; }
+    *,*::before,*::after{ box-sizing:border-box; }
+    body{ margin:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg,var(--esh-black) 0%, var(--esh-zinc-900) 100%); color:var(--esh-zinc-300); min-height:100vh; }
+    .container{ max-width:1000px; margin:0 auto; padding:24px; }
+    .card{ background:var(--esh-zinc-900); border:1px solid var(--esh-zinc-800); border-radius:16px; overflow:hidden; box-shadow:0 25px 50px -12px rgba(0,0,0,.5); }
+    header.hero{ position:relative; padding:48px 40px; text-align:center; border-bottom:2px solid var(--esh-gold); background:linear-gradient(135deg,var(--esh-black), var(--esh-zinc-800)); }
+    header.hero::before{ content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,transparent,transparent 100px, rgba(212,175,55,.03) 100px, rgba(212,175,55,.03) 200px); }
+    .hero-content{ position:relative; z-index:1; }
+    .logo{ height:74px; width:auto; display:block; margin:0 auto 14px; opacity:.95; }
+    h1{ font-family:'Cormorant Garamond',serif; color:var(--esh-white); font-size:3rem; font-weight:300; letter-spacing:.04em; margin:0 0 6px; }
+    h1 .gold{ color:var(--esh-gold); font-weight:400; }
+    p.lead{ max-width:760px; margin:8px auto 0; color:var(--esh-zinc-500); font-weight:300; }
+
+    .content{ padding:36px 40px; }
+    .section{ background:var(--esh-black); border:1px solid var(--esh-zinc-800); border-radius:12px; padding:24px 28px; margin-bottom:24px; }
+    .section h2{ font-family:'Cormorant Garamond',serif; color:var(--esh-gold); font-weight:400; letter-spacing:.04em; margin:0 0 14px; }
+    .form-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    .form-group{ display:flex; flex-direction:column; }
+    label{ font-size:.85rem; color:#e5e7eb; margin-bottom:6px; letter-spacing:.04em; }
+    input, select, textarea{ background:#0b0b0b; border:1px solid var(--esh-zinc-700); color:#f3f4f6; padding:12px 14px; border-radius:8px; outline:none; }
+    input::placeholder, textarea::placeholder{ color:#a1a1aa; opacity:1; }
+    select{ color:#f3f4f6; }
+    input:focus, select:focus, textarea:focus{ border-color:var(--esh-gold); box-shadow:0 0 0 3px rgba(212,175,55,.25); }
+    textarea{ min-height:120px; resize:vertical; }
+
+    .actions{ display:flex; justify-content:center; gap:12px; margin-top:28px; padding-top:20px; border-top:1px solid var(--esh-zinc-800); }
+    .btn{ padding:14px 28px; border-radius:10px; border:2px solid var(--esh-gold); background:var(--esh-gold); color:var(--esh-black); font-weight:700; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; }
+    .btn:hover{ background:transparent; color:var(--esh-gold); box-shadow:0 10px 25px rgba(212,175,55,.2); transform:translateY(-2px); }
+    .tool-row{ position:absolute; top:16px; right:16px; display:flex; gap:8px; }
+    .tool{ padding:8px 12px; border:1px solid var(--esh-zinc-700); border-radius:8px; background:var(--esh-zinc-900); color:var(--esh-zinc-300); cursor:pointer; font-weight:600; }
+    .tool:hover{ border-color:var(--esh-gold); color:var(--esh-gold); }
+
+    /* Print-blank mode for handwriting */
+    .print-blank input,
+    .print-blank select,
+    .print-blank textarea { color: transparent !important; -webkit-text-fill-color: transparent; caret-color: transparent; }
+    .print-blank input::placeholder,
+    .print-blank textarea::placeholder { color: transparent !important; }
+    .print-blank input,
+    .print-blank select { background:#fff !important; border:0 !important; border-bottom:1px solid #000 !important; height:28px; }
+    .print-blank textarea { background:#fff !important; border:1px solid #000 !important; min-height:140px; }
+    .print-blank .section { background:#fff !important; }
+
+    @media (max-width:768px){ .form-grid{ grid-template-columns:1fr; } }
+    @media print{ 
+      body{ background:#fff !important; }
+      .tool-row, .actions{ display:none!important; }
+      header.hero{ background:#fff!important; color:#000; border-bottom:1px solid #000; padding:20px 30px!important; }
+      .logo{ display:none; }
+      .content{ padding:20px 30px!important; }
+      .card{ box-shadow:none; border:0; }
+      .section{ background:#fff!important; border:1px solid #000; }
+      label{ color:#000 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header class="hero">
+        <div class="tool-row">
+          <button class="tool" id="btn-print" type="button">Print</button>
+        </div>
+        <div class="hero-content">
+          <img class="logo" src="/images/logos/esh-dark-bg.png" alt="Elite Service Hub" />
+          <h1>Client <span class="gold">Growth Form</span></h1>
+          <p class="lead">Tell us about your business and your growth goals. We’ll follow up with a tailored plan and next steps.</p>
+        </div>
+      </header>
+
+      <div class="content">
+        <form id="growth-form" name="client-growth-form" method="POST" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="client-growth-form" />
+          <p hidden><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+          <section class="section">
+            <h2>Contact</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="company">Company Name</label><input id="company" name="company" placeholder="Your company" /></div>
+              <div class="form-group"><label for="contact">Contact Name</label><input id="contact" name="contact" placeholder="First Last" /></div>
+              <div class="form-group"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@company.com" /></div>
+              <div class="form-group"><label for="phone">Phone</label><input id="phone" name="phone" placeholder="(###) ###-####" /></div>
+              <div class="form-group"><label for="website">Website</label><input id="website" name="website" placeholder="https://" /></div>
+              <div class="form-group"><label for="location">Primary Location</label><input id="location" name="location" placeholder="City, State" /></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Business Snapshot</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="revenue">Annual Revenue</label>
+                <select id="revenue" name="revenue">
+                  <option value="">Select range</option>
+                  <option value="under-50k">Under $50K</option>
+                  <option value="51k-99k">$51K - $99K</option>
+                  <option value="100k-250k">$100K - $250K</option>
+                  <option value="250k-500k">$250K - $500K</option>
+                  <option value="500k-2m">$500K - $2M</option>
+                  <option value="2m-10m">$2M - $10M</option>
+                  <option value="10m-plus">Over $10M</option>
+                </select>
+              </div>
+              <div class="form-group"><label for="team">Team Size</label><input id="team" name="team" placeholder="e.g., 1-3, 4-10" /></div>
+              <div class="form-group"><label for="markets">Service Areas</label><input id="markets" name="markets" placeholder="Cities/regions" /></div>
+              <div class="form-group"><label for="trade">Primary Service/Trade</label><input id="trade" name="trade" placeholder="e.g., mobile detailing" /></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Goals & Timeline</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="goals">Growth Goals</label><textarea id="goals" name="goals" placeholder="What does success look like in 3-6 months?" ></textarea></div>
+              <div class="form-group"><label for="challenges">Biggest Challenges</label><textarea id="challenges" name="challenges" placeholder="What's holding you back right now?" ></textarea></div>
+              <div class="form-group"><label for="timeline">Timeline to Start</label>
+                <select id="timeline" name="timeline">
+                  <option value="">Select</option>
+                  <option>ASAP</option>
+                  <option>Within 30 days</option>
+                  <option>1-3 months</option>
+                  <option>3+ months</option>
+                </select>
+              </div>
+              <div class="form-group"><label for="budget">Monthly Budget Comfort</label>
+                <select id="budget" name="budget">
+                  <option value="">Select</option>
+                  <option>Under $1,000</option>
+                  <option>$1,000 - $2,500</option>
+                  <option>$2,500 - $5,000</option>
+                  <option>$5,000+</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Current Marketing</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="channels">Active Channels</label><input id="channels" name="channels" placeholder="Google Ads, SEO, Referrals, etc." /></div>
+              <div class="form-group"><label for="avgLead">Avg Lead Volume / Month</label><input id="avgLead" name="avgLead" placeholder="e.g., 10-20" /></div>
+              <div class="form-group"><label for="closeRate">Close Rate</label><input id="closeRate" name="closeRate" placeholder="e.g., 30%" /></div>
+              <div class="form-group"><label for="notes">Notes</label><textarea id="notes" name="notes" placeholder="Anything else we should know?"></textarea></div>
+            </div>
+          </section>
+
+          <!-- Construction Business Loan Pre‑Qualification Intake -->
+          <section class="section">
+            <h2>Construction Business Loan Pre‑Qualification Intake</h2>
+            <p class="lead" style="margin:0 0 12px; color: var(--esh-zinc-500)">Objective: Assess financial health, operational stability, and borrowing capacity to identify suitable financing options.</p>
+          </section>
+
+          <!-- Section 1: Business Information -->
+          <section class="section">
+            <h2>Section 1: Business Information</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="legalName">Legal Business Name</label><input id="legalName" name="legalName" /></div>
+              <div class="form-group"><label for="dba">DBA (Doing Business As)</label><input id="dba" name="dba" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="bizAddress">Physical Business Address (Street, City, County, Zip)</label><input id="bizAddress" name="bizAddress" /></div>
+              <div class="form-group"><label for="bizPhone">Business Phone</label><input id="bizPhone" name="bizPhone" /></div>
+              <div class="form-group"><label for="bizWebsite">Business Website</label><input id="bizWebsite" name="bizWebsite" placeholder="https://" /></div>
+              <div class="form-group"><label for="dateEstablished">Date Business Established</label><input id="dateEstablished" name="dateEstablished" type="date" /></div>
+              <div class="form-group"><label for="ein">Federal Tax ID (EIN)</label><input id="ein" name="ein" placeholder="##-#######" /></div>
+              <div class="form-group"><label for="bizStructure">Business Structure</label><input id="bizStructure" name="bizStructure" placeholder="Sole Prop, LLC, S‑Corp, C‑Corp" /></div>
+              <div class="form-group"><label for="incorpState">State of Incorporation/Formation</label><input id="incorpState" name="incorpState" /></div>
+              <div class="form-group"><label for="incorpDate">Date of Incorporation/Formation</label><input id="incorpDate" name="incorpDate" type="date" /></div>
+            </div>
+          </section>
+
+          <!-- Section 2: Ownership Information -->
+          <section class="section">
+            <h2>Section 2: Ownership Information</h2>
+            <p class="muted">Complete for all owners with 20%+ ownership. Sensitive info is encrypted in transit.</p>
+            <div class="form-grid">
+              <div class="form-group"><label for="owner1Name">Owner 1 Name</label><input id="owner1Name" name="owner1Name" /></div>
+              <div class="form-group"><label for="owner1Pct">Ownership Percentage</label><input id="owner1Pct" name="owner1Pct" placeholder="e.g., 60%" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="owner1Address">Home Address</label><input id="owner1Address" name="owner1Address" /></div>
+              <div class="form-group"><label for="owner1Phone">Personal Phone</label><input id="owner1Phone" name="owner1Phone" /></div>
+              <div class="form-group"><label for="owner1Email">Email</label><input id="owner1Email" name="owner1Email" type="email" /></div>
+              <div class="form-group"><label for="owner1SSN">Social Security Number</label><input id="owner1SSN" name="owner1SSN" placeholder="___-__-____" /></div>
+              <div class="form-group"><label for="owner1Credit">Estimated Personal Credit Score</label><input id="owner1Credit" name="owner1Credit" /></div>
+            </div>
+            <div class="form-grid" style="margin-top:14px">
+              <div class="form-group"><label for="owner2Name">Owner 2 Name (optional)</label><input id="owner2Name" name="owner2Name" /></div>
+              <div class="form-group"><label for="owner2Pct">Ownership Percentage</label><input id="owner2Pct" name="owner2Pct" placeholder="e.g., 40%" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="owner2Address">Home Address</label><input id="owner2Address" name="owner2Address" /></div>
+              <div class="form-group"><label for="owner2Phone">Personal Phone</label><input id="owner2Phone" name="owner2Phone" /></div>
+              <div class="form-group"><label for="owner2Email">Email</label><input id="owner2Email" name="owner2Email" type="email" /></div>
+              <div class="form-group"><label for="owner2SSN">Social Security Number</label><input id="owner2SSN" name="owner2SSN" placeholder="___-__-____" /></div>
+              <div class="form-group"><label for="owner2Credit">Estimated Personal Credit Score</label><input id="owner2Credit" name="owner2Credit" /></div>
+            </div>
+          </section>
+
+          <!-- Section 3: Financial Health -->
+          <section class="section">
+            <h2>Section 3: Financial Health</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="rev2024">Annual Gross Revenue – 2024</label><input id="rev2024" name="rev2024" placeholder="$" /></div>
+              <div class="form-group"><label for="rev2023">Annual Gross Revenue – 2023</label><input id="rev2023" name="rev2023" placeholder="$" /></div>
+              <div class="form-group"><label for="revYTD">Annual Gross Revenue – YTD 2025</label><input id="revYTD" name="revYTD" placeholder="$" /></div>
+              <div class="form-group"><label for="profit2024">Annual Net Profit – 2024</label><input id="profit2024" name="profit2024" placeholder="$" /></div>
+              <div class="form-group"><label for="profit2023">Annual Net Profit – 2023</label><input id="profit2023" name="profit2023" placeholder="$" /></div>
+              <div class="form-group"><label for="profitYTD">Annual Net Profit – YTD 2025</label><input id="profitYTD" name="profitYTD" placeholder="$" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="avgBank">Average Business Bank Account Balance (last 6 months)</label><input id="avgBank" name="avgBank" placeholder="$" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="debtSchedule">Existing Business Debt (paste schedule)</label><textarea id="debtSchedule" name="debtSchedule" placeholder="Lender, orig. amount, current balance, monthly payment, rate"></textarea></div>
+            </div>
+            <div class="form-grid" style="margin-top:10px">
+              <div class="form-group" style="grid-column:1/-1"><label for="documents">Required Documents (upload PDFs/images; multiple allowed)</label><input id="documents" name="documents[]" type="file" multiple /></div>
+            </div>
+          </section>
+
+          <!-- Section 4: Operational & Industry Specifics -->
+          <section class="section">
+            <h2>Section 4: Operational & Industry Specifics</h2>
+            <div class="form-grid">
+              <div class="form-group" style="grid-column:1/-1"><label for="primaryConstruction">Primary Type of Construction</label><input id="primaryConstruction" name="primaryConstruction" placeholder="e.g., New Residential, Commercial Remodeling, Roofing" /></div>
+              <div class="form-group"><label for="licenseNumber">FL Contractor License Number & Type</label><input id="licenseNumber" name="licenseNumber" /></div>
+              <div class="form-group"><label for="insured">Properly Insured (GL / WC)</label><select id="insured" name="insured"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+              <div class="form-group"><label for="ft">Employees – Full‑Time</label><input id="ft" name="ft" /></div>
+              <div class="form-group"><label for="pt">Employees – Part‑Time</label><input id="pt" name="pt" /></div>
+              <div class="form-group"><label for="subs">Subcontractors</label><input id="subs" name="subs" /></div>
+              <div class="form-group"><label for="backlog">Project Backlog – total value</label><input id="backlog" name="backlog" placeholder="$" /></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="projects">Describe your 2–3 largest upcoming projects</label><textarea id="projects" name="projects" placeholder="Project, scope, value, timeline"></textarea></div>
+            </div>
+          </section>
+
+          <!-- Section 5: Loan Request Details -->
+          <section class="section">
+            <h2>Section 5: Loan Request Details</h2>
+            <div class="form-grid">
+              <div class="form-group"><label for="loanAmount">Amount of Funding Requested</label><input id="loanAmount" name="loanAmount" placeholder="$" /></div>
+              <div class="form-group"><label for="purpose">Primary Purpose</label><select id="purpose" name="purpose"><option value="">Select</option><option>Working Capital</option><option>New Equipment Purchase</option><option>Business Expansion</option><option>Purchase Commercial Real Estate</option><option>Refinance Existing Debt</option><option>Other</option></select></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="purposeDetails">Purpose Details (be specific)</label><textarea id="purposeDetails" name="purposeDetails" placeholder="Payroll, materials, list equipment + cost, hiring plan, location, etc."></textarea></div>
+              <div class="form-group" style="grid-column:1/-1"><label for="collateral">Collateral (assets willing to pledge)</label><textarea id="collateral" name="collateral" placeholder="Real estate, equipment, AR, inventory"></textarea></div>
+            </div>
+          </section>
+
+          <div class="actions">
+            <button class="btn" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const form = document.getElementById('growth-form');
+      const btn = document.getElementById('btn-print');
+      let cache = null;
+
+      function enterPrintBlank(){
+        if(!form) return;
+        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
+        cache = fields.map(el => ({ el, value: ('value' in el)? el.value: '', placeholder: el.getAttribute('placeholder') }));
+        form.classList.add('print-blank');
+        fields.forEach(el => {
+          if(el.tagName === 'SELECT') {
+            el.dataset._selectedIndex = el.selectedIndex;
+            el.selectedIndex = -1;
+          } else {
+            el.value = '';
+          }
+          if(el.hasAttribute('placeholder')) el.setAttribute('placeholder','');
+        });
+      }
+
+      function exitPrintBlank(){
+        if(!form || !cache) return;
+        cache.forEach(({el,value,placeholder}) => {
+          if(el.tagName === 'SELECT') {
+            const idx = el.dataset._selectedIndex;
+            if(idx !== undefined) el.selectedIndex = Number(idx);
+          } else {
+            el.value = value || '';
+          }
+          if(placeholder !== null) {
+            if(placeholder === null) el.removeAttribute('placeholder');
+            else el.setAttribute('placeholder', placeholder || '');
+          }
+        });
+        form.classList.remove('print-blank');
+        cache = null;
+      }
+
+      btn && btn.addEventListener('click', () => { enterPrintBlank(); window.print(); });
+      window.addEventListener('afterprint', exitPrintBlank);
+
+      // Web3Forms submission
+      form && form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const object = {};
+        formData.forEach((value, key) => {
+          if (key !== 'bot-field' && key !== 'form-name') {
+            object[key] = value;
+          }
+        });
+        
+        // Web3Forms configuration
+        object['access_key'] = '8e63e7e3-ab53-43a9-80c5-ebc113c25912';
+        object['subject'] = 'New Client Growth Form - ' + (object['company'] || 'Unknown');
+        object['from_name'] = object['contact'] || object['company'];
+        object['emails'] = 'chris@theeliteservicehub.com';
+        const userEmail = (object['email'] || '').toString();
+        object['from_email'] = 'noreply@eliteservicehub.com';
+        if (userEmail) object['reply_to'] = userEmail;
+        
+        const json = JSON.stringify(object);
+        
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: json
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            this.reset();
+            window.location.href = '/thanks.html';
+          } else {
+            console.error('Web3Forms error:', data);
+            alert('Submission error: ' + (data.message || 'Unknown error. Please try again.'));
+          }
+        })
+        .catch(error => {
+          console.error('Network error:', error);
+          alert('Network error submitting your form. Please try again.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

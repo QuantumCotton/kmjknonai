@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK Signature Receipt – Paid Example</title>
+    <style>
+        :root {
+            color-scheme: light;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background: #F2F2F2;
+            padding: 60px 20px;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            inset: 10% 15%;
+            background: url('../information/KMJK PAID STAMP.png') center/70% no-repeat;
+            opacity: 0.09;
+            pointer-events: none;
+            transform: rotate(-10deg);
+            mix-blend-mode: multiply;
+        }
+
+        .letterhead {
+            padding: 56px 72px 42px;
+            background: #101010;
+            color: #F5F5F5;
+            position: relative;
+            z-index: 1;
+        }
+
+        .letterhead .brand-line {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand-name {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+        }
+
+        .status-chip {
+            font-size: 0.9em;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: rgba(31, 122, 77, 0.15);
+            border: 1px solid rgba(31, 122, 77, 0.4);
+            color: #86D8B2;
+            padding: 10px 16px;
+            border-radius: 999px;
+        }
+
+        .tagline {
+            margin-top: 18px;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: rgba(255, 215, 0, 0.8);
+        }
+
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 26px;
+            margin-top: 32px;
+            font-size: 0.95em;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .contact-label {
+            color: rgba(255, 215, 0, 0.8);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-right: 6px;
+        }
+
+        .content {
+            padding: 60px 72px 74px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 46px;
+        }
+
+        .meta-card {
+            background: rgba(184, 134, 11, 0.06);
+            border: 1px solid rgba(184, 134, 11, 0.35);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+
+        .meta-label {
+            font-size: 0.78em;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(44, 44, 44, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .meta-value {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+
+        .section-title {
+            font-size: 1.35em;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 42px 0 20px;
+            color: #B8860B;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title span.icon {
+            font-size: 1.2em;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(44, 44, 44, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+
+        .price-table thead {
+            background: rgba(16, 16, 16, 0.85);
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.85em;
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .price-table th:last-child,
+        .price-table td:last-child {
+            text-align: right;
+        }
+
+        .price-total {
+            background: rgba(31, 122, 77, 0.08);
+            font-weight: 700;
+            font-size: 1.15em;
+        }
+
+        .paid-stamp-text {
+            position: relative;
+            display: inline-block;
+            padding: 2px 8px;
+            color: #1F7A4D;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .paid-stamp-text::after {
+            content: "";
+            position: absolute;
+            inset: -16px -26px;
+            background: url('../information/KMJK PAID STAMP.png') center/contain no-repeat;
+            opacity: 0.22;
+            pointer-events: none;
+            transform: rotate(-16deg);
+            mix-blend-mode: multiply;
+            z-index: -1;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 28px;
+        }
+
+        .detail-card {
+            border: 1px solid rgba(44, 44, 44, 0.08);
+            border-radius: 12px;
+            padding: 22px 24px;
+            background: rgba(255, 255, 255, 0.92);
+            position: relative;
+        }
+
+        .detail-card h3 {
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(44, 44, 44, 0.7);
+            margin-bottom: 14px;
+        }
+
+        .detail-card p {
+            margin-bottom: 8px;
+        }
+
+        .signature-panel {
+            margin-top: 42px;
+            border: 1px solid rgba(44, 44, 44, 0.1);
+            border-radius: 14px;
+            padding: 28px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .signature-panel h3 {
+            font-size: 1.05em;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #B8860B;
+            margin-bottom: 18px;
+        }
+
+        .signature-summary {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .signature-summary strong {
+            color: #2C2C2C;
+        }
+
+        .signature-image {
+            margin-top: 16px;
+            max-width: 360px;
+            border: 1px solid rgba(44, 44, 44, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #FFFFFF;
+        }
+
+        .signature-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .wet-signature-row {
+            margin-top: 32px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 26px;
+        }
+
+        .wet-signature-block {
+            border-top: 2px solid rgba(44, 44, 44, 0.45);
+            padding-top: 14px;
+            font-size: 0.95em;
+        }
+
+        .footer {
+            padding: 28px 72px 46px;
+            text-align: center;
+            font-size: 0.85em;
+            color: rgba(44, 44, 44, 0.55);
+            background: rgba(16, 16, 16, 0.04);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .container::before {
+                opacity: 0.14;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letterhead">
+            <div class="brand-line">
+                <div class="brand-name">KMJK</div>
+                <div class="status-chip">Paid in Full</div>
+            </div>
+            <div class="tagline">Boutique Commercial Finishes • Disciplined Execution</div>
+            <div class="contact-row">
+                <div><span class="contact-label">Principal</span>Josue Lopez</div>
+                <div><span class="contact-label">Direct</span>772-323-3776</div>
+                <div><span class="contact-label">Email</span>KMJKHomeRenov@gmail.com</div>
+                <div><span class="contact-label">Headquarters</span>Stuart, Florida</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="meta-grid">
+                <div class="meta-card">
+                    <div class="meta-label">Receipt</div>
+                    <div class="meta-value">KMJK-2025-1008</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Payment Date</div>
+                    <div class="meta-value">October 21, 2025</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">Chase McCullon</div>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="icon">📋</span>Project Delivery</h2>
+            <div class="summary-card">
+                <p><strong>Scope:</strong> Commercial demolition service including site protection, 22' x 8' wall removal, debris haul-off, and final turnover cleaning at Nordstrom Store, Palm Beach Gardens, FL.</p>
+                <p><strong>Completion:</strong> Work executed prior to 10:00 AM per store operations request. Job confirmed complete without variance.</p>
+            </div>
+
+            <h2 class="section-title"><span class="icon">💰</span>Investment Ledger</h2>
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Details</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Commercial Demolition Service</td>
+                        <td>Protection, wall demo (22' x 8'), debris removal, final cleaning</td>
+                        <td><span class="paid-stamp-text">$600.00</span></td>
+                    </tr>
+                    <tr class="price-total">
+                        <td colspan="2">Total Project Investment</td>
+                        <td><span class="paid-stamp-text">$600.00</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <h3>Payment Record</h3>
+                    <p><strong>Received:</strong> October 21, 2025 at 7:33 PM</p>
+                    <p><strong>Method:</strong> Cash App – $kmjkhomerenov</p>
+                    <p><strong>Reference:</strong> KMJK-AUTH-1021</p>
+                    <p><strong>Amount:</strong> <span class="paid-stamp-text">$600.00</span></p>
+                </div>
+                <div class="detail-card">
+                    <h3>Balance Status</h3>
+                    <p><strong>Remaining Balance:</strong> <span class="paid-stamp-text">$0.00</span></p>
+                    <p><strong>Confirmation:</strong> Digital signature captured.</p>
+                    <p><strong>Serviced By:</strong> Josue Lopez + KMJK crew.</p>
+                    <p><strong>Contact:</strong> 772-323-3776 for post-project support.</p>
+                </div>
+            </div>
+
+            <div class="signature-panel">
+                <h3>Digital Authorization Summary</h3>
+                <div class="signature-summary">
+                    <div><strong>Estimate:</strong> KMJK-2025-1008</div>
+                    <div><strong>Client Name:</strong> Chase McCullon</div>
+                    <div><strong>Date of Birth:</strong> March 25, 1994</div>
+                    <div><strong>Typed Signature:</strong> Chase McCullon</div>
+                    <div><strong>Project Total:</strong> <span class="paid-stamp-text">$600.00</span></div>
+                    <div><strong>Signed On:</strong> October 21, 2025 at 7:33 PM</div>
+                </div>
+                <div class="signature-image">
+                    <img src="data:image/png;base64,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" alt="Drawn signature example">
+                </div>
+
+                <div class="wet-signature-row">
+                    <div class="wet-signature-block">
+                        <strong>KMJK Authorization</strong><br>
+                        Josue Lopez, Owner<br>
+                        Date: __________________
+                    </div>
+                    <div class="wet-signature-block">
+                        <strong>Client Acknowledgment</strong><br>
+                        Chase McCullon<br>
+                        Date: __________________
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            KMJK Home Improvement • Stuart, FL • 772-323-3776 • kmjk.com
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Launch Checklist - Elite Service Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --esh-black: #000000;
+            --esh-panel: #18181b;
+            --esh-panel-alt: #111111;
+            --esh-panel-soft: rgba(255, 255, 255, 0.03);
+            --esh-border: #27272a;
+            --esh-border-soft: rgba(255, 255, 255, 0.08);
+            --esh-gold: #d4af37;
+            --esh-gold-soft: #e5c158;
+            --esh-text: #f5f5f5;
+            --esh-muted: #a1a1aa;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--esh-black) 0%, var(--esh-panel-alt) 100%);
+            color: var(--esh-text);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.02em;
+        }
+
+        .no-print {
+            display: flex;
+            justify-content: flex-end;
+            max-width: 1100px;
+            margin: 0 auto 24px auto;
+        }
+
+        .no-print button {
+            background: var(--esh-gold);
+            color: var(--esh-black);
+            border: none;
+            border-radius: 999px;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.25);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .no-print button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 28px 60px rgba(212, 175, 55, 0.35);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 40px auto;
+            background: var(--esh-panel);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--esh-border);
+            box-shadow: 0 45px 90px rgba(0, 0, 0, 0.45);
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(11, 11, 11, 0.94) 0%, rgba(39, 39, 42, 0.92) 100%);
+            padding: 60px 48px 52px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 110px, rgba(212, 175, 55, 0.06) 110px, rgba(212, 175, 55, 0.06) 220px);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            bottom: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.5), transparent);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 105px;
+            height: auto;
+            margin-bottom: 24px;
+            opacity: 0.9;
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: var(--esh-text);
+        }
+
+        header h1 .gold {
+            color: var(--esh-gold);
+            font-weight: 400;
+        }
+
+        header p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: var(--esh-muted);
+            font-size: 1.1rem;
+            letter-spacing: 0.04em;
+        }
+
+        .cover-page {
+            padding: 96px 48px 88px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.16) 0%, rgba(24, 24, 27, 0.9) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover-page::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.25), transparent 55%);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .cover-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .cover-tagline {
+            font-size: 0.78rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--esh-gold);
+            margin-bottom: 20px;
+        }
+
+        .cover-title {
+            font-size: 3.3rem;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            margin-bottom: 20px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            color: var(--esh-muted);
+            line-height: 1.8;
+        }
+
+        .cover-highlights {
+            margin-top: 40px;
+            display: grid;
+            gap: 18px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .cover-highlights li {
+            list-style: none;
+            border-left: 3px solid var(--esh-gold);
+            padding: 16px 18px;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 12px;
+            color: var(--esh-text);
+            font-size: 0.95rem;
+        }
+
+        .cover-footer {
+            margin-top: 44px;
+            font-size: 0.85rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--esh-muted);
+        }
+
+        main {
+            padding: 56px 48px 64px;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, rgba(24, 24, 27, 0.9) 100%);
+        }
+
+        .doc-title {
+            font-size: 2.5rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            text-align: center;
+            color: var(--esh-gold);
+            margin-bottom: 18px;
+        }
+
+        .doc-subtitle {
+            max-width: 720px;
+            margin: 0 auto 48px;
+            text-align: center;
+            color: var(--esh-muted);
+            font-size: 1rem;
+        }
+
+        section.section {
+            border: 1px solid var(--esh-border);
+            border-radius: 16px;
+            padding: 32px 32px 36px;
+            margin-bottom: 32px;
+            background: rgba(15, 15, 15, 0.85);
+            box-shadow: 0 26px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-bottom: 16px;
+            color: var(--esh-gold);
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--esh-gold), transparent);
+        }
+
+        .section-intro {
+            color: var(--esh-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px 22px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--esh-text);
+            font-size: 0.95rem;
+        }
+
+        .checkbox-item input {
+            margin-top: 4px;
+            accent-color: var(--esh-gold);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+            font-size: 0.92rem;
+            border: 1px solid var(--esh-border);
+            background: rgba(17, 17, 17, 0.85);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: rgba(212, 175, 55, 0.15);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+            color: var(--esh-gold);
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        table td {
+            border-top: 1px solid var(--esh-border);
+            padding: 12px 14px;
+            color: var(--esh-text);
+        }
+
+        .notes-area {
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            border-radius: 14px;
+            padding: 20px 22px;
+            background: rgba(212, 175, 55, 0.08);
+            margin-top: 22px;
+        }
+
+        .notes-area textarea {
+            background: transparent;
+            border: none;
+            padding: 0;
+            min-height: 120px;
+            color: var(--esh-text);
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+
+        .notes-area textarea:focus {
+            outline: none;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 36px;
+            color: var(--esh-muted);
+            font-size: 0.85rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 14px;
+            }
+
+            header {
+                padding: 48px 28px 42px;
+            }
+
+            header h1 {
+                font-size: 2.4rem;
+            }
+
+            .cover-page {
+                padding: 64px 24px 56px;
+            }
+
+            .cover-title {
+                font-size: 2.4rem;
+            }
+
+            .cover-highlights {
+                gap: 14px;
+            }
+
+            main {
+                padding: 36px 24px 48px;
+            }
+
+            section.section {
+                padding: 24px 22px 28px;
+            }
+
+            .no-print {
+                justify-content: center;
+            }
+
+            .no-print button {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+            }
+
+            header {
+                background: #000000;
+                color: #ffffff;
+            }
+
+            header::before {
+                display: none;
+            }
+
+            .cover-page {
+                background: #ffffff;
+                color: #000000;
+                page-break-after: always;
+                border-bottom: 1px solid #000000;
+                padding: 48px 55px 52px;
+            }
+
+            .cover-title,
+            .cover-subtitle,
+            .cover-highlights li,
+            .cover-footer,
+            .cover-tagline {
+                color: #000000;
+            }
+
+            .cover-highlights li {
+                background: #ffffff;
+                border-color: #000000;
+            }
+
+            main {
+                background: #ffffff;
+                color: #000000;
+                padding: 40px 55px 45px;
+            }
+
+            section.section {
+                page-break-inside: avoid;
+                background: #ffffff;
+                border: 1px solid #000000;
+                box-shadow: none;
+            }
+
+            .section-title,
+            .section-intro,
+            .checkbox-item,
+            table th,
+            table td,
+            .footer-note {
+                color: #000000;
+            }
+
+            .notes-area {
+                border-color: #000000;
+                background: transparent;
+            }
+
+            .notes-area textarea {
+                color: #000000;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button type="button" onclick="window.print()">Print Launch Checklist</button>
+    </div>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="/images/logos/esh-dark-bg.png" alt="Elite Service Hub" class="logo">
+                <h1>Elite Service Hub <span class="gold">Digital Launch</span></h1>
+                <p>Deploy the tools, automations, and creatives required to launch remodelers, cleaning teams, pressure washers, auto detailers, and mobile mechanics with confidence.</p>
+            </div>
+        </header>
+        <section class="cover-page">
+            <div class="cover-inner">
+                <div class="cover-tagline">Launch Readiness</div>
+                <h2 class="cover-title">Digital Launch Checklist</h2>
+                <p class="cover-subtitle">
+                    Run this playbook before we unleash ad spend and lead flow. Confirm every page, chatbot, phone line, and payment touchpoint supports the promise you make to clients.
+                </p>
+                <ul class="cover-highlights">
+                    <li>Provision identity infrastructure—email, phone, shared drives, and permissions.</li>
+                    <li>QA landing pages, chat automations, and attribution so leads never fall through.</li>
+                    <li>Embed commission workflows and escalation paths that protect profitability.</li>
+                </ul>
+                <div class="cover-footer">Complete → Greenlight Campaigns</div>
+            </div>
+        </section>
+        <main>
+            <h1 class="doc-title">Digital Launch Checklist</h1>
+            <p class="doc-subtitle">Complete each stage before ad spend begins. This playbook supports any elite field service operator—simply adapt the notes to your craft and market.</p>
+
+            <section class="section">
+                <h2 class="section-title">Identity Infrastructure</h2>
+                <p class="section-intro">Provision the digital foundation for routing leads, dispatches, and follow-ups.</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox"> Create branded Google Workspace or Microsoft 365 account</label>
+                    <label class="checkbox-item"><input type="checkbox"> Configure signature, auto-reply, and shared inbox rules</label>
+                    <label class="checkbox-item"><input type="checkbox"> Provision dedicated call tracking or VOIP line</label>
+                    <label class="checkbox-item"><input type="checkbox"> Forward tracking number to contractor or dispatcher lines</label>
+                    <label class="checkbox-item"><input type="checkbox"> Record voicemail aligned with Elite Service Hub messaging</label>
+                    <label class="checkbox-item"><input type="checkbox"> Set up branded cloud folder with intake, assets, and SOPs</label>
+                    <label class="checkbox-item"><input type="checkbox"> Invite contractor leadership + ESH team with proper permissions</label>
+                </div>
+                <div class="notes-area">
+                    <textarea placeholder="Credential storage, password manager links, escalation contacts…"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Landing Pages & Microsites</h2>
+                <p class="section-intro">Build and QA each offer or service page before campaigns go live.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service / Offer</th>
+                            <th>URL / Slug</th>
+                            <th>Neighborhood / Territory</th>
+                            <th>QA Complete</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Residential Cleaning / Maid Service</td><td></td><td></td><td>☐</td><td></td></tr>
+                        <tr><td>Exterior Soft Wash / Pressure Wash</td><td></td><td></td><td>☐</td><td></td></tr>
+                        <tr><td>Auto Detailing / Ceramic Coating</td><td></td><td></td><td>☐</td><td></td></tr>
+                        <tr><td>Mobile Mechanics / Fleet Service</td><td></td><td></td><td>☐</td><td></td></tr>
+                        <tr><td>Signature Remodeling / Specialty Offer</td><td></td><td></td><td>☐</td><td></td></tr>
+                        <tr><td>High-Ticket Anchor Service</td><td></td><td></td><td>☐</td><td></td></tr>
+                    </tbody>
+                </table>
+                <div class="checkbox-grid" style="margin-top:20px;">
+                    <label class="checkbox-item"><input type="checkbox"> Global header/footer uses latest contractor branding</label>
+                    <label class="checkbox-item"><input type="checkbox"> Forms route to contractor inbox + ESH CRM log</label>
+                    <label class="checkbox-item"><input type="checkbox"> Call buttons use tracking number with click-to-call</label>
+                    <label class="checkbox-item"><input type="checkbox"> Chatbot embedded and tested across devices</label>
+                    <label class="checkbox-item"><input type="checkbox"> LocalBusiness or Service markup configured</label>
+                    <label class="checkbox-item"><input type="checkbox"> Lighthouse performance ≥ 90 on mobile</label>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Chatbot & Automation Configuration</h2>
+                <p class="section-intro">Deploy AI and workflow automations with service-specific dialogue paths.</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox"> Load intake data, pricing notes, and service menu into prompt</label>
+                    <label class="checkbox-item"><input type="checkbox"> Configure per-service question trees and lead scoring tags</label>
+                    <label class="checkbox-item"><input type="checkbox"> Route chat transcripts to contractor inbox and ESH archive</label>
+                    <label class="checkbox-item"><input type="checkbox"> Set abandonment alerts for unanswered chats</label>
+                    <label class="checkbox-item"><input type="checkbox"> Test calendar, routing, and payment handoffs</label>
+                    <label class="checkbox-item"><input type="checkbox"> Enable voicemail-to-text summaries or SMS follow-up (optional)</label>
+                </div>
+                <div class="notes-area">
+                    <textarea placeholder="Prompt versioning, fallback logic, escalation paths…"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Advertising Infrastructure</h2>
+                <p class="section-intro">Set up campaigns with guardrails for cost per lead and response speed.</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox"> Build Meta local campaign with service-specific creatives</label>
+                    <label class="checkbox-item"><input type="checkbox"> Build Google Search campaign with curated keyword groups</label>
+                    <label class="checkbox-item"><input type="checkbox"> Load retargeting audiences and creative variations</label>
+                    <label class="checkbox-item"><input type="checkbox"> Set daily budgets, CPL thresholds, and pacing alerts</label>
+                    <label class="checkbox-item"><input type="checkbox"> Connect ad platforms to attribution dashboard / CRM</label>
+                    <label class="checkbox-item"><input type="checkbox"> Install conversion tracking pixels/events on each page</label>
+                    <label class="checkbox-item"><input type="checkbox"> Draft escalation protocol for CPL or response overages</label>
+                </div>
+                <div class="notes-area">
+                    <textarea placeholder="Campaign names, budget allocations, offer positioning…"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Payment & Commission Flow</h2>
+                <p class="section-intro">Ensure the lead fee and 15% commission stay embedded in every project or service ticket.</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox"> Embed “Elite Service Hub Growth Suite” line item in proposals</label>
+                    <label class="checkbox-item"><input type="checkbox"> Script Payment 1 conversation (lead launch fee)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Script Payment 2 commission reminder post-completion</label>
+                    <label class="checkbox-item"><input type="checkbox"> Set automated invoice template or payment link</label>
+                    <label class="checkbox-item"><input type="checkbox"> Verify payout method via micro-deposit or test transaction</label>
+                </div>
+                <div class="notes-area">
+                    <textarea placeholder="Custom pricing notes, alternate fee structures, collections cadence…"></textarea>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Launch QA & Go-Live Review</h2>
+                <p class="section-intro">Final validation before media spend starts and leads flow to the field.</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item"><input type="checkbox"> Test lead journey end-to-end (form, call, chat, SMS)</label>
+                    <label class="checkbox-item"><input type="checkbox"> Confirm contractor or dispatcher meets response SLAs</label>
+                    <label class="checkbox-item"><input type="checkbox"> Populate launch-day scorecard with KPIs</label>
+                    <label class="checkbox-item"><input type="checkbox"> Schedule 48-hour and 7-day performance reviews</label>
+                    <label class="checkbox-item"><input type="checkbox"> Archive checklist and assets in contractor launch folder</label>
+                </div>
+                <div class="notes-area">
+                    <textarea placeholder="Open issues, mitigation steps, follow-up dates…"></textarea>
+                </div>
+            </section>
+
+            <div class="footer-note">
+                Checklist Complete → Activate Campaigns
+            </div>
+        </main>
+    </div>
+</body>
+</html>

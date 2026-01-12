@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK Signature Estimate – Chase McCullon</title>
+    <style>
+        :root {
+            color-scheme: light;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background: #121212;
+            padding: 60px 20px;
+            color: #F5F5F5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #1F1F1F 0%, #101010 100%);
+            border-radius: 18px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+        }
+        
+        .letterhead {
+            padding: 48px 64px;
+            background: #101010;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+        }
+        
+        .brand-mark {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+        
+        .brand-name {
+            font-size: 3.1em;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+        }
+        
+        .tagline {
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: rgba(255, 215, 0, 0.7);
+            margin-top: 18px;
+        }
+        
+        .contact-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 32px;
+            font-size: 0.95em;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .contact-label {
+            color: rgba(255, 215, 0, 0.7);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        
+        .content {
+            padding: 48px 64px 56px;
+        }
+        
+        .document-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            margin-bottom: 46px;
+        }
+        
+        .meta-block {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 12px;
+            padding: 22px 20px;
+        }
+        
+        .meta-label {
+            font-size: 0.78em;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.7);
+            margin-bottom: 12px;
+        }
+        
+        .meta-value {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: #F5F5F5;
+        }
+        
+        h2.section-title {
+            font-size: 1.4em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 40px 0 18px;
+            color: rgba(255, 215, 0, 0.85);
+        }
+        
+        .section-lede {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.05em;
+            margin-bottom: 12px;
+        }
+        
+        .scope-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+        
+        .scope-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        
+        .scope-card strong {
+            color: rgba(255, 215, 0, 0.8);
+        }
+        
+        table.investment {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 18px;
+        }
+        
+        table.investment th,
+        table.investment td {
+            padding: 18px 20px;
+            text-align: left;
+        }
+        
+        table.investment thead {
+            background: rgba(255, 215, 0, 0.1);
+            color: #F5F5F5;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-size: 0.85em;
+        }
+        
+        table.investment tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        table.investment td:last-child,
+        table.investment th:last-child {
+            text-align: right;
+        }
+        
+        .investment-total {
+            background: rgba(255, 215, 0, 0.08);
+            font-weight: 700;
+            font-size: 1.15em;
+        }
+        
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 16px;
+        }
+        
+        .timeline-step {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.18);
+        }
+        
+        .timeline-step h3 {
+            font-size: 0.9em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.75);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-step p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95em;
+        }
+        
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+        
+        .payment-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 22px;
+            border: 1px solid rgba(255, 215, 0, 0.25);
+        }
+        
+        .payment-card h3 {
+            letter-spacing: 0.15em;
+            font-size: 0.92em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: rgba(255, 215, 0, 0.75);
+        }
+        
+        .payment-detail {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        
+        .payment-amount {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: rgba(255, 215, 0, 0.9);
+            margin-top: 12px;
+        }
+        
+        .cashapp-banner {
+            display: flex;
+            gap: 24px;
+            margin-top: 22px;
+            align-items: center;
+            background: rgba(19, 111, 46, 0.12);
+            border: 1px solid rgba(19, 111, 46, 0.35);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .cashapp-banner img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+        }
+        
+        .cashapp-text p {
+            margin-bottom: 6px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .cashapp-text strong {
+            color: rgba(19, 235, 102, 0.9);
+        }
+        
+        .terms-box {
+            margin-top: 30px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .terms-box h3 {
+            font-size: 1em;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255, 215, 0, 0.75);
+            margin-bottom: 12px;
+        }
+        
+        .terms-box ul {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+        
+        .terms-box li {
+            padding-left: 18px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .terms-box li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: rgba(255, 215, 0, 0.75);
+        }
+        
+        .signature-line {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+        }
+        
+        .signature-block {
+            flex: 1;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+        }
+        
+        .footer {
+            padding: 22px 64px 42px;
+            text-align: center;
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letterhead">
+            <div class="brand-mark">
+                <div class="brand-name">KMJK</div>
+                <div class="meta-value" style="text-align: right;">Project Estimate</div>
+            </div>
+            <div class="tagline">CRAFTED INTERIORS • DISCIPLINED EXECUTION</div>
+            <div class="contact-row">
+                <div class="contact-item">
+                    <span class="contact-label">Principal</span>
+                    <span>Josue Lopez</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Direct</span>
+                    <span>772-323-3776</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    <span>KMJKHomeRenov@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Headquarters</span>
+                    <span>Stuart, Florida</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="document-meta">
+                <div class="meta-block">
+                    <div class="meta-label">Estimate</div>
+                    <div class="meta-value">KMJK-2025-1021</div>
+                </div>
+                <div class="meta-block">
+                    <div class="meta-label">Issued</div>
+                    <div class="meta-value">October 21, 2025</div>
+                </div>
+                <div class="meta-block">
+                    <div class="meta-label">Client</div>
+                    <div class="meta-value">Chase McCullon</div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Executive Summary</h2>
+            <p class="section-lede">
+                KMJK proposes a concierge carpet re-tension program tailored to Nordstrom Fitting Rooms &amp; Corridors – 3111 PGA Blvd, Palm Beach Gardens, FL 33410,
+                ensuring a flawless presentation ahead of daily opening hours. All scopes are delivered turnkey,
+                coordinated with on-site management, and executed by uniformed specialists.
+            </p>
+            
+            <h2 class="section-title">Scope of Services</h2>
+            <div class="scope-grid">
+                <div class="scope-card">
+                    <strong>Protect &amp; Prepare</strong>
+                    <p>Shield cabinetry, mirrors, and merchandise zones; document conditions before and after service.</p>
+                </div>
+                <div class="scope-card">
+                    <strong>Baseboard Reset</strong>
+                    <p>Remove and catalogue trim sections, reinstall with color-matched fasteners and caulk touch ups.</p>
+                </div>
+                <div class="scope-card">
+                    <strong>Precision Stretch</strong>
+                    <p>Power-stretch each bay and corridor run, secure tack strips, and refine seams for seamless visuals.</p>
+                </div>
+                <div class="scope-card">
+                    <strong>Finish &amp; Handover</strong>
+                    <p>Groom pile, vacuum, and complete a guided walk-through with the client representative.</p>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Investment Overview</h2>
+            <table class="investment">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Details</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Carpet Re-Tension &amp; Presentation Reset</td>
+                        <td>Labor, protection, baseboard reset, stretch, finish grooming</td>
+                        <td>$794.39</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Florida Sales Tax (7%)</td>
+                        <td>$55.61</td>
+                    </tr>
+                    <tr class="investment-total">
+                        <td colspan="2">Total Investment</td>
+                        <td>$850.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="section-lede" style="margin-top: 10px;">Payment requested in full prior to mobilization. Cash App payments include the optional 9% convenience total below.</p>
+            
+            <h2 class="section-title">Schedule At A Glance</h2>
+            <div class="timeline">
+                <div class="timeline-step">
+                    <h3>Pre-Arrival</h3>
+                    <p>Confirm access, merchandise clearance, and escort requirements with client concierge.</p>
+                </div>
+                <div class="timeline-step">
+                    <h3>Mobilize 5:30 AM</h3>
+                    <p>Set protection, remove base, stretch, and reset each suite before customer hours.</p>
+                </div>
+                <div class="timeline-step">
+                    <h3>8:45 AM Turnover</h3>
+                    <p>Walk-through, vacuum lines, and deliver a refreshed presentation ready for opening.</p>
+                </div>
+            </div>
+            
+            <h2 class="section-title">Investment Logistics</h2>
+            <div class="payment-grid">
+                <div class="payment-card">
+                    <h3>Project Investment</h3>
+                    <p class="payment-detail"><strong>Due:</strong> Prior to construction mobilization</p>
+                    <p class="payment-detail"><strong>Amount:</strong> $850.00</p>
+                    <p class="payment-detail"><strong>Includes:</strong> Labor, materials, disposal, tax</p>
+                    <div class="payment-amount">$850.00</div>
+                </div>
+                <div class="payment-card">
+                    <h3>Cash App Convenience (Optional)</h3>
+                    <p class="payment-detail"><strong>Adjustment:</strong> 9% service consideration</p>
+                    <p class="payment-detail"><strong>Total via Cash App:</strong> $926.50</p>
+                    <p class="payment-detail"><strong>Added Amount:</strong> $76.50</p>
+                    <div class="payment-amount">$76.50</div>
+                </div>
+            </div>
+            
+            <div class="cashapp-banner">
+                <img src="$kmjkhomerenov.png" alt="Updated Cash App QR for KMJK">
+                <div class="cashapp-text">
+                    <p><strong>Cash App Handle:</strong> $kmjkhomerenov</p>
+                    <p>Feel free to scan or tap to launch Cash App. The 9% adjustment keeps the convenience of app payments available while preserving our white-glove labor standard.</p>
+                    <p>Checks, ACH, Zelle, and major cards remain at the standard investment total.</p>
+                </div>
+            </div>
+            
+            <div class="terms-box">
+                <h3>Engagement Terms</h3>
+                <ul>
+                    <li>Estimate valid for 30 days. Scheduling confirmed upon receipt of cleared funds.</li>
+                    <li>Client to provide access before store hours and remove sensitive merchandise as needed.</li>
+                    <li>KMJK provides licensed, insured craftsmen. Certificates available upon request.</li>
+                    <li>Scope changes require written approval and may affect investment and schedule.</li>
+                    <li>Post-service walk-through ensures client sign-off prior to demobilization.</li>
+                </ul>
+            </div>
+            
+            <div class="signature-line">
+                <div class="signature-block">
+                    <strong>KMJK Authorization</strong><br>
+                    Josue Lopez, Owner<br>
+                    Date: ______________
+                </div>
+                <div class="signature-block">
+                    <strong>Client Authorization</strong><br>
+                    Chase McCullon<br>
+                    Date: ______________
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            KMJK Home Improvement • Boutique Commercial Finishes • www.kmjk.com
+        </div>
+    </div>
+</body>
+</html>

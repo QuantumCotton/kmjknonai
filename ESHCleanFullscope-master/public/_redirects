@@ -1,0 +1,5 @@
+# Redirect /thanks to /thanks.html
+/thanks /thanks.html 200
+
+# Route all other requests to index.html for React Router
+/* /index.html 200

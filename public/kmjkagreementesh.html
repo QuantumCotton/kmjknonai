@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK Contractor Service Agreement</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+            .no-print {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .content {
+                padding: 40px 50px;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .payment-structure {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .payment-item {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .breakdown-grid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .breakdown-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .key-terms {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .signatures {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            h2.section-title {
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            /* Ensure sections start on new page if needed */
+            .section {
+                orphans: 3;
+                widows: 3;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #F8F8F8;
+            padding: 40px 20px;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Letterhead */
+        .letterhead {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 40px 60px;
+            text-align: center;
+        }
+        
+        .company-name {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        
+        .gold-underline {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #B8860B, transparent);
+            margin: 15px auto 20px;
+        }
+        
+        .tagline {
+            font-size: 1.1em;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            color: #B8860B;
+        }
+        
+        .contact-info {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #F8F8F8;
+        }
+        
+        /* Document Content */
+        .content {
+            padding: 50px 60px;
+        }
+        
+        .doc-title {
+            font-size: 2em;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2C2C2C;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #B8860B;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #B8860B;
+            padding-bottom: 5px;
+        }
+        
+        .section p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+        
+        .payment-structure {
+            background: #F8F8F8;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 2px solid #B8860B;
+        }
+        
+        .payment-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #B8860B;
+        }
+        
+        .payment-item h4 {
+            color: #2C2C2C;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+        
+        .payment-item p {
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .amount {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #B8860B;
+        }
+        
+        /* Financial Breakdown */
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .breakdown-card {
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .breakdown-card.your-side {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: #28a745;
+        }
+        
+        .breakdown-card.contractor-side {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+            border-color: #f39c12;
+        }
+        
+        .breakdown-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2C2C2C;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #555;
+            font-size: 0.95em;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        .metric-value.highlight {
+            font-size: 1.1em;
+            color: #B8860B;
+        }
+        
+        .metric-value.profit {
+            color: #28a745;
+        }
+        
+        .metric-value.cost {
+            color: #e74c3c;
+        }
+        
+        .key-terms {
+            background: #FFF9E6;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #B8860B;
+            margin: 25px 0;
+        }
+        
+        .key-terms h4 {
+            color: #2C2C2C;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+        
+        .key-terms ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .key-terms li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+        }
+        
+        .key-terms li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #B8860B;
+            font-weight: bold;
+        }
+        
+        .signatures {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .signature-block {
+            padding-top: 30px;
+        }
+        
+        .signature-line {
+            border-top: 2px solid #2C2C2C;
+            padding-top: 10px;
+            margin-top: 40px;
+        }
+        
+        .sig-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .footer {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 20px 60px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+        
+        .footer-divider {
+            width: 100px;
+            height: 2px;
+            background: #B8860B;
+            margin: 15px auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Letterhead -->
+        <div class="letterhead">
+            <div class="company-name">THE ELITE SERVICE HUB</div>
+            <div class="gold-underline"></div>
+            <div class="tagline">Premium Lead Generation & Business Growth Partners</div>
+            <div class="contact-info">
+                Stuart, Florida | 650-501-7659 | contact@eliteservicehub.com
+            </div>
+        </div>
+        
+        <!-- Document Content -->
+        <div class="content">
+            <h1 class="doc-title">Lead Generation Partnership Agreement</h1>
+            <p style="text-align: center; color: #B8860B; font-size: 1.1em; margin-bottom: 30px; font-style: italic;">The Elite Service Hub's Agreement with KMJK</p>
+            
+            <!-- Introduction -->
+            <div class="section">
+                <h2 class="section-title">Agreement Overview</h2>
+                <p>This Agreement outlines the partnership between <strong>The Elite Service Hub</strong> ("Lead Provider") and <strong>KMJK Home Improvement</strong> ("Contractor") for the provision of qualified kitchen renovation leads and the associated payment structure.</p>
+                <p>The Elite Service Hub will provide pre-qualified, ready-to-close leads to KMJK. KMJK agrees to include The Elite Service Hub's lead acquisition costs in their project bids and compensate The Elite Service Hub according to the payment structure outlined below.</p>
+            </div>
+            
+            <!-- Payment Structure -->
+            <div class="section">
+                <h2 class="section-title">Two-Payment Structure</h2>
+                
+                <div class="payment-structure">
+                    <div class="payment-item">
+                        <h4>📋 Check #1: Contract Signing (Customer to KMJK)</h4>
+                        <p><strong>What's Included:</strong> Materials + Labor + Advertising Costs</p>
+                        <p><strong>Fixed Advertising Cost:</strong> <span class="amount">$2,797</span> per job</p>
+                        <p><strong>Payment Flow:</strong> Customer pays KMJK upfront deposit. KMJK then pays The Elite Service Hub the $2,797 advertising cost.</p>
+                        <p><em>This advertising cost is disclosed to KMJK and must be included in the project bid to the customer.</em></p>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <h4>✅ Check #2: Job Completion (KMJK to The Elite Service Hub)</h4>
+                        <p><strong>What's Included:</strong> The Elite Service Hub Commission Balance (15% Total - $2,797 Already Paid)</p>
+                        <p><strong>Calculation:</strong> (Project Value × 15%) - $2,797</p>
+                        <p><strong>Example on $30,000 job:</strong> ($30,000 × 15% = $4,500) - $2,797 = <span class="amount">$1,703</span></p>
+                        <p><strong>Payment Flow:</strong> Upon job completion, KMJK pays The Elite Service Hub the remaining commission balance from their markup.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Financial Example -->
+            <div class="section">
+                <h2 class="section-title">Financial Breakdown Example</h2>
+                <p><strong>Example Project:</strong> 2 jobs per month at $30,000 average job value with 30% contractor margin</p>
+                
+                <div class="breakdown-grid">
+                    <!-- Elite Service Hub Side -->
+                    <div class="breakdown-card your-side">
+                        <h3>🎯 THE ELITE SERVICE HUB MONTHLY REVENUE</h3>
+                        <div class="metric">
+                            <span class="metric-label">Jobs Per Month:</span>
+                            <span class="metric-value">2</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Avg Job Value:</span>
+                            <span class="metric-value">$30,000</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Ad Cost:</span>
+                            <span class="metric-value cost">$5,594</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">15% Commission Total:</span>
+                            <span class="metric-value">$9,000</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Elite Service Hub Charges KMJK:</span>
+                            <span class="metric-value">$14,594</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">KMJK Keeps (Total):</span>
+                            <span class="metric-value">$45,406</span>
+                        </div>
+                        <div class="metric" style="border-top: 2px solid #28a745; margin-top: 10px; padding-top: 15px;">
+                            <span class="metric-label"><strong>ELITE SERVICE HUB MONTHLY NET PROFIT:</strong></span>
+                            <span class="metric-value profit highlight">$3,406</span>
+                        </div>
+                    </div>
+                    
+                    <!-- KMJK (Contractor) Side -->
+                    <div class="breakdown-card contractor-side">
+                        <h3>👷 KMJK'S MONTHLY PROFIT (30% Margin)</h3>
+                        <div class="metric">
+                            <span class="metric-label">Jobs Per Month:</span>
+                            <span class="metric-value">2</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Materials + Labor + Ads (Per Job):</span>
+                            <span class="metric-value">$21,429</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Their 30% Markup (Per Job):</span>
+                            <span class="metric-value profit">$8,571</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Price to Customer (Per Job):</span>
+                            <span class="metric-value">$30,000</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Total Monthly Volume:</span>
+                            <span class="metric-value">$60,000</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Minus Elite Service Hub Commission:</span>
+                            <span class="metric-value cost">$3,406</span>
+                        </div>
+                        <div class="metric" style="border-top: 2px solid #f39c12; margin-top: 10px; padding-top: 15px;">
+                            <span class="metric-label"><strong>KMJK NET PROFIT:</strong></span>
+                            <span class="metric-value profit highlight">$13,737</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Terms -->
+            <div class="section">
+                <h2 class="section-title">Key Agreement Terms</h2>
+                
+                <div class="key-terms">
+                    <h4>KMJK Home Improvement Obligations (Contractor):</h4>
+                    <ul>
+                        <li>Include the fixed $2,797 advertising cost in Materials + Labor + Advertising line item of customer bid</li>
+                        <li>Pay The Elite Service Hub $2,797 upon contract signing (Check #1)</li>
+                        <li>Pay The Elite Service Hub the commission balance (15% of total - $2,797) upon job completion (Check #2)</li>
+                        <li>Maintain professional standards and quality workmanship on all projects</li>
+                        <li>Complete projects within agreed-upon timelines</li>
+                    </ul>
+                </div>
+                
+                <div class="key-terms">
+                    <h4>The Elite Service Hub Obligations (Lead Provider):</h4>
+                    <ul>
+                        <li>Provide pre-qualified, ready-to-close kitchen renovation leads to KMJK</li>
+                        <li>Handle all marketing, advertising, and lead generation costs</li>
+                        <li>Manage initial customer communications and qualification process</li>
+                        <li>Close deals before introducing customer to KMJK</li>
+                        <li>Provide ongoing marketing support and lead flow</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Benefits Summary -->
+            <div class="section">
+                <h2 class="section-title">Partnership Benefits</h2>
+                <p><strong>For KMJK Home Improvement (Contractor):</strong></p>
+                <ul style="margin-left: 25px; margin-bottom: 15px;">
+                    <li>✅ <strong>No Marketing Costs</strong> - The Elite Service Hub handles all advertising and lead generation</li>
+                    <li>✅ <strong>Pre-Qualified Leads</strong> - Customers are ready to move forward, no tire-kickers</li>
+                    <li>✅ <strong>Predictable Costs</strong> - Fixed $2,797 advertising cost per job, never changes</li>
+                    <li>✅ <strong>Steady Volume</strong> - Consistent flow of quality projects</li>
+                    <li>✅ <strong>Maintain Your Margin</strong> - Keep your standard 30-40% profit margin</li>
+                </ul>
+                
+                <p><strong>For The Elite Service Hub (Lead Provider):</strong></p>
+                <ul style="margin-left: 25px;">
+                    <li>✅ <strong>Quality Execution</strong> - Professional contractor ensures customer satisfaction</li>
+                    <li>✅ <strong>Scalable Model</strong> - Ability to serve more customers with trusted partners</li>
+                    <li>✅ <strong>Transparent Pricing</strong> - Clear commission structure builds trust</li>
+                    <li>✅ <strong>Performance Incentive</strong> - Better marketing efficiency increases profitability</li>
+                </ul>
+            </div>
+            
+            <!-- Example Calculation -->
+            <div class="section">
+                <h2 class="section-title">Per-Job Payment Example</h2>
+                <div class="key-terms" style="background: #E8F4F8;">
+                    <p><strong>Example: $30,000 Kitchen Renovation Project</strong></p>
+                    <p style="margin-top: 15px;"><strong>Contractor's Bid to Customer:</strong></p>
+                    <p style="margin-left: 20px;">
+                        Materials + Labor + Advertising: $21,429<br>
+                        + Contractor's 30% Markup: $8,571<br>
+                        = <strong>Total Price to Customer: $30,000</strong>
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>Payment Flow:</strong></p>
+                    <p style="margin-left: 20px;">
+                        <strong>Check #1 (Contract Signing):</strong> KMJK pays The Elite Service Hub $2,797<br>
+                        <strong>Check #2 (Job Completion):</strong> KMJK pays The Elite Service Hub $1,703<br>
+                        <em>(Total 15% commission = $4,500: $2,797 + $1,703)</em>
+                    </p>
+                    
+                    <p style="margin-top: 15px;"><strong>Final Results:</strong></p>
+                    <p style="margin-left: 20px;">
+                        KMJK's Gross Markup: $8,571<br>
+                        - Elite Service Hub Commission Balance (Check #2): $1,703<br>
+                        = <strong style="color: #28a745;">KMJK Net Profit: $6,868</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Term and Termination -->
+            <div class="section">
+                <h2 class="section-title">Term and Termination</h2>
+                <p>This Agreement shall remain in effect until terminated by either party with 30 days written notice. Both parties agree to complete all ongoing projects and fulfill payment obligations for leads provided prior to termination date.</p>
+            </div>
+            
+            <!-- Signatures -->
+            <div class="signatures">
+                <div class="signature-block">
+                    <div class="signature-line">
+                        <div style="font-weight: 600; margin-bottom: 5px;">The Elite Service Hub</div>
+                        <div class="sig-label">Authorized Representative (Lead Provider)</div>
+                        <div class="sig-label" style="margin-top: 10px;">Date: _________________</div>
+                    </div>
+                </div>
+                
+                <div class="signature-block">
+                    <div class="signature-line">
+                        <div style="font-weight: 600; margin-bottom: 5px;">KMJK Home Improvement</div>
+                        <div class="sig-label">Authorized Representative (Contractor)</div>
+                        <div class="sig-label" style="margin-top: 10px;">Date: _________________</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div>The Elite Service Hub | Premium Lead Generation & Business Growth Partners</div>
+            <div class="footer-divider"></div>
+            <div>Stuart, FL | 650-501-7659 | www.eliteservicehub.com</div>
+        </div>
+    </div>
+    
+    <div class="no-print" style="text-align: center; margin-top: 30px; padding: 20px;">
+        <button onclick="window.print()" style="background: #2C2C2C; color: white; padding: 15px 40px; border: none; border-radius: 6px; font-size: 1.1em; cursor: pointer; font-family: Georgia, serif;">
+            🖨️ Print Agreement
+        </button>
+    </div>
+</body>
+</html>

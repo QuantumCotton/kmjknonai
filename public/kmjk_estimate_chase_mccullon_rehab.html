@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK - Project Estimate</title>
+    <style>
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            body { margin: 0; padding: 0; background: #fff; }
+            .no-print { display: none !important; }
+            .container { box-shadow: none; max-width: 100%; }
+            .letterhead { padding: 20px 40px; }
+            .doc-header { padding: 15px 40px; }
+            .content { padding: 20px 40px; }
+            .section, .payment-flex, .phase-table, .pricing-table {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .phase-table tr, .pricing-table tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Georgia", "Times New Roman", serif;
+            background: #f8f8f8;
+            padding: 20px;
+            color: #2c2c2c;
+            line-height: 1.45;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .letterhead {
+            background: #2c2c2c;
+            color: #f8f8f8;
+            padding: 26px 40px 22px;
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .company-name {
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #b8860b;
+            margin-bottom: 6px;
+        }
+
+        .owner-name {
+            font-size: 1.05em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .owner-title {
+            font-size: 0.8em;
+            color: #b8860b;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        .contact-compact {
+            text-align: right;
+            font-size: 0.82em;
+        }
+
+        .contact-compact div + div {
+            margin-top: 4px;
+        }
+
+        .doc-header {
+            padding: 20px 40px;
+            border-bottom: 3px solid #b8860b;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .doc-title {
+            font-size: 1.75em;
+            font-weight: 600;
+        }
+
+        .estimate-info {
+            text-align: right;
+            font-size: 0.9em;
+        }
+
+        .estimate-number {
+            font-weight: 600;
+            color: #b8860b;
+            font-size: 1.15em;
+        }
+
+        .client-bar {
+            background: #f8f8f8;
+            padding: 14px 40px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 28px;
+            font-size: 0.88em;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .client-bar strong {
+            color: #b8860b;
+            font-size: 0.92em;
+        }
+
+        .content {
+            padding: 22px 40px 30px;
+        }
+
+        .project-intro {
+            background: linear-gradient(135deg, #fff8e6 0%, #fffdf4 100%);
+            border-left: 4px solid #b8860b;
+            padding: 16px 22px;
+            margin-bottom: 22px;
+            border-radius: 6px;
+        }
+
+        .project-intro h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .project-intro p {
+            color: #555;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #b8860b;
+        }
+
+        .work-list {
+            list-style: disc;
+            padding-left: 20px;
+            color: #444;
+        }
+
+        .work-list li {
+            margin-bottom: 8px;
+        }
+
+        .work-list strong {
+            color: #2c2c2c;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92em;
+        }
+
+        .pricing-table thead {
+            background: #2c2c2c;
+            color: #f8f8f8;
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 12px 14px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .pricing-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .pricing-table .amount {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .pricing-table .tax-row {
+            background: #f6f4e8;
+        }
+
+        .pricing-table .total-row {
+            background: #f1efe6;
+        }
+
+        .pricing-table .total-row td {
+            font-weight: 700;
+        }
+
+        .pricing-table .optional-row {
+            background: #fcfbef;
+            font-style: italic;
+        }
+
+        .phase-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .phase-table thead {
+            background: #f1efe6;
+            color: #2c2c2c;
+        }
+
+        .phase-table th,
+        .phase-table td {
+            padding: 12px 14px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .phase-table tbody tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .phase-table .amount {
+            white-space: nowrap;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .payment-flex {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+
+        .payment-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 14px 16px;
+            background: #fafafa;
+        }
+
+        .payment-card h4 {
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .payment-card .amount {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-top: 8px;
+        }
+
+        .terms-list {
+            list-style: disc;
+            padding-left: 20px;
+            font-size: 0.88em;
+            color: #444;
+        }
+
+        .terms-list li {
+            margin-bottom: 6px;
+        }
+
+        .signature-section {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 2px solid #b8860b;
+        }
+
+        .signature-flex {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
+        }
+
+        .signature-block {
+            border: 1px dashed #b8860b;
+            border-radius: 6px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .signature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .signature-block h4 {
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        .signature-line {
+            width: 100%;
+            border-bottom: 1px solid #b8860b;
+            height: 28px;
+        }
+
+        .signature-label {
+            font-size: 0.82em;
+            color: #555;
+        }
+
+        .footer {
+            background: #2c2c2c;
+            color: #f8f8f8;
+            text-align: center;
+            padding: 20px 30px;
+            font-size: 0.85em;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: #b8860b;
+            margin: 12px auto;
+            width: 60%;
+        }
+
+        .print-button {
+            background: #2c2c2c;
+            color: #f8f8f8;
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.95em;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .print-button:hover {
+            background: #b8860b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="letterhead">
+            <div class="header-flex">
+                <div>
+                    <div class="company-name">KMJK</div>
+                    <div class="owner-name">Josue Lopez</div>
+                    <div class="owner-title">Owner &amp; Sales Associate</div>
+                </div>
+                <div class="contact-compact">
+                    <div>1301 Frances St, Jensen Beach, FL 34957</div>
+                    <div>Office: 650-501-7659</div>
+                    <div>Email: Chris@TheEliteServiceHub.com</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-header">
+            <div class="doc-title">Project Estimate</div>
+            <div class="estimate-info">
+                <div class="estimate-number">KMJK-2025-1012</div>
+                <div>Date: October 9, 2025</div>
+                <div>Valid for 30 days</div>
+            </div>
+        </div>
+
+        <div class="client-bar">
+            <div>
+                <strong>CLIENT:</strong> Chase McCullon<br>
+                chase.mccullon@nordstrom.com<br>
+                Mobile: (786) 644-9499
+            </div>
+            <div>
+                <strong>PROJECT LOCATION:</strong> Nordstrom Store<br>
+                3111 PGA Blvd, Palm Beach Gardens, FL
+            </div>
+        </div>
+
+            <div class="content">
+            <div class="project-intro">
+                <h3>Project Overview</h3>
+                <p>
+                    Complete interior and exterior rehabilitation of the client’s mobile home, including 
+                    creation of a third bedroom and bathroom, full flooring replacement, structural panel 
+                    upgrades, and finish improvements throughout. Work also includes exterior cleaning and 
+                    roof coating to prepare the residence for market-ready presentation. AC equipment is to 
+                    be supplied by the client and is outside of this scope. The effort is organized into a 
+                    four-phase delivery plan so progress draws align with tangible milestone completions.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Scope of Work</h2>
+                <ul class="work-list">
+                    <li><strong>Layout & Framing:</strong> Build out third bedroom and bathroom, expand small room footprint, repair or replace interior wall panels as needed.</li>
+                    <li><strong>Flooring & Trim:</strong> Remove existing floor coverings, install new subfloor repairs where required, lay new flooring throughout, and install new baseboards.</li>
+                    <li><strong>Kitchen Assembly:</strong> Reconfigure kitchen layout, assemble cabinetry and finishes, and install a compact island with client-approved footprint.</li>
+                    <li><strong>Bathroom Upgrade:</strong> Replace toilet, convert tub to standing shower with updated surround, ensure plumbing tie-ins and fixture alignment.</li>
+                    <li><strong>Exterior Cleaning:</strong> Power wash roof and exterior surfaces, apply protective roof coating, and wash/pain interior surfaces as specified.</li>
+                    <li><strong>Finishing & Cleanup:</strong> Patch, paint, and finish walls; remove debris daily; deliver final cleaning for client walk-through.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Investment Breakdown</h2>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 24%;">Description</th>
+                            <th>Details</th>
+                            <th style="width: 18%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Layout &amp; Framing Adjustments</strong></td>
+                            <td>Third bedroom and bath framing, structural panel replacement, doorway reconfiguration, framing labor.</td>
+                            <td class="amount">$3,364.49</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bathroom Conversion &amp; Plumbing</strong></td>
+                            <td>New standing shower install, toilet replacement, plumbing tie-ins, moisture barrier, fixture setting.</td>
+                            <td class="amount">$2,990.65</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flooring &amp; Trim Installation</strong></td>
+                            <td>Demolition, floor prep, full-home flooring install, baseboards, transitions, minor leveling.</td>
+                            <td class="amount">$2,803.74</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kitchen Build-Out</strong></td>
+                            <td>Cabinet assembly, island installation, layout adjustments, appliance positioning, finish carpentry.</td>
+                            <td class="amount">$2,616.82</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exterior Cleaning &amp; Coating</strong></td>
+                            <td>Power wash roof and siding, apply roof coating, wash and paint interior surfaces, debris removal.</td>
+                            <td class="amount">$2,242.99</td>
+                        </tr>
+                        <tr class="tax-row">
+                            <td colspan="2">Florida Sales Tax (7%)</td>
+                            <td class="amount">$981.31</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2">TOTAL PROJECT INVESTMENT (Tax Included)</td>
+                            <td class="amount">$15,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Phase Milestones &amp; Draw Schedule</h2>
+                <p style="font-size: 0.86em; color: #555; margin-bottom: 10px;">
+                    Work will be delivered in four clearly defined construction phases following an initial mobilization deposit. 
+                    Each 20% draw totals <strong>$3,000.00</strong>, aligning billing with key project checkpoints to keep cash flow predictable and transparent.
+                </p>
+                <table class="phase-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 18%;">Milestone</th>
+                            <th>Scope Highlights</th>
+                            <th style="width: 22%;">Invoice Trigger</th>
+                            <th style="width: 15%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mobilization Deposit</strong></td>
+                            <td>Contract execution, schedule locking, material procurement, and permit coordination.</td>
+                            <td>Due at acceptance</td>
+                            <td class="amount">$3,000.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 1</strong><br><span style="font-size: 0.8em; color: #666;">Layout &amp; Framing</span></td>
+                            <td>Third bedroom and bath framing, structural panel replacement, doorway reconfiguration, and wall prep.</td>
+                            <td>Upon framing inspection sign-off</td>
+                            <td class="amount">$3,000.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 2</strong><br><span style="font-size: 0.8em; color: #666;">Bathroom Conversion</span></td>
+                            <td>Standing shower conversion, toilet replacement, plumbing tie-ins, waterproofing, and fixture install.</td>
+                            <td>Completion of rough &amp; finish plumbing</td>
+                            <td class="amount">$3,000.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 3</strong><br><span style="font-size: 0.8em; color: #666;">Flooring &amp; Kitchen</span></td>
+                            <td>Full-home flooring install, baseboards, kitchen assembly with island set, and finish carpentry.</td>
+                            <td>Walkthrough of interior finishes</td>
+                            <td class="amount">$3,000.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 4</strong><br><span style="font-size: 0.8em; color: #666;">Exterior Cleaning &amp; Coating</span></td>
+                            <td>Power washing, roof coating, exterior cleanup, and final site presentation.</td>
+                            <td>Final punch list &amp; turnover</td>
+                            <td class="amount">$3,000.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Payment Schedule</h2>
+                <div class="payment-flex">
+                    <div class="payment-card">
+                        <h4>Mobilization Deposit (20%)</h4>
+                        <p>Due at agreement signing to secure calendar, order materials, and mobilize crews.</p>
+                        <div class="amount">$3,000.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 1 Draw (20%)</h4>
+                        <p>Released once structural layout adjustments and framing inspections are completed.</p>
+                        <div class="amount">$3,000.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 2 Draw (20%)</h4>
+                        <p>Issued after bathroom conversion and plumbing upgrades pass quality review.</p>
+                        <div class="amount">$3,000.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 3 Draw (20%)</h4>
+                        <p>Due upon acceptance of flooring installation and kitchen assembly finishes.</p>
+                        <div class="amount">$3,000.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>Phase 4 / Final (20%)</h4>
+                        <p>Collected after exterior cleaning, roof coating, and final punch list sign-off.</p>
+                        <div class="amount">$3,000.00</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.82em; color: #555; margin-top: 10px;">Each invoice equates to <strong>$3,000.00</strong>; all five draws total the $15,000 project investment inclusive of Florida sales tax.</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Terms &amp; Conditions</h2>
+                <ul class="terms-list">
+                    <li>Estimate valid for 30 days from issue date; work begins with signed approval and deposit.</li>
+                    <li>Client supplies all AC equipment; KMJK labor excludes HVAC installation.</li>
+                    <li>Any scope revisions or unforeseen conditions will be documented and priced via change order.</li>
+                    <li>Client responsible for permits, HOA approvals, and utility coordination unless otherwise arranged.</li>
+                    <li>KMJK is licensed and insured; safety protocols and site protection maintained throughout project.</li>
+                    <li>Progress billing follows five equal 20% draws tied to the milestone schedule above.</li>
+                    <li>Final draw is due within three business days of Phase 4 acceptance and punch list clearance.</li>
+                </ul>
+            </div>
+
+            <div class="signature-section">
+                <p style="font-weight: 600; text-align: center; margin-bottom: 12px;">
+                    By signing below, you authorize KMJK to proceed with the work outlined in this estimate.
+                </p>
+                <div class="signature-flex">
+                    <div class="signature-block">
+                        <div class="signature-header">
+                            <h4>KMJK Authorization</h4>
+                            <span class="signature-label">Signature</span>
+                        </div>
+                        <div class="signature-line"></div>
+                        <div class="signature-label">Print: Josue Lopez</div>
+                        <div class="signature-label">Title: Authorized Representative</div>
+                        <div class="signature-label">Date: ____________________</div>
+                    </div>
+                    <div class="signature-block">
+                        <div class="signature-header">
+                            <h4>Client Acceptance</h4>
+                            <span class="signature-label">Signature</span>
+                        </div>
+                        <div class="signature-line"></div>
+                        <div class="signature-label">Print: Chase McCullon</div>
+                        <div class="signature-label">Title: Client</div>
+                        <div class="signature-label">Date: ____________________</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px; padding: 14px; background: #f8f8f8; border-radius: 6px; text-align: center; border: 1px solid #e0e0e0;">
+                <p style="font-weight: 600; color: #b8860b; margin-bottom: 6px;">Thank You for Partnering with KMJK</p>
+                <p style="font-size: 0.86em; color: #555;">
+                    We appreciate the opportunity to deliver this rehab for you and your buyers. Contact us anytime at 650-501-7659 for questions or adjustments.
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div><strong>KMJK Home Improvement</strong></div>
+            <div class="footer-divider"></div>
+            <div>1301 Frances St, Jensen Beach, FL 34957 &nbsp;|&nbsp; 650-501-7659 &nbsp;|&nbsp; Chris@TheEliteServiceHub.com</div>
+            <div style="margin-top: 8px; font-style: italic; color: #b8860b;">Building Excellence, One Project at a Time</div>
+        </div>
+    </div>
+
+    <div class="no-print" style="text-align: center; margin-top: 20px;">
+        <button class="print-button" onclick="window.print()">Print Estimate</button>
+    </div>
+</body>
+</html>

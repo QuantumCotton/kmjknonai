@@ -1,0 +1,15 @@
+0000000000000000000000000000000000000000 822d56378c701cd956c7d4ed927f89a1979215f0 WindSurf <myproductiveemail@gmail.com> 1759524794 -0700	branch: Created from HEAD
+822d56378c701cd956c7d4ed927f89a1979215f0 e0d7158d96e1ae29a7ec532cabe131089e83c94f WindSurf <myproductiveemail@gmail.com> 1759525276 -0700	commit: Add high-conversion landing pages for bathroom, kitchen, and handyman services with Lexi's bubbly energy!
+e0d7158d96e1ae29a7ec532cabe131089e83c94f 36332ebdee0d1f895770d195498ce0e2ae52a905 WindSurf <myproductiveemail@gmail.com> 1759531199 -0700	cherry-pick: Add handyman landing page with transparent pricing section
+36332ebdee0d1f895770d195498ce0e2ae52a905 2e51ef9d61df70c35486c661aafce145f8081fd8 WindSurf <myproductiveemail@gmail.com> 1759533574 -0700	commit: Add improved landing pages with popup forms and image upload for all services
+2e51ef9d61df70c35486c661aafce145f8081fd8 10fd3367e2b3f36415f30be8a75917f60c2dca90 WindSurf <myproductiveemail@gmail.com> 1759544346 -0700	commit: upgate
+10fd3367e2b3f36415f30be8a75917f60c2dca90 ebad1b9082c5df7d2e87653c0ee0cf737dc43657 WindSurf <myproductiveemail@gmail.com> 1759544426 -0700	commit: Add TV Mounting landing page with package-based upsell strategy
+ebad1b9082c5df7d2e87653c0ee0cf737dc43657 2e358e7dc77be3121658c138e69d0a66a02deeb7 WindSurf <myproductiveemail@gmail.com> 1759557725 -0700	commit: Update TV Mounting page location references to South Florida/Treasure Coast
+2e358e7dc77be3121658c138e69d0a66a02deeb7 285e7225b5060d5197bc4af219f729da5619bf87 WindSurf <myproductiveemail@gmail.com> 1759595110 -0700	commit: landing pages
+285e7225b5060d5197bc4af219f729da5619bf87 2c345ab5c10a9d12f206de123bf05e86e6a1d5d6 WindSurf <myproductiveemail@gmail.com> 1759595168 -0700	commit: Update TV Mounting gallery with varied images and realistic captions
+2c345ab5c10a9d12f206de123bf05e86e6a1d5d6 90164cce8cfbe2e7071e4a33773ce9364a755274 WindSurf <myproductiveemail@gmail.com> 1759595193 -0700	commit: Update TV Mounting gallery with diverse images
+90164cce8cfbe2e7071e4a33773ce9364a755274 455353c0e509e3c587e60acbda413b503788fd74 WindSurf <myproductiveemail@gmail.com> 1759595472 -0700	commit: Add package tracking to TV Mounting form submissions
+455353c0e509e3c587e60acbda413b503788fd74 7676a0cde5c4aaec35933c31bb0ce1c212d226d9 WindSurf <myproductiveemail@gmail.com> 1759596090 -0700	commit: Add tracking to Bathroom landing page forms
+7676a0cde5c4aaec35933c31bb0ce1c212d226d9 d6852b383dcb89bb5c5a55063e38597f5e2d5c9b WindSurf <myproductiveemail@gmail.com> 1759597779 -0700	commit: Add GA4 tracking and form tracking to all landing pages
+d6852b383dcb89bb5c5a55063e38597f5e2d5c9b 5ea6dd48cf8dae55218aa339ecc9440ffc097ef7 WindSurf <myproductiveemail@gmail.com> 1759600649 -0700	commit (merge): Merge main into development - sync landing page optimizations
+5ea6dd48cf8dae55218aa339ecc9440ffc097ef7 27b790e0054bf5b6715d57379d0a6137ba42abca WindSurf <myproductiveemail@gmail.com> 1759601842 -0700	commit: Add GA4 conversion tracking to all landing page forms

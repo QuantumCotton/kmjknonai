@@ -1,0 +1,181 @@
+0000000000000000000000000000000000000000 476510965cb1e4c8ec6b039df6259250650fb98a WindSurf <myproductiveemail@gmail.com> 1759521708 -0700	clone: from https://github.com/QuantumCotton/kmjknonai.git
+476510965cb1e4c8ec6b039df6259250650fb98a 822d56378c701cd956c7d4ed927f89a1979215f0 WindSurf <myproductiveemail@gmail.com> 1759522804 -0700	commit: Update hero button: change 'Get Started' to 'Schedule Consultation' with improved contrast
+822d56378c701cd956c7d4ed927f89a1979215f0 c926aebd8bd5491c55035c1d11796266849c0ae2 WindSurf <myproductiveemail@gmail.com> 1759526710 -0700	commit: landing pages
+c926aebd8bd5491c55035c1d11796266849c0ae2 9927063ba0db0e97cb047f65ee65cd516dc171dc WindSurf <myproductiveemail@gmail.com> 1759530067 -0700	commit: landing page updates
+9927063ba0db0e97cb047f65ee65cd516dc171dc 2ea109fead5fb78652eac5ba58a70530829526ed WindSurf <myproductiveemail@gmail.com> 1759531158 -0700	commit: Add handyman landing page with transparent pricing section
+2ea109fead5fb78652eac5ba58a70530829526ed f1f15b351da75c66d43730f6ebaa92cb2874198a WindSurf <myproductiveemail@gmail.com> 1759531243 -0700	merge development: Merge made by the 'ort' strategy.
+f1f15b351da75c66d43730f6ebaa92cb2874198a cdffc3ebb4c2847599eb0668d62f1449bdc083d8 WindSurf <myproductiveemail@gmail.com> 1759531437 -0700	commit: 1
+cdffc3ebb4c2847599eb0668d62f1449bdc083d8 31747c72e99f6273e5cd70c00304311f0993431e WindSurf <myproductiveemail@gmail.com> 1759531521 -0700	commit: 2
+31747c72e99f6273e5cd70c00304311f0993431e c6e940c97e87d53418c3c8b1b06481fbb37f6b75 WindSurf <myproductiveemail@gmail.com> 1759531928 -0700	commit: Update BathroomLanding.jsx
+c6e940c97e87d53418c3c8b1b06481fbb37f6b75 e66e7bc903416c49ff24babda88f6963fa46a834 WindSurf <myproductiveemail@gmail.com> 1759531987 -0700	commit: Add _redirects file for Netlify SPA routing
+e66e7bc903416c49ff24babda88f6963fa46a834 1616c7b3ecd864eef1360e8e2a5c75e677688222 WindSurf <myproductiveemail@gmail.com> 1759532268 -0700	commit: Add improved handyman landing page with contact form modal, image upload, and hero background
+1616c7b3ecd864eef1360e8e2a5c75e677688222 81af2a207af3c4fdc937d36d73b4a972a336aadd WindSurf <myproductiveemail@gmail.com> 1759533099 -0700	commit: Remove 3D kitchen design references from kitchen landing page
+81af2a207af3c4fdc937d36d73b4a972a336aadd 1955cab28ed490b532e2988cd8003ceacdbe6910 WindSurf <myproductiveemail@gmail.com> 1759533664 -0700	commit (merge): Merge development: Add improved landing pages with popup forms for all services
+1955cab28ed490b532e2988cd8003ceacdbe6910 008a8f31d6300f815b7dc2a5c7da2e293ffa6b7f WindSurf <myproductiveemail@gmail.com> 1759544636 -0700	commit: Add TV Mounting landing page with conversion-optimized packages
+008a8f31d6300f815b7dc2a5c7da2e293ffa6b7f 7a9e49244e5db6dabae9338166c75a3122e8ed3e WindSurf <myproductiveemail@gmail.com> 1759595213 -0700	commit: Update TV Mounting gallery with varied images
+7a9e49244e5db6dabae9338166c75a3122e8ed3e ae2920d178842e2f91141d43a67f125c16fc5fbe WindSurf <myproductiveemail@gmail.com> 1759595483 -0700	commit: Add package tracking to TV Mounting form - you'll now see which package customers select
+ae2920d178842e2f91141d43a67f125c16fc5fbe 73f2529eaf56aeaeb5c60dc756d6bba1ee846a15 WindSurf <myproductiveemail@gmail.com> 1759596109 -0700	commit: Add form tracking to Bathroom landing page
+73f2529eaf56aeaeb5c60dc756d6bba1ee846a15 6e5cfa53b22a491276b8c4915609c1808706decd WindSurf <myproductiveemail@gmail.com> 1759597827 -0700	commit: Add GA4 tracking and form tracking to all landing pages
+6e5cfa53b22a491276b8c4915609c1808706decd a36d0b48da08b3bf2de4cb47c61322e1dc7abba7 WindSurf <myproductiveemail@gmail.com> 1759600596 -0700	commit: Optimize landing pages for Marcus strategy: Add minimum to Handyman page, fix TV Mounting location to South Florida, create new Bathroom Repairs landing page
+a36d0b48da08b3bf2de4cb47c61322e1dc7abba7 27b790e0054bf5b6715d57379d0a6137ba42abca WindSurf <myproductiveemail@gmail.com> 1759601869 -0700	merge development: Fast-forward
+27b790e0054bf5b6715d57379d0a6137ba42abca 17f9b546f7b92d93d895fcc6dc3f38aa8f324274 WindSurf <myproductiveemail@gmail.com> 1759602245 -0700	commit: Fix onClick arrow syntax in BathroomLandingImproved
+17f9b546f7b92d93d895fcc6dc3f38aa8f324274 a9c091d5d41dbac928e10c04042ec8e3369bf7c8 WindSurf <myproductiveemail@gmail.com> 1759604354 -0700	commit: Fix TV mounting page responsive layout - equal height cards
+a9c091d5d41dbac928e10c04042ec8e3369bf7c8 9cc94542b1164d8fb0e691e9862392cc317c9afa WindSurf <myproductiveemail@gmail.com> 1759611196 -0700	commit: fix tv mounting
+9cc94542b1164d8fb0e691e9862392cc317c9afa 18e72bc6c9a4383064e0a994420be967fac1d193 WindSurf <myproductiveemail@gmail.com> 1759611270 -0700	commit: 5
+18e72bc6c9a4383064e0a994420be967fac1d193 81e40ae2481576565735051ecd2f6ac4df1f086d WindSurf <myproductiveemail@gmail.com> 1759618946 -0700	commit: 4
+81e40ae2481576565735051ecd2f6ac4df1f086d 4f40a131d97bd7e1fd86b64f6f08995ce61d6beb WindSurf <myproductiveemail@gmail.com> 1759620685 -0700	commit: Update KitchenRenovationElite.jsx
+4f40a131d97bd7e1fd86b64f6f08995ce61d6beb bfcc923b8dd6e6f496b2c7877dffdf5fe882db90 WindSurf <myproductiveemail@gmail.com> 1759622208 -0700	commit: Create kitchen_investment_calculator.html
+bfcc923b8dd6e6f496b2c7877dffdf5fe882db90 cc2a1b023c7e03c58f807e6fb1d888c325391a61 WindSurf <myproductiveemail@gmail.com> 1759622633 -0700	commit: Update kitchen_investment_calculator.html
+cc2a1b023c7e03c58f807e6fb1d888c325391a61 8a334febc63285b0f877890c44c165b3f61f9a2e WindSurf <myproductiveemail@gmail.com> 1759623364 -0700	commit: 76
+8a334febc63285b0f877890c44c165b3f61f9a2e c559723bf21921009d3f457e0171379ade05bf98 WindSurf <myproductiveemail@gmail.com> 1759625465 -0700	commit: Update kitchen_investment_calculator.html
+c559723bf21921009d3f457e0171379ade05bf98 38ba07d66cbcb0c981933dccb956f6e268ef43fc WindSurf <myproductiveemail@gmail.com> 1759626559 -0700	commit: 345
+38ba07d66cbcb0c981933dccb956f6e268ef43fc e11ba189f6c2e9ca62913a0db78d14ae8319555a WindSurf <myproductiveemail@gmail.com> 1759639412 -0700	commit: Update kitchen_investment_calculator.html
+e11ba189f6c2e9ca62913a0db78d14ae8319555a 8d93c936d8b8ed28c0389d4825db5165b0d9e4d3 WindSurf <myproductiveemail@gmail.com> 1759643855 -0700	commit: service
+8d93c936d8b8ed28c0389d4825db5165b0d9e4d3 079b67901e8a440fa22ee2cacd94aedcc8664668 WindSurf <myproductiveemail@gmail.com> 1759656379 -0700	commit: partnerships online
+079b67901e8a440fa22ee2cacd94aedcc8664668 57e410240615ee6f740dfa43700b8a953a2b871b WindSurf <myproductiveemail@gmail.com> 1759657120 -0700	commit: h
+57e410240615ee6f740dfa43700b8a953a2b871b 27b6224708b4b4aece3ccc6142932ca7308e4797 WindSurf <myproductiveemail@gmail.com> 1759700252 -0700	commit: update
+27b6224708b4b4aece3ccc6142932ca7308e4797 13e9a909d5707503e5d87aab44bf7a91ab8d277f WindSurf <myproductiveemail@gmail.com> 1759708593 -0700	commit: 4
+13e9a909d5707503e5d87aab44bf7a91ab8d277f 778a0c5d27da51fe191a8db8dc7b01dd6a83af5a WindSurf <myproductiveemail@gmail.com> 1759961158 -0700	commit: est
+778a0c5d27da51fe191a8db8dc7b01dd6a83af5a b80eda6bbb8ff12d5ab0fb1df3327b4867b40db0 WindSurf <myproductiveemail@gmail.com> 1759961793 -0700	commit: Create kmjk_estimate_chase_mccullon_chairs.html
+b80eda6bbb8ff12d5ab0fb1df3327b4867b40db0 8e8cef422e8655b9d75ae248ad0d03dbf783a294 WindSurf <myproductiveemail@gmail.com> 1760068928 -0700	commit: b
+8e8cef422e8655b9d75ae248ad0d03dbf783a294 e9bc5d99e7da2908bc4fbec6ae612a34bea5c639 WindSurf <myproductiveemail@gmail.com> 1760310597 -0700	commit: 3
+e9bc5d99e7da2908bc4fbec6ae612a34bea5c639 69ec462d96cf6074571c8298a5953d184e248cbe WindSurf <myproductiveemail@gmail.com> 1760311163 -0700	commit: Update kmjk_estimate_chase_mccullon_rehab.html
+69ec462d96cf6074571c8298a5953d184e248cbe e5db261eb468672296db6a4c48c83528e942d0a2 WindSurf <myproductiveemail@gmail.com> 1760315253 -0700	commit: 1
+e5db261eb468672296db6a4c48c83528e942d0a2 30ca695008fde78bf9c2edc9bea6d4a5845f20d4 WindSurf <myproductiveemail@gmail.com> 1760321749 -0700	commit: Update kmjk_estimate_chase_mccullon_rehab.html
+30ca695008fde78bf9c2edc9bea6d4a5845f20d4 f4a308fe8210ebb234483bfb3d7aeb34b43f4521 WindSurf <myproductiveemail@gmail.com> 1760322176 -0700	commit: Update kmjk_estimate_chase_mccullon_rehab.html
+f4a308fe8210ebb234483bfb3d7aeb34b43f4521 7336f99b61ad5b796f0a98c37e21117d7f6253cd WindSurf <myproductiveemail@gmail.com> 1760322443 -0700	commit: Update kmjk_estimate_chase_mccullon_rehab.html
+7336f99b61ad5b796f0a98c37e21117d7f6253cd d7bece1566b3fc90f79d95f8a93bc28b2d8cfb5c WindSurf <myproductiveemail@gmail.com> 1760324080 -0700	commit: Update kmjk_estimate_chase_mccullon_rehab.html
+d7bece1566b3fc90f79d95f8a93bc28b2d8cfb5c 102fb1069f109e8c1d7d437d34bd29175e86fa90 WindSurf <myproductiveemail@gmail.com> 1760818804 -0700	commit: big push
+102fb1069f109e8c1d7d437d34bd29175e86fa90 d7bece1566b3fc90f79d95f8a93bc28b2d8cfb5c WindSurf <myproductiveemail@gmail.com> 1760818977 -0700	reset: moving to d7bece1566b3fc90f79d95f8a93bc28b2d8cfb5c
+d7bece1566b3fc90f79d95f8a93bc28b2d8cfb5c dc6ca390ca2be19b60c274d2c6d117d0a0471c7b WindSurf <myproductiveemail@gmail.com> 1760820732 -0700	commit: update
+dc6ca390ca2be19b60c274d2c6d117d0a0471c7b c9e54c9b4cde02c37e020a2401da1f2a6ae53619 WindSurf <myproductiveemail@gmail.com> 1760821361 -0700	commit: gf
+c9e54c9b4cde02c37e020a2401da1f2a6ae53619 4fb4f29d9566f3593ccfd039d5aa822d1d7b8091 WindSurf <myproductiveemail@gmail.com> 1760846169 -0700	commit: Update App.jsx
+4fb4f29d9566f3593ccfd039d5aa822d1d7b8091 a71ee1c124531619adad146637142376cb94f4da WindSurf <myproductiveemail@gmail.com> 1761080975 -0700	commit: estimate
+a71ee1c124531619adad146637142376cb94f4da 2e39fb90b0604ba41552e2947f848d1253a992d8 WindSurf <myproductiveemail@gmail.com> 1761082051 -0700	commit: Update kmjk_estimate_chase_mccullon.html
+2e39fb90b0604ba41552e2947f848d1253a992d8 e12b431814d63f3903c25030de830510d44a7eca WindSurf <myproductiveemail@gmail.com> 1761082578 -0700	commit: Update kmjk_estimate_chase_mccullon.html
+e12b431814d63f3903c25030de830510d44a7eca 695ea4844732e4f01459dd6dc728b96b11ebe6e0 WindSurf <myproductiveemail@gmail.com> 1761083895 -0700	commit: Update kmjk_estimate_chase_mccullon.html
+695ea4844732e4f01459dd6dc728b96b11ebe6e0 ccec59eaa17e01259a0a5a90b3c26961ce4f9c22 WindSurf <myproductiveemail@gmail.com> 1761165181 -0700	commit: work orders
+ccec59eaa17e01259a0a5a90b3c26961ce4f9c22 f0b72d89360c398d5a78f894787ef2ea8bb4d641 WindSurf <myproductiveemail@gmail.com> 1761165901 -0700	commit: d
+f0b72d89360c398d5a78f894787ef2ea8bb4d641 dabcfc01f4bce793e02c59ed31edab6dbe6c1fc1 WindSurf <myproductiveemail@gmail.com> 1761166210 -0700	commit: sd
+dabcfc01f4bce793e02c59ed31edab6dbe6c1fc1 0be50225a2a11869d0024ae072fac715da1b7dbc WindSurf <myproductiveemail@gmail.com> 1761167582 -0700	commit: d
+0be50225a2a11869d0024ae072fac715da1b7dbc 64b3a47bb0758aff217628af3862abbb03851bc0 WindSurf <myproductiveemail@gmail.com> 1761177580 -0700	commit: cxv
+64b3a47bb0758aff217628af3862abbb03851bc0 7e540d3a9f40825eb94106eabd50f2374eb9f4e1 WindSurf <myproductiveemail@gmail.com> 1761235659 -0700	commit: Update kmjk_estimate_nordstrom_carpet.html
+7e540d3a9f40825eb94106eabd50f2374eb9f4e1 d99c9ea2d5bf3a906b8103ffa29f2669600a9dd4 WindSurf <myproductiveemail@gmail.com> 1761238946 -0700	commit: Create kmjk_estimate_nordstrom_carpet copy.html
+d99c9ea2d5bf3a906b8103ffa29f2669600a9dd4 c2de6a993091258bb38904059d0e501609fa1215 WindSurf <myproductiveemail@gmail.com> 1761250486 -0700	commit: dashbaord
+c2de6a993091258bb38904059d0e501609fa1215 4d52f37ec20d5cfc96a3da7fbf00def729f36f12 WindSurf <myproductiveemail@gmail.com> 1761254171 -0700	commit: d
+4d52f37ec20d5cfc96a3da7fbf00def729f36f12 ccf8138464b509ba1bd0e380415b30e99eec1598 WindSurf <myproductiveemail@gmail.com> 1761259193 -0700	commit: c
+ccf8138464b509ba1bd0e380415b30e99eec1598 67a41863286508cacf8a4812cae7286ffe7d4da9 WindSurf <myproductiveemail@gmail.com> 1761260967 -0700	commit: sdf
+67a41863286508cacf8a4812cae7286ffe7d4da9 939d91c79241cad3ad8b9cf1b73dd19761b2700f WindSurf <myproductiveemail@gmail.com> 1761261866 -0700	commit: wer
+939d91c79241cad3ad8b9cf1b73dd19761b2700f 64de1c9893f630ec2b669c8f9741fe8e4973c81b WindSurf <myproductiveemail@gmail.com> 1761262005 -0700	commit: Update BathroomRenovationPages.jsx
+64de1c9893f630ec2b669c8f9741fe8e4973c81b d7ce6edef17a96c9fd829a0b095637e8aabd7d8f WindSurf <myproductiveemail@gmail.com> 1761264595 -0700	commit: fdg
+d7ce6edef17a96c9fd829a0b095637e8aabd7d8f 0447735198e418e1035473334fb4aa635f8a9309 WindSurf <myproductiveemail@gmail.com> 1761265954 -0700	commit: fdg
+0447735198e418e1035473334fb4aa635f8a9309 b4a56a553112b3a2e2f9079b5eaab3ea508a64d6 WindSurf <myproductiveemail@gmail.com> 1761343684 -0700	commit: Update pnpm-lock.yaml
+b4a56a553112b3a2e2f9079b5eaab3ea508a64d6 3e50b670d48473ef993b1a3833a1e4edfb5f2af9 WindSurf <myproductiveemail@gmail.com> 1761355011 -0700	commit: asdf
+3e50b670d48473ef993b1a3833a1e4edfb5f2af9 f59dfc64db8d31983552833d23e68f8de9daac69 WindSurf <myproductiveemail@gmail.com> 1761355800 -0700	commit: Update TreasureCoastLandingTemplate.jsx
+f59dfc64db8d31983552833d23e68f8de9daac69 f0c797ab4fd25c3fcd191365139b4e0134a8d662 WindSurf <myproductiveemail@gmail.com> 1761356469 -0700	commit: d
+f0c797ab4fd25c3fcd191365139b4e0134a8d662 8001b800082b85ea7292f4fad37184b72cf1a3c3 WindSurf <myproductiveemail@gmail.com> 1761356704 -0700	commit: sda
+8001b800082b85ea7292f4fad37184b72cf1a3c3 dd94132e2aa7baca034d9d62361c29360bfaaee1 WindSurf <myproductiveemail@gmail.com> 1761366763 -0700	commit: asdf
+dd94132e2aa7baca034d9d62361c29360bfaaee1 7fc2cd4476589d70ea49a80f431d6a59c2fc4951 WindSurf <myproductiveemail@gmail.com> 1761374979 -0700	commit: sd
+7fc2cd4476589d70ea49a80f431d6a59c2fc4951 bc063c332dc210ec7765c5ed2cd0b9551ffd85e8 WindSurf <myproductiveemail@gmail.com> 1761376246 -0700	commit: ds
+bc063c332dc210ec7765c5ed2cd0b9551ffd85e8 dbd762d7b83b69045dba5c011217e4a37ad4fb98 WindSurf <myproductiveemail@gmail.com> 1761377853 -0700	commit: ret
+dbd762d7b83b69045dba5c011217e4a37ad4fb98 65b04137821d83afca126105b8d2be6ce15fe64c WindSurf <myproductiveemail@gmail.com> 1761423521 -0700	commit: sd
+65b04137821d83afca126105b8d2be6ce15fe64c ea02fb2536e534be69023da33e691e742817dc75 WindSurf <myproductiveemail@gmail.com> 1761424623 -0700	commit: Update kmjk-openai.js
+ea02fb2536e534be69023da33e691e742817dc75 f0b1e211a704cf162d40cd80fb50b2641f280f2b WindSurf <myproductiveemail@gmail.com> 1761427405 -0700	commit: d
+f0b1e211a704cf162d40cd80fb50b2641f280f2b 613bd9c69084ad39fce855926c1e51537cab0990 WindSurf <myproductiveemail@gmail.com> 1761428605 -0700	commit: Update kmjk-openai.js
+613bd9c69084ad39fce855926c1e51537cab0990 924932e4124f486584f1a7fb89537de5a22d115f WindSurf <myproductiveemail@gmail.com> 1761429042 -0700	commit: Update kmjk-openai.js
+924932e4124f486584f1a7fb89537de5a22d115f b86a068e2d12c22dd524542f4eae27d402d0b05e WindSurf <myproductiveemail@gmail.com> 1761429615 -0700	commit: PROOF THIS IS WORKING
+b86a068e2d12c22dd524542f4eae27d402d0b05e 758698be05e1b9e18bfc8f185b0e502aff8c73b4 WindSurf <myproductiveemail@gmail.com> 1761430658 -0700	commit: jhg
+758698be05e1b9e18bfc8f185b0e502aff8c73b4 6aa3369dfc8634397c3a72ca47bcdfee27a56fac WindSurf <myproductiveemail@gmail.com> 1761587886 -0700	commit: chast
+6aa3369dfc8634397c3a72ca47bcdfee27a56fac 445e21a48b07d0a2179cfe7ec39c8adcb868ea4f WindSurf <myproductiveemail@gmail.com> 1761590181 -0700	commit: s
+445e21a48b07d0a2179cfe7ec39c8adcb868ea4f ef42362a34fd9ae46fd1c8041b265456515bf311 WindSurf <myproductiveemail@gmail.com> 1761591516 -0700	commit: 65
+ef42362a34fd9ae46fd1c8041b265456515bf311 d1124f497be097e1f5936c73b3502f58fd54995c WindSurf <myproductiveemail@gmail.com> 1761610911 -0700	commit: d
+d1124f497be097e1f5936c73b3502f58fd54995c 787554e565625ec0a896451e768264b424f337fc WindSurf <myproductiveemail@gmail.com> 1761848439 -0700	commit: work order updates
+787554e565625ec0a896451e768264b424f337fc 020359ff1f8ae48ce6b541ef9d21521a1346e84e WindSurf <myproductiveemail@gmail.com> 1761849388 -0700	commit: Update kmjk_estimate_nordstrom_carpet copy.html
+020359ff1f8ae48ce6b541ef9d21521a1346e84e 36b54f43bfcc18be1026c9f50a9d916a7b63f7be WindSurf <myproductiveemail@gmail.com> 1761849696 -0700	commit: Update App.jsx
+36b54f43bfcc18be1026c9f50a9d916a7b63f7be bbedc00c9cabc826d2b6faf4ee4be43240c1d46d WindSurf <myproductiveemail@gmail.com> 1761851756 -0700	commit: dw
+bbedc00c9cabc826d2b6faf4ee4be43240c1d46d 283725bd10646f62bc26c04c13c18f445d16d073 WindSurf <myproductiveemail@gmail.com> 1761851788 -0700	commit: Update kmjk_estimate_nordstrom_carpet_additional.html
+283725bd10646f62bc26c04c13c18f445d16d073 5a6572ee18251a0652ca90c6fb3797f570539a2e WindSurf <myproductiveemail@gmail.com> 1761853610 -0700	commit: sdf
+5a6572ee18251a0652ca90c6fb3797f570539a2e e37bb6443b739f9fa07d249c64b0250115b9ee7c WindSurf <myproductiveemail@gmail.com> 1761853732 -0700	commit: Update kmjk_estimate_chase_mccullon_carpet_additional.html
+e37bb6443b739f9fa07d249c64b0250115b9ee7c 1aed6a11875ac5133f785a540bfdf868d17fd13f WindSurf <myproductiveemail@gmail.com> 1761853923 -0700	commit: Update kmjk_estimate_chase_mccullon_carpet_additional.html
+1aed6a11875ac5133f785a540bfdf868d17fd13f 9cd68823dd3362243e92839847bb02b510ac3772 WindSurf <myproductiveemail@gmail.com> 1761855702 -0700	commit: Update kmjk_estimate_chase_mccullon_carpet_additional.html
+9cd68823dd3362243e92839847bb02b510ac3772 951c9809c35962542bee205d297d3145114d2a24 WindSurf <myproductiveemail@gmail.com> 1762033168 -0700	commit: sway and chris update
+951c9809c35962542bee205d297d3145114d2a24 dc157f1fbd9ee2cf798d0fdbf83a9e51bc1719e0 WindSurf <myproductiveemail@gmail.com> 1762038865 -0700	commit: kljhb
+dc157f1fbd9ee2cf798d0fdbf83a9e51bc1719e0 c1fa4c4c8fd7ec292d6d72ded170a427e53a6dbd WindSurf <myproductiveemail@gmail.com> 1762039606 -0700	commit: Update BathroomRemodelSailfishPoint.jsx
+c1fa4c4c8fd7ec292d6d72ded170a427e53a6dbd 833905cf153730f26a362e062b9df4e32dbf6792 WindSurf <myproductiveemail@gmail.com> 1762040370 -0700	commit: jhg
+833905cf153730f26a362e062b9df4e32dbf6792 7aad1c4815d91da847c7cac76349498b5f6658ca WindSurf <myproductiveemail@gmail.com> 1762043720 -0700	commit: asdf
+7aad1c4815d91da847c7cac76349498b5f6658ca 578ce686407f1428021880a6f9d8d9596d7b72b0 WindSurf <myproductiveemail@gmail.com> 1762045115 -0700	commit: Update TreasureCoastLandingTemplate.jsx
+578ce686407f1428021880a6f9d8d9596d7b72b0 01b31084549f0d765d783561defab73d04bdcc57 WindSurf <myproductiveemail@gmail.com> 1762045371 -0700	commit: Update TreasureCoastLandingTemplate.jsx
+01b31084549f0d765d783561defab73d04bdcc57 f551d2d46fa1b728b56c49e33c2e5c8e94c9049d WindSurf <myproductiveemail@gmail.com> 1762046861 -0700	commit: dczg
+f551d2d46fa1b728b56c49e33c2e5c8e94c9049d b69800b1f41ee53a4e8cd82c09718dbb3b18b181 WindSurf <myproductiveemail@gmail.com> 1762047712 -0700	commit: Update TreasureCoastLandingTemplate.jsx
+b69800b1f41ee53a4e8cd82c09718dbb3b18b181 f91e8e748595d4f73152e18712d51edf382d0efe WindSurf <myproductiveemail@gmail.com> 1762047773 -0700	commit: sdftg
+f91e8e748595d4f73152e18712d51edf382d0efe f85ca87883b585ed09228b100f28e65b57eb04d7 WindSurf <myproductiveemail@gmail.com> 1762047817 -0700	commit: sadf
+f85ca87883b585ed09228b100f28e65b57eb04d7 28128e563994a834c770303947d5bcf9f06189e4 WindSurf <myproductiveemail@gmail.com> 1762048031 -0700	commit: asdf
+28128e563994a834c770303947d5bcf9f06189e4 fbc3fd01d016fc290b1e1adc3af8bddd7f49d332 WindSurf <myproductiveemail@gmail.com> 1762048193 -0700	commit: 3ret
+fbc3fd01d016fc290b1e1adc3af8bddd7f49d332 18008190a638bd94e51e38d706d9e60de88f3e0e WindSurf <myproductiveemail@gmail.com> 1762048232 -0700	commit: sdfg
+18008190a638bd94e51e38d706d9e60de88f3e0e b2838f72743e721e8421e70df662ccab5efff7fd WindSurf <myproductiveemail@gmail.com> 1762048275 -0700	commit: sadf
+b2838f72743e721e8421e70df662ccab5efff7fd 535521cac105c4aec497a4e6816b8f92239af4a5 WindSurf <myproductiveemail@gmail.com> 1762048378 -0700	commit: dfg
+535521cac105c4aec497a4e6816b8f92239af4a5 110b14285771e564b5a613ba01e52b761f96bcd5 WindSurf <myproductiveemail@gmail.com> 1762048494 -0700	commit: Update BathroomRemodelSewallsPoint.jsx
+110b14285771e564b5a613ba01e52b761f96bcd5 be231ddd714879e673248efb1f87ca62d915b32b WindSurf <myproductiveemail@gmail.com> 1762048676 -0700	commit: Update BathroomRenovationPages.jsx
+be231ddd714879e673248efb1f87ca62d915b32b 5cd51fc3987e1446bd2a1c4f8e985420955622d8 WindSurf <myproductiveemail@gmail.com> 1762049991 -0700	commit: Update TreasureCoastLandingTemplate.jsx
+5cd51fc3987e1446bd2a1c4f8e985420955622d8 e2370b2b5e0363273c304af3675464bc315d3662 WindSurf <myproductiveemail@gmail.com> 1762050423 -0700	commit: Update CallTeamButtons.jsx
+e2370b2b5e0363273c304af3675464bc315d3662 d6572591d0b637bd3942404c5ca0cf8a6b334419 WindSurf <myproductiveemail@gmail.com> 1762059453 -0700	commit: asd
+d6572591d0b637bd3942404c5ca0cf8a6b334419 7df87b709901af18fddc7fcbe8c3f793d69b182e WindSurf <myproductiveemail@gmail.com> 1762060251 -0700	commit: dsfg
+7df87b709901af18fddc7fcbe8c3f793d69b182e 90182e1743e3a0cc265024f9ae4f51b65147ab20 WindSurf <myproductiveemail@gmail.com> 1762060926 -0700	commit: sd
+90182e1743e3a0cc265024f9ae4f51b65147ab20 ae2f5239bb2d4a69716bd0735ff327f25ffd3f12 WindSurf <myproductiveemail@gmail.com> 1762061008 -0700	commit: Update kmjkChatService.js
+ae2f5239bb2d4a69716bd0735ff327f25ffd3f12 a6976beff5750c5acf46f9e7de12621e25b0b6b4 WindSurf <myproductiveemail@gmail.com> 1762061562 -0700	commit: Update ChatWidget.jsx
+a6976beff5750c5acf46f9e7de12621e25b0b6b4 dba90dab14877c59e5aa92eb556e7f276183ee90 WindSurf <myproductiveemail@gmail.com> 1762061803 -0700	commit: Update kmjkChatService.js
+dba90dab14877c59e5aa92eb556e7f276183ee90 8b1d3ddf33b549ba0f84748b58830fbce3d64986 WindSurf <myproductiveemail@gmail.com> 1762061995 -0700	commit: hgf
+8b1d3ddf33b549ba0f84748b58830fbce3d64986 e7f720c44d5f7baade30e266d6b261b9bdd53077 WindSurf <myproductiveemail@gmail.com> 1762062457 -0700	commit: Update KitchenRenovationPages.jsx
+e7f720c44d5f7baade30e266d6b261b9bdd53077 ec8779acf8d0d7bbcfc5b50bc201f39a1dc0cd34 WindSurf <myproductiveemail@gmail.com> 1762062881 -0700	commit: Update KitchenRenovationPages.jsx
+ec8779acf8d0d7bbcfc5b50bc201f39a1dc0cd34 b03d57a4734d9d42b93f35b48348ab128204309b WindSurf <myproductiveemail@gmail.com> 1762106382 -0800	commit: Update App.jsx
+b03d57a4734d9d42b93f35b48348ab128204309b 50b208290e7fd5d0a1f94cbc6c060a91d39c6aa6 WindSurf <myproductiveemail@gmail.com> 1762536543 -0800	commit: ASDF
+50b208290e7fd5d0a1f94cbc6c060a91d39c6aa6 7c1d69a4532ebaa81ef32b9285e479fcc623f033 WindSurf <myproductiveemail@gmail.com> 1762536711 -0800	commit: Update KMJK ESTIMATE FRANK ALSAYED PAINT.html
+7c1d69a4532ebaa81ef32b9285e479fcc623f033 3c4beffcc0dafc17aacf075e047195b1f521cc32 WindSurf <myproductiveemail@gmail.com> 1762536791 -0800	commit: Update KMJK ESTIMATE FRANK ALSAYED PAINT.html
+3c4beffcc0dafc17aacf075e047195b1f521cc32 5e06756b12e7a81fd8da0f3be4e8deb99835dda9 WindSurf <myproductiveemail@gmail.com> 1762537128 -0800	commit: Update KMJK ESTIMATE FRANK ALSAYED PAINT.html
+5e06756b12e7a81fd8da0f3be4e8deb99835dda9 7f23c4ada0e4796da01dd5bbe5f3f762a79e1993 WindSurf <myproductiveemail@gmail.com> 1762806583 -0800	commit: Switch chatbot from Resend to Web3Forms with full conversation transcripts
+7f23c4ada0e4796da01dd5bbe5f3f762a79e1993 04a5f97298e53323880ebf895b9559d1d2c8c28e WindSurf <myproductiveemail@gmail.com> 1762806675 -0800	commit: Add Slack notifications alongside Web3Forms for KMJK chatbot transcripts
+04a5f97298e53323880ebf895b9559d1d2c8c28e 44f6e739e72f4f8ef7067699fa0def80e2353d96 WindSurf <myproductiveemail@gmail.com> 1762806709 -0800	commit: adsfg
+44f6e739e72f4f8ef7067699fa0def80e2353d96 e39ff446d191ee3280f21af532f451ab1140924b WindSurf <myproductiveemail@gmail.com> 1762811123 -0800	commit: Re-enable chatbot image uploads with S3 storage
+e39ff446d191ee3280f21af532f451ab1140924b 1ff42422b83ef796dab601184e3b045745683696 WindSurf <myproductiveemail@gmail.com> 1762815311 -0800	commit: Switch from AWS S3 to Cloudinary for chatbot image uploads - much simpler setup
+1ff42422b83ef796dab601184e3b045745683696 5f201efb332f7045226be5235d297db4d5da581d WindSurf <myproductiveemail@gmail.com> 1762820755 -0800	commit: ad
+5f201efb332f7045226be5235d297db4d5da581d b351c540a56e37123acb961c1b82b683c38fb924 WindSurf <myproductiveemail@gmail.com> 1762824006 -0800	commit: asdf
+b351c540a56e37123acb961c1b82b683c38fb924 0b926ee177072608bb8fbece6a37150f77a8d2a1 WindSurf <myproductiveemail@gmail.com> 1762826417 -0800	commit: d
+0b926ee177072608bb8fbece6a37150f77a8d2a1 523e5fc38ed38d8a67ae0724bbfeea7aca391811 WindSurf <myproductiveemail@gmail.com> 1763172131 -0800	commit: c
+523e5fc38ed38d8a67ae0724bbfeea7aca391811 f94a10d66bcb4d001c1c8132ac60f8059e1b6876 WindSurf <myproductiveemail@gmail.com> 1763172812 -0800	commit: Update calcex.html
+f94a10d66bcb4d001c1c8132ac60f8059e1b6876 6c16e92e960d2603d9a84adf73757338315b4c0f WindSurf <myproductiveemail@gmail.com> 1763172898 -0800	commit: Update calcex.html
+6c16e92e960d2603d9a84adf73757338315b4c0f fb499e5afff582082de2a022054c7d7052e4af2a WindSurf <myproductiveemail@gmail.com> 1763173013 -0800	commit: Update calcex.html
+fb499e5afff582082de2a022054c7d7052e4af2a 10c07fd14e290e3183cd2611a4abc68d4bdd3753 WindSurf <myproductiveemail@gmail.com> 1763182614 -0800	commit: Update index.html
+10c07fd14e290e3183cd2611a4abc68d4bdd3753 7f4581e858fde664de5ad1cbf7026644085e043e WindSurf <myproductiveemail@gmail.com> 1763183265 -0800	commit: Update _redirects
+7f4581e858fde664de5ad1cbf7026644085e043e 72091bc92d2797e6e82c38bcdd893276a46bbd6c WindSurf <myproductiveemail@gmail.com> 1763187175 -0800	commit: uyhg
+72091bc92d2797e6e82c38bcdd893276a46bbd6c 66d77cec3ce9b7d621e48ef323bd45cdb081e605 WindSurf <myproductiveemail@gmail.com> 1763242538 -0800	commit: Update index.html
+66d77cec3ce9b7d621e48ef323bd45cdb081e605 90986e2d559c015d9ba9f8043db8540a86809d04 WindSurf <myproductiveemail@gmail.com> 1763245514 -0800	commit: a
+90986e2d559c015d9ba9f8043db8540a86809d04 7894936f77ac135da75b0297106204b9b9eefe4d WindSurf <myproductiveemail@gmail.com> 1763246135 -0800	commit: Update TreasureCoastHomeRenovation.jsx
+7894936f77ac135da75b0297106204b9b9eefe4d 0bd629a16660aee31fb910d9b4a527176cb586f0 WindSurf <myproductiveemail@gmail.com> 1763246566 -0800	commit: ed
+0bd629a16660aee31fb910d9b4a527176cb586f0 1fe0f53832a53254a29303dd9e97dd3bbce9d728 WindSurf <myproductiveemail@gmail.com> 1763247127 -0800	commit: rgt
+1fe0f53832a53254a29303dd9e97dd3bbce9d728 030850f3c2838728ea8872b73f684a7ced4ce0ef WindSurf <myproductiveemail@gmail.com> 1763247314 -0800	commit: cv
+030850f3c2838728ea8872b73f684a7ced4ce0ef 78433f2fdf82dc389c169687a010ed33a330c4b1 WindSurf <myproductiveemail@gmail.com> 1763248924 -0800	commit: sdf
+78433f2fdf82dc389c169687a010ed33a330c4b1 51121e0dd365d582ac4f6fbe22c491d59c7ae29d WindSurf <myproductiveemail@gmail.com> 1763250839 -0800	commit: d
+51121e0dd365d582ac4f6fbe22c491d59c7ae29d 8e9e8486e996f38acab5713f6b313645d4001b74 WindSurf <myproductiveemail@gmail.com> 1763250973 -0800	commit: cv
+8e9e8486e996f38acab5713f6b313645d4001b74 e9693bac4c2035ffd4f2c10efdb9aa1bf9991491 WindSurf <myproductiveemail@gmail.com> 1763251138 -0800	commit: d
+e9693bac4c2035ffd4f2c10efdb9aa1bf9991491 27046127fc29dcd3bf8773132a87b6e7265451bd WindSurf <myproductiveemail@gmail.com> 1763251178 -0800	commit: 23
+27046127fc29dcd3bf8773132a87b6e7265451bd f90314257b297ab065e44af06932fdb6f54fe307 WindSurf <myproductiveemail@gmail.com> 1763251623 -0800	commit: r
+f90314257b297ab065e44af06932fdb6f54fe307 f5db8173276c1ab31fd64f17583bac5cd3286187 WindSurf <myproductiveemail@gmail.com> 1763340533 -0800	commit: s
+f5db8173276c1ab31fd64f17583bac5cd3286187 9bab469932c74487c164ba92d2894ab85726defb WindSurf <myproductiveemail@gmail.com> 1763341321 -0800	commit: sdfg
+9bab469932c74487c164ba92d2894ab85726defb 31f99dcb9a5eaa7f762e9f808272c2d26416c568 WindSurf <myproductiveemail@gmail.com> 1763598562 -0800	commit: Update HomeRenovationPages.jsx
+31f99dcb9a5eaa7f762e9f808272c2d26416c568 a3371bdcf5d5364de315a0d7e1840526fc477534 WindSurf <myproductiveemail@gmail.com> 1764660525 -0800	commit: c
+a3371bdcf5d5364de315a0d7e1840526fc477534 4b49089861928e19ce0c2a0f863c4f42f9f4527a WindSurf <myproductiveemail@gmail.com> 1764661755 -0800	commit: ed
+4b49089861928e19ce0c2a0f863c4f42f9f4527a c03387ce4d49154ee18d51ca7b289f43f21f583b WindSurf <myproductiveemail@gmail.com> 1764665807 -0800	commit: v
+c03387ce4d49154ee18d51ca7b289f43f21f583b e323c54a921b3f5665bd91336b4e5d4e9a53046c WindSurf <myproductiveemail@gmail.com> 1764709766 -0800	commit: h
+e323c54a921b3f5665bd91336b4e5d4e9a53046c 39cdd6eb88c2f1ec0dd40fa2425b70a404f42e98 WindSurf <myproductiveemail@gmail.com> 1764709943 -0800	commit: h
+39cdd6eb88c2f1ec0dd40fa2425b70a404f42e98 bf453d8c9986e3a868147b5fd04d4ef7eb919d70 WindSurf <myproductiveemail@gmail.com> 1764710194 -0800	commit: g
+bf453d8c9986e3a868147b5fd04d4ef7eb919d70 f623987a1ab3ad7e3dfb096f891b7aaae74a5c44 WindSurf <myproductiveemail@gmail.com> 1764711168 -0800	commit: Create nordstrom-stair-sally.html
+f623987a1ab3ad7e3dfb096f891b7aaae74a5c44 451412f0eda079049f0c42959a4f54ca293e9f15 WindSurf <myproductiveemail@gmail.com> 1764711371 -0800	commit: g
+451412f0eda079049f0c42959a4f54ca293e9f15 87214204a8baf4c053ce0a2739dbadd0c0d3ad22 WindSurf <myproductiveemail@gmail.com> 1764817003 -0800	commit: 65
+87214204a8baf4c053ce0a2739dbadd0c0d3ad22 4385dc20fa0077ac76f8bdda8c42bd72757ca8f0 WindSurf <myproductiveemail@gmail.com> 1764899639 -0800	commit: jhbg
+4385dc20fa0077ac76f8bdda8c42bd72757ca8f0 6a922e38522e02f2ec17074c500c88e935f16832 WindSurf <myproductiveemail@gmail.com> 1764901198 -0800	commit: jhg
+6a922e38522e02f2ec17074c500c88e935f16832 9fef817c2770a9c341f9fbb64ca62bcb1c967cd6 WindSurf <myproductiveemail@gmail.com> 1764902418 -0800	commit: fg
+9fef817c2770a9c341f9fbb64ca62bcb1c967cd6 a1f241a5b1ea421553274128c33a404d3192886c WindSurf <myproductiveemail@gmail.com> 1764902822 -0800	commit: fgh
+a1f241a5b1ea421553274128c33a404d3192886c 25bd1577d91d02da6b31ababa39d154bd826d4fa WindSurf <myproductiveemail@gmail.com> 1765403173 -0800	commit: asdf
+25bd1577d91d02da6b31ababa39d154bd826d4fa 6c9955fb495f449388fc088460e02de15d1692f0 WindSurf <myproductiveemail@gmail.com> 1765403607 -0800	commit: Update InternalDashboard.jsx
+6c9955fb495f449388fc088460e02de15d1692f0 6bb17ae9a9f846fa52b76eae2fed8f0a36a18fad WindSurf <myproductiveemail@gmail.com> 1765412510 -0800	commit: 765
+6bb17ae9a9f846fa52b76eae2fed8f0a36a18fad 4c7b92dd93cdd377e74943847c1f43ef96004a64 WindSurf <myproductiveemail@gmail.com> 1765493736 -0800	commit: Update nordstrom-painting-sally-staircase.html
