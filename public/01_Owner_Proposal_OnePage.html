@@ -397,26 +397,26 @@
 
     <div class="tierSwitcher">
       <button class="tierBtn" data-tier="budget" onclick="selectTier('budget')">Budget</button>
-      <button class="tierBtn" data-tier="standard" onclick="selectTier('standard')">Standard</button>
-      <button class="tierBtn active" data-tier="premium" onclick="selectTier('premium')">
-        Premium
+      <button class="tierBtn active" data-tier="standard" onclick="selectTier('standard')">
+        Standard
         <span class="badge">RECOMMENDED</span>
       </button>
+      <button class="tierBtn" data-tier="premium" onclick="selectTier('premium')">Premium</button>
     </div>
 
     <div class="tierComparison" id="tierComparison">Full facilities coverage — risk absorbed.</div>
 
     <div class="number">
-      <div class="kicker" id="kicker">Premium Option — Full Facilities Coverage (Recommended)</div>
-      <p class="value" id="monthlyTotal">$19,200 <small>/ month</small></p>
+      <div class="kicker" id="kicker">Standard Option — Full Facilities Coverage (Recommended)</div>
+      <p class="value" id="monthlyTotal">$10,580 <small>/ month</small></p>
       <div class="meta">
         <div>
           <div class="label">Per-Unit Cost</div>
-          <div class="strong" id="perUnitCost">$873 / unit / month (22 units)</div>
+          <div class="strong" id="perUnitCost">$481 / unit / month (22 units)</div>
         </div>
         <div>
           <div class="label">What this buys</div>
-          <div class="strong" id="hoursPerWeek">60 hours/week pooled facilities labor + full landscaping</div>
+          <div class="strong" id="hoursPerWeek">32 hours/week pooled facilities labor + full landscaping</div>
         </div>
       </div>
     </div>
@@ -476,10 +476,10 @@
     </div>
 
     <!-- STANDARD TIER CONTENT -->
-    <div class="tierContent" id="standardContent">
+    <div class="tierContent active" id="standardContent">
       <div class="tierSection">
-        <h4>Standard Option — Stability & Compliance</h4>
-        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Minimum recommended coverage for compliant operation.</p>
+        <h4>Standard Option — Full Facilities Coverage (Recommended)</h4>
+        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Designed to meet the actual needs of the facility. Covers everything required.</p>
       </div>
 
       <div class="grid3">
@@ -487,60 +487,6 @@
           <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
           <ul>
             <li>32 hours/week pooled labor</li>
-            <li>Covers repairs + limited preventive maintenance</li>
-            <li>Suitable for moderate ticket volume</li>
-            <li>Some infrastructure problem-solving</li>
-            <li>Emergency response hours can draw from pool</li>
-          </ul>
-        </div>
-        <div class="box">
-          <h3>Preventive + Compliance <span class="tag">Included</span></h3>
-          <ul>
-            <li>HVAC drain line service, filter management, coil rinsing</li>
-            <li>Monthly property walk + safety checks</li>
-            <li>Code/inspection readiness support</li>
-            <li>Photo documentation & monthly summary</li>
-          </ul>
-        </div>
-        <div class="box">
-          <h3>Landscaping <span class="tag">Included</span></h3>
-          <ul>
-            <li>Mow/edge/blow, trimming, debris removal</li>
-            <li>Kept to code-compliant curb appeal standards</li>
-            <li>Portfolio rate: <strong>$850/month included</strong></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tierSection">
-        <h4>Standard Tier Expectations</h4>
-        <ul>
-          <li>⚠️ Some overages expected in bad months</li>
-          <li>⚠️ Deferred maintenance addressed gradually</li>
-          <li>⚠️ Improvements are limited and selective</li>
-          <li>Preventive work is limited by available hours</li>
-          <li>Major issues may exceed the pool</li>
-        </ul>
-      </div>
-
-      <div class="tierInfo">
-        <strong>Note:</strong> Preventive work is limited by available hours. Major issues may exceed the pool. Emergency overages may still occur during heavy months.
-      </div>
-    </div>
-
-    <!-- PREMIUM TIER CONTENT -->
-    <div class="tierContent active" id="premiumContent">
-
-      <div class="tierSection">
-        <h4>Premium Option — Full Facilities Coverage (Recommended)</h4>
-        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Designed to meet the actual needs of the facility.</p>
-      </div>
-
-      <div class="grid3">
-        <div class="box">
-          <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
-          <ul>
-            <li>60 hours/week pooled labor</li>
             <li>Covers repairs, prevention, emergencies, and improvements</li>
             <li>Allows real problem-solving, not just patching</li>
             <li>Most emergencies absorbed within the pool</li>
@@ -567,7 +513,7 @@
       </div>
 
       <div class="tierSection">
-        <h4>What Premium Unlocks</h4>
+        <h4>What Standard Includes</h4>
         <ul>
           <li>✔ Concrete demo & patching for plumbing access</li>
           <li>✔ Wall opening & repair for leak remediation</li>
@@ -579,7 +525,61 @@
       </div>
 
       <div class="tierSuccess">
-        <strong>✓ Value Statement:</strong> This tier shifts responsibility from the owner to the facilities team. Most emergencies are absorbed within the pool.
+        <strong>✓ Value Statement:</strong> This tier shifts responsibility from the owner to the facilities team. Most emergencies are absorbed within the pool. Adequate for the majority of property needs.
+      </div>
+    </div>
+
+    <!-- PREMIUM TIER CONTENT -->
+    <div class="tierContent" id="premiumContent">
+      <div class="tierSection">
+        <h4>Premium Option — Renovation & Overflow (Extended Hours)</h4>
+        <p style="font-size:13px; color:var(--muted); margin:8px 0;">Same full coverage as Standard, with substantially more hours to get ahead on renovations and overflow work.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3>Facilities Labor Pool <span class="tag">Included</span></h3>
+          <ul>
+            <li>60 hours/week pooled labor</li>
+            <li>Same full coverage as Standard</li>
+            <li>Extra hours for renovations & improvements</li>
+            <li>Get ahead on deferred maintenance</li>
+            <li>Buffer for heavy months & overflow</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Preventive + Compliance <span class="tag">Full</span></h3>
+          <ul>
+            <li>HVAC drain line service, filter management, coil rinsing</li>
+            <li>Monthly property walk + safety checks</li>
+            <li>Code/inspection readiness support</li>
+            <li>Photo documentation & monthly summary</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Landscaping <span class="tag">Included</span></h3>
+          <ul>
+            <li>Mow/edge/blow, trimming, debris removal</li>
+            <li>Kept to code-compliant curb appeal standards</li>
+            <li>Portfolio rate: <strong>$850/month included</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tierSection">
+        <h4>What Premium Adds (Beyond Standard)</h4>
+        <ul>
+          <li>✔ 28 additional hours/week (60 vs 32)</li>
+          <li>✔ Dedicated renovation capacity</li>
+          <li>✔ Get ahead on unit improvements</li>
+          <li>✔ Aggressive deferred maintenance paydown</li>
+          <li>✔ Buffer for unexpected heavy months</li>
+          <li>✔ Reduced overage likelihood</li>
+        </ul>
+      </div>
+
+      <div class="tierInfo">
+        <strong>Note:</strong> Premium includes all the same full coverage features as Standard, but provides substantially more hours to tackle renovations, improvements, and overflow work without overage charges.
       </div>
     </div>
 
@@ -654,9 +654,6 @@
     </div>
 
     <div class="foot">
-      <strong>Prepared by:</strong> KMJK Home Improvement<br>
-      751 NE 69th Street, Boca Raton, FL 33487<br>
-      Phone: 561-479-7382<br><br>
       Proposal assumes “mid-condition” systems (not new, not failing everywhere). Valid 30–60 days.<br>
       <strong>Tier Summary:</strong> Budget (24 hrs/week, $8,100/mo) • Standard (32 hrs/week, $10,580/mo) • Premium (60 hrs/week, $19,200/mo)
     </div>
@@ -676,16 +673,16 @@
         monthlyTotal: '$10,580',
         perUnitCost: '$481 / unit / month (22 units)',
         hoursPerWeek: '32 hours/week pooled facilities labor + full landscaping',
-        kicker: 'Standard Option — Stability & Compliance',
-        comparison: 'Compliance-focused — some risk remains.',
+        kicker: 'Standard Option — Full Facilities Coverage (Recommended)',
+        comparison: 'Full facilities coverage — risk absorbed.',
         contentId: 'standardContent'
       },
       premium: {
         monthlyTotal: '$19,200',
         perUnitCost: '$873 / unit / month (22 units)',
         hoursPerWeek: '60 hours/week pooled facilities labor + full landscaping',
-        kicker: 'Premium Option — Full Facilities Coverage (Recommended)',
-        comparison: 'Full facilities coverage — risk absorbed.',
+        kicker: 'Premium Option — Renovation & Overflow (Extended Hours)',
+        comparison: 'Same coverage as Standard + 28 extra hours/week for renovations.',
         contentId: 'premiumContent'
       }
     };
@@ -712,9 +709,9 @@
       document.getElementById(data.contentId).classList.add('active');
     }
 
-    // Initialize with Premium selected by default
+    // Initialize with Standard selected by default
     document.addEventListener('DOMContentLoaded', () => {
-      selectTier('premium');
+      selectTier('standard');
     });
   </script>
 </body>
