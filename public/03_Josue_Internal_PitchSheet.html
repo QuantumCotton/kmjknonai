@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio Bid Cheat Sheet (Internal) — Josue</title>
+  <style>
+    :root {
+      --deep-charcoal: #2C2C2C;
+      --warm-off-white: #F8F8F8;
+      --brushed-gold: #B8860B;
+      --muted: #6B6B6B;
+      --border: #D1D1D1;
+      --card: #FFFFFF;
+      --danger: #DC2626;
+    }
+
+    @page { size: Letter; margin: 0.5in; }
+
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      background: var(--warm-off-white);
+      color: var(--deep-charcoal);
+      font-family: Georgia, 'Times New Roman', serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      line-height: 1.5;
+    }
+
+    .page {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 6px solid var(--brushed-gold);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .badge {
+      font-size: 12px;
+      color: #fff;
+      border: 1px solid var(--deep-charcoal);
+      background: var(--deep-charcoal);
+      padding: 8px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .cardTitle {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--deep-charcoal);
+    }
+
+    .bigNumber {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1;
+      margin: 4px 0 12px;
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-weight: 700; }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    li { margin: 5px 0; }
+
+    .quote {
+      border-left: 4px solid var(--brushed-gold);
+      padding: 12px 14px;
+      background: rgba(184,134,11,0.08);
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .full {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    td {
+      border-top: 1px solid var(--border);
+      padding: 10px 10px;
+      vertical-align: top;
+    }
+
+    tr:first-child td { border-top: none; }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+
+    .objection { width: 40%; font-weight: 700; }
+
+    .warning {
+      border: 1px solid rgba(220,38,38,0.35);
+      background: rgba(220,38,38,0.06);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .warningTitle { font-weight: 800; color: var(--danger); text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; margin-bottom: 6px; }
+
+    .smallTable td { padding: 8px 10px; }
+
+    @media (max-width: 640px) {
+      html { font-size: 14px; }
+      .page { padding: 20px 16px 16px; border-radius: 12px; }
+      .header { flex-direction: column; gap: 12px; }
+      .grid { grid-template-columns: 1fr; gap: 14px; }
+      .bigNumber { font-size: 32px; }
+      .kpi { grid-template-columns: 1fr; gap: 10px; }
+      .quote { font-size: 13px; }
+      table { font-size: 13px; }
+      td { padding: 8px 8px; }
+      .objection { width: auto; display: block; margin-bottom: 4px; }
+      .warning { font-size: 12px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { box-shadow: none; max-width: none; margin: 0; }
+      .card, .full, tr { page-break-inside: avoid; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1>Portfolio Bid Cheat Sheet <span style="color:var(--brushed-gold);">(Internal)</span> — Josue</h1>
+        <div class="subtitle">This is what you pitch. Keep it simple. Don’t freestyle pricing.</div>
+      </div>
+      <div class="badge">Internal Use</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="cardTitle">The Numbers</div>
+        <div class="kpi">
+          <div>
+            <div class="label">Units</div>
+            <div class="value">22</div>
+          </div>
+          <div>
+            <div class="label">Per Unit</div>
+            <div class="value">$481/unit/month</div>
+          </div>
+          <div style="grid-column: 1 / -1;">
+            <div class="label">Recommended All-In Monthly</div>
+            <div class="bigNumber">$10,580</div>
+          </div>
+          <div>
+            <div class="label">Includes</div>
+            <div class="value">32 hours/week pooled labor + landscaping</div>
+          </div>
+          <div>
+            <div class="label">Landscaping value</div>
+            <div class="value">$850/month included</div>
+          </div>
+        </div>
+        <div style="margin-top:8px; font-size:10.5px;">
+          <div style="font-weight:700;">Overages (only if pool exceeded):</div>
+          <div style="color:var(--muted); margin-top:2px;">Standard: $78/hr | After-hours: $117/hr</div>
+          <div style="font-weight:700; margin-top:6px;">Turnovers:</div>
+          <div style="color:var(--muted); margin-top:2px;">Standard turn: $1,200/unit | Heavy turn: $78/hr</div>
+          <div style="font-weight:700; margin-top:6px;">Materials:</div>
+          <div style="color:var(--muted); margin-top:2px;">20% markup; approval &gt; $250</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">The 20-Second Pitch (verbatim)</div>
+        <div class="quote">“For $10,580 a month, we run a pooled facilities labor program across all 22 units, plus full landscaping.
+          It’s 32 hours a week dedicated to this portfolio, used flexibly for repairs, prevention, and small improvements.
+          You get one bill, fewer emergencies over time, and the ability to stay ahead instead of falling behind.”</div>
+
+        <div style="height:10px;"></div>
+        <div class="cardTitle">How the pool works (don’t mess this up)</div>
+        <ul>
+          <li>One shared pool. Not “free hours.”</li>
+          <li>Heavy repair month → hours shift to repairs</li>
+          <li>Light month → hours go to preventive + improvements</li>
+          <li>No rollovers. No credits.</li>
+          <li>This is how we absorb bad months without surprise bills.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="full">
+      <div class="cardTitle">Objections + clean replies</div>
+      <table>
+        <tr>
+          <td class="objection">Owner: “That seems high.”</td>
+          <td>Reply: “It includes a weekly dedicated capacity. This isn’t random dispatch; it’s facilities coverage plus landscaping, with predictable cost.”</td>
+        </tr>
+        <tr>
+          <td class="objection">Owner: “Can we lower the price?”</td>
+          <td>Reply: “Yes—by choosing a smaller weekly hour pool. Price tracks capacity.”</td>
+        </tr>
+        <tr>
+          <td class="objection">Owner: “I don’t want surprise costs.”</td>
+          <td>Reply: “That’s the point of the pool. Overages are only if we exceed the weekly hours, and rates are published up front.”</td>
+        </tr>
+        <tr>
+          <td class="objection">Owner: “Why separate turnovers?”</td>
+          <td>Reply: “Turns are vacancy-driven and volatile. Flat-rate turns keep it fair and transparent.”</td>
+        </tr>
+        <tr>
+          <td class="objection">Owner: “What about storms?”</td>
+          <td>Reply: “Storm services are optional and priced clearly—prep, shutters, and post-storm assessment.”</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="grid" style="grid-template-columns: 1.2fr 0.8fr;">
+      <div class="full" style="margin-bottom:0;">
+        <div class="cardTitle">Recommended pricing logic (why $10,580 is fair for “mid condition”)</div>
+        <div style="font-size:10.5px; line-height:1.25;">
+          This is the “middle mediocrity” capacity call:
+          <ul style="margin-top:6px;">
+            <li>Without records, professional underwriting for vintage FL multifamily usually lands around 30–45 hrs/week to stay stable.</li>
+            <li>32 hrs/week is a conservative-but-not-worst-case starting point that:
+              <ul>
+                <li>covers ongoing tickets,</li>
+                <li>keeps preventive work happening,</li>
+                <li>and still avoids the “full-time tech” pricing shock of 40 hrs/week.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div style="height:8px;"></div>
+        <div class="cardTitle">Optional tiering (if you want it)</div>
+        <table class="smallTable">
+          <tr>
+            <td style="width:48%; font-weight:700;">Lean</td>
+            <td>24 hrs/week → $8,100/month (same structure, less capacity)</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Standard (Recommended)</td>
+            <td>32 hrs/week → $10,580/month</td>
+          </tr>
+          <tr>
+            <td style="font-weight:700;">Dedicated</td>
+            <td>40 hrs/week → $13,000/month (closest to “on-call facilities team”)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="warning">
+        <div class="warningTitle">What not to say</div>
+        <ul style="margin:0; padding-left:16px;">
+          <li>Don’t promise rollover credits</li>
+          <li>Don’t say “unlimited” anything</li>
+          <li>Don’t blend renovation into maintenance without approval</li>
+          <li>Don’t negotiate hourly rates—adjust weekly pool instead</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

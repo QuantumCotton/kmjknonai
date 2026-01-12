@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Optional Add-Ons (Choose Any)</title>
+  <style>
+    :root {
+      --deep-charcoal: #2C2C2C;
+      --warm-off-white: #F8F8F8;
+      --brushed-gold: #B8860B;
+      --muted: #6B6B6B;
+      --border: #D1D1D1;
+      --card: #FFFFFF;
+    }
+
+    @page { size: Letter; margin: 0.5in; }
+
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      background: var(--warm-off-white);
+      color: var(--deep-charcoal);
+      font-family: Georgia, 'Times New Roman', serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      line-height: 1.5;
+    }
+
+    .page {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 6px solid var(--brushed-gold);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .note {
+      font-size: 12px;
+      color: var(--deep-charcoal);
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .section {
+      margin-top: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      overflow: hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .sectionTitle {
+      padding: 12px 14px;
+      background: linear-gradient(90deg, rgba(184,134,11,0.12), rgba(184,134,11,0));
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    td {
+      border-top: 1px solid var(--border);
+      padding: 12px 14px;
+      vertical-align: top;
+    }
+
+    tr:first-child td { border-top: none; }
+    tr { page-break-inside: avoid; break-inside: avoid; }
+
+    .colCheck { width: 40px; }
+    .colPrice { width: 160px; text-align: right; white-space: nowrap; font-weight: 700; }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1.8px solid var(--deep-charcoal);
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 2px;
+      background: #fff;
+    }
+
+    .itemName { font-weight: 700; font-size: 15px; }
+    .includes { margin-top: 6px; color: var(--muted); font-size: 13px; }
+    .includes ul { margin: 6px 0 0; padding-left: 18px; }
+    .includes li { margin: 4px 0; }
+
+    .mutedLine { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    .foot {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 640px) {
+      html { font-size: 14px; }
+      .page { padding: 20px 16px 16px; border-radius: 12px; }
+      .header { flex-direction: column; gap: 12px; }
+      .sectionTitle { font-size: 12px; padding: 10px 12px; }
+      table { font-size: 13px; }
+      td { padding: 10px 12px; }
+      .colCheck { width: 36px; }
+      .colPrice { width: 140px; }
+      .itemName { font-size: 14px; }
+      .includes { font-size: 12px; }
+      .mutedLine { font-size: 12px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { box-shadow: none; max-width: none; margin: 0; }
+      .section, tr { page-break-inside: avoid; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1>Optional Add-Ons <span style="color:var(--brushed-gold);">(Choose Any)</span></h1>
+        <div class="subtitle">These reduce long-term surprises and stabilize operating cost. Not required.</div>
+      </div>
+      <div class="note">Pricing Menu</div>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">Storm &amp; Emergency Services</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Storm Prep Package (per named storm watch / per activation)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Pre-storm site walk (all properties)</li>
+                <li>Secure loose items / basic readiness check</li>
+                <li>Photo documentation for baseline condition</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$750</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Storm Shutter Deployment / Panel Install (if shutters/panels exist)</div>
+            <div class="mutedLine">Labor only (hardware/materials billed separately if needed)</div>
+          </td>
+          <td class="colPrice">$125 per unit</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Post-Storm Rapid Assessment (within 24–48 hrs after storm)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Water intrusion checks, roof/exterior scan, photos</li>
+                <li>Immediate mitigation recommendations &amp; vendor coordination</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$950</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Emergency Board-Up Coordination Fee (if needed)</div>
+            <div class="mutedLine">(Does not include vendor charges)</div>
+          </td>
+          <td class="colPrice">$250 per event</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">HVAC Protection (especially coastal)</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Coastal HVAC Anti-Corrosion Service</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Scheduled coil rinse/clean cadence appropriate for coastal exposure</li>
+                <li>Basic corrosion inhibitor application as appropriate (materials separate)</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$35 per unit / month</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">HVAC Drain Line “No-Clog” Program</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Regular flush/biocide cadence to reduce algae clogs &amp; overflow calls</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$12 per unit / month</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Annual HVAC Performance Check (portfolio)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Visual inspection, basic performance notes, prioritized replacement plan (no refrigerant work)</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$600 / year</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">Plumbing / Sewer Risk Control</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Quarterly Main Line Preventive (portfolio)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Cleanout checks, targeted preventive service, early blockage detection</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$450 / quarter</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Annual Camera Scope (per building line)</div>
+            <div class="mutedLine">(If multiple lines/buildings exist, priced per scope)</div>
+          </td>
+          <td class="colPrice">$350 each</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Annual Hydro-Jetting Allowance (portfolio)</div>
+            <div class="mutedLine">(Used proactively to reduce backups; vendor costs may vary—this is labor/coordination + standard allowance)</div>
+          </td>
+          <td class="colPrice">$1,800 / year</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">Electrical / Safety / Compliance</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Annual Electrical Thermal Scan (portfolio)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Panel hotspot scan &amp; report (non-invasive)</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$650 / year</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Quarterly Life-Safety Audit (portfolio)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Smoke/CO checks, GFCI checks, exterior lighting/function, trip hazards</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$300 / quarter</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Coral Springs / Lake Worth Compliance Pre-Check (per inspection cycle)</div>
+            <div class="includes">Includes:
+              <ul>
+                <li>Walkthrough against typical city checklist; punch list created and scheduled</li>
+              </ul>
+            </div>
+          </td>
+          <td class="colPrice">$400 / event</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">Exterior / Aesthetic / Mold Control</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Annual Exterior Soft-Wash / Mold Mitigation (portfolio)</div>
+            <div class="mutedLine">(Assumes typical surfaces; heavy growth may require adjustment)</div>
+          </td>
+          <td class="colPrice">$2,200 / year</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Roof Soft-Wash Coordination (portfolio admin fee)</div>
+            <div class="mutedLine">(Vendor billed separately)</div>
+          </td>
+          <td class="colPrice">$250 / event</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">Renovation Support (optional, controlled)</div>
+      <table>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Renovation Support Upgrade (adds dedicated improvement hours): +8 hours/week add-on</div>
+            <div class="mutedLine">(This is for planned improvements; materials billed separately; scope must be approved.)</div>
+          </td>
+          <td class="colPrice">$2,200 / month</td>
+        </tr>
+        <tr>
+          <td class="colCheck"><span class="checkbox"></span></td>
+          <td>
+            <div class="itemName">Renovation Support Upgrade (adds dedicated improvement hours): +16 hours/week add-on</div>
+            <div class="mutedLine">(This is for planned improvements; materials billed separately; scope must be approved.)</div>
+          </td>
+          <td class="colPrice">$4,200 / month</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="foot">Add-ons can be turned on/off with 30 days notice unless storm-activated.</div>
+  </div>
+</body>
+</html>
