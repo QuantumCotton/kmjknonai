@@ -476,6 +476,66 @@ export default function Dashboard() {
     }
   }
 
+  // Photo upload handlers
+  const handlePhotoUploadClick = () => {
+    setPhotoUploadError('')
+    photoInputRef.current?.click()
+  }
+
+  const handlePhotoFileSelection = async (event) => {
+    const files = Array.from(event.target.files || [])
+    if (!files.length || !selectedJob) return
+
+    setIsUploadingPhoto(true)
+    setPhotoUploadError('')
+
+    try {
+      const newPhotos = []
+      for (const file of files) {
+        const photoMeta = await uploadChatPhoto(file, `job-${selectedJob.id}`)
+        newPhotos.push({
+          url: photoMeta.viewUrl,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          uploadedAt: new Date().toISOString(),
+          cloudinaryPublicId: photoMeta.cloudinaryPublicId
+        })
+      }
+
+      const updatedPhotos = [...(selectedJob.photos || []), ...newPhotos]
+      const updatedJob = await jobsApi.update(selectedJob.id, { ...transformJobToDB(selectedJob), photos: updatedPhotos })
+      const transformedJob = transformJobFromDB(updatedJob)
+
+      setJobs(prevJobs => prevJobs.map(job => job.id === selectedJob.id ? transformedJob : job))
+      setSelectedJob(transformedJob)
+    } catch (error) {
+      console.error('[Dashboard] Photo upload failed:', error)
+      setPhotoUploadError(error?.message || 'Failed to upload photo. Please try again.')
+    } finally {
+      setIsUploadingPhoto(false)
+      event.target.value = ''
+    }
+  }
+
+  const handleRemovePhoto = async (photoIndex) => {
+    if (!selectedJob) return
+
+    if (!window.confirm('Are you sure you want to remove this photo?')) return
+
+    try {
+      const updatedPhotos = (selectedJob.photos || []).filter((_, idx) => idx !== photoIndex)
+      const updatedJob = await jobsApi.update(selectedJob.id, { ...transformJobToDB(selectedJob), photos: updatedPhotos })
+      const transformedJob = transformJobFromDB(updatedJob)
+
+      setJobs(prevJobs => prevJobs.map(job => job.id === selectedJob.id ? transformedJob : job))
+      setSelectedJob(transformedJob)
+    } catch (error) {
+      console.error('[Dashboard] Failed to remove photo:', error)
+      alert('Failed to remove photo. Please try again.')
+    }
+  }
+
   // Get status badge
   const getStatusBadge = (status) => {
     const statusConfig = STATUSES.find(s => s.value === status) || STATUSES[0]
@@ -1229,11 +1289,66 @@ export default function Dashboard() {
             </TabsContent>
 
             <TabsContent value="photos" className="space-y-4">
-              <div className="text-center py-8">
-                <ImageIcon size={48} className="mx-auto text-gray-300 mb-4" />
-                <h4 className="font-semibold mb-2">Photo Gallery</h4>
-                <p className="text-sm text-gray-600">Coming soon - upload before/during/after photos</p>
+              {/* Upload Button */}
+              <div className="flex flex-col gap-3">
+                <Button 
+                  onClick={handlePhotoUploadClick}
+                  disabled={isUploadingPhoto}
+                  className="w-full sm:w-auto bg-[var(--deep-charcoal)] hover:bg-[#2a2a2a]"
+                >
+                  <ImageIcon size={16} className="mr-2" />
+                  {isUploadingPhoto ? 'Uploading...' : 'Add Photos'}
+                </Button>
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handlePhotoFileSelection}
+                />
+                {photoUploadError && (
+                  <p className="text-xs text-red-500">{photoUploadError}</p>
+                )}
               </div>
+
+              <Separator />
+
+              {/* Photo Gallery */}
+              {(selectedJob?.photos || []).length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <ImageIcon size={48} className="mx-auto mb-2 text-gray-300" />
+                  <p className="text-sm">No photos uploaded yet</p>
+                  <p className="text-xs text-gray-400 mt-1">Click "Add Photos" to upload before/during/after photos</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {(selectedJob.photos || []).map((photo, idx) => (
+                    <div key={idx} className="relative group">
+                      <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                        <img 
+                          src={photo.url} 
+                          alt={photo.name || 'Job photo'}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      <button
+                        onClick={() => handleRemovePhoto(idx)}
+                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                        title="Remove photo"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                      {photo.name && (
+                        <p className="text-xs text-gray-600 mt-1 truncate" title={photo.name}>
+                          {photo.name}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </TabsContent>
 
             <TabsContent value="summary" className="space-y-4">
