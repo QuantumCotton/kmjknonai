@@ -11,10 +11,29 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Create Supabase client
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
+const createSupabaseNotConfiguredError = () => new Error(
+  'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.'
 )
+
+export const supabase = (!supabaseUrl || !supabaseAnonKey)
+  ? {
+      from() {
+        throw createSupabaseNotConfiguredError()
+      },
+      channel() {
+        throw createSupabaseNotConfiguredError()
+      },
+      removeChannel() {
+        throw createSupabaseNotConfiguredError()
+      },
+      rpc() {
+        throw createSupabaseNotConfiguredError()
+      },
+      raw() {
+        throw createSupabaseNotConfiguredError()
+      }
+    }
+  : createClient(supabaseUrl, supabaseAnonKey)
 
 // Database table names
 export const TABLES = {
@@ -226,26 +245,48 @@ export const tagsApi = {
 
   // Update tag count
   async incrementCount(label) {
+    const normalizedLabel = label.toLowerCase()
+
+    const { data: currentTag, error: getError } = await supabase
+      .from(TABLES.TAGS)
+      .select('count')
+      .eq('label', normalizedLabel)
+      .single()
+
+    if (getError) handleSupabaseError(getError)
+
+    const currentCount = Number(currentTag?.count ?? 0)
     const { data, error } = await supabase
       .from(TABLES.TAGS)
-      .update({ count: supabase.raw('count + 1') })
-      .eq('label', label.toLowerCase())
+      .update({ count: currentCount + 1 })
+      .eq('label', normalizedLabel)
       .select()
       .single()
-    
+
     if (error) handleSupabaseError(error)
     return data
   },
 
   // Update tag count (decrement)
   async decrementCount(label) {
+    const normalizedLabel = label.toLowerCase()
+
+    const { data: currentTag, error: getError } = await supabase
+      .from(TABLES.TAGS)
+      .select('count')
+      .eq('label', normalizedLabel)
+      .single()
+
+    if (getError) handleSupabaseError(getError)
+
+    const currentCount = Number(currentTag?.count ?? 0)
     const { data, error } = await supabase
       .from(TABLES.TAGS)
-      .update({ count: supabase.raw('GREATEST(count - 1, 0)') })
-      .eq('label', label.toLowerCase())
+      .update({ count: Math.max(currentCount - 1, 0) })
+      .eq('label', normalizedLabel)
       .select()
       .single()
-    
+
     if (error) handleSupabaseError(error)
     return data
   },
