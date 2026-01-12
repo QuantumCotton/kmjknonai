@@ -4,17 +4,27 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
+
 // Validate required environment variables
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!isSupabaseConfigured) {
   console.error('Missing Supabase environment variables. Please check your .env file.')
   console.error('Required: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
 }
 
-// Create Supabase client
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
-)
+// Create Supabase client (only if configured)
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null
+
+const assertSupabaseConfigured = () => {
+  if (!isSupabaseConfigured) {
+    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.')
+  }
+  if (!supabase) {
+    throw new Error('Supabase client is not initialized.')
+  }
+}
 
 // Database table names
 export const TABLES = {
@@ -33,6 +43,7 @@ export const handleSupabaseError = (error) => {
 export const jobsApi = {
   // Fetch all jobs
   async getAll() {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.JOBS)
       .select('*')
@@ -44,6 +55,7 @@ export const jobsApi = {
 
   // Fetch job by ID
   async getById(id) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.JOBS)
       .select('*')
@@ -56,6 +68,7 @@ export const jobsApi = {
 
   // Create new job
   async create(jobData) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.JOBS)
       .insert([{
@@ -83,6 +96,7 @@ export const jobsApi = {
 
   // Update job
   async update(id, jobData) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.JOBS)
       .update({
@@ -113,6 +127,7 @@ export const jobsApi = {
 
   // Delete job
   async delete(id) {
+    assertSupabaseConfigured()
     const { error } = await supabase
       .from(TABLES.JOBS)
       .delete()
@@ -124,6 +139,7 @@ export const jobsApi = {
 
   // Add note to job
   async addNote(jobId, note) {
+    assertSupabaseConfigured()
     // First get current job to get existing notes
     const job = await this.getById(jobId)
     const notes = job.notes || []
@@ -151,6 +167,7 @@ export const jobsApi = {
 
   // Update AI summary
   async updateAiSummary(jobId, summary) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.JOBS)
       .update({
@@ -167,6 +184,10 @@ export const jobsApi = {
 
   // Subscribe to real-time changes
   subscribeToChanges(callback) {
+    if (!isSupabaseConfigured) {
+      return () => {}
+    }
+
     const channel = supabase
       .channel('jobs-changes')
       .on(
@@ -193,6 +214,7 @@ export const jobsApi = {
 export const tagsApi = {
   // Fetch all tags
   async getAll() {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.TAGS)
       .select('*')
@@ -204,6 +226,7 @@ export const tagsApi = {
 
   // Create new tag
   async create(label, color = 'bg-gray-100 text-gray-800') {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.TAGS)
       .insert([{
@@ -226,6 +249,7 @@ export const tagsApi = {
 
   // Update tag count
   async incrementCount(label) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.TAGS)
       .update({ count: supabase.raw('count + 1') })
@@ -239,6 +263,7 @@ export const tagsApi = {
 
   // Update tag count (decrement)
   async decrementCount(label) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.TAGS)
       .update({ count: supabase.raw('GREATEST(count - 1, 0)') })
@@ -252,6 +277,7 @@ export const tagsApi = {
 
   // Delete tag
   async delete(id) {
+    assertSupabaseConfigured()
     const { error } = await supabase
       .from(TABLES.TAGS)
       .delete()
@@ -263,6 +289,7 @@ export const tagsApi = {
 
   // Recalculate all tag counts based on jobs
   async recalculateCounts() {
+    assertSupabaseConfigured()
     const jobs = await jobsApi.getAll()
     const tagCounts = {}
     
@@ -288,6 +315,7 @@ export const tagsApi = {
 export const auditLogApi = {
   // Fetch all audit logs
   async getAll(limit = 100, offset = 0) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.AUDIT_LOG)
       .select('*')
@@ -300,6 +328,7 @@ export const auditLogApi = {
 
   // Fetch audit logs for a specific job
   async getByJobId(jobId) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.AUDIT_LOG)
       .select('*')
@@ -312,6 +341,7 @@ export const auditLogApi = {
 
   // Fetch audit logs by action type
   async getByAction(action, limit = 100) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .from(TABLES.AUDIT_LOG)
       .select('*')
@@ -325,6 +355,7 @@ export const auditLogApi = {
 
   // Restore a deleted job
   async restoreJob(jobId) {
+    assertSupabaseConfigured()
     const { data, error } = await supabase
       .rpc('restore_job', { job_uuid: jobId })
     

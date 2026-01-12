@@ -10,7 +10,6 @@ import { Textarea } from '@/components/ui/textarea.jsx'
 
 export default function VoiceInput({ onAddNote, jobContext }) {
   const [isRecording, setIsRecording] = useState(false)
-  const [isListening, setIsListening] = useState(false)
   const [transcript, setTranscript] = useState('')
   const [aiProcessing, setAiProcessing] = useState(false)
   const [aiResult, setAiResult] = useState(null)
@@ -50,11 +49,9 @@ export default function VoiceInput({ onAddNote, jobContext }) {
       recognitionRef.current.onerror = (event) => {
         console.error('Speech recognition error:', event.error)
         setIsRecording(false)
-        setIsListening(false)
       }
 
       recognitionRef.current.onend = () => {
-        setIsListening(false)
         setIsRecording(false)
       }
     }
@@ -86,12 +83,11 @@ export default function VoiceInput({ onAddNote, jobContext }) {
   const handleStartRecording = async () => {
     try {
       // Request microphone access
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      await navigator.mediaDevices.getUserMedia({ audio: true })
       
       // Use Web Speech API for transcription
       if (recognitionRef.current) {
         setTranscript('')
-        setIsListening(true)
         setIsRecording(true)
         setRecordingTime(0)
         setAiResult(null)
@@ -109,7 +105,6 @@ export default function VoiceInput({ onAddNote, jobContext }) {
       recognitionRef.current.stop()
     }
     setIsRecording(false)
-    setIsListening(false)
   }
 
   const handleProcessWithAI = async () => {

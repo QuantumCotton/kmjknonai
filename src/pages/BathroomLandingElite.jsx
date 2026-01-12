@@ -123,7 +123,7 @@ function BathroomLandingElite() {
       } else {
         alert('Error: ' + (data.message || 'Failed to submit form'))
       }
-    } catch (error) {
+    } catch (_error) {
       alert('Network error - please check your connection')
     } finally {
       setIsSubmitting(false)

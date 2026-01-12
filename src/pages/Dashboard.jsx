@@ -36,8 +36,8 @@ import { Label } from '@/components/ui/label.jsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.jsx'
 import { Separator } from '@/components/ui/separator.jsx'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx'
-import { processCrewUpdate, generateJobSummary, processHomeownerQuestion, getApiKey } from '@/services/zaiService.js'
-import { jobsApi, tagsApi } from '@/lib/supabaseClient.js'
+import { generateJobSummary, getApiKey } from '@/services/zaiService.js'
+import { jobsApi, tagsApi, isSupabaseConfigured } from '@/lib/supabaseClient.js'
 import VoiceInput from '@/components/voice-input.jsx'
 
 // Job status options
@@ -105,16 +105,6 @@ const getInitials = (name) => {
     .slice(0, 2)
 }
 
-const getAllTagsFromJobs = (jobs) => {
-  const tagCounts = {}
-  jobs.forEach(job => {
-    (job.tags || []).forEach(tag => {
-      tagCounts[tag] = (tagCounts[tag] || 0) + 1
-    })
-  })
-  return tagCounts
-}
-
 // Transform Supabase job to frontend format
 const transformJobFromDB = (dbJob) => ({
   id: dbJob.id,
@@ -160,15 +150,6 @@ const saveApiKey = (apiKey) => {
   localStorage.setItem('kmjk_openai_api_key', apiKey)
 }
 
-// Get API key from localStorage or environment
-const getApiKeyFromStorage = () => {
-  const storedKey = localStorage.getItem('kmjk_zai_api_key')
-  if (storedKey && storedKey.trim() !== '') {
-    return storedKey
-  }
-  return getApiKey() // Fallback to environment variable
-}
-
 export default function Dashboard() {
   const [jobs, setJobs] = useState([])
   const [tags, setTags] = useState([])
@@ -202,15 +183,13 @@ export default function Dashboard() {
   // Tag management state
   const [newTag, setNewTag] = useState('')
 
-  // Load jobs and tags from Supabase on mount
-  useEffect(() => {
-    loadInitialData()
-    setupRealtimeSubscription()
-    
-    document.title = 'KMJK Job Dashboard'
-  }, [])
+  const loadInitialData = useCallback(async () => {
+    if (!isSupabaseConfigured) {
+      setIsLoading(false)
+      setError('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.')
+      return
+    }
 
-  const loadInitialData = async () => {
     try {
       setIsLoading(true)
       setError(null)
@@ -235,18 +214,23 @@ export default function Dashboard() {
       setError('Failed to load data. Please check your Supabase configuration.')
       setIsLoading(false)
     }
-  }
+  }, [])
 
   // Setup real-time subscription
   const setupRealtimeSubscription = useCallback(() => {
+    if (!isSupabaseConfigured) {
+      return () => {}
+    }
+
     const unsubscribe = jobsApi.subscribeToChanges((payload) => {
       console.log('[Dashboard] Real-time update:', payload.eventType, payload)
       
       switch (payload.eventType) {
-        case 'INSERT':
+        case 'INSERT': {
           const newJob = transformJobFromDB(payload.new)
           setJobs(prevJobs => [newJob, ...prevJobs])
           break
+        }
           
         case 'UPDATE':
           setJobs(prevJobs => {
@@ -256,9 +240,10 @@ export default function Dashboard() {
               updatedJobs[index] = transformJobFromDB(payload.new)
               
               // Update selectedJob if it's the same job
-              if (selectedJob?.id === payload.new.id) {
-                setSelectedJob(transformJobFromDB(payload.new))
-              }
+              setSelectedJob(prevSelected => {
+                if (prevSelected?.id !== payload.new.id) return prevSelected
+                return transformJobFromDB(payload.new)
+              })
               
               return updatedJobs
             }
@@ -268,15 +253,27 @@ export default function Dashboard() {
           
         case 'DELETE':
           setJobs(prevJobs => prevJobs.filter(job => job.id !== payload.old.id))
-          if (selectedJob?.id === payload.old.id) {
-            setSelectedJob(null)
-          }
+          setSelectedJob(prevSelected => (prevSelected?.id === payload.old.id ? null : prevSelected))
           break
       }
     })
 
     return unsubscribe
-  }, [selectedJob])
+  }, [])
+
+  // Load jobs and tags from Supabase on mount
+  useEffect(() => {
+    loadInitialData()
+    let unsubscribe = () => {}
+    if (isSupabaseConfigured) {
+      unsubscribe = setupRealtimeSubscription()
+    }
+    
+    document.title = 'KMJK Job Dashboard'
+    return () => {
+      if (typeof unsubscribe === 'function') unsubscribe()
+    }
+  }, [loadInitialData, setupRealtimeSubscription])
 
   // Update tag counts when jobs change
   const updateTagCounts = useCallback(async () => {

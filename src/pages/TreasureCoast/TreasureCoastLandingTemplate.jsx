@@ -84,7 +84,7 @@ export function createTreasureCoastLandingPage(config) {
       caseStudies = [],
       faqs = [],
       relatedLinks = [],
-      landmarkImage,
+      _landmarkImage,
     } = config
 
     const [isFormOpen, setIsFormOpen] = useState(false)

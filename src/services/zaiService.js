@@ -337,7 +337,7 @@ Response format (JSON only):
         if (jsonMatch) {
           return JSON.parse(jsonMatch[0])
         }
-      } catch (e) {
+      } catch (_e) {
         // Fallback
         return {
           categorizedAnswer: aiContent,

@@ -101,10 +101,10 @@ export default function BathroomRemodelSailfishPoint(){
           setSubmitSuccess(false)
         }, 2500)
       } else {
-        alert(data.message || 'We could not submit your request. Please try again.')
+        alert('Error: ' + (data.message || 'Failed to submit form'))
       }
-    } catch (error) {
-      alert('Network error. Please try again or email info@kmjk.pro.')
+    } catch (_error) {
+      alert('Network error - please check your connection')
     } finally {
       setIsSubmitting(false)
     }
