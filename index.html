@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/kmjk-logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/kmjk-logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/kmjk-logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KMJK Home Improvement | Exceptional Craftsmanship, Seamless Experience</title>
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MH23WHPLV6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MH23WHPLV6');
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '492737221639026');
+    fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
+
+      <!-- SEO Meta -->
+    <meta name="description" content="KMJK Home Improvement delivers premium kitchen, bathroom, and custom renovation services in Stuart, Florida and the Treasure Coast. Licensed and insured. Free consultations.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="KMJK Home Improvement | Exceptional Craftsmanship">
+    <meta property="og:description" content="Premium kitchen, bathroom, and custom renovations in Stuart, FL. Licensed and insured. Free consultations.">
+    <meta property="og:url" content="https://kmjkhomeimprovement.com/">
+    <meta property="og:image" content="/android-chrome-512x512.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KMJK Home Improvement | Exceptional Craftsmanship">
+    <meta name="twitter:description" content="Premium kitchen, bathroom, and custom renovations in Stuart, FL.">
+    <meta name="twitter:image" content="/android-chrome-512x512.png">
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "KMJK Home Improvement",
+      "image": "https://kmjkhomeimprovement.com/android-chrome-512x512.png",
+      "telephone": "+1-772-777-0622",
+      "email": "info@kmjk.pro",
+      "url": "https://kmjkhomeimprovement.com/",
+      "address": {"@type": "PostalAddress","streetAddress": "1301 SE Francis Street","addressLocality": "Jensen Beach","addressRegion": "FL","postalCode": "34957","addressCountry": "US"},
+      "areaServed": [{"@type": "City","name": "Stuart"},{"@type": "City","name": "Jensen Beach"},{"@type": "City","name": "Palm City"},{"@type": "City","name": "Treasure Coast"}],
+      "openingHoursSpecification": [{"@type": "OpeningHoursSpecification","dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens": "08:00","closes": "18:00"},{"@type": "OpeningHoursSpecification","dayOfWeek": ["Saturday"],"opens": "09:00","closes": "16:00"}],
+      "priceRange": "$$",
+      "sameAs": []
+    }
+    </script>
+      <script>
+      // Basic CTA instrumentation without touching JSX
+      document.addEventListener('click', function(e){
+        const a = e.target.closest('a');
+        if(!a) return;
+        try {
+          const href = a.getAttribute('href') || '';
+          if(href.startsWith('tel:')){
+            window.gtag && window.gtag('event','click_to_call',{location: 'delegated'});
+          } else if(href.startsWith('mailto:')){
+            window.gtag && window.gtag('event','contact_email_click',{location: 'delegated'});
+          } else if(href.includes('/contact')){
+            window.gtag && window.gtag('event','cta_click',{action:'schedule_consultation', location: 'delegated'});
+          }
+        } catch(_) {}
+      });
+    </script>
+  </head>
+  <body>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=492737221639026&ev=PageView&noscript=1"
+    /></noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+
+

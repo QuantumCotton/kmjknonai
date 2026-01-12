@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK - Project Estimate</title>
+    <style>
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            body { margin: 0; padding: 0; background: white; }
+            .no-print { display: none; }
+            .container { box-shadow: none; max-width: 100%; }
+            .letterhead { 
+                padding: 20px 40px;
+                background: #2C2C2C !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .company-name { font-size: 2em; }
+            .doc-header { 
+                padding: 15px 40px;
+                border-bottom: 3px solid #B8860B !important;
+            }
+            .content { padding: 20px 40px; }
+            .section { margin-bottom: 15px; }
+            .footer {
+                background: #2C2C2C !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .pricing-table thead {
+                background: #2C2C2C !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #F8F8F8;
+            padding: 20px;
+            color: #2C2C2C;
+            line-height: 1.4;
+            font-size: 13px;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Letterhead */
+        .letterhead {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 25px 40px 20px;
+        }
+        
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .company-info {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #B8860B;
+            margin-bottom: 5px;
+        }
+        
+        .owner-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #F8F8F8;
+            letter-spacing: 0.05em;
+        }
+        
+        .owner-title {
+            font-size: 0.75em;
+            color: #B8860B;
+            font-style: italic;
+            margin-top: 2px;
+        }
+        
+        .contact-compact {
+            text-align: right;
+            font-size: 0.75em;
+            color: #F8F8F8;
+        }
+        
+        .contact-compact div {
+            margin-bottom: 3px;
+        }
+        
+        .contact-compact .email-discrete {
+            font-size: 0.85em;
+            color: #999;
+        }
+        
+        /* Document Header */
+        .doc-header {
+            padding: 18px 40px;
+            border-bottom: 3px solid #B8860B;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .doc-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        .estimate-info {
+            text-align: right;
+            font-size: 0.85em;
+        }
+        
+        .estimate-number {
+            font-weight: 600;
+            color: #B8860B;
+            font-size: 1.2em;
+        }
+        
+        /* Client Info Bar */
+        .client-bar {
+            background: #F8F8F8;
+            padding: 12px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            font-size: 0.85em;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .client-bar strong {
+            color: #B8860B;
+            font-size: 0.9em;
+        }
+        
+        /* Content */
+        .content {
+            padding: 18px 40px 20px;
+        }
+        
+        .project-intro {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%);
+            border-left: 4px solid #B8860B;
+            padding: 15px 20px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+        }
+        
+        .project-intro h3 {
+            color: #2C2C2C;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+        
+        .project-intro p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.85em;
+        }
+        
+        .section {
+            margin-bottom: 16px;
+        }
+        
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+        
+        .section-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #B8860B;
+        }
+        
+        /* Work Items - Compact */
+        .work-list {
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .work-list li {
+            margin-bottom: 4px;
+            padding-left: 18px;
+            position: relative;
+        }
+        
+        .work-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #B8860B;
+            font-weight: bold;
+        }
+        
+        /* Pricing Table - Compact */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 0.85em;
+        }
+        
+        .pricing-table th {
+            background: #2C2C2C;
+            color: white;
+            padding: 6px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .pricing-table th:last-child {
+            text-align: right;
+        }
+        
+        .pricing-table td {
+            padding: 6px 12px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .pricing-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .pricing-table .subtotal-row {
+            background: #F8F8F8;
+            font-weight: 600;
+        }
+        
+        .pricing-table .tax-row {
+            background: #F8F8F8;
+        }
+        
+        .pricing-table .tax-row td {
+            font-size: 0.85em;
+            color: #555;
+        }
+        
+        .pricing-table .total-row {
+            background: #FFF9E6;
+            border-top: 3px solid #B8860B;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .pricing-table .total-row td {
+            padding: 10px 12px;
+        }
+        
+        .total-amount {
+            color: #B8860B;
+            font-size: 1.3em;
+        }
+        
+        /* Payment Cards - Side by Side Compact */
+        .payment-flex {
+            display: flex;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        
+        .payment-card {
+            flex: 1;
+            border: 2px solid #B8860B;
+            border-radius: 6px;
+            padding: 10px;
+            background: white;
+        }
+        
+        .payment-card h4 {
+            color: #B8860B;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+        }
+        
+        .payment-card p {
+            font-size: 0.75em;
+            margin-bottom: 3px;
+            color: #555;
+        }
+        
+        .payment-card .amount {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #B8860B;
+            margin-top: 6px;
+        }
+        
+        /* Terms - Compact */
+        .terms-compact {
+            background: #FFF9E6;
+            border-left: 4px solid #B8860B;
+            padding: 18px 20px;
+            margin: 15px 0;
+            font-size: 0.85em;
+        }
+        
+        .terms-compact h4 {
+            font-size: 0.95em;
+            margin-bottom: 8px;
+            color: #2C2C2C;
+        }
+        
+        .terms-compact ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .terms-compact li {
+            padding: 6px 0 6px 18px;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .terms-compact li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #B8860B;
+            font-weight: bold;
+        }
+        
+        /* Signatures - Compact */
+        .signature-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #E0E0E0;
+        }
+        
+        .signature-flex {
+            display: flex;
+            gap: 40px;
+            margin-top: 12px;
+        }
+        
+        .signature-block {
+            flex: 1;
+        }
+        
+        .signature-block h4 {
+            font-size: 0.75em;
+            color: #B8860B;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+        
+        .signature-line {
+            border-top: 2px solid #2C2C2C;
+            padding-top: 6px;
+            font-size: 0.8em;
+        }
+        
+        .sig-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .sig-label {
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .sig-date {
+            margin-top: 10px;
+            color: #666;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 15px 40px;
+            text-align: center;
+            font-size: 0.75em;
+        }
+        
+        .footer-divider {
+            width: 60px;
+            height: 2px;
+            background: #B8860B;
+            margin: 8px auto;
+        }
+        
+        /* Print Button */
+        .print-button {
+            background: #2C2C2C;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            font-family: Georgia, serif;
+        }
+        
+        .print-button:hover {
+            background: #B8860B;
+        }
+        
+        .validity {
+            background: #E8F4F8;
+            border: 1px solid #5DADE2;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            margin: 12px 0;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Letterhead -->
+        <div class="letterhead">
+            <div class="header-flex">
+                <div class="company-info">
+                    <div class="company-name">KMJK</div>
+                    <div class="owner-name">Josue Lopez</div>
+                    <div class="owner-title">Owner & Sales Associate</div>
+                </div>
+                <div class="contact-compact">
+                    <div><strong>📍</strong> 1301 Frances St, Jensen Beach, FL 34957</div>
+                    <div><strong>📞</strong> 650-501-7659</div>
+                    <div class="email-discrete">✉️ Chris@TheEliteServiceHub.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Document Header -->
+        <div class="doc-header">
+            <div class="doc-title">Project Estimate</div>
+            <div class="estimate-info">
+                <div class="estimate-number">KMJK-2025-1008</div>
+                <div>Date: October 8, 2025</div>
+                <div>Valid: 30 Days</div>
+            </div>
+        </div>
+        
+        <!-- Client Info Bar -->
+        <div class="client-bar">
+            <div>
+                <strong>CLIENT:</strong> Chase McCullon<br>
+                chase.mccullon@nordstrom.com | +1 (786) 644-9499
+            </div>
+            <div>
+                <strong>LOCATION:</strong> Nordstrom Store<br>
+                3111 PGA Blvd, Palm Beach Gardens, FL
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Project Introduction -->
+            <div class="project-intro">
+                <h3>📋 Project Overview</h3>
+                <p>This estimate covers a commercial demolition project at the Nordstrom Store location. Our experienced team will handle all aspects of the 22' × 8' × 6" wall demolition (88 cubic feet), including comprehensive site protection, debris removal, and thorough cleanup. All work will be completed efficiently and professionally to minimize disruption to your store operations.</p>
+            </div>
+            
+            <!-- Scope of Work -->
+            <div class="section">
+                <h2 class="section-title">Scope of Work</h2>
+                <ul class="work-list">
+                    <li><strong>Site Protection:</strong> Cover floor and all clothing items around wall with protective sheeting</li>
+                    <li><strong>Wall Demolition:</strong> Demo 22' × 8' × 6" wall section (88 cubic feet)</li>
+                    <li><strong>Debris Removal:</strong> Dispose of all demolition debris and garbage from site</li>
+                    <li><strong>Complete Cleanup:</strong> Thorough cleaning, remove all protective coverings</li>
+                    <li><strong>Timeline:</strong> All work completed before 10:00 AM to minimize store disruption</li>
+                </ul>
+            </div>
+            
+            <!-- Pricing -->
+            <div class="section">
+                <h2 class="section-title">Investment Breakdown</h2>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th style="width: 50%;">Details</th>
+                            <th style="width: 15%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Demolition Service</strong></td>
+                            <td>Site protection, wall demo, debris removal, cleanup</td>
+                            <td>$560.75</td>
+                        </tr>
+                        <tr class="tax-row">
+                            <td colspan="2">Florida Sales Tax (Palm Beach County - 7%)</td>
+                            <td>$39.25</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>TOTAL PROJECT INVESTMENT</strong></td>
+                            <td class="total-amount">$600.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Payment Schedule -->
+            <div class="section">
+                <h2 class="section-title">Payment Schedule</h2>
+                <div class="payment-flex">
+                    <div class="payment-card">
+                        <h4>① Initial Deposit</h4>
+                        <p>Upon contract signing</p>
+                        <div class="amount">$300.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <h4>② Final Payment</h4>
+                        <p>Upon project completion</p>
+                        <div class="amount">$300.00</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Terms & Conditions -->
+            <div class="section page-break">
+                <h2 class="section-title">Terms & Conditions</h2>
+                <div class="terms-compact">
+                    <ul>
+                        <li>Estimate valid for 30 days from issue date (expires November 7, 2025)</li>
+                        <li>Work commences upon receipt of signed estimate and initial deposit</li>
+                        <li>Project completed before 10:00 AM as specified</li>
+                        <li>All work performed by licensed and insured professionals</li>
+                        <li>KMJK carries full liability insurance and workers' compensation coverage</li>
+                        <li>Changes to scope must be approved in writing and may affect pricing</li>
+                        <li>Client responsible for securing necessary permits or landlord approvals</li>
+                        <li>Final payment due immediately upon satisfactory completion</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Signature Section -->
+            <div class="signature-section">
+                <p style="text-align: center; margin-bottom: 12px; font-weight: 600; font-size: 0.95em;">
+                    By signing below, you authorize KMJK to proceed with the work described in this estimate.
+                </p>
+                
+                <div class="signature-flex">
+                    <div class="signature-block">
+                        <h4>For KMJK</h4>
+                        <div class="signature-line">
+                            <div class="sig-name">Josue Lopez</div>
+                            <div class="sig-label">Authorized Representative</div>
+                            <div class="sig-date">Date: _________________</div>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-block">
+                        <h4>Client Acceptance</h4>
+                        <div class="signature-line">
+                            <div class="sig-name">Chase McCullon</div>
+                            <div class="sig-label">Client Signature</div>
+                            <div class="sig-date">Date: _________________</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thank You -->
+            <div style="margin-top: 20px; padding: 12px; background: #F8F8F8; border-radius: 6px; text-align: center; border: 1px solid #E0E0E0;">
+                <p style="font-weight: 600; color: #B8860B; margin-bottom: 6px;">Thank You for Choosing KMJK</p>
+                <p style="font-size: 0.85em; color: #555; line-height: 1.5;">
+                    We appreciate the opportunity to work with you. Our team is committed to delivering exceptional quality and service. 
+                    Questions? Contact us at 650-501-7659.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div><strong>KMJK Home Improvement</strong></div>
+            <div class="footer-divider"></div>
+            <div>1301 Frances St, Jensen Beach, FL 34957 | 650-501-7659 | Chris@TheEliteServiceHub.com</div>
+            <div style="color: #B8860B; margin-top: 6px; font-style: italic;">Building Excellence, One Project at a Time</div>
+        </div>
+    </div>
+    
+    <!-- Print Button -->
+    <div class="no-print" style="text-align: center; margin-top: 20px; padding: 20px;">
+        <button onclick="window.print()" class="print-button">
+            🖨️ Print Estimate
+        </button>
+    </div>
+</body>
+</html>

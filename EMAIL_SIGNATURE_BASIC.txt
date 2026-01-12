@@ -1,0 +1,32 @@
+<table width="500" cellpadding="20" border="2" bordercolor="#b8860b" bgcolor="#fffbf3" style="font-family: Georgia;">
+<tr>
+<td colspan="2" align="center" style="border-bottom: 2px solid #b8860b; padding-bottom: 15px;">
+<font size="5" color="#212121" face="Georgia"><b>KMJK</b></font><br>
+<font size="2" color="#b8860b" face="Georgia">PROFESSIONAL HOME IMPROVEMENT</font>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top" style="padding-right: 15px;">
+<font size="3" color="#212121" face="Georgia"><b>Chris Cotton</b></font><br>
+<font size="2" color="#666" face="Georgia"><i>Project Manager</i></font><br><br>
+<font size="2" color="#2c2c2c" face="Georgia">
+<b><font color="#b8860b">Mobile:</font></b> <a href="tel:772-777-0622" style="color: #2c2c2c;">772-777-0622</a><br>
+<b><font color="#b8860b">Email:</font></b> <a href="mailto:chris@kmjk.pro" style="color: #2c2c2c;">chris@kmjk.pro</a><br>
+<b><font color="#b8860b">Web:</font></b> <a href="https://kmjk.pro" style="color: #2c2c2c;">kmjk.pro</a>
+</font>
+</td>
+<td width="50%" valign="top" style="border-left: 1px solid #caa96a; padding-left: 15px;">
+<font size="2" color="#666" face="Georgia"><i><b>Specializing in:</b></i></font><br>
+<font size="2" color="#2c2c2c" face="Georgia">
+Kitchen Remodeling • Bathroom Renovations<br>
+Luxury Flooring • Outdoor Living Spaces<br>
+Custom Countertops • Handyman Services
+</font>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center" style="border-top: 1px solid #caa96a; padding-top: 15px;">
+<font size="1" color="#999" face="Georgia"><i>Servicing the Treasure Coast & Beyond</i></font>
+</td>
+</tr>
+</table>

@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK - Project Estimate</title>
+    <style>
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+            .no-print {
+                display: none;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .digital-acceptance {
+                display: none !important;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .content {
+                padding: 40px 50px;
+            }
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #F8F8F8;
+            padding: 40px 20px;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 8.5in;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Letterhead */
+        .letterhead {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 40px 60px 30px;
+        }
+        
+        .company-name {
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+        }
+        
+        .gold-underline {
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, #B8860B, transparent);
+            margin: 15px 0 20px;
+        }
+        
+        .tagline {
+            font-size: 1em;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            color: #B8860B;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            font-size: 0.85em;
+            color: #F8F8F8;
+            padding-top: 15px;
+            border-top: 1px solid rgba(184, 134, 11, 0.3);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .contact-icon {
+            color: #B8860B;
+            font-size: 1.1em;
+        }
+        
+        /* Document Header */
+        .doc-header {
+            background: linear-gradient(135deg, #F8F8F8 0%, #FFFFFF 100%);
+            padding: 30px 60px;
+            border-bottom: 3px solid #B8860B;
+        }
+        
+        .doc-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .doc-title {
+            font-size: 2.2em;
+            font-weight: 600;
+            color: #2C2C2C;
+        }
+        
+        .estimate-number {
+            text-align: right;
+        }
+        
+        .estimate-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .estimate-value {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #B8860B;
+        }
+        
+        .client-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .info-block h3 {
+            font-size: 1em;
+            color: #B8860B;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .info-block p {
+            color: #2C2C2C;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        
+        .info-block .highlight {
+            font-weight: 600;
+        }
+        
+        /* Content */
+        .content {
+            padding: 40px 60px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #B8860B;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-icon {
+            color: #B8860B;
+            font-size: 1.1em;
+        }
+        
+        /* Scope of Work */
+        .work-items {
+            background: #F8F8F8;
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #E0E0E0;
+        }
+        
+        .work-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #D0D0D0;
+        }
+        
+        .work-item:last-child {
+            border-bottom: none;
+        }
+        
+        .work-item-bullet {
+            color: #B8860B;
+            font-weight: bold;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .work-item-text {
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        /* Pricing Table */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .pricing-table thead {
+            background: #2C2C2C;
+            color: white;
+        }
+        
+        .pricing-table th {
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        
+        .pricing-table th:last-child {
+            text-align: right;
+        }
+        
+        .pricing-table tbody tr {
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .pricing-table td {
+            padding: 18px 20px;
+            color: #2C2C2C;
+        }
+        
+        .pricing-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .pricing-table .tax-row td {
+            background: #FBFBFB;
+            font-weight: 500;
+        }
+        
+        .pricing-table .total-row {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFBF0 100%);
+            border-top: 3px solid #B8860B;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .pricing-table .total-row td {
+            padding: 20px;
+            color: #2C2C2C;
+        }
+        
+        .total-amount {
+            color: #B8860B;
+            font-size: 1.3em;
+        }
+        
+        /* Payment Schedule */
+        .payment-schedule {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .payment-card {
+            background: white;
+            border: 2px solid #B8860B;
+            border-radius: 8px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #B8860B, #D4A522);
+        }
+        
+        .payment-number {
+            display: inline-block;
+            background: #B8860B;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .payment-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 10px;
+        }
+        
+        .payment-detail {
+            color: #555;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+        
+        .payment-amount {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #B8860B;
+            margin-top: 15px;
+        }
+        
+        /* Terms Box */
+        .terms-box {
+            background: #FFF9E6;
+            border-left: 5px solid #B8860B;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .terms-box h4 {
+            color: #2C2C2C;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .terms-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .terms-box li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        .terms-box li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #B8860B;
+            font-weight: bold;
+        }
+        
+        /* Validity Notice */
+        .validity-notice {
+            background: linear-gradient(135deg, #E8F4F8 0%, #F0F8FB 100%);
+            border: 2px solid #5DADE2;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .validity-notice p {
+            color: #2C2C2C;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .validity-date {
+            color: #5DADE2;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        /* Signature Section */
+        .signature-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #E0E0E0;
+        }
+        
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 30px;
+        }
+        
+        .signature-block h4 {
+            font-size: 1em;
+            color: #B8860B;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .signature-line {
+            border-top: 2px solid #2C2C2C;
+            padding-top: 10px;
+        }
+        
+        .sig-name {
+            font-weight: 600;
+            color: #2C2C2C;
+            margin-bottom: 5px;
+        }
+        
+        .sig-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .sig-date {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 15px;
+        }
+        
+        .print-only {
+            display: none;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .digital-acceptance {
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F4F4F4 100%);
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        .signature-form {
+            display: grid;
+            gap: 24px;
+            margin-top: 20px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-field label {
+            display: block;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #D0D0D0;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #FFFFFF;
+            color: #2C2C2C;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: #B8860B;
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.2);
+        }
+        
+        .signature-pad {
+            background: #FFFFFF;
+            border: 1px dashed #B8860B;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .signature-pad canvas {
+            width: 100%;
+            height: 170px;
+            background: #FFFFFF;
+            border: 1px solid #E0E0E0;
+            border-radius: 6px;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.08);
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .signature-pad p {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .signature-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .signature-actions button {
+            background: transparent;
+            border: none;
+            color: #B8860B;
+            font-size: 0.9em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        
+        .signature-actions button:hover {
+            text-decoration: underline;
+        }
+        
+        .acceptance-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95em;
+            color: #2C2C2C;
+            line-height: 1.6;
+        }
+        
+        .acceptance-checkbox input {
+            margin-top: 2px;
+            width: 22px;
+            height: 22px;
+            accent-color: #B8860B;
+            flex-shrink: 0;
+        }
+        
+        .acceptance-checkbox span {
+            display: block;
+        }
+        
+        .accept-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #B8860B 0%, #D9B45B 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+            box-shadow: 0 6px 14px rgba(184, 134, 11, 0.3);
+        }
+        
+        .accept-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 18px rgba(184, 134, 11, 0.35);
+        }
+        
+        .accept-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            box-shadow: none;
+        }
+        
+        .thank-you-card {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            border: 1px solid #E0E0E0;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+        }
+        
+        .thank-you-card.active {
+            display: block;
+        }
+        
+        .thank-you-card h3 {
+            font-size: 1.5em;
+            color: #2C2C2C;
+            margin-bottom: 10px;
+        }
+        
+        .thank-you-card p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-summary {
+            display: grid;
+            row-gap: 10px;
+            font-size: 0.95em;
+            color: #2C2C2C;
+        }
+        
+        .thank-you-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+        
+        .thank-you-actions a,
+        .thank-you-actions button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 24px;
+            border: 1px solid #B8860B;
+            background: transparent;
+            color: #B8860B;
+            font-size: 0.9em;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        
+        .thank-you-actions button {
+            border: none;
+        }
+        
+        .thank-you-actions a:hover,
+        .thank-you-actions button:hover {
+            background: #B8860B;
+            color: #FFFFFF;
+        }
+        
+        .form-status {
+            font-size: 0.9em;
+            margin-top: 14px;
+            letter-spacing: 0.03em;
+        }
+        
+        .form-status.pending {
+            color: #B8860B;
+        }
+        
+        .form-status.success {
+            color: #1F7A4D;
+        }
+        
+        .form-status.error {
+            color: #B00020;
+        }
+        
+        .payment-options {
+            background: linear-gradient(135deg, #1F1F1F 0%, #2E2E2E 100%);
+            color: #F5F5F5;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+        }
+        
+        .payment-options .section-title {
+            color: #FFFFFF;
+        }
+        
+        .cashapp-callout {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .cashapp-info {
+            flex: 1 1 260px;
+        }
+        
+        .cashapp-info p {
+            color: #E8E8E8;
+            margin-bottom: 12px;
+        }
+        
+        .cashapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 24px;
+            background: #00C244;
+            color: #FFFFFF;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 6px 16px rgba(0, 194, 68, 0.35);
+        }
+        
+        .cashapp-link:hover {
+            background: #02AA3C;
+        }
+        
+        .cashapp-qr {
+            flex: 0 0 200px;
+            text-align: center;
+        }
+        
+        .cashapp-qr img {
+            max-width: 200px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+            background: #FFFFFF;
+        }
+        
+        .cashapp-qr span {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85em;
+            color: #CFCFCF;
+            letter-spacing: 0.04em;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                margin: 0 10px;
+            }
+            
+            .content {
+                padding: 30px 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+            
+            .letterhead {
+                padding: 28px 24px 18px;
+            }
+            
+            .doc-header {
+                padding: 26px 24px;
+            }
+            
+            .content {
+                padding: 26px 20px;
+            }
+            
+            .digital-acceptance {
+                margin-top: 36px;
+                padding: 26px 22px;
+            }
+            
+            .signature-form {
+                gap: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .signature-pad canvas {
+                height: 150px;
+            }
+            
+            .acceptance-checkbox {
+                flex-direction: column;
+            }
+            
+            .acceptance-checkbox input {
+                margin-top: 0;
+            }
+            
+            .accept-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .thank-you-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .payment-options {
+                padding: 26px 22px;
+            }
+            
+            .cashapp-callout {
+                gap: 22px;
+            }
+        }
+        
+        @media (max-width: 520px) {
+            body {
+                padding: 20px 12px;
+            }
+            
+            .letterhead,
+            .doc-header,
+            .content {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+            
+            .digital-acceptance {
+                padding: 22px 16px;
+            }
+            
+            .signature-pad canvas {
+                height: 135px;
+            }
+            
+            .acceptance-checkbox span {
+                font-size: 0.92em;
+            }
+            
+            .thank-you-card {
+                padding: 24px 18px;
+            }
+            
+            .payment-options {
+                padding: 22px 18px;
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            background: #2C2C2C;
+            color: #F8F8F8;
+            padding: 25px 60px;
+            text-align: center;
+        }
+        
+        .footer-main {
+            font-size: 1em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        .footer-divider {
+            width: 100px;
+            height: 2px;
+            background: #B8860B;
+            margin: 15px auto;
+        }
+        
+        .footer-contact {
+            font-size: 0.85em;
+            color: #D0D0D0;
+        }
+        
+        .footer-tagline {
+            margin-top: 12px;
+            font-size: 0.8em;
+            color: #B8860B;
+            font-style: italic;
+        }
+        
+        /* Print Button */
+        .print-button {
+            background: #2C2C2C;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            transition: background 0.3s;
+        }
+        
+        .print-button:hover {
+            background: #B8860B;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Letterhead -->
+        <div class="letterhead">
+            <div class="company-name">KMJK</div>
+            <div class="gold-underline"></div>
+            <div class="tagline">Professional Home Improvement Services</div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <span>Josue Lopez - Stuart, Florida</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <span>772-323-3776</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span>KMJKHomeRenov@gmail.com</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Document Header -->
+        <div class="doc-header">
+            <div class="doc-header-top">
+                <div>
+                    <h1 class="doc-title">Nordstrom Carpet Re-Tension Estimate</h1>
+                </div>
+                <div class="estimate-number">
+                    <div class="estimate-label">Estimate #</div>
+                    <div class="estimate-value">KMJK-2025-1021</div>
+                    <div class="estimate-label" style="margin-top: 10px;">Date Issued</div>
+                    <div style="font-weight: 600; color: #2C2C2C;">October 21, 2025</div>
+                </div>
+            </div>
+            
+            <div class="client-info-grid">
+                <div class="info-block">
+                    <h3>Client Information</h3>
+                    <p class="highlight">Chase McCullon</p>
+                    <p>chase.mccullon@nordstrom.com</p>
+                    <p>+1 (786) 644-9499</p>
+                </div>
+                <div class="info-block">
+                    <h3>Project Location</h3>
+                    <p class="highlight">Nordstrom Fitting Rooms &amp; Corridors</p>
+                    <p>3111 PGA Blvd</p>
+                    <p>Palm Beach Gardens, FL 33410</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <!-- Project Snapshot -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🧭</span>
+                    Project Snapshot
+                </h2>
+                <p style="color: #2C2C2C; font-size: 1.02em; line-height: 1.7;">
+                    KMJK will re-tension the loose carpet throughout Nordstrom fitting rooms and interior corridors,
+                    carefully removing and resetting baseboards to achieve a clean, taut finish before store opening.
+                    Our crew works quietly before guests arrive, leaving each space refreshed and ready for retail traffic.
+                </p>
+            </div>
+            
+            <!-- Estimate Revision Note -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">📝</span>
+                    Estimate Revision
+                </h2>
+                <p style="color: #2C2C2C; font-size: 1.02em; line-height: 1.7;">
+                    Upon further assessment, the project scope has been expanded to include an additional area of carpet requiring re-tensioning. This adjustment results in a $200.00 increase to the total project investment, bringing it to $1,050.00 including applicable taxes.
+                </p>
+            </div>
+            
+            <!-- Scope of Work -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">📋</span>
+                    Scope of Work
+                </h2>
+                <div class="work-items">
+                    <div class="work-item">
+                        <div class="work-item-bullet">•</div>
+                        <div class="work-item-text">
+                            <strong>Pre-Work Protection:</strong> Cover adjacent fixtures, fitting room thresholds, and apparel zones before work begins
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-item-bullet">•</div>
+                        <div class="work-item-text">
+                            <strong>Baseboard Removal &amp; Reset:</strong> Carefully remove required base to access carpet edges and reinstall with finish fasteners
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-item-bullet">•</div>
+                        <div class="work-item-text">
+                            <strong>Precision Carpet Stretching:</strong> Power-stretch and re-tension all fitting room and corridor sections to eliminate slack
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-item-bullet">•</div>
+                        <div class="work-item-text">
+                            <strong>Seam &amp; Transition Touch-Up:</strong> Re-secure tack strips, seams, and metal transitions for a smooth finished appearance
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <div class="work-item-bullet">•</div>
+                        <div class="work-item-text">
+                            <strong>Timeline:</strong> Work scheduled prior to store opening hours to keep Nordstrom operations on schedule
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pricing -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">💰</span>
+                    Investment Breakdown
+                </h2>
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Details</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Carpet Re-Tension &amp; Finish Reset</strong></td>
+                            <td>Protection, base removal &amp; reinstall, power-stretching, seam/transition refresh, final grooming</td>
+                            <td>$981.31</td>
+                        </tr>
+                        <tr class="tax-row">
+                            <td colspan="2">Florida Sales Tax (7%)</td>
+                            <td>$68.69</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>Total Project Investment</strong></td>
+                            <td class="total-amount">$1050.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Payment Schedule -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">💳</span>
+                    Payment Schedule
+                </h2>
+                <div class="payment-schedule">
+                    <div class="payment-card">
+                        <div class="payment-number">1</div>
+                        <div class="payment-title">Project Investment</div>
+                        <div class="payment-detail"><strong>When:</strong> Due in full prior to mobilization</div>
+                        <div class="payment-detail"><strong>Includes:</strong> Labor, materials, and tax</div>
+                        <div class="payment-amount">$1050.00</div>
+                    </div>
+                    <div class="payment-card">
+                        <div class="payment-number">2</div>
+                        <div class="payment-title">Optional Cash App Convenience</div>
+                        <div class="payment-detail"><strong>When:</strong> Only if paying via Cash App</div>
+                        <div class="payment-detail"><strong>Adjustment:</strong> 3% processing consideration</div>
+                        <div class="payment-detail"><strong>Total via Cash App:</strong> $1081.50</div>
+                        <div class="payment-amount">$31.50</div>
+                    </div>
+                </div>
+                
+                <div style="background: #E8F4F8; padding: 15px; border-radius: 6px; margin-top: 20px; text-align: center;">
+                    <p style="color: #2C2C2C; margin: 0;"><strong>Accepted Payment Methods:</strong> Check, ACH, Zelle, Credit/Debit Card. Cash App welcomed with the 3% convenience adjustment noted above.</p>
+                </div>
+            </div>
+            
+            <div class="section payment-options">
+                <h2 class="section-title">
+                    <span class="section-icon">$</span>
+                    Pay Securely
+                </h2>
+                <div class="cashapp-callout">
+                    <div class="cashapp-info">
+                        <p>For fast processing, you can submit your payment through Cash App directly to KMJK Home Improvement.</p>
+                        <p><strong>Cash App Handle:</strong> $kmjkhomerenov</p>
+                        <a class="cashapp-link" href="https://cash.app/$kmjkhomerenov" target="_blank" rel="noopener">Open Cash App</a>
+                        <p style="margin-top: 16px; color: #444;">Cash App payments carry a gentle 3% convenience adjustment ($31.50) to cover platform fees. Prefer another route? We’re happy to take checks, ACH, Zelle, or cards.</p>
+                        <p style="margin-top: 16px; color: #DADADA;">Need help? Contact Josue Lopez at 772-323-3776 for payment support.</p>
+                    </div>
+                    <div class="cashapp-qr">
+                        <img src="$kmjkhomerenov.png" alt="Updated Cash App QR code for KMJK Home Improvement">
+                        <span>Scan to pay with Cash App</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Terms & Conditions -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">📄</span>
+                    Terms & Conditions
+                </h2>
+                <div class="terms-box">
+                    <h4>Project Terms:</h4>
+                    <ul>
+                        <li>This estimate is valid for 30 days from the date of issue</li>
+                        <li>Full project investment is due prior to construction mobilization to secure scheduling</li>
+                        <li>KMJK mobilizes before store opening and coordinates quietly with Nordstrom management</li>
+                        <li>All work performed by licensed and insured professionals; COI available upon request</li>
+                        <li>KMJK carries full liability insurance and workers' compensation coverage</li>
+                        <li>Any scope adjustments or schedule changes must be approved in writing and may affect pricing</li>
+                        <li>Client provides clear access, removes sensitive merchandise as needed, and secures landlord approvals</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Validity Notice -->
+            <div class="validity-notice">
+                <p>This estimate is valid until:</p>
+                <p class="validity-date">November 7, 2025</p>
+            </div>
+            
+            <!-- Signature Section (Print Version) -->
+            <div class="section signature-section print-only">
+                <p style="font-size: 1.1em; color: #2C2C2C; margin-bottom: 20px; text-align: center;">
+                    <strong>By signing below, you authorize KMJK to proceed with the work described in this estimate.</strong>
+                </p>
+                
+                <div class="signature-grid">
+                    <div class="signature-block">
+                        <h4>For KMJK</h4>
+                        <div class="signature-line">
+                            <div class="sig-name">Josue Lopez</div>
+                            <div class="sig-label">Owner, KMJK Home Improvement</div>
+                            <div class="sig-date">Date: _____________________</div>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-block">
+                        <h4>Client Acceptance</h4>
+                        <div class="signature-line">
+                            <div class="sig-name">Chase McCullon</div>
+                            <div class="sig-label">Client Signature</div>
+                            <div class="sig-date">Date: _____________________</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Digital Acceptance -->
+            <div class="section digital-acceptance no-print">
+                <h2 class="section-title">
+                    <span class="section-icon">&#9998;</span>
+                    Digital Project Authorization
+                </h2>
+                <p style="margin-top: 12px; color: #444;">Complete the electronic authorization below to approve the scope of work and payment schedule outlined in this estimate.</p>
+                
+                <form id="signatureForm" class="signature-form" novalidate>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="signerName">Full Name</label>
+                            <input type="text" id="signerName" name="signerName" placeholder="Enter your legal name" autocomplete="name" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="signerDob">Date of Birth</label>
+                            <input type="date" id="signerDob" name="signerDob" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="typedSignature">Type Your Signature</label>
+                            <input type="text" id="typedSignature" name="typedSignature" placeholder="Re-type your name to sign" autocomplete="name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-pad">
+                        <p>Optional: Draw your signature below using your mouse, stylus, or touch device.</p>
+                        <canvas id="signatureCanvas" aria-label="Draw your signature"></canvas>
+                        <div class="signature-actions">
+                            <button type="button" id="clearSignature">Clear Signature</button>
+                        </div>
+                    </div>
+                    
+                    <label class="acceptance-checkbox">
+                        <input type="checkbox" id="acceptTerms">
+                        <span>I, <span id="agreeNamePreview">your name</span>, certify that I am the person named above and authorize KMJK Home Improvement to proceed with the services described.</span>
+                    </label>
+                    
+                    <button type="submit" id="acceptButton" class="accept-button" disabled>
+                        I Accept &amp; Sign
+                    </button>
+                    
+                    <div id="formStatus" class="form-status hidden"></div>
+                </form>
+                
+                <div id="thankYouCard" class="thank-you-card">
+                    <h3>Thank you, <span id="thankYouName"></span>!</h3>
+                    <p>We&rsquo;ve recorded your authorization and prepared an email confirmation for the KMJK team.</p>
+                    <div class="thank-you-summary">
+                        <div><strong>Signed On:</strong> <span id="thankYouTimestamp"></span></div>
+                        <div><strong>Date of Birth:</strong> <span id="thankYouDob"></span></div>
+                        <div><strong>Typed Signature:</strong> <span id="thankYouTyped"></span></div>
+                        <div><strong>Drawn Signature:</strong> <span id="thankYouSketch"></span></div>
+                    </div>
+                    <div class="thank-you-actions">
+                        <a id="signatureDownload" class="hidden" download="kmjk-digital-signature.png">Download Signature</a>
+                        <button type="button" id="printReceiptButton">Print Confirmation</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thank You Note -->
+            <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #F8F8F8 0%, #FFFFFF 100%); border-radius: 8px; text-align: center; border: 1px solid #E0E0E0;">
+                <p style="font-size: 1.2em; color: #B8860B; font-weight: 600; margin-bottom: 10px;">Thank You for Choosing KMJK</p>
+                <p style="color: #555; line-height: 1.7;">We appreciate the opportunity to work with you on this project. Our team is committed to delivering exceptional quality and service. If you have any questions about this estimate, please don't hesitate to contact us.</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-main">KMJK Home Improvement</div>
+            <div class="footer-divider"></div>
+            <div class="footer-contact">Stuart, FL | 772-323-3776 | KMJKHomeRenov@gmail.com</div>
+            <div class="footer-tagline">Building Excellence, One Project at a Time</div>
+        </div>
+    </div>
+    
+    <!-- Print Button -->
+    <div class="no-print" style="text-align: center; margin-top: 30px; padding: 20px;">
+        <button onclick="window.print()" class="print-button">
+            🖨️ Print Estimate
+        </button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('signatureForm');
+            if (!form) {
+                return;
+            }
+            
+            const signerName = document.getElementById('signerName');
+            const signerDob = document.getElementById('signerDob');
+            const typedSignature = document.getElementById('typedSignature');
+            const acceptTerms = document.getElementById('acceptTerms');
+            const acceptButton = document.getElementById('acceptButton');
+            const agreeNamePreview = document.getElementById('agreeNamePreview');
+            const thankYouCard = document.getElementById('thankYouCard');
+            const thankYouName = document.getElementById('thankYouName');
+            const thankYouTimestamp = document.getElementById('thankYouTimestamp');
+            const thankYouDob = document.getElementById('thankYouDob');
+            const thankYouTyped = document.getElementById('thankYouTyped');
+            const thankYouSketch = document.getElementById('thankYouSketch');
+            const signatureDownload = document.getElementById('signatureDownload');
+            const printReceiptButton = document.getElementById('printReceiptButton');
+            const formStatus = document.getElementById('formStatus');
+            const web3formsEndpoint = 'https://api.web3forms.com/submit';
+            const web3formsAccessKey = '8e63e7e3-ab53-43a9-80c5-ebc113c25912';
+            
+            const setStatus = function (state, message) {
+                if (!formStatus) {
+                    return;
+                }
+                formStatus.textContent = message || '';
+                formStatus.classList.remove('pending', 'success', 'error');
+                if (!state) {
+                    formStatus.classList.add('hidden');
+                    return;
+                }
+                formStatus.classList.remove('hidden');
+                formStatus.classList.add(state);
+            };
+            
+            const canvas = document.getElementById('signatureCanvas');
+            const clearSignatureButton = document.getElementById('clearSignature');
+            const estimateValueElement = document.querySelector('.estimate-value');
+            const estimateNumber = estimateValueElement ? estimateValueElement.textContent.trim() : 'KMJK Estimate';
+            
+            let userEditedTypedSignature = false;
+            let hasDrawnSignature = false;
+            let isDrawing = false;
+            let ctx = null;
+            
+            if (canvas && canvas.getContext) {
+                ctx = canvas.getContext('2d');
+                
+                const prepareCanvas = function () {
+                    const rect = canvas.getBoundingClientRect();
+                    canvas.width = rect.width;
+                    canvas.height = rect.height;
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = '#2C2C2C';
+                };
+                
+                const getPosition = function (event) {
+                    const rect = canvas.getBoundingClientRect();
+                    return {
+                        x: event.clientX - rect.left,
+                        y: event.clientY - rect.top
+                    };
+                };
+                
+                const stopDrawing = function (event) {
+                    if (!isDrawing) {
+                        return;
+                    }
+                    isDrawing = false;
+                    ctx.closePath();
+                    if (event && typeof event.pointerId === 'number' && canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) {
+                        canvas.releasePointerCapture(event.pointerId);
+                    }
+                };
+                
+                prepareCanvas();
+                
+                canvas.addEventListener('pointerdown', function (event) {
+                    if (!ctx) {
+                        return;
+                    }
+                    isDrawing = true;
+                    const position = getPosition(event);
+                    ctx.beginPath();
+                    ctx.moveTo(position.x, position.y);
+                    hasDrawnSignature = true;
+                    if (typeof event.pointerId === 'number') {
+                        canvas.setPointerCapture(event.pointerId);
+                    }
+                    event.preventDefault();
+                });
+                
+                canvas.addEventListener('pointermove', function (event) {
+                    if (!isDrawing || !ctx) {
+                        return;
+                    }
+                    const position = getPosition(event);
+                    ctx.lineTo(position.x, position.y);
+                    ctx.stroke();
+                    event.preventDefault();
+                });
+                
+                canvas.addEventListener('pointerup', stopDrawing);
+                canvas.addEventListener('pointerleave', stopDrawing);
+                canvas.addEventListener('pointercancel', stopDrawing);
+                
+                if (clearSignatureButton) {
+                    clearSignatureButton.addEventListener('click', function () {
+                        prepareCanvas();
+                        hasDrawnSignature = false;
+                    });
+                }
+            } else if (clearSignatureButton) {
+                clearSignatureButton.classList.add('hidden');
+            }
+            
+            const updateNamePreview = function () {
+                const value = signerName.value.trim();
+                agreeNamePreview.textContent = value || 'your name';
+                if (!userEditedTypedSignature) {
+                    typedSignature.value = value;
+                }
+            };
+            
+            const updateButtonState = function () {
+                const valid = signerName.value.trim().length > 0 &&
+                    signerDob.value &&
+                    typedSignature.value.trim().length > 0 &&
+                    acceptTerms.checked;
+                acceptButton.disabled = !valid;
+            };
+            
+            signerName.addEventListener('input', function () {
+                updateNamePreview();
+                updateButtonState();
+            });
+            
+            signerDob.addEventListener('change', updateButtonState);
+            signerDob.addEventListener('input', updateButtonState);
+            
+            typedSignature.addEventListener('input', function () {
+                userEditedTypedSignature = typedSignature.value.trim() !== signerName.value.trim();
+                updateButtonState();
+            });
+            
+            acceptTerms.addEventListener('change', updateButtonState);
+            
+            updateNamePreview();
+            updateButtonState();
+            
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                updateButtonState();
+                if (acceptButton.disabled) {
+                    return;
+                }
+                
+                acceptButton.disabled = true;
+                setStatus('pending', 'Submitting authorization...');
+                
+                const name = signerName.value.trim();
+                const dobValue = signerDob.value;
+                const typedValue = typedSignature.value.trim();
+                const signedDate = new Date();
+                
+                const signedDisplay = signedDate.toLocaleString(undefined, { dateStyle: 'long', timeStyle: 'short' });
+                let dobDisplay = 'N/A';
+                if (dobValue) {
+                    const dobDate = new Date(dobValue + 'T00:00:00');
+                    if (!Number.isNaN(dobDate.getTime())) {
+                        dobDisplay = dobDate.toLocaleDateString(undefined, { dateStyle: 'long' });
+                    } else {
+                        dobDisplay = dobValue;
+                    }
+                }
+                
+                const projectTotalElement = document.querySelector('.total-amount');
+                const projectTotal = projectTotalElement ? projectTotalElement.textContent.trim() : '';
+                const signatureImageData = hasDrawnSignature && canvas && canvas.toDataURL ? canvas.toDataURL('image/png') : '';
+                const summaryTextLines = [
+                    'Estimate: ' + estimateNumber,
+                    'Client Name: ' + name,
+                    'Date of Birth: ' + dobDisplay,
+                    'Typed Signature: ' + typedValue,
+                    'Drawn Signature Captured: ' + (hasDrawnSignature ? 'Yes' : 'No'),
+                    'Signed On: ' + signedDisplay,
+                    projectTotal ? 'Project Total: ' + projectTotal : null
+                ].filter(Boolean);
+                const summaryText = summaryTextLines.join('\n');
+                const summaryHtml = [
+                    '<h3 style=\"margin:0 0 12px 0;font-family:Georgia,serif;color:#2C2C2C;\">Digital Authorization Summary</h3>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Estimate:</strong> ' + estimateNumber + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Client Name:</strong> ' + name + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Date of Birth:</strong> ' + dobDisplay + '</p>',
+                    '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Typed Signature:</strong> ' + typedValue + '</p>',
+                    projectTotal ? '<p style=\"margin:0 0 6px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Project Total:</strong> ' + projectTotal + '</p>' : '',
+                    '<p style=\"margin:0 0 12px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Signed On:</strong> ' + signedDisplay + '</p>',
+                    hasDrawnSignature && signatureImageData
+                        ? '<div><p style=\"margin:0 0 8px 0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Drawn Signature:</strong></p><img src=\"' + signatureImageData + '\" alt=\"Drawn signature\" style=\"max-width:320px;border:1px solid #ddd;border-radius:6px;\"></div>'
+                        : '<p style=\"margin:0;font-family:Georgia,serif;color:#2C2C2C;\"><strong>Drawn Signature:</strong> Not provided</p>'
+                ].join('');
+                
+                const formData = new FormData();
+                formData.append('access_key', web3formsAccessKey);
+                formData.append('subject', 'Digital Acceptance - ' + estimateNumber);
+                formData.append('full_name', name);
+                formData.append('date_of_birth_raw', dobValue || 'N/A');
+                formData.append('date_of_birth_display', dobDisplay);
+                formData.append('typed_signature', typedValue);
+                formData.append('typed_signature_matches_name', typedValue.toLowerCase() === name.toLowerCase() ? 'Yes' : 'No');
+                formData.append('drawn_signature_provided', hasDrawnSignature ? 'Yes' : 'No');
+                formData.append('signed_on', signedDate.toISOString());
+                formData.append('signed_on_display', signedDisplay);
+                formData.append('estimate_number', estimateNumber);
+                if (projectTotal) {
+                    formData.append('project_total', projectTotal);
+                }
+                formData.append('summary_text', summaryText);
+                formData.append('summary_html', summaryHtml);
+                formData.append('source_url', window.location.href);
+                if (signatureImageData) {
+                    formData.append('signature_image_base64', signatureImageData.replace(/^data:image\/png;base64,/, ''));
+                    formData.append('signature_image_data_url', signatureImageData);
+                }
+                
+                try {
+                    const response = await fetch(web3formsEndpoint, {
+                        method: 'POST',
+                        headers: {
+                            Accept: 'application/json'
+                        },
+                        body: formData
+                    });
+                    const result = await response.json();
+                    if (!result.success) {
+                        throw new Error(result.message || 'Submission failed.');
+                    }
+                    
+                    thankYouName.textContent = name;
+                    thankYouTimestamp.textContent = signedDisplay;
+                    thankYouDob.textContent = dobDisplay;
+                    thankYouTyped.textContent = typedValue;
+                    thankYouSketch.textContent = hasDrawnSignature ? 'Captured (download below)' : 'Not provided';
+                    
+                    if (signatureDownload) {
+                        if (signatureImageData) {
+                            signatureDownload.href = signatureImageData;
+                            signatureDownload.download = 'kmjk-digital-signature-' + Date.now() + '.png';
+                            signatureDownload.classList.remove('hidden');
+                        } else {
+                            signatureDownload.classList.add('hidden');
+                        }
+                    }
+                    
+                    thankYouCard.classList.add('active');
+                    setStatus('success', 'Authorization received. A confirmation email has been sent to KMJK.');
+                    
+                    Array.prototype.forEach.call(form.elements, function (element) {
+                        if (element === printReceiptButton || element.tagName.toLowerCase() === 'a') {
+                            return;
+                        }
+                        element.disabled = true;
+                    });
+                } catch (error) {
+                    console.error('Digital acceptance submission failed:', error);
+                    setStatus('error', 'Could not submit the authorization. Please try again or contact KMJK.');
+                    updateButtonState();
+                    return;
+                }
+            });
+            
+            if (printReceiptButton) {
+                printReceiptButton.addEventListener('click', function () {
+                    window.print();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
