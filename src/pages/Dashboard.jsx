@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { 
   Plus, 
   FileText, 
@@ -39,6 +39,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.j
 import { processCrewUpdate, generateJobSummary, processHomeownerQuestion, getApiKey } from '@/services/zaiService.js'
 import { jobsApi, tagsApi } from '@/lib/supabaseClient.js'
 import VoiceInput from '@/components/voice-input.jsx'
+import { uploadChatPhoto } from '@/services/kmjkUploadService.js'
 
 // Job status options
 const STATUSES = [
@@ -183,6 +184,9 @@ export default function Dashboard() {
   const [showTagManager, setShowTagManager] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false)
+  const [photoUploadError, setPhotoUploadError] = useState('')
+  const photoInputRef = useRef(null)
 
   // Form state
   const [formData, setFormData] = useState({
