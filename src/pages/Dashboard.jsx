@@ -116,8 +116,14 @@ const getAllTagsFromJobs = (jobs) => {
   return tagCounts
 }
 
+const getPhotoUrl = (photo) => {
+  if (!photo) return null
+  if (typeof photo === 'string') return photo
+  return photo.url || photo.viewUrl || photo.fileUrl || photo.publicUrl || photo.src || null
+}
+
 const normalizePhotoUrl = (url) => {
-  if (!url || typeof url !== 'string') return url
+  if (!url || typeof url !== 'string') return null
   return url
 }
 
@@ -143,25 +149,40 @@ const getSupabaseHost = () => {
 }
 
 // Transform Supabase job to frontend format
-const transformJobFromDB = (dbJob) => ({
-  id: dbJob.id,
-  company: dbJob.company || '',
-  clientName: dbJob.client_name || '',
-  clientEmail: dbJob.client_email || '',
-  clientPhone: dbJob.client_phone || '',
-  jobType: dbJob.job_type || '',
-  description: dbJob.description || '',
-  status: dbJob.status || 'lead',
-  location: dbJob.location || '',
-  budget: dbJob.budget ? parseFloat(dbJob.budget) : null,
-  estimatedCompletion: dbJob.estimated_completion || null,
-  notes: dbJob.notes || [],
-  createdAt: dbJob.created_at,
-  files: dbJob.files || [],
-  photos: dbJob.photos || [],
-  tags: dbJob.tags || [],
-  aiSummary: dbJob.ai_summary || null
-})
+const transformJobFromDB = (dbJob) => {
+  const rawPhotos = dbJob.photos || []
+  if (rawPhotos.length > 0) {
+    console.log('[transformJobFromDB] Raw photos for job', dbJob.id, ':', JSON.stringify(rawPhotos))
+  }
+  
+  const normalizedPhotos = rawPhotos.map((p, i) => {
+    const url = getPhotoUrl(p)
+    if (!url) {
+      console.warn('[transformJobFromDB] Photo', i, 'has no URL. Raw:', JSON.stringify(p))
+    }
+    return typeof p === 'string' ? { url: p, name: `Photo ${i + 1}` } : { ...p, url }
+  })
+  
+  return {
+    id: dbJob.id,
+    company: dbJob.company || '',
+    clientName: dbJob.client_name || '',
+    clientEmail: dbJob.client_email || '',
+    clientPhone: dbJob.client_phone || '',
+    jobType: dbJob.job_type || '',
+    description: dbJob.description || '',
+    status: dbJob.status || 'lead',
+    location: dbJob.location || '',
+    budget: dbJob.budget ? parseFloat(dbJob.budget) : null,
+    estimatedCompletion: dbJob.estimated_completion || null,
+    notes: dbJob.notes || [],
+    createdAt: dbJob.created_at,
+    files: dbJob.files || [],
+    photos: normalizedPhotos,
+    tags: dbJob.tags || [],
+    aiSummary: dbJob.ai_summary || null
+  }
+}
 
 // Transform frontend job to Supabase format
 const transformJobToDB = (frontendJob) => ({
