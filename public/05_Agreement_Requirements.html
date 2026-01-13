@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KMJK — Agreement Requirements & Clauses</title>
+  <style>
+    :root {
+      --deep-charcoal: #2C2C2C;
+      --warm-off-white: #F8F8F8;
+      --brushed-gold: #B8860B;
+      --muted: #6B6B6B;
+      --border: #D1D1D1;
+      --card: #FFFFFF;
+      --danger-bg: #FEF2F2;
+      --danger-text: #DC2626;
+    }
+
+    @page { size: Letter; margin: 0.5in; }
+
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      background: var(--warm-off-white);
+      color: var(--deep-charcoal);
+      font-family: Georgia, 'Times New Roman', serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      line-height: 1.5;
+    }
+
+    .page {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 6px solid var(--brushed-gold);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    .header .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .badge {
+      font-size: 12px;
+      color: #fff;
+      border: 1px solid var(--deep-charcoal);
+      background: var(--deep-charcoal);
+      padding: 8px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      background: #fff;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section h2 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brushed-gold);
+      border-bottom: 1px solid var(--warm-off-white);
+      padding-bottom: 8px;
+    }
+
+    .clause-box {
+      margin-bottom: 16px;
+    }
+
+    .clause-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--deep-charcoal);
+      margin-bottom: 6px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    li { margin: 6px 0; }
+
+    .warning-box {
+      background: var(--danger-bg);
+      border: 1px solid #FECACA;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: var(--danger-text);
+      margin-top: 10px;
+    }
+
+    .highlight {
+      background: rgba(184,134,11,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .page { padding: 20px 16px; margin: 10px; }
+      .header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1>Agreement Requirements <span style="color:var(--brushed-gold);">— Air-Tight Provisions</span></h1>
+        <div class="subtitle">Legal Mechanics for the Pooled Labor Model</div>
+      </div>
+      <div class="badge">Internal Drafting Guide</div>
+    </div>
+
+    <div class="section">
+      <h2>1. The "Labor Pool" Mechanism (Core Risk)</h2>
+      <div class="clause-box">
+        <div class="clause-title">"Use-It-or-Lose-It" Clause</div>
+        <ul>
+          <li>Explicitly state that unused Weekly Pool Hours <strong>expire at 11:59 PM on Sunday</strong>.</li>
+          <li><strong>Prohibited:</strong> Rollover credits, cash value redemption, or "banking" hours.</li>
+          <li><strong>Rationale:</strong> Prevents paying for 3 quiet months then demanding 100 hours in Week 13.</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">Definition of "Hour"</div>
+        <ul>
+          <li><strong>Clock Start:</strong> Upon arrival at the portfolio/site (Portal-to-Portal if negotiated).</li>
+          <li><strong>Minimum Increments:</strong> 30-minute blocks.</li>
+          <li><strong>Trip Charges:</strong> Materials sourcing time counts against the pool.</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">Overage Mechanics</div>
+        <ul>
+          <li><strong>Trigger:</strong> Hours > 32 (Standard) or > 60 (Premium).</li>
+          <li><strong>Rate:</strong> $78/hr (Standard) / $117/hr (After-hours).</li>
+          <li><strong>Notification:</strong> KMJK notifies when pool is exhausted; work pauses until Overage authorized.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. Scope: Maintenance vs. Renovation</h2>
+      <div class="clause-box">
+        <div class="clause-title">"Minor Repair" (Included - All Tiers)</div>
+        <ul>
+          <li>Repairs intended to restore functionality to an existing asset.</li>
+          <li><strong>Cap:</strong> Any single task > 4 hours continuous labor = Project/Renovation (requires separate scope).</li>
+          <li><strong>Exclusions:</strong> Flooring (>1 room), full interior paint, cabinets.</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">"Renovation" (Excluded from Standard/Budget)</div>
+        <ul>
+          <li>Improvements intended to increase asset value or change aesthetics.</li>
+          <li><strong>Trigger:</strong> Requires separate approval of scope and budget.</li>
+        </ul>
+      </div>
+      <div class="clause-box" style="background:var(--warm-off-white); border:1px solid var(--brushed-gold); padding:10px; border-radius:8px;">
+        <div class="clause-title" style="color:var(--brushed-gold);">★ Premium Tier Exception ("Renovation Subscription")</div>
+        <ul>
+          <li><strong>Authorized Use:</strong> Premium Tier clients are <em>authorized</em> to use Pool Hours for Capital Improvements.</li>
+          <li><strong>Phase 1 (Stabilization):</strong> Months 1-3 focus on critical repairs. Renovation timelines are estimated, not guaranteed.</li>
+          <li><strong>Phase 2 (Roadmap):</strong> "Renovation Roadmap" agreed monthly. Unused maintenance hours shift to Roadmap projects (Variable Velocity).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Turnover Pricing Protection</h2>
+      <div class="clause-box">
+        <div class="clause-title">"Standard Turn" ($1,200)</div>
+        <ul>
+          <li><strong>Includes:</strong> Patching nail holes (<20), spot paint (<20%), deep clean, safety check.</li>
+          <li><strong>Condition Precedent:</strong> Unit must be "broom clean" and free of personal property.</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">"Heavy Turn" Triggers (Billable/Quoted)</div>
+        <ul>
+          <li><strong>Trash:</strong> > 2 kitchen bags of debris left behind.</li>
+          <li><strong>Drywall:</strong> Holes > 4 inches diameter.</li>
+          <li><strong>Paint:</strong> Full wall color change or nicotine/smoke remediation.</li>
+          <li><strong>Biohazard:</strong> Pet waste, infestation (automatic exclusion).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. Waivers & Liability</h2>
+      <div class="clause-box">
+        <div class="clause-title">Storm Prep (Effort vs. Outcome)</div>
+        <ul>
+          <li>"Owner acknowledges Storm Prep Services constitute a <em>best-effort service</em>. KMJK does not guarantee prevention of damage. KMJK is not an insurer."</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">Declined Services (Add-On Menu)</div>
+        <ul>
+          <li><strong>HVAC Waiver:</strong> If declined, Owner accepts liability for accelerated corrosion/coil failure.</li>
+          <li><strong>Sewer Waiver:</strong> If declined, Owner accepts liability for main line stoppages.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>5. Material Markup & Spending</h2>
+      <ul>
+        <li><strong>Emergency Authority:</strong> KMJK may spend up to $1,000 without prior approval <em>strictly</em> to stop active damage.</li>
+        <li><strong>Non-Emergency Cap:</strong> Strict $250 limit without written approval.</li>
+        <li><strong>Markup:</strong> Cost + 20%. Sourcing labor deducted from Labor Pool.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>6. Anti-Gaming & Fees</h2>
+      <div class="clause-box">
+        <div class="clause-title">The "Tier Switcher" Trap</div>
+        <ul>
+          <li><strong>Downgrade Penalty:</strong> Downgrading from Premium to Budget triggers a "Condition Reset" inspection fee to prevent fixing neglect on Premium hours then dropping.</li>
+          <li><strong>Termination:</strong> 30-day notice required.</li>
+        </ul>
+      </div>
+      <div class="clause-box">
+        <div class="clause-title">One-Page Close Compatibility</div>
+        <ul>
+          <li>The <strong>Proposal</strong> is the Term Sheet.</li>
+          <li>It references the <strong>Master Service Agreement (MSA)</strong> at a fixed URL.</li>
+          <li>Signature agrees to the "Use-It-or-Lose-It" policy.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

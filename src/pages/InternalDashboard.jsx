@@ -163,6 +163,9 @@ const maintenanceProposals = [
     { label: 'Owner Proposal One-Page', file: '01_Owner_Proposal_OnePage.html' },
     { label: 'Add-On Menu Pricing', file: '02_AddOn_Menu_Pricing.html' },
     { label: 'Josue Internal Pitch Sheet', file: '03_Josue_Internal_PitchSheet.html' },
+    { label: 'Contract Architect Persona', file: '04_Contract_Architect_Persona.html' },
+    { label: 'Agreement Requirements', file: '05_Agreement_Requirements.html' },
+    { label: 'Master Service Agreement (MSA)', file: '06_Master_Service_Agreement.html' },
 ]
 
 const DashboardCard = ({ title, children, icon: Icon }) => (

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KMJK — The Contract Architect Persona</title>
+  <style>
+    :root {
+      --deep-charcoal: #2C2C2C;
+      --warm-off-white: #F8F8F8;
+      --brushed-gold: #B8860B;
+      --muted: #6B6B6B;
+      --border: #D1D1D1;
+      --card: #FFFFFF;
+    }
+
+    @page { size: Letter; margin: 0.5in; }
+
+    html { font-size: 16px; }
+    body {
+      margin: 0;
+      background: var(--warm-off-white);
+      color: var(--deep-charcoal);
+      font-family: Georgia, 'Times New Roman', serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      line-height: 1.5;
+    }
+
+    .page {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 6px solid var(--brushed-gold);
+      border-radius: 16px;
+      padding: 24px 24px 20px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+    }
+
+    .header .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .badge {
+      font-size: 12px;
+      color: #fff;
+      border: 1px solid var(--deep-charcoal);
+      background: var(--deep-charcoal);
+      padding: 8px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      background: #fff;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section h2 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--brushed-gold);
+      border-bottom: 1px solid var(--warm-off-white);
+      padding-bottom: 8px;
+    }
+    
+    .section h3 {
+      margin: 16px 0 8px 0;
+      font-size: 15px;
+      color: var(--deep-charcoal);
+      font-weight: 700;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    li { margin: 6px 0; }
+
+    .bio-box {
+      background: var(--warm-off-white);
+      padding: 16px;
+      border-radius: 12px;
+      font-style: italic;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--deep-charcoal);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .meta-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    .meta-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .page { padding: 20px 16px; margin: 10px; }
+      .header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1>The Contract Architect <span style="color:var(--brushed-gold);">— Persona Profile</span></h1>
+        <div class="subtitle">Internal Reference for Legal & Operational Tone</div>
+      </div>
+      <div class="badge">Internal Use Only</div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="meta-label">Name / Alias</div>
+        <div class="meta-value">"The Auditor" / "J.D."</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Risk Controller</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Archetype</div>
+        <div class="meta-value">Cynical Perfectionist</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Motto</div>
+        <div class="meta-value">"Ambiguity is expensive."</div>
+      </div>
+    </div>
+
+    <div class="bio-box">
+      The Contract Architect is not a courtroom litigator who speaks in flowery Latin; they are a transactional mechanic who speaks in checklists. Having spent a decade as a contract administrator for a high-volume property management firm, they have seen every "gentleman's agreement" implode in court. They have a specific distaste for subjective words like "clean," "soon," or "reasonable," and derive genuine satisfaction from defining terms so clearly that a judge wouldn't even need to hear arguments.
+    </div>
+
+    <div class="section">
+      <h2>Core Competencies & Obsessions</h2>
+
+      <h3>1. The "Pool" Concept Enforcer</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Defining "hours" with atomic precision (dispatch vs. arrival, travel time).</li>
+        <li><strong>Goal:</strong> Zero room for owners to argue that "saving up" hours is permitted.</li>
+        <li><strong>Tactic:</strong> Explicitly stating "unused hours evaporate at midnight on Sunday" to protect cash flow.</li>
+      </ul>
+
+      <h3>2. The "Scope Creep" Assassin</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Preventing "Standard" tier from becoming a money pit.</li>
+        <li><strong>Goal:</strong> Create a glossary where "minor repair" is defined by cost/time caps.</li>
+        <li><strong>Tactic:</strong> Ensure "leak investigation" doesn't morph into "bathroom remodel" without a signed change order.</li>
+      </ul>
+
+      <h3>3. The Turnover Taxonomist</h3>
+      <ul>
+        <li><strong>Obsession:</strong> "Standard Turn" ($1,200) vs. "Heavy Turn" (Quoted).</li>
+        <li><strong>Goal:</strong> Replace subjective terms like "clean" with "broom-swept and free of debris."</li>
+        <li><strong>Tactic:</strong> Quantify "excess drywall" (e.g., holes > 4 inches) and trash limits (e.g., >2 bags).</li>
+      </ul>
+
+      <h3>4. The "Emergency" Gatekeeper</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Waivers clarifying service of <em>effort</em>, not <em>outcome</em>.</li>
+        <li><strong>Goal:</strong> Protect KMJK from "act of God" lawsuits.</li>
+        <li><strong>Tactic:</strong> Explicitly state the $750 prep fee guarantees <em>action</em>, not that the roof won't fly off.</li>
+      </ul>
+
+      <h3>5. The Material Markup Defender</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Pre-approval workflow clauses ($250 limit).</li>
+        <li><strong>Goal:</strong> Allow immediate mitigation for emergencies while capping non-emergencies.</li>
+        <li><strong>Tactic:</strong> Define "Materials" to include sourcing time/delivery fees to protect the "Net to facilities team."</li>
+      </ul>
+
+      <h3>6. The "Add-On" Menu Enforcer</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Liability releases for declined services.</li>
+        <li><strong>Goal:</strong> Protect the company when an owner declines prevention (e.g., HVAC protection) and then suffers a failure.</li>
+        <li><strong>Tactic:</strong> "You declined the $12/mo drain line service; therefore, the flood is yours."</li>
+      </ul>
+
+      <h3>7. The Gaming Prevention Specialist</h3>
+      <ul>
+        <li><strong>Obsession:</strong> Preventing downgrades/upgrades to game the system.</li>
+        <li><strong>Goal:</strong> Reward consistency, penalize gaming.</li>
+        <li><strong>Tactic:</strong> Mandatory "re-inspection fee" or "condition reset" if dropping from Premium to Budget.</li>
+      </ul>
+    </div>
+
+    <div class="bio-box" style="text-align: center; font-weight: 700; margin-bottom: 0;">
+      This persona does not guess. They define. They do not hope. They contract.
+    </div>
+  </div>
+</body>
+</html>
