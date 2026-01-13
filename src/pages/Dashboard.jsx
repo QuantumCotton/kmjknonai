@@ -118,7 +118,28 @@ const getAllTagsFromJobs = (jobs) => {
 
 const normalizePhotoUrl = (url) => {
   if (!url || typeof url !== 'string') return url
-  return url.replace('/storage/v1/object/public/kmjk-photos/', '/storage/v1/object/public/KMJK-PHOTOS/')
+  return url
+}
+
+const getAlternatePhotoUrl = (url) => {
+  if (!url || typeof url !== 'string') return null
+  if (url.includes('/storage/v1/object/public/KMJK-PHOTOS/')) {
+    return url.replace('/storage/v1/object/public/KMJK-PHOTOS/', '/storage/v1/object/public/kmjk-photos/')
+  }
+  if (url.includes('/storage/v1/object/public/kmjk-photos/')) {
+    return url.replace('/storage/v1/object/public/kmjk-photos/', '/storage/v1/object/public/KMJK-PHOTOS/')
+  }
+  return null
+}
+
+const getSupabaseHost = () => {
+  const url = import.meta.env.VITE_SUPABASE_URL
+  if (!url || typeof url !== 'string') return ''
+  try {
+    return new URL(url).host
+  } catch {
+    return url
+  }
 }
 
 // Transform Supabase job to frontend format
@@ -743,6 +764,7 @@ export default function Dashboard() {
                 <h1 className="text-xl md:text-2xl font-bold tracking-tight">KMJK Job Dashboard</h1>
                 <p className="text-xs md:text-sm text-gray-300">Manage work orders & estimates</p>
                 <p className="text-[10px] text-gray-400">Build: {import.meta.env.VITE_KMJK_BUILD_REF}</p>
+                <p className="text-[10px] text-gray-500">Supabase: {getSupabaseHost()}</p>
               </div>
             </div>
             {/* Mobile-only stats/toggle could go here if needed */}
@@ -1348,8 +1370,17 @@ export default function Dashboard() {
                           className="w-full h-full object-cover"
                           loading="lazy"
                           onError={(e) => {
-                            console.error('[Dashboard] Image load error:', normalizePhotoUrl(photo.url));
                             const img = e.currentTarget
+
+                            const triedAlt = img.dataset.triedAlt === '1'
+                            const altUrl = getAlternatePhotoUrl(photo.url)
+                            if (!triedAlt && altUrl) {
+                              img.dataset.triedAlt = '1'
+                              img.src = altUrl
+                              return
+                            }
+
+                            console.error('[Dashboard] Image load error:', normalizePhotoUrl(photo.url));
                             img.style.display = 'none'
                             const fallback = img.nextElementSibling
                             if (fallback) {
