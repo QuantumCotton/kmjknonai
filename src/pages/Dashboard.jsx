@@ -737,6 +737,7 @@ export default function Dashboard() {
               <div>
                 <h1 className="text-xl md:text-2xl font-bold tracking-tight">KMJK Job Dashboard</h1>
                 <p className="text-xs md:text-sm text-gray-300">Manage work orders & estimates</p>
+                <p className="text-[10px] text-gray-400">Build: {import.meta.env.VITE_KMJK_BUILD_REF}</p>
               </div>
             </div>
             {/* Mobile-only stats/toggle could go here if needed */}
