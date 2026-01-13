@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabaseClient'
 
-const BUCKET_NAME = 'kmjk-photos'
+const BUCKET_NAME = import.meta.env.VITE_KMJK_PHOTO_BUCKET || 'KMJK-PHOTOS'
 
 /**
  * Uploads a file to Supabase Storage

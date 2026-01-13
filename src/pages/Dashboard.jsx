@@ -116,6 +116,11 @@ const getAllTagsFromJobs = (jobs) => {
   return tagCounts
 }
 
+const normalizePhotoUrl = (url) => {
+  if (!url || typeof url !== 'string') return url
+  return url.replace('/storage/v1/object/public/kmjk-photos/', '/storage/v1/object/public/KMJK-PHOTOS/')
+}
+
 // Transform Supabase job to frontend format
 const transformJobFromDB = (dbJob) => ({
   id: dbJob.id,
@@ -1338,12 +1343,12 @@ export default function Dashboard() {
                     <div key={idx} className="relative group">
                       <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 relative">
                         <img 
-                          src={photo.url} 
+                          src={normalizePhotoUrl(photo.url)} 
                           alt={photo.name || 'Job photo'}
                           className="w-full h-full object-cover"
                           loading="lazy"
                           onError={(e) => {
-                            console.error('[Dashboard] Image load error:', photo.url);
+                            console.error('[Dashboard] Image load error:', normalizePhotoUrl(photo.url));
                             const img = e.currentTarget
                             img.style.display = 'none'
                             const fallback = img.nextElementSibling
@@ -1354,7 +1359,7 @@ export default function Dashboard() {
                         />
                         <div className="absolute inset-0 hidden items-center justify-center bg-gray-100 text-xs text-gray-500 flex-col gap-2">
                             <span>Failed to load</span>
-                            <a href={photo.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Open Link</a>
+                            <a href={normalizePhotoUrl(photo.url)} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Open Link</a>
                         </div>
                       </div>
 
@@ -1373,7 +1378,7 @@ export default function Dashboard() {
                             </p>
                         )}
                         <a 
-                            href={photo.url} 
+                            href={normalizePhotoUrl(photo.url)} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="text-[10px] text-blue-600 hover:underline ml-2 whitespace-nowrap"
