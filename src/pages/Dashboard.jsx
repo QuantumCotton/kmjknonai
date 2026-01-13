@@ -1335,14 +1335,28 @@ export default function Dashboard() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {(selectedJob.photos || []).map((photo, idx) => (
                     <div key={idx} className="relative group">
-                      <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
+                      <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 relative">
                         <img 
                           src={photo.url} 
                           alt={photo.name || 'Job photo'}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          onError={(e) => {
+                            console.error('[Dashboard] Image load error:', photo.url);
+                            const img = e.currentTarget
+                            img.style.display = 'none'
+                            const fallback = img.nextElementSibling
+                            if (fallback) {
+                              fallback.style.display = 'flex'
+                            }
+                          }}
                         />
+                        <div className="absolute inset-0 hidden items-center justify-center bg-gray-100 text-xs text-gray-500 flex-col gap-2">
+                            <span>Failed to load</span>
+                            <a href={photo.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Open Link</a>
+                        </div>
                       </div>
+
                       <button
                         onClick={() => handleRemovePhoto(idx)}
                         className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
@@ -1350,11 +1364,23 @@ export default function Dashboard() {
                       >
                         <Trash2 size={14} />
                       </button>
-                      {photo.name && (
-                        <p className="text-xs text-gray-600 mt-1 truncate" title={photo.name}>
-                          {photo.name}
-                        </p>
-                      )}
+
+                      <div className="flex justify-between items-center mt-1">
+                        {photo.name && (
+                            <p className="text-xs text-gray-600 truncate flex-1" title={photo.name}>
+                            {photo.name}
+                            </p>
+                        )}
+                        <a 
+                            href={photo.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-blue-600 hover:underline ml-2 whitespace-nowrap"
+                            title="Open in new tab"
+                        >
+                            Open
+                        </a>
+                      </div>
                     </div>
                   ))}
                 </div>
