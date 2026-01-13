@@ -1,0 +1,21 @@
+{
+  "name": "KMJK Home Improvement",
+  "short_name": "KMJK",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1f1f1f",
+  "description": "Premium kitchen, bathroom, and custom renovations in Stuart, FL.",
+  "icons": [
+    {
+      "src": "/kmjk-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/kmjk-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -729,36 +729,46 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[var(--warm-off-white)]">
       {/* Header */}
-      <header className="bg-[var(--deep-charcoal)] text-white px-6 py-4 sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <FileText className="text-[var(--brushed-gold)]" size={28} />
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight">KMJK Job Dashboard</h1>
-              <p className="text-sm text-gray-300">Manage work orders & estimates</p>
+      <header className="bg-[var(--deep-charcoal)] text-white px-4 py-3 md:px-6 md:py-4 sticky top-0 z-50 shadow-lg">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center justify-between w-full md:w-auto">
+            <div className="flex items-center gap-3">
+              <FileText className="text-[var(--brushed-gold)]" size={24} />
+              <div>
+                <h1 className="text-xl md:text-2xl font-bold tracking-tight">KMJK Job Dashboard</h1>
+                <p className="text-xs md:text-sm text-gray-300">Manage work orders & estimates</p>
+              </div>
             </div>
+            {/* Mobile-only stats/toggle could go here if needed */}
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
+          
+          <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto no-scrollbar">
+            <div className="text-right hidden md:block">
               <div className="text-sm text-gray-300">Total Jobs</div>
               <div className="text-2xl font-bold text-[var(--brushed-gold)]">{jobs.length}</div>
             </div>
             <Button 
               onClick={() => window.location.href = '/history'} 
               variant="outline" 
-              className="bg-[#2a2a2a] text-white border-white mr-2 hover:bg-[#3a3a3a]"
+              size="sm"
+              className="bg-[#2a2a2a] text-white border-white hover:bg-[#3a3a3a] whitespace-nowrap"
             >
-              <History size={18} className="mr-2" />
+              <History size={16} className="mr-2" />
               History
             </Button>
-            <Button onClick={() => setShowTagManager(true)} variant="outline" className="bg-[#2a2a2a] text-white border-white hover:bg-[#3a3a3a]">
-              <TagIcon size={18} className="mr-2" />
+            <Button 
+              onClick={() => setShowTagManager(true)} 
+              variant="outline" 
+              size="sm"
+              className="bg-[#2a2a2a] text-white border-white hover:bg-[#3a3a3a] whitespace-nowrap"
+            >
+              <TagIcon size={16} className="mr-2" />
               Tags
             </Button>
             <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
               <DialogTrigger asChild>
-                <Button className="bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-yellow-500 font-semibold">
-                  <Plus size={18} className="mr-2" />
+                <Button size="sm" className="bg-[var(--brushed-gold)] text-[var(--deep-charcoal)] hover:bg-yellow-500 font-semibold whitespace-nowrap">
+                  <Plus size={16} className="mr-2" />
                   Add Job
                 </Button>
               </DialogTrigger>

@@ -48,7 +48,7 @@ pnpm run preview
 
 ## Project Structure
 
-```
+```text
 kmjk-website/
 ├── src/
 │   ├── assets/          # Images and static files
@@ -63,9 +63,10 @@ kmjk-website/
 
 ## Contact Information
 
-**KMJK Home Improvement**
+### KMJK Home Improvement
+
 - Phone: 772-777-0622
-- Email: info@kmjk.pro
+- Email: <info@kmjk.pro>
 - Operations Hub: 1301 SE Francis Street, Jensen Beach, FL 34957
 - Service Area: Jensen Beach, Stuart, Palm City, and the Treasure Coast
 
@@ -85,11 +86,13 @@ To interact with this project effectively, adopt the **"Contract Architect"** (a
 **Core Logic:** Protects the "Pooled Labor" model from scope creep and "banked hours" liability.
 
 ### The "Renovation Subscription" Business Model
+
 - **Standard Tier ($14,900):** Pool hours are for **Preservation** (Repair/Prevent). Unused hours expire Sunday at 11:59 PM.
 - **Premium Tier ($19,200):** Pool hours are for **Growth** (Renovate). Unused maintenance hours *automatically* pivot to pre-planned upgrades ("Renovation Roadmap").
 - **Stabilization Period:** Months 1-3 are for stabilizing the asset. Renovation timelines are "best effort" until the building is learned.
 
 ### Key Documents (The Legal Firewall)
+
 - **1. Proposal (Commercial Terms):** [`public/01_Owner_Proposal_OnePage.html`](public/01_Owner_Proposal_OnePage.html)
   - *Defines the offer: Standard = Stability, Premium = Growth.*
 - **2. Add-On Menu (Pricing):** [`public/02_AddOn_Menu_Pricing.html`](public/02_AddOn_Menu_Pricing.html)
