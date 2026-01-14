@@ -815,6 +815,10 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto no-scrollbar">
+            <div className="text-right hidden md:block">
+              <div className="text-sm text-gray-300">Total Jobs</div>
+              <div className="text-2xl font-bold text-[var(--brushed-gold)]">{jobs.length}</div>
+            </div>
             <Button 
               onClick={() => window.location.href = '/history'} 
               variant="outline" 
@@ -1144,12 +1148,7 @@ export default function Dashboard() {
       <Dialog open={!!selectedJob} onOpenChange={(open) => { if (!open) setSelectedJob(null) }}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              Job Details
-              <Button size="sm" variant="ghost" onClick={() => setSelectedJob(null)}>
-                ✕
-              </Button>
-            </DialogTitle>
+            <DialogTitle>Job Details</DialogTitle>
           </DialogHeader>          
           <Tabs defaultValue="info" className="w-full">
             <TabsList className="grid w-full grid-cols-4 mb-4">
