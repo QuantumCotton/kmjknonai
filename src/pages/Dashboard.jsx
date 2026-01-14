@@ -815,10 +815,6 @@ export default function Dashboard() {
           </div>
           
           <div className="flex items-center gap-2 md:gap-4 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto no-scrollbar">
-            <div className="text-right hidden md:block">
-              <div className="text-sm text-gray-300">Total Jobs</div>
-              <div className="text-2xl font-bold text-[var(--brushed-gold)]">{jobs.length}</div>
-            </div>
             <Button 
               onClick={() => window.location.href = '/history'} 
               variant="outline" 
