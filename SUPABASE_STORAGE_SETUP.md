@@ -3,21 +3,24 @@
 This guide walks you through creating a storage bucket for the KMJK Dashboard photo uploads.
 
 ## IMPORTANT: Bucket Name
-Your bucket is named: **`KMJK-PHOTOS`** (uppercase with hyphen)
+
+Your bucket is named: **`kmjk-photos`** (lowercase with hyphen)
 
 The website will automatically detect your bucket name, but if you need to create a new one, use exactly this name.
 
 ## 1. Create the Bucket (if not already created)
+
 1. Go to your Supabase project dashboard: [https://supabase.com/dashboard](https://supabase.com/dashboard)
 2. Click on **Storage** in the left sidebar (icon looks like a box/archive).
 3. Click **New Bucket**.
-4. Enter the name: `KMJK-PHOTOS` (uppercase)
+4. Enter the name: `kmjk-photos` (lowercase)
 5. **IMPORTANT:** Toggle "Public Bucket" to **ON**.
    - This allows the images to be viewed in the app.
 6. Click **Save**.
 
 ## 2. Configure Policies (Permissions)
-1. In the Storage page, verify `KMJK-PHOTOS` is listed with a "PUBLIC" badge.
+
+1. In the Storage page, verify `kmjk-photos` is listed with a "PUBLIC" badge.
 2. Click the bucket name, then click **Policies** tab.
 3. You need to allow uploads. Click **New Policy**.
 4. Choose **"For full customization"** (or "Get started quickly").

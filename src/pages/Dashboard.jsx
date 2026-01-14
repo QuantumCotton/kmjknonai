@@ -116,10 +116,35 @@ const getAllTagsFromJobs = (jobs) => {
   return tagCounts
 }
 
-const getPhotoUrl = (photo) => {
+const parsePhoto = (photo) => {
   if (!photo) return null
-  if (typeof photo === 'string') return photo
-  return photo.url || photo.viewUrl || photo.fileUrl || photo.publicUrl || photo.src || null
+  if (typeof photo === 'string') {
+    try {
+      const parsed = JSON.parse(photo)
+      return parsePhoto(parsed)
+    } catch {
+      if (photo.startsWith('http')) return { url: photo, name: 'Photo' }
+      return null
+    }
+  }
+  if (typeof photo === 'object') {
+    const url = photo.url || photo.viewUrl || photo.fileUrl || photo.publicUrl || photo.src
+    if (typeof url === 'string' && url.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(url)
+        return { ...photo, ...parsed, url: parsed.url || parsed.viewUrl || parsed.fileUrl }
+      } catch {
+        return photo
+      }
+    }
+    return { ...photo, url }
+  }
+  return null
+}
+
+const getPhotoUrl = (photo) => {
+  const parsed = parsePhoto(photo)
+  return parsed?.url || null
 }
 
 const normalizePhotoUrl = (url) => {
@@ -151,17 +176,15 @@ const getSupabaseHost = () => {
 // Transform Supabase job to frontend format
 const transformJobFromDB = (dbJob) => {
   const rawPhotos = dbJob.photos || []
-  if (rawPhotos.length > 0) {
-    console.log('[transformJobFromDB] Raw photos for job', dbJob.id, ':', JSON.stringify(rawPhotos))
-  }
   
   const normalizedPhotos = rawPhotos.map((p, i) => {
-    const url = getPhotoUrl(p)
-    if (!url) {
+    const parsed = parsePhoto(p)
+    if (!parsed?.url) {
       console.warn('[transformJobFromDB] Photo', i, 'has no URL. Raw:', JSON.stringify(p))
+      return null
     }
-    return typeof p === 'string' ? { url: p, name: `Photo ${i + 1}` } : { ...p, url }
-  })
+    return { ...parsed, name: parsed.name || `Photo ${i + 1}` }
+  }).filter(Boolean)
   
   return {
     id: dbJob.id,

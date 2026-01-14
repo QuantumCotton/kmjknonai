@@ -86,8 +86,8 @@ export async function uploadChatPhoto(file, conversationId = 'general') {
   if (envBucket) candidatesSet.add(envBucket)
   bucketIds.forEach(id => candidatesSet.add(id))
   bucketNames.forEach(name => candidatesSet.add(name))
-  candidatesSet.add('KMJK-PHOTOS')
   candidatesSet.add('kmjk-photos')
+  candidatesSet.add('KMJK-PHOTOS')
   
   const BUCKET_CANDIDATES = Array.from(candidatesSet)
   console.log('[uploadChatPhoto] Will try these buckets in order:', BUCKET_CANDIDATES)
