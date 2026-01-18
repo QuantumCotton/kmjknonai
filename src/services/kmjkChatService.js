@@ -6,8 +6,8 @@ const isNode = typeof window === 'undefined'
 const BASE_URL = isNode ? (process.env.NETLIFY_DEV_URL || 'http://localhost:8888') : ''
 
 const OPENAI_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-openai`
-// LEAD_EMAIL_ENDPOINT removed as we use Web3Forms directly now
-// const OPENAI_TIMEOUT_MS = 45000
+const LEAD_EMAIL_ENDPOINT = `${BASE_URL}/.netlify/functions/kmjk-send-lead`
+const OPENAI_TIMEOUT_MS = 45000
 
 const DIGEST_REASON_LABELS = {
   inactivity: 'Inactivity timeout',
@@ -138,7 +138,7 @@ function createInitialConversation(conversationId) {
         id: `msg_${now.getTime()}`,
         role: 'assistant',
         content:
-          "Hey there! I'm Atlas with KMJK Home Improvement on the Treasure Coast. I'd love to help you explore your project ideas. What's your first name, and what are you thinking about doing?",
+          "Hey there! I'm Atlas with KMJK Home Improvement on the Treasure Coast. What's your first name?",
         timestamp,
         quickReplies: [],
       },
@@ -155,6 +155,10 @@ function createInitialConversation(conversationId) {
       preference: undefined,
       maxQuestions: undefined,
       questionCount: 0,
+      lastAskedKey: null,
+      lastAskedTurn: -1,
+      plannedQuestionKey: null,
+      plannedQuestionText: null,
     },
     leadNotificationSent: false,
     conversationDigestSent: false,
@@ -165,7 +169,7 @@ function createInitialConversation(conversationId) {
   }
 }
 
-const STORAGE_KEY = 'kmjk_chat_conversation_v1'
+const STORAGE_KEY = 'kmjk_chat_conversation_v2'
 
 export function loadConversationFromStorage() {
   if (isNode) return null
@@ -179,6 +183,28 @@ export function loadConversationFromStorage() {
       localStorage.removeItem(STORAGE_KEY)
       return null
     }
+
+    const leadData = parsed.leadData && typeof parsed.leadData === 'object' ? parsed.leadData : {}
+    parsed.leadData = {
+      ...leadData,
+      scopeNotes: Array.isArray(leadData.scopeNotes) ? leadData.scopeNotes : [],
+      photos: Array.isArray(leadData.photos) ? leadData.photos : [],
+    }
+
+    const intake = parsed.intake && typeof parsed.intake === 'object' ? parsed.intake : {}
+    parsed.intake = {
+      active: Boolean(intake.active),
+      estimatedQuestions: typeof intake.estimatedQuestions === 'number' ? intake.estimatedQuestions : 6,
+      askedQuestions: Array.isArray(intake.askedQuestions) ? intake.askedQuestions : [],
+      preference: intake.preference,
+      maxQuestions: intake.maxQuestions,
+      questionCount: typeof intake.questionCount === 'number' ? intake.questionCount : 0,
+      lastAskedKey: intake.lastAskedKey ?? null,
+      lastAskedTurn: typeof intake.lastAskedTurn === 'number' ? intake.lastAskedTurn : -1,
+      plannedQuestionKey: intake.plannedQuestionKey ?? null,
+      plannedQuestionText: intake.plannedQuestionText ?? null,
+    }
+
     return parsed
   } catch (error) {
     console.error('Failed to load conversation from storage:', error)
@@ -271,7 +297,18 @@ function captureScopeDetails(input, leadData) {
     return updated
   }
 
-  const indicatesDetail = text.length >= 30 || /\d/.test(text)
+  if (
+    /^(kitchen remodel|bathroom remodel|handyman visit|coatings\s*\/\s*epoxy|holiday lighting|gutter guards|roofing|energy rebates|tv mounting\s*\/\s*av)$/i.test(
+      text
+    )
+  ) {
+    return updated
+  }
+
+  const indicatesDetail =
+    text.length >= 12 ||
+    text.split(/\s+/).filter(Boolean).length >= 3 ||
+    /\b(sq\s?ft|sqft|square\s?feet|\d{2,})\b/i.test(text)
   if (!indicatesDetail) {
     return updated
   }
@@ -299,7 +336,7 @@ function detectServiceType(input, leadData) {
       updated.projectType = service.category
       updated.serviceCategory = service.category
       updated.serviceKeyword = service.keywords[0]
-      if (!updated.projectSummary) {
+      if (!updated.projectSummary && input.trim().length >= 18) {
         updated.projectSummary = input
       }
       break
@@ -320,7 +357,7 @@ function detectTimeline(input, leadData) {
   if (lower.includes('asap') || lower.includes('soon') || lower.includes('immediately')) {
     updated.timeline = 'ASAP'
   } else {
-    const match = lower.match(/\b(?:next|within)?\s*\d+\s*(?:day|days|week|weeks|month|months)\b/)
+    const match = lower.match(/\b(?:next|within)?\s*\d+(?:\s*-\s*\d+)?\s*(?:day|days|week|weeks|month|months)\b/)
     if (match) {
       updated.timeline = match[0]
     }
@@ -336,12 +373,49 @@ function detectBudget(input, leadData) {
 
   const lower = input.toLowerCase()
   const updated = { ...leadData }
-  const match = lower.match(/\$?\d+[k,]?\d*k?/)
 
+  const hasBudgetContext = /(budget|ballpark|range|invest|spend|price)/i.test(input)
+
+  const rangeMatch = input.match(
+    /(\$?\s*\d[\d,]*(?:\.\d+)?\s*[kK]?)\s*-\s*(\$?\s*\d[\d,]*(?:\.\d+)?\s*[kK]?)/
+  )
+  if (rangeMatch) {
+    const rawRange = `${rangeMatch[1]}-${rangeMatch[2]}`
+    updated.budget = rawRange.replace(/\s+/g, '')
+    return updated
+  }
+
+  const match = input.match(/\$\s*\d[\d,]*(?:\.\d+)?\s*[kK]?|\b\d+(?:\.\d+)?\s*[kK]\b/)
   if (match) {
-    updated.budget = match[0]
-  } else if (lower.includes('flexible') || lower.includes('depends')) {
+    const raw = match[0].trim()
+    const hasDollar = raw.includes('$')
+    const hasK = /k/i.test(raw)
+    const numeric = Number.parseFloat(raw.replace(/[^0-9.]/g, ''))
+    const normalizedValue = hasK ? numeric * 1000 : numeric
+    if (hasDollar || hasK || hasBudgetContext || normalizedValue >= 1000) {
+      updated.budget = raw.replace(/\s+/g, '')
+    }
+  }
+
+  if (!updated.budget && (lower.includes('flexible') || lower.includes('depends'))) {
     updated.budget = 'Flexible'
+  }
+
+  return updated
+}
+
+function detectContactPreference(input, leadData) {
+  if (leadData.contactPreference) return leadData
+
+  const lower = input.toLowerCase()
+  const updated = { ...leadData }
+
+  if (/(text|sms)/i.test(lower)) {
+    updated.contactPreference = 'text'
+  } else if (/(call|phone me|ring)/i.test(lower)) {
+    updated.contactPreference = 'call'
+  } else if (/(email|e-mail)/i.test(lower)) {
+    updated.contactPreference = 'email'
   }
 
   return updated
@@ -380,9 +454,10 @@ function determineStage(conversation) {
     return stage;
   }
   if (stage === 'dreaming') {
-    // Require minimum 3 turns in dreaming phase before advancing
-    const hasMinTurns = stageTurnCount >= 3;
-    const hasScopeNotes = Array.isArray(leadData.scopeNotes) && leadData.scopeNotes.length > 0;
+    const hasMinTurns = stageTurnCount >= 2;
+    const hasScopeNotes =
+      (Array.isArray(leadData.scopeNotes) && leadData.scopeNotes.length > 0) ||
+      (typeof leadData.projectSummary === 'string' && leadData.projectSummary.trim().length >= 18);
     if (hasMinTurns && hasScopeNotes) return 'logistics';
     return stage;
   }
@@ -394,20 +469,157 @@ function determineStage(conversation) {
   return stage;
 }
 
-function generateQuickReplies(leadData) {
+function planNextIntakeQuestion(conversation) {
+  const leadData = conversation?.leadData || {}
+  const stage = conversation?.stage
+  const turnCount = conversation?.turnCount || 0
+  const stageTurnCount = conversation?.stageTurnCount || 0
+  const lastAskedKey = conversation?.intake?.lastAskedKey
+  const lastAskedTurn = conversation?.intake?.lastAskedTurn ?? -1
+
+  const hasScope =
+    (Array.isArray(leadData.scopeNotes) && leadData.scopeNotes.length > 0) ||
+    (typeof leadData.projectSummary === 'string' && leadData.projectSummary.trim().length >= 18)
+
+  const service = (leadData.serviceCategory || leadData.projectType || '').toString()
+
+  const scopeQuestion = (() => {
+    if (/kitchen/i.test(service)) {
+      return "What's the biggest change you want in the kitchen—layout/flow, cabinets, counters, or something else?"
+    }
+    if (/bath/i.test(service)) {
+      return "For the bathroom, is this mainly a shower/tub upgrade, a vanity refresh, or a full remodel?"
+    }
+    if (/epoxy|coating|garage|polyaspartic/i.test(service)) {
+      return "Which area are we coating (garage, patio, interior), and about how many square feet?"
+    }
+    return "What are you hoping to change, and what's the main pain point with the space right now?"
+  })()
+
+  const steps = []
+
+  if (!leadData.name) {
+    steps.push({ key: 'name', question: "What's your first name?" })
+  }
+
+  if (stage === 'greeting') {
+    if (!leadData.projectType) {
+      steps.push({
+        key: 'projectType',
+        question: 'Which are you looking for today: a kitchen remodel, a bathroom remodel, or an epoxy floor/coating?',
+      })
+    }
+  }
+
+  if (stage === 'dreaming') {
+    if (!hasScope) {
+      if (lastAskedKey === 'scope' && turnCount - lastAskedTurn < 2) {
+        const altScope = (() => {
+          if (/kitchen/i.test(service)) {
+            return 'Quick check—are we mostly changing cabinets/counters, the layout, or flooring?' 
+          }
+          if (/bath/i.test(service)) {
+            return 'Quick check—is this mainly the shower, the vanity, or the whole bathroom?' 
+          }
+          if (/epoxy|coating|garage|polyaspartic/i.test(service)) {
+            return 'Quick check—is this a garage floor, a patio, or an interior floor?' 
+          }
+          return 'Quick check—what part are we changing first?' 
+        })()
+        steps.push({ key: 'scope_alt', question: altScope })
+      } else {
+        steps.push({ key: 'scope', question: scopeQuestion })
+      }
+    } else if (stageTurnCount < 2) {
+      const followUp = (() => {
+        if (/kitchen/i.test(service)) {
+          return 'What style are you leaning toward—more modern/clean, or warm/traditional?' 
+        }
+        if (/bath/i.test(service)) {
+          return 'Are you aiming for a spa feel, something sleek/modern, or more classic?' 
+        }
+        if (/epoxy|coating|garage|polyaspartic/i.test(service)) {
+          return 'Do you prefer a flake finish, a solid color, or a metallic look?' 
+        }
+        return 'What look or vibe are you going for overall—clean/modern, warm/classic, or something bold?' 
+      })()
+      steps.push({ key: 'vision', question: followUp })
+    }
+  }
+
+  if (stage === 'logistics') {
+    if (!leadData.contactPreference) {
+      steps.push({ key: 'contactPreference', question: 'What’s the best way for Chris to reach you—text, call, or email?' })
+    }
+    if (!leadData.phone && !leadData.email) {
+      steps.push({ key: 'contact', question: 'Perfect—what’s the best phone number or email to use?' })
+    }
+    if (!leadData.zip) {
+      steps.push({ key: 'zip', question: 'What’s the project zip code?' })
+    }
+    if (!leadData.timeline) {
+      steps.push({ key: 'timeline', question: 'When are you hoping to start?' })
+    }
+    if (!leadData.budget) {
+      steps.push({ key: 'budget', question: 'Do you have a rough investment range in mind, or should we help you dial that in?' })
+    }
+  }
+
+  if (stage === 'wrap_up') {
+    steps.push({
+      key: 'schedule',
+      question: 'To get you on the calendar, do weekdays or weekends usually work better for you?',
+    })
+  }
+
+  if (steps.length === 0) return null
+
+  const pick = steps.find((step) => step.key !== lastAskedKey || turnCount - lastAskedTurn >= 2)
+  return pick || steps[0]
+}
+
+function generateQuickReplies(conversation) {
+  const leadData = conversation?.leadData || {}
+  const plannedKey = conversation?.intake?.plannedQuestionKey
   const replies = new Set()
+
+  if (plannedKey === 'projectType') {
+    replies.add('Kitchen remodel')
+    replies.add('Bathroom remodel')
+    replies.add('Epoxy / coatings')
+    return Array.from(replies)
+  }
+
+  if (plannedKey === 'contactPreference') {
+    replies.add('Text')
+    replies.add('Call')
+    replies.add('Email')
+    return Array.from(replies)
+  }
+
+  if (plannedKey === 'timeline') {
+    replies.add('ASAP')
+    replies.add('2-4 weeks')
+    replies.add('1-3 months')
+    replies.add('Not sure yet')
+    return Array.from(replies)
+  }
+
+  if (plannedKey === 'budget') {
+    replies.add('Not sure yet')
+    replies.add('$5k-$15k')
+    replies.add('$15k-$40k')
+    replies.add('$40k+')
+    return Array.from(replies)
+  }
 
   if (!leadData.name) {
     replies.add('My name is...')
   }
-  if (!leadData.email) {
-    replies.add('Here is my email')
-  }
-  if (!leadData.phone) {
-    replies.add('Here is my phone number')
-  }
   if (!leadData.projectType) {
-    serviceCatalog.forEach((service) => replies.add(service.quickReply))
+    replies.add('Kitchen remodel')
+    replies.add('Bathroom remodel')
+    replies.add('Epoxy / coatings')
   }
   if (!leadData.scopeNotes || leadData.scopeNotes.length === 0) {
     replies.add('Here are the project details')
@@ -422,6 +634,7 @@ function buildPrompt(conversation, userInput) {
   const hasPhotoIssue = detectPhotoUploadIssue(userInput)
   const randomCuriosity = getRandomPhrase('curiosity')
   const randomAgreement = getRandomPhrase('agreement')
+  const plannedQuestionText = conversation?.intake?.plannedQuestionText || ''
   
   // Track what we've already collected to avoid re-asking
   const collectedItems = []
@@ -446,7 +659,7 @@ Your goal is to:
 
 <context>
 Stage: ${conversation.stage}
-Stage turn count: ${conversation.stageTurnCount} (minimum 3 turns required in dreaming phase)
+Stage turn count: ${conversation.stageTurnCount}
 Current lead data: ${JSON.stringify(conversation.leadData)}
 ${alreadyCollected}
 Qualification score: ${conversation.qualificationScore}
@@ -457,6 +670,12 @@ Photo upload issue detected: ${hasPhotoIssue || 'no'}
 Available services: ${serviceOverview}
 Phrase suggestions for variety: "${randomCuriosity}" / "${randomAgreement}"
 </context>
+
+<intake_next_question>
+Ask exactly ONE question. Ask this exact question and do not ask any other question:
+${plannedQuestionText}
+If the question above is blank, ask NO question. Instead, briefly summarize what you have and ask them to share any missing detail they'd like.
+</intake_next_question>
 
 <photo_upload_handling>
 ${hasPhotoIssue ? `
@@ -572,10 +791,10 @@ BUT: Gather these through natural conversation, not interrogation. Let it flow.
 <critical_reminders>
 - Act like a helpful friend who knows home improvement, not a data collection bot
 - Let the conversation develop naturally—don't rush to the next question
-- Help them dream and explore before diving into logistics (minimum 3 turns in dreaming stage)
+- Help them dream and explore before diving into logistics (minimum 2 turns in dreaming stage)
 - Stage rules (STRICTLY FOLLOW):
   - greeting → focus on rapport and project vision
-  - dreaming → ask vision-clarifying questions; do NOT ask budget, timeline, or zip (minimum 3 turns here)
+  - dreaming → ask vision-clarifying questions; do NOT ask budget, timeline, or zip (minimum 2 turns here)
   - logistics → now you may ask budget, timeline, zip/location if still missing
   - wrap_up → summarize and propose concrete appointment with day/time options
 - Never re-ask for information already in lead data or listed in Intake asked questions
@@ -622,6 +841,16 @@ function buildFallbackResponse(conversation) {
   const { leadData, stage } = conversation
   const missing = []
 
+  const plannedQuestionText = conversation?.intake?.plannedQuestionText || ''
+  if (plannedQuestionText && plannedQuestionText.trim().length > 0) {
+    const nameSuffix = leadData?.name ? `, ${leadData.name}` : ''
+    const prefix = stage === 'wrap_up' ? `Thanks${nameSuffix}!` : `Got it${nameSuffix}.`
+    return {
+      text: `${prefix} ${plannedQuestionText}`.trim(),
+      quickReplies: generateQuickReplies(conversation),
+    }
+  }
+
   // Only ask for what's truly missing based on conversation stage
   // Don't ask for photos if they've indicated they can't upload
   const hasPhotoIssue = conversation.leadData?.photoUploadIssue
@@ -661,7 +890,7 @@ function buildFallbackResponse(conversation) {
 
   return {
     text: responseText,
-    quickReplies: generateQuickReplies(leadData),
+    quickReplies: generateQuickReplies(conversation),
   }
 }
 
@@ -806,6 +1035,7 @@ export async function sendKmjkMessage(conversation, userInput) {
   }
 
   updatedConversation.leadData = extractContactDetails(userInput, updatedConversation.leadData)
+  updatedConversation.leadData = detectContactPreference(userInput, updatedConversation.leadData)
   updatedConversation.leadData = detectServiceType(userInput, updatedConversation.leadData)
   updatedConversation.leadData = detectTimeline(userInput, updatedConversation.leadData)
   updatedConversation.leadData = detectBudget(userInput, updatedConversation.leadData)
@@ -827,6 +1057,13 @@ export async function sendKmjkMessage(conversation, userInput) {
   
   updatedConversation.stage = newStage
 
+  const nextQuestion = planNextIntakeQuestion(updatedConversation)
+  updatedConversation.intake = {
+    ...(updatedConversation.intake || {}),
+    plannedQuestionKey: nextQuestion?.key || null,
+    plannedQuestionText: nextQuestion?.question || '',
+  }
+
   const chatMessages = updatedConversation.messages
     .filter((msg) => msg.content?.trim())
     .map((msg) => ({
@@ -841,7 +1078,7 @@ export async function sendKmjkMessage(conversation, userInput) {
     const response = await requestOpenAI(chatMessages, systemPrompt)
     assistantResponse = {
       text: response.text,
-      quickReplies: generateQuickReplies(updatedConversation.leadData),
+      quickReplies: generateQuickReplies(updatedConversation),
     }
   } catch (error) {
     console.error('[KMJK Chat] Falling back after OpenAI error:', error)
@@ -865,6 +1102,19 @@ export async function sendKmjkMessage(conversation, userInput) {
 
   updatedConversation.messages = [...updatedConversation.messages, assistantMessage]
   updatedConversation.lastActivityAt = assistantIso
+
+  if (updatedConversation?.intake?.plannedQuestionKey) {
+    updatedConversation.intake = {
+      ...updatedConversation.intake,
+      lastAskedKey: updatedConversation.intake.plannedQuestionKey,
+      lastAskedTurn: updatedConversation.turnCount || 0,
+      askedQuestions: Array.isArray(updatedConversation.intake.askedQuestions)
+        ? updatedConversation.intake.askedQuestions.includes(updatedConversation.intake.plannedQuestionKey)
+          ? updatedConversation.intake.askedQuestions
+          : [...updatedConversation.intake.askedQuestions, updatedConversation.intake.plannedQuestionKey]
+        : [updatedConversation.intake.plannedQuestionKey],
+    }
+  }
 
   const hasContact = Boolean(updatedConversation.leadData.email || updatedConversation.leadData.phone)
   const hasProjectContext = Boolean(

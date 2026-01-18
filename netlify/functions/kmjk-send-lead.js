@@ -38,6 +38,7 @@ export const handler = async (event) => {
     formData.append('lead_name', leadData.name || 'Not provided')
     formData.append('lead_email', leadData.email || 'Not provided')
     formData.append('lead_phone', leadData.phone || 'Not provided')
+    formData.append('contact_preference', leadData.contactPreference || 'Not provided')
     formData.append('service_category', leadData.serviceCategory || leadData.projectType || 'Not provided')
     formData.append('timeline', leadData.timeline || 'Not provided')
     formData.append('budget', leadData.budget || 'Not provided')
