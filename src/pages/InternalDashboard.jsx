@@ -13,6 +13,16 @@ const epoxyPitchDecks = [
   { label: 'Luxury Showroom', file: 'pitch-deck-07-showroom-v3.html' },
 ]
 
+const marcusFluxDecks = [
+  { label: 'Commercial Flooring', file: 'MARCUS-COMMERCIAL-FLUX-v1.html' },
+  { label: 'Mechanic Shop', file: 'MARCUS-MECHANIC-FLUX-v1.html' },
+  { label: 'Commercial Kitchen', file: 'MARCUS-KITCHEN-FLUX-v1.html' },
+  { label: 'Home Garage', file: 'MARCUS-GARAGE-FLUX-v1.html' },
+  { label: 'Industrial Warehouse', file: 'MARCUS-INDUSTRIAL-FLUX-v1.html' },
+  { label: 'Aircraft Hangar', file: 'MARCUS-HANGAR-FLUX-v1.html' },
+  { label: 'Luxury Showroom', file: 'MARCUS-SHOWROOM-FLUX-v1.html' },
+]
+
 const treasureCoastSections = [
   {
     title: 'Treasure Coast Area',
@@ -324,6 +334,20 @@ export default function InternalDashboard() {
                 <div className="space-y-3">
                     <p className="text-sm text-gray-600">7 professional pitch decks for different epoxy applications. Each opens in a new tab - print or save as PDF.</p>
                     <LinkGrid items={epoxyPitchDecks} />
+                </div>
+            </DashboardCard>
+        </section>
+
+        {/* MARCUS FLUX CHEN DECKS SECTION */}
+        <section className="space-y-6">
+            <div className="flex items-center gap-3">
+                <Layers className="text-[var(--brushed-gold)]" size={24} />
+                <h2 className="text-2xl font-semibold text-[var(--deep-charcoal)]">Marcus "Flux" Chen Decks</h2>
+            </div>
+            <DashboardCard title="Flux Protocol - Diagnostic Approach" icon={Layers}>
+                <div className="space-y-3">
+                    <p className="text-sm text-gray-600">7 advanced pitch decks by Marcus "Flux" Chen. Diagnostic-first approach with technical specification tables and detailed sales guides.</p>
+                    <LinkGrid items={marcusFluxDecks} />
                 </div>
             </DashboardCard>
         </section>

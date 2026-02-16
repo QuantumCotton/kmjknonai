@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Flooring Diagnostic - KMJK Group | Flux Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 7.5in;
+            height: 10in;
+            padding: 0.35in;
+            margin: 0 auto;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page:not(:last-child) {
+            page-break-after: always;
+        }
+
+        /* FLUX PROTOCOL HEADER */
+        .flux-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .flux-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flux-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .flux-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .flux-logo-text span {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .flux-doc-type {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: right;
+        }
+
+        .flux-doc-type span {
+            color: #00ff88;
+        }
+
+        /* COST ANALYSIS BOX */
+        .cost-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 4px solid #ff4444;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .cost-box h2 {
+            font-size: 14px;
+            color: #ff4444;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cost-box h2 i {
+            font-size: 16px;
+        }
+
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .cost-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .cost-item i {
+            color: #ff4444;
+            margin-top: 2px;
+        }
+
+        .cost-total {
+            margin-top: 12px;
+            padding-top: 8px;
+            border-top: 2px solid #ff4444;
+            font-size: 13px;
+            color: #ff4444;
+            font-weight: 700;
+        }
+
+        /* TECHNICAL SPECIFICATION */
+        .tech-spec {
+            background: #111;
+            border: 1px solid #00ff88;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tech-spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tech-spec-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .tech-spec-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 3px;
+        }
+
+        /* COMPARISON MATRIX */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 15px;
+        }
+
+        .matrix-table th {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        .matrix-table td {
+            padding: 6px;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:hover {
+            background: #111;
+        }
+
+        .matrix-table .row-header {
+            font-weight: 600;
+            color: #00ff88;
+            background: #0f0f0f;
+            width: 22%;
+        }
+
+        .matrix-table .tier-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .check { color: #00ff88; }
+        .warn { color: #ffaa00; }
+        .fail { color: #ff4444; }
+
+        /* FLUX TIP BOX */
+        .flux-tip {
+            background: linear-gradient(90deg, #0a1f12 0%, #0a0a0a 100%);
+            border-left: 3px solid #00ff88;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .flux-tip-header {
+            color: #00ff88;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flux-tip-content {
+            color: #aaa;
+        }
+
+        /* DIAGNOSTIC FLOW */
+        .flow-step {
+            background: #111;
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-number {
+            width: 28px;
+            height: 28px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .flow-content h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* FOOTER */
+        .flux-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .flux-footer span {
+            color: #00ff88;
+        }
+
+        /* PAGE 2 STYLES */
+        .sales-section {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .sales-section h3 {
+            font-size: 13px;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .sales-section ul {
+            list-style: none;
+        }
+
+        .sales-section li {
+            font-size: 11px;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .sales-section li:last-child {
+            border-bottom: none;
+        }
+
+        .sales-section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .objection {
+            background: #1f1a1a;
+            border-left: 3px solid #ff4444;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .objection h4 {
+            font-size: 11px;
+            color: #ff4444;
+            margin-bottom: 4px;
+        }
+
+        .objection p {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        @media screen {
+            .page {
+                box-shadow: 0 0 20px rgba(0,255,136,0.1);
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.35in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .flux-footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: DIAGNOSIS & PRESCRIPTION -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Technical Specification<br>
+            <span>Document: FP-CF-2026-v1</span>
+        </div>
+    </div>
+
+    <!-- COST ANALYSIS: The Problem -->
+    <div class="cost-box">
+        <h2><i class="fas fa-chart-line"></i> DIAGNOSTIC: Your Floor Is Bleeding Money</h2>
+        <div class="cost-breakdown">
+            <div class="cost-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Downtime:</strong> Uncoated floors shut down for repairs 2-3x/year. Each shutdown costs $5-50K in lost revenue.</span>
+            </div>
+            <div class="cost-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Replacement:</strong> Concrete replacement every 5-7 years. $15-25/sq ft. $150-250K for 10,000 sq ft.</span>
+            </div>
+            <div class="cost-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Liability:</strong> Cracked floors = slip hazards. One lawsuit = $100K+. Good luck fighting the premises liability claim.</span>
+            </div>
+            <div class="cost-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Cleaning:</strong> Porous concrete absorbs spills. 3x cleaning labor cost vs coated floor. 10-year cost difference: $15-30K.</span>
+            </div>
+        </div>
+        <div class="cost-total">
+            10-Year Uncosted Floor Cost: $350-600K+ | Coated Floor ROI: 300-400%
+        </div>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX FIELD NOTE</div>
+        <div class="flux-tip-content">
+            Commercial floors aren't floor coverings - they're profit infrastructure. Every crack is downtime. Every stain is a customer complaint. Every repair is lost revenue. The companies that win are the ones that understand floors as P&L line items, not maintenance expenses.
+        </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATION -->
+    <div class="tech-spec">
+        <div class="tech-spec-header">
+            <div class="tech-spec-title">System Architecture: Commercial Flooring</div>
+            <div class="tech-spec-badge">4-TIER SYSTEM</div>
+        </div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>SPECIFICATION</th>
+                    <th>ESSENTIAL</th>
+                    <th>PROFESSIONAL</th>
+                    <th>PREMIUM</th>
+                    <th>FLUX-CORE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">Resin System</td>
+                    <td>Bisphenol A<br>EEW 190</td>
+                    <td>Bis A/F Blend<br>EEW 195</td>
+                    <td>Novolac<br>EEW 210</td>
+                    <td class="tier-name">FluxCore 350<br>Proprietary Novolac</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hardener</td>
+                    <td>Polyamide 115</td>
+                    <td>Cycloaliphatic<br>Ancamine 1618</td>
+                    <td>IPDA<br>Cycloaliphatic</td>
+                    <td class="tier-name">FluxCure IP<br>Modified IPDA</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Heat Resistance (HDT)</td>
+                    <td>140°F</td>
+                    <td>180°F</td>
+                    <td>250°F</td>
+                    <td class="tier-name check">350°F</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Compressive Strength</td>
+                    <td>10,000 PSI</td>
+                    <td>12,500 PSI</td>
+                    <td>14,000 PSI</td>
+                    <td class="tier-name check">16,000 PSI</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Impact Resistance</td>
+                    <td>50 in-lb</td>
+                    <td>80 in-lb</td>
+                    <td>110 in-lb</td>
+                    <td class="tier-name check">140 in-lb</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Chemical Resistance</td>
+                    <td>Oil, water</td>
+                    <td>+ Gas, brake fluid</td>
+                    <td>+ Solvents, acids</td>
+                    <td class="tier-name check">+ All commercial</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Foot Traffic Rating</td>
+                    <td>Light (5K)</td>
+                    <td>Moderate (15K)</td>
+                    <td>Heavy (50K)</td>
+                    <td class="tier-name check">Extreme (100K)</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Warranty</td>
+                    <td>5 years</td>
+                    <td>10 years</td>
+                    <td>15 years</td>
+                    <td class="tier-name check">20 years</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Install Time</td>
+                    <td>2-3 days</td>
+                    <td>3-4 days</td>
+                    <td>3-4 days</td>
+                    <td class="tier-name check">2 days</td>
+                </tr>
+                <tr>
+                    <td class="row-header">PRICE INSTALLED</td>
+                    <td><strong>$3-4/sq ft</strong></td>
+                    <td><strong>$5-7/sq ft</strong></td>
+                    <td><strong>$8-12/sq ft</strong></td>
+                    <td class="tier-name"><strong>$12-18/sq ft</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DIAGNOSTIC FLOW: How to Choose -->
+    <div style="margin-top: 20px;">
+        <h2 style="font-size: 14px; color: #00ff88; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+            <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Diagnostic Selection Flow
+        </h2>
+
+        <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+                <h3>Storage Area / Back Office? → ESSENTIAL</h3>
+                <p>Low traffic, foot traffic only, no heavy equipment. Just need dust control and easy cleaning. 5-year warranty is sufficient.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+                <h3>Retail / Restaurant Front? → PROFESSIONAL</h3>
+                <p>Customer-facing areas, moderate traffic, spills common. Needs UV protection, easy cleaning. 10-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+                <h3>Warehouse / Manufacturing? → PREMIUM</h3>
+                <p>Heavy forklift traffic, dropped tools, chemical exposure. Maximum durability, chemical resistance. 15-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+                <h3>Can't Afford Downtime? → FLUX-CORE</h3>
+                <p>2-day installation, extreme durability. For facilities that need to stay running. 20-year warranty. The floor you never replace.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Technical Document | <span>FP-CF-2026-v1</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+<!-- PAGE 2: SALES GUIDE -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Sales Guide<br>
+            <span>INTERNAL USE ONLY</span>
+        </div>
+    </div>
+
+    <div style="background: #00ff88; color: #000; padding: 12px 15px; margin-bottom: 15px; font-weight: 700; font-size: 14px;">
+        <i class="fas fa-lock" style="margin-right: 8px;"></i>
+        INTERNAL - Commercial Flooring Sales Protocol
+    </div>
+
+    <!-- DIAGNOSIS FIRST -->
+    <div class="sales-section">
+        <h3><i class="fas fa-stethoscope"></i> Step 1: Diagnose the Pain Point</h3>
+        <ul>
+            <li>"What's the biggest problem with your current floor?" (Cracks? Stains? Downtime? Liability?)</li>
+            <li>"How many people walk through this area daily?" (Foot traffic tier = durability tier)</li>
+            <li>"What's your business continuity risk if this floor fails?" (One shutdown = Professional tier minimum)</li>
+            <li>"What's your 5-year floor maintenance budget?" (Coated floor ROI calculation time)</li>
+            <li>"Have you had liability issues from floor conditions?" (Slip hazards = Professional tier, full disclosure needed)</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX TIP</div>
+        <div class="flux-tip-content">
+            Commercial buyers don't care about pretty floors. They care about P&L. If you can show them that spending $50K on flooring saves $300K over 10 years, the sale is already made. Quantify the problem, sell the solution. Don't sell epoxy - sell ROI.
+        </div>
+    </div>
+
+    <!-- TALKING POINTS BY TIER -->
+    <div class="sales-section">
+        <h3><i class="fas fa-comments"></i> Step 2: Tier-Specific Pitch</h3>
+        <ul>
+            <li><strong>ESSENTIAL:</strong> "Dust control, easy cleaning, 5-year warranty. For back offices, storage areas, anywhere foot traffic is light. If it's not customer-facing and not revenue-generating, this is the right choice."</li>
+            <li><strong>PROFESSIONAL:</strong> "Customer-facing areas. Spills wipe up with one pass. UV protection keeps colors bright. 10-year warranty. This is what retailers, restaurants, and office lobbies choose."</li>
+            <li><strong>PREMIUM:</strong> "For heavy traffic - warehouses, manufacturing, loading docks. Forklift rated, chemical resistant, impact resistant. This floor doesn't crack when you drop a pallet. 15-year warranty."</li>
+            <li><strong>FLUX-CORE:</strong> "The last floor you'll ever buy. Extreme durability, 2-day installation, 20-year warranty. For facilities where downtime costs more than the floor. One installation, done forever."</li>
+        </ul>
+    </div>
+
+    <!-- OBJECTION HANDLING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-shield-alt"></i> Step 3: Objection Protocol</h3>
+    </div>
+
+    <div class="objection">
+        <h4>"That's a lot per square foot"</h4>
+        <p>Let's run the 10-year numbers. Uncosted concrete: $150-250K in replacements. Coated floor: $50-120K. Difference: $100-130K. Cleaning labor difference: $15-30K. Liability risk reduction: Priceless. You're not spending money - you're avoiding loss.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"We can shut down for repairs, it's cheaper"</h4>
+        <p>One shutdown costs $5-50K in lost revenue. Do that 5 times in 10 years and you're at $25-250K - plus repair costs. Our Professional tier costs $50-70K for 10,000 sq ft. Do the math. Proactive vs reactive isn't a choice.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"How long will we be shut down?"</h4>
+        <p>Essential: 2-3 days. Professional: 3-4 days. Premium: 3-4 days. FluxCore: 2 days. We can work weekends, nights, or in sections if you can't fully shut down. Premium tiers worth 1 extra day for 5 extra years of warranty.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"What if it cracks?"</h4>
+        <p>We use 2-part crack isolation primers. Hairline cracks in the substrate? The coating bridges them. Structural movement? We use flexible membranes. Our warranty covers delamination and coating failure. If it's a structural slab issue, that's a building problem, not a flooring problem - but we'll identify it before quoting.</p>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-handshake"></i> Step 4: Close</h3>
+        <ul>
+            <li>"Most commercial facilities go with Professional - it's the right balance of cost and durability. Want me to write that up?"</li>
+            <li>"If you want to see ROI projections, I can run a 10-year cost analysis for your facility."</li>
+            <li>"Either way, get the moisture test done. Even if you don't use us, you need to know what's coming through your slab."</li>
+        </ul>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Sales Guide | <span>INTERNAL</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+</body>
+</html>

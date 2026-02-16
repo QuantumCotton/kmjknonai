@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garage Flooring Diagnostic - KMJK Group | Flux Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 7.5in;
+            height: 10in;
+            padding: 0.35in;
+            margin: 0 auto;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page:not(:last-child) {
+            page-break-after: always;
+        }
+
+        /* FLUX PROTOCOL HEADER */
+        .flux-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .flux-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flux-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .flux-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .flux-logo-text span {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .flux-doc-type {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: right;
+        }
+
+        .flux-doc-type span {
+            color: #00ff88;
+        }
+
+        /* DIAGNOSTIC SECTION */
+        .diagnostic-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 4px solid #ff4444;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .diagnostic-box h2 {
+            font-size: 14px;
+            color: #ff4444;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .diagnostic-box h2 i {
+            font-size: 16px;
+        }
+
+        .diagnostic-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .diagnostic-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .diagnostic-item i {
+            color: #ff4444;
+            margin-top: 2px;
+        }
+
+        /* TECHNICAL SPECIFICATION */
+        .tech-spec {
+            background: #111;
+            border: 1px solid #00ff88;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tech-spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tech-spec-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .tech-spec-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 3px;
+        }
+
+        /* COMPARISON MATRIX */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 15px;
+        }
+
+        .matrix-table th {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        .matrix-table td {
+            padding: 6px;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:hover {
+            background: #111;
+        }
+
+        .matrix-table .row-header {
+            font-weight: 600;
+            color: #00ff88;
+            background: #0f0f0f;
+            width: 22%;
+        }
+
+        .matrix-table .tier-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .check { color: #00ff88; }
+        .warn { color: #ffaa00; }
+        .fail { color: #ff4444; }
+
+        /* FLUX TIP BOX */
+        .flux-tip {
+            background: linear-gradient(90deg, #0a1f12 0%, #0a0a0a 100%);
+            border-left: 3px solid #00ff88;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .flux-tip-header {
+            color: #00ff88;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flux-tip-content {
+            color: #aaa;
+        }
+
+        /* DIAGNOSTIC FLOW */
+        .flow-step {
+            background: #111;
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-number {
+            width: 28px;
+            height: 28px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .flow-content h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* TIER PRESCRIPTION */
+        .prescription {
+            background: #0f1f15;
+            border: 2px solid #00ff88;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .prescription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .prescription-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .prescription-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .prescription-price span {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* FOOTER */
+        .flux-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .flux-footer span {
+            color: #00ff88;
+        }
+
+        /* PAGE 2 STYLES */
+        .sales-section {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .sales-section h3 {
+            font-size: 13px;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .sales-section ul {
+            list-style: none;
+        }
+
+        .sales-section li {
+            font-size: 11px;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .sales-section li:last-child {
+            border-bottom: none;
+        }
+
+        .sales-section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .objection {
+            background: #1f1a1a;
+            border-left: 3px solid #ff4444;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .objection h4 {
+            font-size: 11px;
+            color: #ff4444;
+            margin-bottom: 4px;
+        }
+
+        .objection p {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        @media screen {
+            .page {
+                box-shadow: 0 0 20px rgba(0,255,136,0.1);
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.35in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .flux-footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: DIAGNOSIS & PRESCRIPTION -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Technical Specification<br>
+            <span>Document: FP-GF-2026-v1</span>
+        </div>
+    </div>
+
+    <!-- DIAGNOSTIC: What's Wrong -->
+    <div class="diagnostic-box">
+        <h2><i class="fas fa-exclamation-triangle"></i> DIAGNOSTIC: Garage Floor Failure Modes</h2>
+        <div class="diagnostic-list">
+            <div class="diagnostic-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Concrete Dust:</strong> Porous concrete releases silica dust that coats everything - tools, cars, enters living space</span>
+            </div>
+            <div class="diagnostic-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Oil Staining:</strong> Concrete absorbs hydrocarbons permanently. No amount of cleaning removes deep penetration</span>
+            </div>
+            <div class="diagnostic-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Moisture Migration:</strong> Florida humidity + no vapor barrier = moisture pushing coatings off from below</span>
+            </div>
+            <div class="diagnostic-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Hot Tire Pickup:</strong> Standard epoxy softens at 140°F. Tires coming off hot asphalt? 180°F+.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX FIELD NOTE</div>
+        <div class="flux-tip-content">
+            90% of "epoxy failures" aren't epoxy failures. They're moisture failures. If you don't test for MVT (moisture vapor transmission) before quoting, you're gambling, not installing. I've seen $15K garage floors peel in 30 days because someone skipped a $15 calcium chloride test.
+        </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATION -->
+    <div class="tech-spec">
+        <div class="tech-spec-header">
+            <div class="tech-spec-title">System Architecture: Garage Flooring</div>
+            <div class="tech-spec-badge">4-TIER SYSTEM</div>
+        </div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>SPECIFICATION</th>
+                    <th>ESSENTIAL</th>
+                    <th>PROFESSIONAL</th>
+                    <th>PREMIUM</th>
+                    <th>FLUX-CORE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">Resin System</td>
+                    <td>Bisphenol A<br>EEW 190</td>
+                    <td>Bis A/F Blend<br>EEW 195</td>
+                    <td>Novolac/Bis A<br>60/40 blend</td>
+                    <td class="tier-name">FluxCore 350<br>Proprietary Novolac</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hardener</td>
+                    <td>Polyamide 115</td>
+                    <td>Cycloaliphatic<br>Ancamine 1618</td>
+                    <td>IPDA<br>Cycloaliphatic</td>
+                    <td class="tier-name">FluxCure IP<br>Modified IPDA</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Heat Resistance (HDT)</td>
+                    <td>140°F</td>
+                    <td>180°F</td>
+                    <td>250°F</td>
+                    <td class="tier-name check">350°F</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hot Tire Rating</td>
+                    <td class="fail">Not rated</td>
+                    <td class="check">Yes</td>
+                    <td class="check">Yes</td>
+                    <td class="check">Yes - extreme</td>
+                </tr>
+                <tr>
+                    <td class="row-header">UV Protection</td>
+                    <td class="fail">None</td>
+                    <td>HALS 1.5%</td>
+                    <td>HALS 2% + UVA 1%</td>
+                    <td class="tier-name check">FluxShield UV<br>3% combined</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Chemical Resistance</td>
+                    <td>Oil, water</td>
+                    <td>+ Gas, brake fluid</td>
+                    <td>+ Solvents</td>
+                    <td class="tier-name check">+ All automotive</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Finish Options</td>
+                    <td>Solid color</td>
+                    <td>+ Decorative flake</td>
+                    <td>+ Metallic</td>
+                    <td class="tier-name">All options</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Install Time</td>
+                    <td>1-2 days</td>
+                    <td>2-3 days</td>
+                    <td>2-3 days</td>
+                    <td class="tier-name check">1 day</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Return to Service</td>
+                    <td>48 hrs</td>
+                    <td>72 hrs</td>
+                    <td>72 hrs</td>
+                    <td class="tier-name check">4 hrs</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Warranty</td>
+                    <td>5 years</td>
+                    <td>10 years</td>
+                    <td>15 years</td>
+                    <td class="tier-name check">20 years</td>
+                </tr>
+                <tr>
+                    <td class="row-header">PRICE INSTALLED</td>
+                    <td><strong>$3-4/sq ft</strong></td>
+                    <td><strong>$5-7/sq ft</strong></td>
+                    <td><strong>$8-12/sq ft</strong></td>
+                    <td class="tier-name"><strong>$10-14/sq ft</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DIAGNOSTIC FLOW: How to Choose -->
+    <div style="margin-top: 20px;">
+        <h2 style="font-size: 14px; color: #00ff88; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+            <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Diagnostic Selection Flow
+        </h2>
+
+        <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+                <h3>Budget Priority? → ESSENTIAL</h3>
+                <p>Storage garage, rental property, or just need dust control. No UV exposure, light traffic. 5-year warranty is fine.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+                <h3>Standard Residential? → PROFESSIONAL</h3>
+                <p>2-car garage, daily driver cars, wants it to look good. UV protection for door exposure. Hot tire rated. 10-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+                <h3>Car Collector / Showroom? → PREMIUM</h3>
+                <p>Classic cars, heated garage, wants metallic or custom finish. Maximum UV protection. 15-year warranty. This is a showroom floor.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+                <h3>Can't Wait? → FLUX-CORE</h3>
+                <p>1-day installation, 4-hour return to service. Our proprietary polyaspartic hybrid. 20-year warranty. For when downtime isn't an option.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Technical Document | <span>FP-GF-2026-v1</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+<!-- PAGE 2: SALES GUIDE -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Sales Guide<br>
+            <span>INTERNAL USE ONLY</span>
+        </div>
+    </div>
+
+    <div style="background: #00ff88; color: #000; padding: 12px 15px; margin-bottom: 15px; font-weight: 700; font-size: 14px;">
+        <i class="fas fa-lock" style="margin-right: 8px;"></i>
+        INTERNAL - Garage Flooring Sales Protocol
+    </div>
+
+    <!-- DIAGNOSIS FIRST -->
+    <div class="sales-section">
+        <h3><i class="fas fa-stethoscope"></i> Step 1: Diagnose Before You Prescribe</h3>
+        <ul>
+            <li>"What's the biggest problem with your current floor?" (Dust, stains, cracks, looks bad?)</li>
+            <li>"How old is the concrete?" (New concrete needs 28+ days cure before coating)</li>
+            <li>"Do you park daily drivers or classics?" (Hot tires require Professional tier or above)</li>
+            <li>"Does the garage door stay open?" (UV exposure requires HALS protection)</li>
+            <li>"Any previous coatings?" (Failed coatings must be ground off - add $1/sq ft for prep)</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX TIP</div>
+        <div class="flux-tip-content">
+            If they say "the floor is fine, I just want it to look better" - they're Essential tier. If they say "I'm tired of concrete dust in my house" - they're Professional tier. If they say "I want a showroom floor for my car collection" - they're Premium. Let their problem sell the tier.
+        </div>
+    </div>
+
+    <!-- TALKING POINTS BY TIER -->
+    <div class="sales-section">
+        <h3><i class="fas fa-comments"></i> Step 2: Tier-Specific Pitch</h3>
+        <ul>
+            <li><strong>ESSENTIAL:</strong> "This seals the concrete and stops the dust. Not fancy, but it works. 5-year warranty."</li>
+            <li><strong>PROFESSIONAL:</strong> "This is what most homeowners choose. UV protection, hot tire rated, decorative flake if you want it. Looks like a $100K garage for $3K."</li>
+            <li><strong>PREMIUM:</strong> "You're not just coating a floor - you're building a showroom. Metallic finish, 15-year warranty, this is the last floor you'll ever need."</li>
+            <li><strong>FLUX-CORE:</strong> "Our proprietary system. Installed today, drive on tonight. 20-year warranty. When downtime isn't an option."</li>
+        </ul>
+    </div>
+
+    <!-- OBJECTION HANDLING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-shield-alt"></i> Step 3: Objection Protocol</h3>
+    </div>
+
+    <div class="objection">
+        <h4>"That's more than I expected"</h4>
+        <p>Compare to what they'd spend on flooring that lasts: Hardwood ($12-20/sq ft), quality tile ($8-15/sq ft), polished concrete ($8-12/sq ft). Our Professional tier is $5-7/sq ft and lasts 10+ years with zero maintenance. Plus: it seals the concrete forever. No more dust, no more stains.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"I can get it cheaper at Home Depot"</h4>
+        <p>You can. Rust-Oleum kit is $150 for a 2-car garage. Here's what you get: 50% water content (so half your film thickness evaporates), no UV protection (it'll yellow in 6 months), no hot tire rating (it'll lift where your tires sit), and zero warranty when it fails. Our Professional tier is 100% solids, UV protected, hot tire rated, 10-year warranty. Different product, different result.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"How long until I can park on it?"</h4>
+        <p>Professional and Premium tiers: 72 hours for full cure. You can walk on it in 24 hours, but tires need the full cure. If you can't wait 3 days, our FluxCore system is drive-on in 4 hours. Costs more, but if you don't have alternative parking, it's worth it.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"What if it peels?"</h4>
+        <p>Peeling happens for one reason: moisture. We test for moisture vapor transmission before we quote. If your concrete has high MVT, we use a vapor-blocking primer. We don't skip steps. That's why our floors don't peel.</p>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-handshake"></i> Step 4: Close</h3>
+        <ul>
+            <li>"Most people go with Professional - it's the sweet spot of performance and price. Want me to write that up?"</li>
+            <li>"If you want to see it before you commit, I can show you samples of all four tiers."</li>
+            <li>"Either way, get the moisture test done. Even if you don't use us, you need to know what's coming through your slab."</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX CLOSING TECHNIQUE</div>
+        <div class="flux-tip-content">
+            Never ask "Which one do you want?" Ask "What's the biggest problem with your current floor?" Then solve that problem. If they say dust, prescribe Professional. If they say "I want it to look amazing," prescribe Premium. Don't sell tiers - sell solutions. The tier is just the vehicle.
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Sales Guide | <span>INTERNAL</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+</body>
+</html>
