@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Flooring - KMJK Group</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+        .page { width: 7.5in; height: 10in; padding: 0.25in; margin: 0 auto; background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%); page-break-after: always; position: relative; }
+        .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 2px solid #4a90d9; margin-bottom: 30px; }
+        .logo { font-size: 24px; font-weight: 700; color: #fff; }
+        .logo span { color: #4a90d9; }
+        .contact { font-size: 11px; color: #888; text-align: right; }
+        .hero { text-align: center; padding: 30px 0; margin-bottom: 30px; }
+        .hero h1 { font-size: 38px; font-weight: 300; margin-bottom: 12px; }
+        .hero h1 strong { font-weight: 700; color: #4a90d9; }
+        .hero p { font-size: 16px; color: #888; }
+        .specs-bar { display: flex; justify-content: center; gap: 35px; padding: 20px; background: #141414; border-radius: 8px; margin-bottom: 25px; }
+        .spec-item { text-align: center; }
+        .spec-item .value { font-size: 26px; font-weight: 700; color: #4a90d9; }
+        .spec-item .label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
+        .benefit { background: #141414; padding: 15px; border-radius: 8px; border-left: 3px solid #4a90d9; text-align: center; }
+        .benefit i { font-size: 24px; color: #4a90d9; margin-bottom: 8px; }
+        .benefit h3 { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+        .benefit p { font-size: 11px; color: #888; }
+        .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+        .tier-card { background: #141414; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #2a2a2a; }
+        .tier-card.recommended { border: 2px solid #4a90d9; position: relative; }
+        .tier-card.recommended::after { content: 'BEST VALUE'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #4a90d9; color: #fff; padding: 3px 10px; font-size: 9px; font-weight: 700; border-radius: 4px; }
+        .tier-name { font-size: 14px; font-weight: 600; color: #4a90d9; margin-bottom: 8px; }
+        .tier-price { font-size: 22px; font-weight: 700; margin-bottom: 3px; }
+        .tier-price span { font-size: 11px; color: #888; font-weight: 400; }
+        .tier-desc { font-size: 11px; color: #888; }
+        .cta { text-align: center; padding: 25px; background: #141414; border-radius: 8px; }
+        .cta h3 { font-size: 18px; margin-bottom: 8px; }
+        .cta-phone { font-size: 22px; font-weight: 700; color: #4a90d9; margin-top: 10px; }
+        .sales-header { background: #4a90d9; color: #fff; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; }
+        .sales-header h2 { font-size: 16px; font-weight: 700; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }
+        .comparison-table th { background: #1a1a1a; padding: 10px 6px; text-align: left; font-weight: 600; border-bottom: 2px solid #4a90d9; }
+        .comparison-table td { padding: 8px 6px; border-bottom: 1px solid #2a2a2a; }
+        .comparison-table tr:hover { background: #141414; }
+        .comparison-table .feature-col { font-weight: 600; color: #4a90d9; width: 25%; }
+        .check { color: #4caf50; }
+        .talking-points { background: #141414; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .talking-points h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #4a90d9; }
+        .talking-points ul { list-style: none; }
+        .talking-points li { padding: 6px 0; padding-left: 20px; position: relative; font-size: 12px; border-bottom: 1px solid #2a2a2a; }
+        .talking-points li:last-child { border-bottom: none; }
+        .talking-points li::before { content: '💬'; position: absolute; left: 0; }
+        .objection-box { background: #1a1a1a; border-left: 3px solid #4a90d9; padding: 12px 15px; margin-bottom: 10px; }
+        .objection-box h4 { font-size: 12px; color: #4a90d9; margin-bottom: 5px; }
+        .objection-box p { font-size: 11px; color: #ccc; }
+        .footer { position: absolute; bottom: 20px; left: 40px; right: 40px; text-align: center; padding-top: 10px; border-top: 1px solid #2a2a2a; font-size: 10px; color: #666; }
+        @media print {
+            body {
+                background: #0a0a0a;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.25in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1 - CLIENT FACING -->
+<div class="page">
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">kmjk.pro | 772-323-3776</div>
+    </div>
+
+    <div class="hero">
+        <h1>The Floor That <strong>Never Quits</strong></h1>
+        <p>Commercial-grade epoxy systems for 24/7 high-traffic environments</p>
+    </div>
+
+    <div class="specs-bar">
+        <div class="spec-item">
+            <div class="value">1M+</div>
+            <div class="label">Footsteps/Year</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">15 Yrs</div>
+            <div class="label">Warranty</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">Zero</div>
+            <div class="label">Grout Lines</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">Easy</div>
+            <div class="label">Maintenance</div>
+        </div>
+    </div>
+
+    <div class="benefits">
+        <div class="benefit">
+            <i class="fas fa-shoe-prints"></i>
+            <h3>Heavy Traffic</h3>
+            <p>Built for malls, hospitals, airports - millions of footsteps without wear</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-broom"></i>
+            <h3>Easy to Clean</h3>
+            <p>Seamless surface - no grout lines to trap dirt, mops clean in one pass</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-clock"></i>
+            <h3>Fast Install</h3>
+            <p>Most commercial spaces done in 1-3 days with weekend scheduling</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Slip Resistant</h3>
+            <p>Meets ADA and OSHA requirements for commercial safety</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-bacteria"></i>
+            <h3>Hygienic</h3>
+            <p>Non-porous surface doesn't harbor bacteria - hospital grade available</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-palette"></i>
+            <h3>Custom Colors</h3>
+            <p>Match your brand, wayfinding zones, or safety markings</p>
+        </div>
+    </div>
+
+    <h3 style="text-align: center; margin-bottom: 15px; font-size: 18px;">Commercial Flooring Options</h3>
+
+    <div class="tier-grid">
+        <div class="tier-card">
+            <div class="tier-name">BASIC</div>
+            <div class="tier-price">$3-4<span>/sq ft</span></div>
+            <div class="tier-desc">Storage, low traffic areas</div>
+        </div>
+        <div class="tier-card recommended">
+            <div class="tier-name">PROFESSIONAL</div>
+            <div class="tier-price">$5-7<span>/sq ft</span></div>
+            <div class="tier-desc">Offices, retail, corridors</div>
+        </div>
+        <div class="tier-card">
+            <div class="tier-name">HEAVY TRAFFIC</div>
+            <div class="tier-price">$8-12<span>/sq ft</span></div>
+            <div class="tier-desc">Malls, airports, hospitals</div>
+        </div>
+        <div class="tier-card">
+            <div class="tier-name">ANTIMICROBIAL</div>
+            <div class="tier-price">$12-15<span>/sq ft</span></div>
+            <div class="tier-desc">Healthcare, food, labs</div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <h3>Ready to Upgrade Your Floors?</h3>
+        <p>Free facility assessment | Weekend installations</p>
+        <div class="cta-phone">772-323-3776</div>
+    </div>
+
+    <div class="footer">KMJK Group | Commercial Flooring Specialists | kmjk.pro</div>
+</div>
+
+<!-- PAGE 2 - SALES GUIDE -->
+<div class="page">
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">SALES GUIDE</div>
+    </div>
+
+    <div class="sales-header">
+        <h2><i class="fas fa-lock"></i> INTERNAL - Commercial Flooring Sales Guide</h2>
+    </div>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>BASIC<br>$3-4/sq ft</th>
+                <th>PROFESSIONAL<br>$5-7/sq ft</th>
+                <th>HEAVY TRAFFIC<br>$8-12/sq ft</th>
+                <th>ANTIMICROBIAL<br>$12-15/sq ft</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="feature-col">Best For</td>
+                <td>Storage, utility rooms</td>
+                <td>Offices, retail, schools</td>
+                <td>Malls, airports, ERs</td>
+                <td>Hospitals, labs, food</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Traffic Rating</td>
+                <td>Light</td>
+                <td>Medium</td>
+                <td class="check">Heavy</td>
+                <td>Heavy</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Slip Resistance</td>
+                <td>Standard</td>
+                <td>Enhanced</td>
+                <td>High</td>
+                <td>High</td>
+            </tr>
+            <tr>
+                <td class="feature-col">UV Protection</td>
+                <td>—</td>
+                <td>Standard</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Antimicrobial</td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td class="check">Silver-ion</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Warranty</td>
+                <td>5 years</td>
+                <td>7-10 years</td>
+                <td>10-15 years</td>
+                <td>15+ years</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Color Options</td>
+                <td>Standard</td>
+                <td>Custom</td>
+                <td>Custom + zones</td>
+                <td>Custom + zones</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="talking-points">
+        <h3>Key Sales Points</h3>
+        <ul>
+            <li>"VCT tiles start showing wear in 2-3 years - our Professional tier is warrantied for 7-10"</li>
+            <li>"No grout lines means no trapped dirt - one pass with a mop and it's clean"</li>
+            <li>"We can do color zones for wayfinding, safety areas, or branding at no extra charge"</li>
+            <li>"The Antimicrobial tier meets healthcare sanitation requirements - silver-ion technology"</li>
+        </ul>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "What about downtime?"</h4>
+        <p>We work around your schedule. Most commercial spaces are done Friday night through Sunday, open Monday. We can also phase the work to keep you operational.</p>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "Is it slippery when wet?"</h4>
+        <p>All our commercial tiers include anti-slip aggregate that meets ADA requirements. Wet or dry, it's safe.</p>
+    </div>
+
+    <div class="footer">KMJK Group | Internal Sales Document | kmjk.pro | 772-323-3776</div>
+</div>
+
+</body>
+</html>

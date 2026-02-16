@@ -1,7 +1,17 @@
 import { useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
-import { LayoutDashboard, ExternalLink, FileText, MapPinned, FileSpreadsheet, Building2, User, FileInput, Calculator, Handshake } from 'lucide-react'
+import { LayoutDashboard, ExternalLink, FileText, MapPinned, FileSpreadsheet, Building2, User, FileInput, Calculator, Handshake, Layers } from 'lucide-react'
+
+const epoxyPitchDecks = [
+  { label: 'Commercial High-Traffic', file: 'pitch-deck-01-commercial-v3.html' },
+  { label: 'Mechanic Shop', file: 'pitch-deck-02-mechanic-v3.html' },
+  { label: 'Commercial Kitchen', file: 'pitch-deck-03-kitchen-v3.html' },
+  { label: 'Home Garage', file: 'pitch-deck-04-garage-v3.html' },
+  { label: 'Industrial Warehouse', file: 'pitch-deck-05-industrial-v3.html' },
+  { label: 'Aircraft Hangar', file: 'pitch-deck-06-hangar-v3.html' },
+  { label: 'Luxury Showroom', file: 'pitch-deck-07-showroom-v3.html' },
+]
 
 const treasureCoastSections = [
   {
@@ -302,6 +312,20 @@ export default function InternalDashboard() {
                     </div>
                 ))}
             </div>
+        </section>
+
+        {/* Epoxy Pitch Decks Section */}
+        <section className="space-y-6">
+            <div className="flex items-center gap-3">
+                <Layers className="text-[var(--deep-charcoal)]" size={24} />
+                <h2 className="text-2xl font-semibold text-[var(--deep-charcoal)]">Epoxy Flooring Pitch Decks</h2>
+            </div>
+            <DashboardCard title="Professional Pitch Decks (Print-Ready)" icon={Layers}>
+                <div className="space-y-3">
+                    <p className="text-sm text-gray-600">7 professional pitch decks for different epoxy applications. Each opens in a new tab - print or save as PDF.</p>
+                    <LinkGrid items={epoxyPitchDecks} />
+                </div>
+            </DashboardCard>
         </section>
 
         <section className="grid gap-8 md:grid-cols-2">

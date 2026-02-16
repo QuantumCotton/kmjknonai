@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Garage Flooring - KMJK Group</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
+        .page { width: 7.5in; height: 10in; padding: 0.25in; margin: 0 auto; background: linear-gradient(180deg, #0e3b6e 0%, #0a0a0a 100%); page-break-after: always; position: relative; }
+        .brand-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 2px solid #00a8e8; margin-bottom: 30px; }
+        .logo { font-size: 24px; font-weight: 700; color: #fff; }
+        .logo span { color: #00a8e8; }
+        .contact { font-size: 11px; color: #888; text-align: right; }
+        .page-label { position: absolute; top: 0; left: 0; background: #00a8e8; color: #fff; padding: 5px 15px; font-size: 10px; font-weight: 600; }
+        .hero { text-align: center; padding: 30px 0; margin-bottom: 30px; }
+        .hero h1 { font-size: 38px; font-weight: 300; margin-bottom: 12px; }
+        .hero h1 strong { font-weight: 700; color: #00a8e8; }
+        .hero p { font-size: 16px; color: #888; }
+        .specs-bar { display: flex; justify-content: center; gap: 35px; padding: 20px; background: #141414; border-radius: 8px; margin-bottom: 25px; }
+        .spec-item { text-align: center; }
+        .spec-item .value { font-size: 26px; font-weight: 700; color: #00a8e8; }
+        .spec-item .label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
+        .benefit { background: #141414; padding: 18px; border-radius: 8px; border-left: 3px solid #00a8e8; }
+        .benefit h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .benefit h3 i { color: #00a8e8; }
+        .benefit p { font-size: 13px; color: #888; line-height: 1.5; }
+        .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+        .tier-card { background: #141414; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #2a2a2a; }
+        .tier-card.recommended { border: 2px solid #00a8e8; position: relative; }
+        .tier-card.recommended::after { content: 'MOST POPULAR'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #00a8e8; color: #fff; padding: 3px 10px; font-size: 9px; font-weight: 700; border-radius: 4px; }
+        .tier-name { font-size: 14px; font-weight: 600; color: #00a8e8; margin-bottom: 8px; }
+        .tier-price { font-size: 22px; font-weight: 700; margin-bottom: 3px; }
+        .tier-price span { font-size: 11px; color: #888; font-weight: 400; }
+        .tier-desc { font-size: 11px; color: #888; }
+        .cta { text-align: center; padding: 25px; background: #141414; border-radius: 8px; }
+        .cta h3 { font-size: 18px; margin-bottom: 8px; }
+        .cta-phone { font-size: 22px; font-weight: 700; color: #00a8e8; margin-top: 10px; }
+        .sales-header { background: #00a8e8; color: #fff; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; }
+        .sales-header h2 { font-size: 16px; font-weight: 700; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }
+        .comparison-table th { background: #1a1a1a; padding: 10px 6px; text-align: left; font-weight: 600; border-bottom: 2px solid #00a8e8; }
+        .comparison-table td { padding: 8px 6px; border-bottom: 1px solid #2a2a2a; }
+        .comparison-table tr:hover { background: #141414; }
+        .comparison-table .feature-col { font-weight: 600; color: #00a8e8; width: 25%; }
+        .check { color: #4caf50; }
+        .talking-points { background: #141414; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .talking-points h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #00a8e8; }
+        .talking-points ul { list-style: none; }
+        .talking-points li { padding: 6px 0; padding-left: 20px; position: relative; font-size: 12px; border-bottom: 1px solid #2a2a2a; }
+        .talking-points li:last-child { border-bottom: none; }
+        .talking-points li::before { content: '💬'; position: absolute; left: 0; }
+        .objection-box { background: #1a1a1a; border-left: 3px solid #00a8e8; padding: 12px 15px; margin-bottom: 10px; }
+        .objection-box h4 { font-size: 12px; color: #00a8e8; margin-bottom: 5px; }
+        .objection-box p { font-size: 11px; color: #ccc; }
+        .footer { position: absolute; bottom: 20px; left: 40px; right: 40px; text-align: center; padding-top: 10px; border-top: 1px solid #2a2a2a; font-size: 10px; color: #666; }
+        @media print {
+            body {
+                background: #0a0a0a;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.25in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1 - CLIENT FACING -->
+<div class="page">
+    <div class="page-label">HOME GARAGE FLOORING</div>
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">kmjk.pro | 772-323-3776</div>
+    </div>
+
+    <div class="hero">
+        <h1>Your Garage Deserves <strong>Better Than Concrete</strong></h1>
+        <p>Transform your garage into the ultimate workspace or showroom</p>
+    </div>
+
+    <div class="specs-bar">
+        <div class="spec-item">
+            <div class="value">10 Yrs</div>
+            <div class="label">Warranty</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">1-Day</div>
+            <div class="label">Option</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">50+</div>
+            <div class="label">Colors</div>
+        </div>
+        <div class="spec-item">
+            <div class="value">UV</div>
+            <div class="label">Protected</div>
+        </div>
+    </div>
+
+    <div class="benefits">
+        <div class="benefit">
+            <h3><i class="fas fa-broom"></i> Dust Free Forever</h3>
+            <p>Seals concrete permanently. No more dust on your car, tools, or everything in the garage. Easy to clean - one mop pass.</p>
+        </div>
+        <div class="benefit">
+            <h3><i class="fas fa-tint"></i> Stain Resistant</h3>
+            <p>Oil, transmission fluid, gasoline - all wipe clean. No permanent stains. Looks new for years.</p>
+        </div>
+        <div class="benefit">
+            <h3><i class="fas fa-palette"></i> Custom Colors</h3>
+            <p>50+ standard colors, custom color matching available. Solid colors, decorative flake, or metallic finishes.</p>
+        </div>
+        <div class="benefit">
+            <h3><i class="fas fa-car"></i> Showroom Ready</h3>
+            <p>Transform your garage into a space you're proud to show off. Great for car collectors, man caves, workshops.</p>
+        </div>
+    </div>
+
+    <h3 style="text-align: center; margin-bottom: 15px; font-size: 18px;">Garage Flooring Options</h3>
+
+    <div class="tier-grid">
+        <div class="tier-card">
+            <div class="tier-name">ESSENTIAL</div>
+            <div class="tier-price">$3-4<span>/sq ft</span></div>
+            <div class="tier-desc">Storage, hobby garage</div>
+        </div>
+        <div class="tier-card recommended">
+            <div class="tier-name">DESIGNER</div>
+            <div class="tier-price">$5-7<span>/sq ft</span></div>
+            <div class="tier-desc">Standard 2-car garage</div>
+        </div>
+        <div class="tier-card">
+            <div class="tier-name">PREMIUM</div>
+            <div class="tier-price">$8-12<span>/sq ft</span></div>
+            <div class="tier-desc">Car collector, showroom</div>
+        </div>
+        <div class="tier-card">
+            <div class="tier-name">1-DAY</div>
+            <div class="tier-price">$10-14<span>/sq ft</span></div>
+            <div class="tier-desc">Done in one day</div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <h3>Ready to Transform Your Garage?</h3>
+        <p>Free on-site estimate | Color samples available</p>
+        <div class="cta-phone">772-323-3776</div>
+    </div>
+
+    <div class="footer">KMJK Group | Residential Garage Specialists | kmjk.pro</div>
+</div>
+
+<!-- PAGE 2 - SALES GUIDE -->
+<div class="page">
+    <div class="page-label">GARAGE FLOORING - SALES GUIDE</div>
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">SALES GUIDE</div>
+    </div>
+
+    <div class="sales-header">
+        <h2><i class="fas fa-lock"></i> INTERNAL - Home Garage Flooring Sales Guide</h2>
+    </div>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>ESSENTIAL<br>$3-4/sq ft</th>
+                <th>DESIGNER<br>$5-7/sq ft</th>
+                <th>PREMIUM<br>$8-12/sq ft</th>
+                <th>1-DAY<br>$10-14/sq ft</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="feature-col">Best For</td>
+                <td>Storage, hobby</td>
+                <td>Standard 2-car garage</td>
+                <td>Car collector, showroom</td>
+                <td>Can't wait homeowners</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Finish Type</td>
+                <td>Solid color</td>
+                <td>Decorative flake</td>
+                <td>Flake or metallic</td>
+                <td>Polyaspartic</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Colors Available</td>
+                <td>15 standard</td>
+                <td>50+ standard</td>
+                <td>Unlimited custom</td>
+                <td>50+ standard</td>
+            </tr>
+            <tr>
+                <td class="feature-col">UV Protection</td>
+                <td>—</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Hot Tire Rated</td>
+                <td>—</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+                <td class="check">Yes</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Install Time</td>
+                <td>1-2 days</td>
+                <td>2-3 days</td>
+                <td>2-3 days</td>
+                <td class="check">1 day</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Return to Service</td>
+                <td>48 hours</td>
+                <td>72 hours</td>
+                <td>72 hours</td>
+                <td class="check">4 hours</td>
+            </tr>
+            <tr>
+                <td class="feature-col">Warranty</td>
+                <td>5 years</td>
+                <td>7-10 years</td>
+                <td>10-15 years</td>
+                <td>15+ years</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="talking-points">
+        <h3>Key Sales Points</h3>
+        <ul>
+            <li>"Concrete dust gets everywhere - on your car, tools, in your house. Our system seals it forever"</li>
+            <li>"The Designer tier is our most popular - flake system, UV protected, great value"</li>
+            <li>"Standard epoxy yellows in sun - our Designer and up have UV protection"</li>
+            <li>"Our 1-Day tier lets you park your car back in the garage the same day"</li>
+        </ul>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "We might sell the house"</h4>
+        <p>Our floors actually help resale value. Shows you took care of the property. Plus, it's a feature buyers look for.</p>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "How long until we can use it?"</h4>
+        <p>Light foot traffic in 24 hours, full use in 48-72 hours depending on tier. With our 1-Day system, drive on in 4 hours.</p>
+    </div>
+
+    <div class="footer">KMJK Group | Internal Sales Document | kmjk.pro | 772-323-3776</div>
+</div>
+
+</body>
+</html>
