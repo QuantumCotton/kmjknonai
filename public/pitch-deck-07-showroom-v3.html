@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Showroom Flooring - KMJK Group</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 40px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            page-break-after: always;
+            position: relative;
+        }
+
+        .brand-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #c9a962;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .logo span { color: #c9a962; }
+
+        .contact {
+            font-size: 11px;
+            color: #888;
+            text-align: right;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 strong {
+            font-weight: 700;
+            color: #c9a962;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #888;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .benefit {
+            background: #141414;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            text-align: center;
+        }
+
+        .benefit i {
+            font-size: 32px;
+            color: #c9a962;
+            margin-bottom: 15px;
+        }
+
+        .benefit h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .benefit p {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.5;
+        }
+
+        .tiers-preview {
+            margin-bottom: 40px;
+        }
+
+        .tiers-preview h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tier-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .tier-card {
+            background: #141414;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #2a2a2a;
+            text-align: center;
+        }
+
+        .tier-card.featured {
+            border: 2px solid #c9a962;
+            position: relative;
+        }
+
+        .tier-card.featured::after {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #c9a962;
+            color: #000;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        .tier-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #c9a962;
+            margin-bottom: 10px;
+        }
+
+        .tier-price {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .tier-price span {
+            font-size: 14px;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .tier-tagline {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .cta {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .cta h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .cta p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .cta-phone {
+            font-size: 24px;
+            font-weight: 700;
+            color: #c9a962;
+            margin-top: 15px;
+        }
+
+        /* PAGE 2 - SALES GUIDE */
+        .sales-header {
+            background: #c9a962;
+            color: #000;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .sales-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .sales-header p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 12px;
+        }
+
+        .comparison-table th {
+            background: #1a1a1a;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #c9a962;
+        }
+
+        .comparison-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #2a2a2a;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:hover {
+            background: #141414;
+        }
+
+        .comparison-table .tier-col {
+            font-weight: 600;
+            color: #c9a962;
+        }
+
+        .check { color: #4caf50; }
+        .partial { color: #ff9800; }
+
+        .talking-points {
+            background: #141414;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .talking-points h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #c9a962;
+        }
+
+        .talking-points ul {
+            list-style: none;
+        }
+
+        .talking-points li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 13px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .talking-points li:last-child {
+            border-bottom: none;
+        }
+
+        .talking-points li::before {
+            content: '💬';
+            position: absolute;
+            left: 0;
+        }
+
+        .objection-box {
+            background: #1a1a1a;
+            border-left: 4px solid #c9a962;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .objection-box h4 {
+            font-size: 14px;
+            color: #c9a962;
+            margin-bottom: 8px;
+        }
+
+        .objection-box p {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            right: 40px;
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #2a2a2a;
+            font-size: 11px;
+            color: #666;
+        }
+
+        @media print {
+            .page { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1 - CLIENT FACING -->
+<div class="page">
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">
+            kmjk.pro<br>
+            772-323-3776
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>Your Floor Is Your <strong>First Impression</strong></h1>
+        <p>Make it unforgettable with luxury epoxy flooring designed for high-end retail and showrooms</p>
+    </div>
+
+    <div class="benefits">
+        <div class="benefit">
+            <i class="fas fa-gem"></i>
+            <h3>Magazine-Worthy Finish</h3>
+            <p>3D metallic effects and custom designs that photograph perfectly for marketing</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Scratch Resistant</h3>
+            <p>Ceramic-infused formula stands up to heels, traffic, and daily wear</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-clock"></i>
+            <h3>Quick Installation</h3>
+            <p>Most projects complete in 1-2 days with minimal disruption to business</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-palette"></i>
+            <h3>Custom Colors</h3>
+            <p>Match your brand colors exactly. Unlimited design possibilities.</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-certificate"></i>
+            <h3>15-Year Warranty</h3>
+            <p>Premium tiers backed by our industry-leading warranty</p>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-dollar-sign"></i>
+            <h3>Increases Value</h3>
+            <p>A signature floor becomes a selling point for your space</p>
+        </div>
+    </div>
+
+    <div class="tiers-preview">
+        <h2>Choose Your Finish</h2>
+        <div class="tier-row">
+            <div class="tier-card">
+                <div class="tier-name">ESSENTIAL</div>
+                <div class="tier-price">$4-6<span>/sq ft</span></div>
+                <div class="tier-tagline">Clean, professional solid color</div>
+            </div>
+            <div class="tier-card featured">
+                <div class="tier-name">DESIGNER</div>
+                <div class="tier-price">$7-10<span>/sq ft</span></div>
+                <div class="tier-tagline">Decorative flake, custom colors</div>
+            </div>
+            <div class="tier-card">
+                <div class="tier-name">LUXE</div>
+                <div class="tier-price">$12-18<span>/sq ft</span></div>
+                <div class="tier-tagline">Full metallic, 3D effects</div>
+            </div>
+            <div class="tier-card">
+                <div class="tier-name">ELITE</div>
+                <div class="tier-price">$18-25<span>/sq ft</span></div>
+                <div class="tier-tagline">Liquid quartz, custom art</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <h3>Ready to Transform Your Space?</h3>
+        <p>Free consultation • Custom samples available</p>
+        <div class="cta-phone">772-323-3776</div>
+    </div>
+
+    <div class="footer">
+        KMJK Group | Professional Epoxy Solutions | Serving Palm Beach to Vero Beach
+    </div>
+</div>
+
+<!-- PAGE 2 - SALES GUIDE FOR JOSUE -->
+<div class="page">
+    <div class="brand-bar">
+        <div class="logo">KMJK <span>Group</span></div>
+        <div class="contact">SALES GUIDE</div>
+    </div>
+
+    <div class="sales-header">
+        <h2><i class="fas fa-lock"></i> INTERNAL - Sales Guide for Showroom Flooring</h2>
+        <p>Talking points, comparison table, and objection handling</p>
+    </div>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>ESSENTIAL<br>$4-6/sq ft</th>
+                <th>DESIGNER<br>$7-10/sq ft</th>
+                <th>LUXE<br>$12-18/sq ft</th>
+                <th>ELITE<br>$18-25/sq ft</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tier-col">Best For</td>
+                <td>Boutiques, salons, offices</td>
+                <td>Retail stores, galleries</td>
+                <td>Luxury dealers, jewelry</td>
+                <td>Flagship stores, lobbies</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Finish Type</td>
+                <td>Solid color, high gloss</td>
+                <td>Decorative flake system</td>
+                <td>Metallic 3D swirls</td>
+                <td>Liquid quartz, custom art</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Color Options</td>
+                <td>50+ standard</td>
+                <td>Custom matching</td>
+                <td>Unlimited effects</td>
+                <td>Full custom design</td>
+            </tr>
+            <tr>
+                <td class="tier-col">UV Protection</td>
+                <td>Standard</td>
+                <td class="check">Enhanced</td>
+                <td class="check">Premium</td>
+                <td class="check">Maximum</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Warranty</td>
+                <td>7 years</td>
+                <td>10 years</td>
+                <td>15 years</td>
+                <td>20+ years</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Scratch Resistance</td>
+                <td>Standard</td>
+                <td>Enhanced</td>
+                <td class="check">High</td>
+                <td class="check">Extreme</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Install Time</td>
+                <td>1-2 days</td>
+                <td>2-3 days</td>
+                <td>2-3 days</td>
+                <td>3-5 days</td>
+            </tr>
+            <tr>
+                <td class="tier-col">Logo/Branding</td>
+                <td>—</td>
+                <td>—</td>
+                <td>Optional</td>
+                <td class="check">Included</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="talking-points">
+        <h3>Key Sales Points</h3>
+        <ul>
+            <li>"Your floor is the first thing customers see - make it memorable"</li>
+            <li>"These floors photograph beautifully for your marketing and social media"</li>
+            <li>"Unlike tile or carpet, there's no grout to clean - it's seamless"</li>
+            <li>"The Designer tier is our most popular - great balance of looks and value"</li>
+            <li>"We can match your exact brand colors at no extra charge"</li>
+            <li>"Most installs are done in a weekend so you don't lose business"</li>
+        </ul>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "That seems expensive"</h4>
+        <p>Compare to what they'd spend on quality tile ($8-15/sq ft) or hardwood ($12-20/sq ft). Our Designer tier gives a custom look for less, and it lasts 10+ years with minimal maintenance. Plus: no grout lines to clean, no waxing, no refinishing.</p>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "How long until we can walk on it?"</h4>
+        <p>Light foot traffic in 24 hours, full use in 72 hours. We schedule installs around your business - most are done Friday-Sunday so you're open Monday.</p>
+    </div>
+
+    <div class="objection-box">
+        <h4>⚠️ "What if it gets scratched?"</h4>
+        <p>Luxury retail rarely sees the abuse that damages floors. Our Designer and Luxe tiers include ceramic microspheres that resist heel marks and scuffs. For high-traffic entryways, we recommend the Luxe tier.</p>
+    </div>
+
+    <div class="footer">
+        KMJK Group | Internal Sales Document | kmjk.pro | 772-323-3776
+    </div>
+</div>
+
+</body>
+</html>

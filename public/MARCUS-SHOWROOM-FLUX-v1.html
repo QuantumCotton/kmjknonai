@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Showroom Flooring Diagnostic - KMJK Group | Flux Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 7.5in;
+            height: 10in;
+            padding: 0.35in;
+            margin: 0 auto;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page:not(:last-child) {
+            page-break-after: always;
+        }
+
+        /* FLUX PROTOCOL HEADER */
+        .flux-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .flux-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flux-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .flux-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .flux-logo-text span {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .flux-doc-type {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: right;
+        }
+
+        .flux-doc-type span {
+            color: #00ff88;
+        }
+
+        /* BRAND IMPACT DIAGNOSTIC */
+        .brand-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 4px solid #ff00ff;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .brand-box h2 {
+            font-size: 14px;
+            color: #ff00ff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-box h2 i {
+            font-size: 16px;
+        }
+
+        .brand-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .brand-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .brand-item i {
+            color: #ff00ff;
+            margin-top: 2px;
+        }
+
+        /* TECHNICAL SPECIFICATION */
+        .tech-spec {
+            background: #111;
+            border: 1px solid #00ff88;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tech-spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tech-spec-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .tech-spec-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 3px;
+        }
+
+        /* COMPARISON MATRIX */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 15px;
+        }
+
+        .matrix-table th {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        .matrix-table td {
+            padding: 6px;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:hover {
+            background: #111;
+        }
+
+        .matrix-table .row-header {
+            font-weight: 600;
+            color: #00ff88;
+            background: #0f0f0f;
+            width: 22%;
+        }
+
+        .matrix-table .tier-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .check { color: #00ff88; }
+        .warn { color: #ffaa00; }
+        .fail { color: #ff4444; }
+
+        /* FLUX TIP BOX */
+        .flux-tip {
+            background: linear-gradient(90deg, #0a1f12 0%, #0a0a0a 100%);
+            border-left: 3px solid #00ff88;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .flux-tip-header {
+            color: #00ff88;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flux-tip-content {
+            color: #aaa;
+        }
+
+        /* DIAGNOSTIC FLOW */
+        .flow-step {
+            background: #111;
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-number {
+            width: 28px;
+            height: 28px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .flow-content h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* FOOTER */
+        .flux-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .flux-footer span {
+            color: #00ff88;
+        }
+
+        /* PAGE 2 STYLES */
+        .sales-section {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .sales-section h3 {
+            font-size: 13px;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .sales-section ul {
+            list-style: none;
+        }
+
+        .sales-section li {
+            font-size: 11px;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .sales-section li:last-child {
+            border-bottom: none;
+        }
+
+        .sales-section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .objection {
+            background: #1f1a1a;
+            border-left: 3px solid #ff00ff;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .objection h4 {
+            font-size: 11px;
+            color: #ff00ff;
+            margin-bottom: 4px;
+        }
+
+        .objection p {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        @media screen {
+            .page {
+                box-shadow: 0 0 20px rgba(0,255,136,0.1);
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.35in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .flux-footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: DIAGNOSIS & PRESCRIPTION -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Technical Specification<br>
+            <span>Document: FP-LS-2026-v1</span>
+        </div>
+    </div>
+
+    <!-- BRAND IMPACT DIAGNOSTIC -->
+    <div class="brand-box">
+        <h2><i class="fas fa-camera"></i> DIAGNOSTIC: Your Floor Is The First Thing Customers Photograph. Make It Count.</h2>
+        <div class="brand-list">
+            <div class="brand-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>First Impression:</strong> 93% of purchase decisions are visual. A stained, cracked floor signals "we don't care." A showroom floor signals "we're the best."</span>
+            </div>
+            <div class="brand-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Social Sharing:</strong> Your showroom isn't just for customers - it's for Instagram. Every customer with a phone becomes a brand ambassador or brand critic.</span>
+            </div>
+            <div class="brand-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Light Reflection:</strong> Polished concrete reflects 15% of light. High-gloss epoxy reflects 85%. Same showroom, 5x brighter, 5x more impressive.</span>
+            </div>
+            <div class="brand-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Color Psychology:</strong> Floor color affects mood. Warm tones = comfort. Cool tones = sophistication. Dark tones = luxury. Wrong floor = wrong brand.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX FIELD NOTE</div>
+        <div class="flux-tip-content">
+            I've watched customers walk into a showroom, look at the floor, and walk out. Not the cars, not the products - the floor. A dirty, worn floor says "we're cutting corners." A pristine, glossy floor says "we're the premium choice." Luxury buyers don't ask about price - they ask about quality. Your floor answers that question before you say a word.
+        </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATION -->
+    <div class="tech-spec">
+        <div class="tech-spec-header">
+            <div class="tech-spec-title">System Architecture: Luxury Showroom Flooring</div>
+            <div class="tech-spec-badge">4-TIER SYSTEM</div>
+        </div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>SPECIFICATION</th>
+                    <th>ESSENTIAL</th>
+                    <th>PROFESSIONAL</th>
+                    <th>PREMIUM</th>
+                    <th>FLUX-CORE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">Resin System</td>
+                    <td>Bisphenol A<br>EEW 190</td>
+                    <td>Bis A/F Blend<br>EEW 195</td>
+                    <td>Novolac<br>EEW 210</td>
+                    <td class="tier-name">FluxCore 350<br>Proprietary Novolac</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hardener</td>
+                    <td>Polyamide 115</td>
+                    <td>Cycloaliphatic<br>Ancamine 1618</td>
+                    <td>IPDA<br>Cycloaliphatic</td>
+                    <td class="tier-name">FluxCure IP<br>Modified IPDA</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Gloss Level</td>
+                    <td>Matte (70%)</td>
+                    <td>Satin (80%)</td>
+                    <td>High-gloss (92%)</td>
+                    <td class="tier-name check">Ultra-gloss (98%)</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Color Options</td>
+                    <td>20 solids</td>
+                    <td>+ 8 metallics</td>
+                    <td>+ Custom blends</td>
+                    <td class="tier-name check">Unlimited custom</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Finish Types</td>
+                    <td>Solid</td>
+                    <td>+ Flake</td>
+                    <td>+ Metallic<br>+ Marble</td>
+                    <td class="tier-name check">All + custom</td>
+                </tr>
+                <tr>
+                    <td class="row-header">UV Resistance</td>
+                    <td>Class 2<br>Moderate</td>
+                    <td>Class 1<br>Good</td>
+                    <td class="check">Class 0<br>Excellent</td>
+                    <td class="tier-name check">FluxShield UV<br>Complete</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Scratch Resistance</td>
+                    <td>Standard</td>
+                    <td>+20%</td>
+                    <td>+40%</td>
+                    <td class="tier-name check">+80%</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Impact Resistance</td>
+                    <td>50 in-lb</td>
+                    <td>80 in-lb</td>
+                    <td>110 in-lb</td>
+                    <td class="tier-name check">140 in-lb</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Warranty</td>
+                    <td>5 years</td>
+                    <td>10 years</td>
+                    <td>15 years</td>
+                    <td class="tier-name check">20 years</td>
+                </tr>
+                <tr>
+                    <td class="row-header">PRICE INSTALLED</td>
+                    <td><strong>$5-7/sq ft</strong></td>
+                    <td><strong>$8-12/sq ft</strong></td>
+                    <td><strong>$13-20/sq ft</strong></td>
+                    <td class="tier-name"><strong>$18-25/sq ft</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DIAGNOSTIC FLOW: How to Choose -->
+    <div style="margin-top: 20px;">
+        <h2 style="font-size: 14px; color: #00ff88; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+            <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Diagnostic Selection Flow
+        </h2>
+
+        <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+                <h3>Back Office / Storage? → ESSENTIAL</h3>
+                <p>Non-customer-facing areas. Matte finish, easy maintenance. If nobody sees it, you don't need to spend on gloss.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+                <h3>Standard Retail / Showroom? → PROFESSIONAL</h3>
+                <p>Satin finish, decorative flakes. Clean, professional appearance. Most retail showrooms choose this tier. 10-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+                <h3>Luxury / Premium Brand? → PREMIUM</h3>
+                <p>High-gloss metallic or marble finishes. Maximum UV protection, scratch resistance. For brands that market on luxury. 15-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+                <h3>Flagship / Brand Experience? → FLUX-CORE</h3>
+                <p>Ultra-gloss, unlimited custom colors, 2-day installation. For showrooms where the floor IS the brand statement. 20-year warranty.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Technical Document | <span>FP-LS-2026-v1</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+<!-- PAGE 2: SALES GUIDE -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Sales Guide<br>
+            <span>INTERNAL USE ONLY</span>
+        </div>
+    </div>
+
+    <div style="background: #00ff88; color: #000; padding: 12px 15px; margin-bottom: 15px; font-weight: 700; font-size: 14px;">
+        <i class="fas fa-lock" style="margin-right: 8px;"></i>
+        INTERNAL - Luxury Showroom Sales Protocol
+    </div>
+
+    <!-- DIAGNOSIS FIRST -->
+    <div class="sales-section">
+        <h3><i class="fas fa-stethoscope"></i> Step 1: Diagnose the Brand Value</h3>
+        <ul>
+            <li>"What's your average ticket price?" (Under $1K = Professional. $1-10K = Premium. Over $10K = FluxCore minimum. The floor needs to match the product.)</li>
+            <li>"What's your brand positioning?" (Value = Professional. Quality = Premium. Luxury = FluxCore. Discount brands don't need $20/sq ft floors.)</li>
+            <li>"Do customers take photos in the showroom?" (No = Professional. Yes = Premium. Yes + tag your brand = FluxCore. Instagram = showroom.)</li>
+            <li>"How important is floor maintenance to your daily operations?" (Can't clean during business hours = Premium or FluxCore. Non-yellowing is non-negotiable.)</li>
+            <li>"What's your ROI on brand differentiation?" (If 5% better branding = 10% more sales, the floor pays for itself.)</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX TIP</div>
+        <div class="flux-tip-content">
+            Luxury buyers aren't price-sensitive - they're quality-sensitive. A $100K car buyer notices a $20K floor. A $5K car buyer doesn't. Price the floor to match the product. Selling Ferraris on a $5/sq ft floor? Mixed message. Selling Hondas on a $20/sq ft floor? Overpriced. The floor must match the brand.
+        </div>
+    </div>
+
+    <!-- TALKING POINTS BY TIER -->
+    <div class="sales-section">
+        <h3><i class="fas fa-comments"></i> Step 2: Tier-Specific Pitch</h3>
+        <ul>
+            <li><strong>ESSENTIAL:</strong> "Matte finish, solid colors. For back office, storage, non-customer-facing areas. Easy maintenance, clean appearance. 5-year warranty."</li>
+            <li><strong>PROFESSIONAL:</strong> "Satin finish, decorative flakes. Clean, professional appearance that enhances the product without overshadowing it. Most retail showrooms choose this tier. 10-year warranty."</li>
+            <li><strong>PREMIUM:</strong> "High-gloss metallic or marble finishes. The floor becomes part of the brand. Maximum UV protection, scratch resistance. For luxury brands where appearance is everything. 15-year warranty."</li>
+            <li><strong>FLUX-CORE:</strong> "Ultra-gloss, unlimited custom colors, 2-day installation. For flagship showrooms where the floor IS the experience. 20-year warranty. The floor you build your brand around."</li>
+        </ul>
+    </div>
+
+    <!-- OBJECTION HANDLING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-shield-alt"></i> Step 3: Objection Protocol</h3>
+    </div>
+
+    <div class="objection">
+        <h4>"That's a lot for a floor"</h4>
+        <p>Let's look at your average ticket. If you're selling $50K cars, what's 0.4% of that price? That's $200/sq ft. Our Premium tier is $13-20/sq ft. You're spending 0.2-0.3% of your product value on the floor that presents it. If the floor helps you close 2% more deals, it pays for itself in 2 months.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"Polished concrete is cheaper"</h4>
+        <p>Polished concrete costs $5-8/sq ft. But it reflects 15% of light. Our Premium high-gloss reflects 92%. That's 6x brighter showroom for 2x the cost. Plus: polished concrete stains, scratches, and needs monthly polishing. Premium epoxy? Wipe and go. 5-year maintenance difference: $15-30K.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"The yellowing will show"</h4>
+        <p>Standard epoxy yellows. Premium with FluxShield UV doesn't. That's 3% HALS and 1% UVA additives - UV absorbers and light stabilizers. Your floor looks the same in year 10 as it does in year 1. Non-yellowing isn't optional for luxury brands.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"How long until we can open?"</h4>
+        <p>Professional: 72 hours full cure. Premium: 72 hours. FluxCore: 24 hours. If you absolutely cannot close for 3 days, FluxCore is the only option. 2-day installation costs more, but if you're losing $10K/day, it pays for itself.</p>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-handshake"></i> Step 4: Close</h3>
+        <ul>
+            <li>"Most retail showrooms go with Professional - clean, professional, enhances the product without overwhelming it. Want me to write that up?"</li>
+            <li>"If you're a luxury brand or your customers take photos, I'd strongly recommend Premium. The floor is part of the brand experience."</li>
+            <li>"Either way, get the moisture test done. Even if you don't use us, you need to know what's coming through your slab."</li>
+        </ul>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Sales Guide | <span>INTERNAL</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+</body>
+</html>

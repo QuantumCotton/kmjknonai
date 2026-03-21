@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Flooring Diagnostic - KMJK Group | Flux Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 7.5in;
+            height: 10in;
+            padding: 0.35in;
+            margin: 0 auto;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page:not(:last-child) {
+            page-break-after: always;
+        }
+
+        /* FLUX PROTOCOL HEADER */
+        .flux-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .flux-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flux-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .flux-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .flux-logo-text span {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .flux-doc-type {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: right;
+        }
+
+        .flux-doc-type span {
+            color: #00ff88;
+        }
+
+        /* FAILURE ANALYSIS BOX */
+        .failure-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 4px solid #ff9900;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .failure-box h2 {
+            font-size: 14px;
+            color: #ff9900;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .failure-box h2 i {
+            font-size: 16px;
+        }
+
+        .failure-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .failure-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .failure-item i {
+            color: #ff9900;
+            margin-top: 2px;
+        }
+
+        /* TECHNICAL SPECIFICATION */
+        .tech-spec {
+            background: #111;
+            border: 1px solid #00ff88;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tech-spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tech-spec-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .tech-spec-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 3px;
+        }
+
+        /* COMPARISON MATRIX */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 15px;
+        }
+
+        .matrix-table th {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        .matrix-table td {
+            padding: 6px;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:hover {
+            background: #111;
+        }
+
+        .matrix-table .row-header {
+            font-weight: 600;
+            color: #00ff88;
+            background: #0f0f0f;
+            width: 22%;
+        }
+
+        .matrix-table .tier-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .check { color: #00ff88; }
+        .warn { color: #ffaa00; }
+        .fail { color: #ff4444; }
+
+        /* FLUX TIP BOX */
+        .flux-tip {
+            background: linear-gradient(90deg, #0a1f12 0%, #0a0a0a 100%);
+            border-left: 3px solid #00ff88;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .flux-tip-header {
+            color: #00ff88;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flux-tip-content {
+            color: #aaa;
+        }
+
+        /* DIAGNOSTIC FLOW */
+        .flow-step {
+            background: #111;
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-number {
+            width: 28px;
+            height: 28px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .flow-content h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* FOOTER */
+        .flux-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .flux-footer span {
+            color: #00ff88;
+        }
+
+        /* PAGE 2 STYLES */
+        .sales-section {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .sales-section h3 {
+            font-size: 13px;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .sales-section ul {
+            list-style: none;
+        }
+
+        .sales-section li {
+            font-size: 11px;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .sales-section li:last-child {
+            border-bottom: none;
+        }
+
+        .sales-section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .objection {
+            background: #1f1a1a;
+            border-left: 3px solid #ff9900;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .objection h4 {
+            font-size: 11px;
+            color: #ff9900;
+            margin-bottom: 4px;
+        }
+
+        .objection p {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        @media screen {
+            .page {
+                box-shadow: 0 0 20px rgba(0,255,136,0.1);
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.35in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .flux-footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: DIAGNOSIS & PRESCRIPTION -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Technical Specification<br>
+            <span>Document: FP-ID-2026-v1</span>
+        </div>
+    </div>
+
+    <!-- FAILURE ANALYSIS -->
+    <div class="failure-box">
+        <h2><i class="fas fa-hammer"></i> DIAGNOSTIC: Forklifts Don't Break Floors. Wrong Specifications Do.</h2>
+        <div class="failure-list">
+            <div class="failure-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Impact Failure:</strong> Dropping a 5,000 lb pallet from 2 feet = 20,000 ft-lbs of energy. Standard epoxy? Cracks. Premium epoxy? Absorbs it.</span>
+            </div>
+            <div class="failure-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Point Loading:</strong> Forklift wheels concentrate 8,000 lbs on 2 square inches. That's 4,000 PSI. Concrete fails. Our coating handles it.</span>
+            </div>
+            <div class="failure-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Chemical Attack:</strong> Manufacturing spills aren't just water. Solvents, acids, bases. One wrong chemical and your floor dissolves.</span>
+            </div>
+            <div class="failure-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Thermal Shock:</strong> Hot metal welding + cold floor + water quench = concrete cracks. Epoxy cracks right with it unless designed for it.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX FIELD NOTE</div>
+        <div class="flux-tip-content">
+            Industrial floors don't "wear out" - they fail from impact or chemical attack. The only variables: impact resistance (measured in ft-lbs) and chemical resistance (measured in classes). Everything else is marketing. Premium tier gets you 140 ft-lbs impact resistance and Class 1 chemical resistance. Essential tier gets 50 ft-lbs and Class 3. For a warehouse running forklifts? The choice is clear.
+        </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATION -->
+    <div class="tech-spec">
+        <div class="tech-spec-header">
+            <div class="tech-spec-title">System Architecture: Industrial Flooring</div>
+            <div class="tech-spec-badge">4-TIER SYSTEM</div>
+        </div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>SPECIFICATION</th>
+                    <th>ESSENTIAL</th>
+                    <th>PROFESSIONAL</th>
+                    <th>PREMIUM</th>
+                    <th>FLUX-CORE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">Resin System</td>
+                    <td>Bisphenol A<br>EEW 190</td>
+                    <td>Bis A/F Blend<br>EEW 195</td>
+                    <td>Novolac<br>EEW 210</td>
+                    <td class="tier-name">FluxCore 350<br>Proprietary Novolac</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hardener</td>
+                    <td>Polyamide 115</td>
+                    <td>Cycloaliphatic<br>Ancamine 1618</td>
+                    <td>IPDA<br>Cycloaliphatic</td>
+                    <td class="tier-name">FluxCure IP<br>Modified IPDA</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Compressive Strength</td>
+                    <td>10,000 PSI</td>
+                    <td>12,500 PSI</td>
+                    <td>14,000 PSI</td>
+                    <td class="tier-name check">16,000 PSI</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Impact Resistance</td>
+                    <td>50 ft-lbs</td>
+                    <td>80 ft-lbs</td>
+                    <td>110 ft-lbs</td>
+                    <td class="tier-name check">140 ft-lbs</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Point Load Rating</td>
+                    <td>2,000 PSI</td>
+                    <td>3,000 PSI</td>
+                    <td>4,000 PSI</td>
+                    <td class="tier-name check">5,000 PSI</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Forklift Rated</td>
+                    <td class="warn">Light</td>
+                    <td class="check">Standard</td>
+                    <td class="check">Heavy</td>
+                    <td class="tier-name check">Extreme</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Chemical Resistance</td>
+                    <td>Class 3<br>Limited</td>
+                    <td>Class 2<br>Good</td>
+                    <td>Class 1<br>Excellent</td>
+                    <td class="tier-name check">Class 0<br>Impermeable</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Abrasion Resistance</td>
+                    <td>Standard</td>
+                    <td>+30%</td>
+                    <td>+50%</td>
+                    <td class="tier-name check">+80%</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Warranty</td>
+                    <td>5 years</td>
+                    <td>10 years</td>
+                    <td>15 years</td>
+                    <td class="tier-name check">20 years</td>
+                </tr>
+                <tr>
+                    <td class="row-header">PRICE INSTALLED</td>
+                    <td><strong>$3-4/sq ft</strong></td>
+                    <td><strong>$5-8/sq ft</strong></td>
+                    <td><strong>$9-13/sq ft</strong></td>
+                    <td class="tier-name"><strong>$12-18/sq ft</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DIAGNOSTIC FLOW: How to Choose -->
+    <div style="margin-top: 20px;">
+        <h2 style="font-size: 14px; color: #00ff88; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+            <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Diagnostic Selection Flow
+        </h2>
+
+        <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+                <h3>Light Storage / Warehouse? → ESSENTIAL</h3>
+                <p>Pallet racking, light forklifts, mostly foot traffic. 5-year warranty is fine if you're not dropping pallets.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+                <h3>Standard Manufacturing? → PROFESSIONAL</h3>
+                <p>Standard forklifts, some chemical exposure, dropped tools. Good impact and chemical resistance. 10-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+                <h3>Heavy Industrial? → PREMIUM</h3>
+                <p>Heavy forklifts, frequent dropped pallets, aggressive chemicals. Maximum impact and chemical resistance. 15-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+                <h3>Extreme Duty? → FLUX-CORE</h3>
+                <p>2-day installation, 20-year warranty, maximum durability. For facilities running 24/7 where downtime costs more than the floor.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Technical Document | <span>FP-ID-2026-v1</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+<!-- PAGE 2: SALES GUIDE -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Sales Guide<br>
+            <span>INTERNAL USE ONLY</span>
+        </div>
+    </div>
+
+    <div style="background: #00ff88; color: #000; padding: 12px 15px; margin-bottom: 15px; font-weight: 700; font-size: 14px;">
+        <i class="fas fa-lock" style="margin-right: 8px;"></i>
+        INTERNAL - Industrial Flooring Sales Protocol
+    </div>
+
+    <!-- DIAGNOSIS FIRST -->
+    <div class="sales-section">
+        <h3><i class="fas fa-stethoscope"></i> Step 1: Diagnose the Duty Level</h3>
+        <ul>
+            <li>"What's your maximum forklift capacity?" (Under 5K lbs = Professional. Over 10K lbs = Premium. Over 20K lbs = FluxCore minimum.)</li>
+            <li>"How often do you drop pallets?" (Never = Professional. Occasionally = Premium. Regularly = FluxCore.)</li>
+            <li>"What chemicals do you use?" (Just oil/water = Professional. Solvents/acids = Premium. Battery acid/strong solvents = FluxCore.)</li>
+            <li>"What's your daily revenue if production stops?" (Under $5K = Professional. $5-20K = Premium. Over $20K = FluxCore.)</li>
+            <li>"Do you have thermal cycling?" (Hot welding + cold floor = Premium minimum. Concrete cracks, coating cracks unless designed for it.)</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX TIP</div>
+        <div class="flux-tip-content">
+            Industrial buyers care about one thing: uptime. If a floor failure shuts down a $50M/year facility for 3 days, that's $600K in lost revenue. Our Premium tier costs $9-13/sq ft. For a 20,000 sq ft warehouse, that's $180-260K. That's 30-40% of ONE shutdown cost. The ROI calculation writes itself.
+        </div>
+    </div>
+
+    <!-- TALKING POINTS BY TIER -->
+    <div class="sales-section">
+        <h3><i class="fas fa-comments"></i> Step 2: Tier-Specific Pitch</h3>
+        <ul>
+            <li><strong>ESSENTIAL:</strong> "Light duty, basic protection. For storage areas, light forklifts, low-impact environments. If you're not dropping heavy pallets, this works. 5-year warranty."</li>
+            <li><strong>PROFESSIONAL:</strong> "Standard industrial duty. Good impact and chemical resistance. For standard manufacturing and warehousing. Most facilities choose this tier. 10-year warranty."</li>
+            <li><strong>PREMIUM:</strong> "Heavy industrial. Maximum impact and chemical resistance. For facilities dropping pallets daily or working with aggressive chemicals. 15-year warranty."</li>
+            <li><strong>FLUX-CORE:</strong> "Extreme duty, 2-day installation, 20-year warranty. For 24/7 facilities where any downtime costs more than the floor. Install Friday, run Monday."</li>
+        </ul>
+    </div>
+
+    <!-- OBJECTION HANDLING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-shield-alt"></i> Step 3: Objection Protocol</h3>
+    </div>
+
+    <div class="objection">
+        <h4>"We just seal the concrete"</h4>
+        <p>Concrete sealers don't provide impact resistance. Dropping a pallet on sealed concrete? The concrete cracks. The sealer cracks right with it. Epoxy provides a continuous film that absorbs impact energy. Sealers protect against stains. Epoxy protects against damage.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"We replace the floor every 10 years anyway"</h4>
+        <p>Concrete replacement costs $15-25/sq ft. Our Professional tier is $5-8/sq ft. For a 20,000 sq ft warehouse: replacement = $300-500K. Professional epoxy = $100-160K. Plus: 10 years of maintenance-free operation vs yearly sealing. The math says epoxy wins.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"How long until we can run forklifts?"</h4>
+        <p>Professional: 72 hours full cure. Light traffic at 24, but heavy forklifts need 72. Premium: 72 hours. FluxCore: 24 hours. If you absolutely cannot wait 3 days, FluxCore is the only option. It costs more, but if you're losing $20K/day, it pays for itself in 2 days.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"What about expansion joints?"</h4>
+        <p>We leave existing expansion joints open but fill them with flexible epoxy. The floor moves with the concrete without cracking. Structural joints stay open. Control joints can be filled if you want. We don't hide expansion joints - we accommodate them properly.</p>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-handshake"></i> Step 4: Close</h3>
+        <ul>
+            <li>"Most industrial facilities go with Professional - it's the right balance of durability and cost. Want me to write that up?"</li>
+            <li>"If you're dropping pallets regularly or using aggressive chemicals, I'd strongly recommend Premium. One dropped pallet can pay for the upgrade."</li>
+            <li>"Either way, get the moisture test done. Even if you don't use us, you need to know what's coming through your slab."</li>
+        </ul>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Sales Guide | <span>INTERNAL</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+</body>
+</html>

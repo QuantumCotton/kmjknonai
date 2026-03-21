@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aircraft Hangar Flooring Diagnostic - KMJK Group | Flux Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @page {
+            size: letter portrait;
+            margin: 0.5in;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.5;
+        }
+
+        .page {
+            width: 7.5in;
+            height: 10in;
+            padding: 0.35in;
+            margin: 0 auto;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page:not(:last-child) {
+            page-break-after: always;
+        }
+
+        /* FLUX PROTOCOL HEADER */
+        .flux-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #00ff88;
+            margin-bottom: 20px;
+        }
+
+        .flux-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flux-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .flux-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .flux-logo-text span {
+            color: #888;
+            font-weight: 400;
+        }
+
+        .flux-doc-type {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: right;
+        }
+
+        .flux-doc-type span {
+            color: #00ff88;
+        }
+
+        /* SKYDROL DAMAGE DIAGNOSTIC */
+        .skydrol-box {
+            background: #111;
+            border: 1px solid #333;
+            border-left: 4px solid #0066ff;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        .skydrol-box h2 {
+            font-size: 14px;
+            color: #0066ff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skydrol-box h2 i {
+            font-size: 16px;
+        }
+
+        .skydrol-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .skydrol-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 11px;
+            color: #ccc;
+        }
+
+        .skydrol-item i {
+            color: #0066ff;
+            margin-top: 2px;
+        }
+
+        /* TECHNICAL SPECIFICATION */
+        .tech-spec {
+            background: #111;
+            border: 1px solid #00ff88;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tech-spec-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .tech-spec-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #00ff88;
+        }
+
+        .tech-spec-badge {
+            background: #00ff88;
+            color: #000;
+            padding: 3px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 3px;
+        }
+
+        /* COMPARISON MATRIX */
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10px;
+            margin-bottom: 15px;
+        }
+
+        .matrix-table th {
+            background: #1a1a1a;
+            color: #00ff88;
+            padding: 8px 6px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #00ff88;
+        }
+
+        .matrix-table td {
+            padding: 6px;
+            border-bottom: 1px solid #222;
+            vertical-align: top;
+        }
+
+        .matrix-table tr:hover {
+            background: #111;
+        }
+
+        .matrix-table .row-header {
+            font-weight: 600;
+            color: #00ff88;
+            background: #0f0f0f;
+            width: 22%;
+        }
+
+        .matrix-table .tier-name {
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .check { color: #00ff88; }
+        .warn { color: #ffaa00; }
+        .fail { color: #ff4444; }
+
+        /* FLUX TIP BOX */
+        .flux-tip {
+            background: linear-gradient(90deg, #0a1f12 0%, #0a0a0a 100%);
+            border-left: 3px solid #00ff88;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+
+        .flux-tip-header {
+            color: #00ff88;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flux-tip-content {
+            color: #aaa;
+        }
+
+        /* DIAGNOSTIC FLOW */
+        .flow-step {
+            background: #111;
+            border: 1px solid #333;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .flow-number {
+            width: 28px;
+            height: 28px;
+            background: #00ff88;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .flow-content h3 {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .flow-content p {
+            font-size: 11px;
+            color: #888;
+        }
+
+        /* FOOTER */
+        .flux-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 25px;
+            right: 25px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+        }
+
+        .flux-footer span {
+            color: #00ff88;
+        }
+
+        /* PAGE 2 STYLES */
+        .sales-section {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .sales-section h3 {
+            font-size: 13px;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .sales-section ul {
+            list-style: none;
+        }
+
+        .sales-section li {
+            font-size: 11px;
+            color: #ccc;
+            padding: 5px 0;
+            padding-left: 15px;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .sales-section li:last-child {
+            border-bottom: none;
+        }
+
+        .sales-section li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .objection {
+            background: #1f1a1a;
+            border-left: 3px solid #0066ff;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .objection h4 {
+            font-size: 11px;
+            color: #0066ff;
+            margin-bottom: 4px;
+        }
+
+        .objection p {
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        @media screen {
+            .page {
+                box-shadow: 0 0 20px rgba(0,255,136,0.1);
+                margin-bottom: 20px;
+            }
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: 10in;
+                margin: 0;
+                padding: 0.35in;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .flux-footer {
+                position: relative;
+                bottom: auto;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PAGE 1: DIAGNOSIS & PRESCRIPTION -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Technical Specification<br>
+            <span>Document: FP-AH-2026-v1</span>
+        </div>
+    </div>
+
+    <!-- SKYDROL DAMAGE DIAGNOSTIC -->
+    <div class="skydrol-box">
+        <h2><i class="fas fa-plane-departure"></i> DIAGNOSTIC: Skydrol Dissolves Standard Epoxy. We Don't Use Standard Epoxy.</h2>
+        <div class="skydrol-list">
+            <div class="skydrol-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Skydrol Attack:</strong> Skydrol (hydraulic fluid) attacks polyester and polyamide epoxies. It softens them, bubbles them, dissolves them. 24-48 hours and your floor is gone.</span>
+            </div>
+            <div class="skydrol-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Jet Fuel Spills:</strong> Jet-A and Jet-B are aggressive solvents. Standard epoxy? Softens and delaminates. Novolac? Impermeable. Nothing soaks in.</span>
+            </div>
+            <div class="skydrol-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Tire Heat:</strong> Aircraft tires reach 200°F+. Standard epoxy softens at 140°F. Premium handles 250°F. FluxCore handles 350°F.</span>
+            </div>
+            <div class="skydrol-item">
+                <i class="fas fa-times-circle"></i>
+                <span><strong>Deicing Fluids:</strong> Propylene glycol and glycerin-based deicers contain chemicals that attack standard coatings. One application and the coating fails.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX FIELD NOTE</div>
+        <div class="flux-tip-content">
+            I've seen hangar floors delaminate after one Skydrol spill. The mechanic mops it up, but the damage is done. Skydrol penetrated the epoxy, attacked the bond line, and the coating peeled off in sheets. That's a $50K floor replacement. Premium tier with Novolac doesn't have this problem. Skydrol doesn't dissolve Novolac. It just sits there until you wipe it up.
+        </div>
+    </div>
+
+    <!-- TECHNICAL SPECIFICATION -->
+    <div class="tech-spec">
+        <div class="tech-spec-header">
+            <div class="tech-spec-title">System Architecture: Aircraft Hangar Flooring</div>
+            <div class="tech-spec-badge">4-TIER SYSTEM</div>
+        </div>
+
+        <table class="matrix-table">
+            <thead>
+                <tr>
+                    <th>SPECIFICATION</th>
+                    <th>ESSENTIAL</th>
+                    <th>PROFESSIONAL</th>
+                    <th>PREMIUM</th>
+                    <th>FLUX-CORE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="row-header">Resin System</td>
+                    <td>Bisphenol A<br>EEW 190</td>
+                    <td>Bis A/F Blend<br>EEW 195</td>
+                    <td>Novolac<br>EEW 210</td>
+                    <td class="tier-name">FluxCore 350<br>Proprietary Novolac</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Hardener</td>
+                    <td>Polyamide 115</td>
+                    <td>Cycloaliphatic<br>Ancamine 1618</td>
+                    <td>IPDA<br>Cycloaliphatic</td>
+                    <td class="tier-name">FluxCure IP<br>Modified IPDA</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Heat Resistance (HDT)</td>
+                    <td>140°F</td>
+                    <td>180°F</td>
+                    <td>250°F</td>
+                    <td class="tier-name check">350°F</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Skydrol Resistant</td>
+                    <td class="fail">No</td>
+                    <td class="warn">Limited</td>
+                    <td class="check">Yes</td>
+                    <td class="tier-name check">Yes - complete</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Jet Fuel Resistant</td>
+                    <td class="fail">No</td>
+                    <td class="warn">Brief</td>
+                    <td class="check">Yes</td>
+                    <td class="tier-name check">Yes - extended</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Deicing Fluid Resistant</td>
+                    <td class="fail">No</td>
+                    <td class="warn">Limited</td>
+                    <td class="check">Yes</td>
+                    <td class="tier-name check">Yes - complete</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Compressive Strength</td>
+                    <td>10,000 PSI</td>
+                    <td>12,500 PSI</td>
+                    <td>14,000 PSI</td>
+                    <td class="tier-name check">16,000 PSI</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Aircraft Tire Rated</td>
+                    <td class="fail">No</td>
+                    <td class="warn">Light</td>
+                    <td class="check">Yes</td>
+                    <td class="tier-name check">Yes - all aircraft</td>
+                </tr>
+                <tr>
+                    <td class="row-header">FAA Compliant</td>
+                    <td class="warn">Partial</td>
+                    <td class="check">Yes</td>
+                    <td class="check">Yes</td>
+                    <td class="tier-name check">Yes</td>
+                </tr>
+                <tr>
+                    <td class="row-header">Warranty</td>
+                    <td>5 years</td>
+                    <td>10 years</td>
+                    <td>15 years</td>
+                    <td class="tier-name check">20 years</td>
+                </tr>
+                <tr>
+                    <td class="row-header">PRICE INSTALLED</td>
+                    <td><strong>$4-6/sq ft</strong></td>
+                    <td><strong>$7-10/sq ft</strong></td>
+                    <td><strong>$11-15/sq ft</strong></td>
+                    <td class="tier-name"><strong>$14-20/sq ft</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DIAGNOSTIC FLOW: How to Choose -->
+    <div style="margin-top: 20px;">
+        <h2 style="font-size: 14px; color: #00ff88; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">
+            <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Diagnostic Selection Flow
+        </h2>
+
+        <div class="flow-step">
+            <div class="flow-number">1</div>
+            <div class="flow-content">
+                <h3>Storage Only / No Aircraft? → ESSENTIAL</h3>
+                <p>General aviation storage, no aircraft on floor, no hydraulic fluids. If you're not dealing with aircraft chemicals, this works.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">2</div>
+            <div class="flow-content">
+                <h3>Light Aircraft / Maintenance? → PROFESSIONAL</h3>
+                <p>Cessna, Piper, light jets. Occasional Skydrol, minimal fuel exposure. Good chemical resistance. 10-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">3</div>
+            <div class="flow-content">
+                <h3>Commercial / Business Jets? → PREMIUM</h3>
+                <p>Heavy aircraft, regular Skydrol and jet fuel exposure. Novolac formulation is chemically impermeable. 15-year warranty.</p>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="flow-number">4</div>
+            <div class="flow-content">
+                <h3>Military / Commercial Fleet? → FLUX-CORE</h3>
+                <p>2-day installation, 20-year warranty, maximum chemical resistance. For hangars that can't afford downtime or aircraft downtime.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Technical Document | <span>FP-AH-2026-v1</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+<!-- PAGE 2: SALES GUIDE -->
+<div class="page">
+    <div class="flux-header">
+        <div class="flux-logo">
+            <div class="flux-logo-mark">F</div>
+            <div class="flux-logo-text">FLUX <span>PROTOCOL</span></div>
+        </div>
+        <div class="flux-doc-type">
+            Sales Guide<br>
+            <span>INTERNAL USE ONLY</span>
+        </div>
+    </div>
+
+    <div style="background: #00ff88; color: #000; padding: 12px 15px; margin-bottom: 15px; font-weight: 700; font-size: 14px;">
+        <i class="fas fa-lock" style="margin-right: 8px;"></i>
+        INTERNAL - Aircraft Hangar Sales Protocol
+    </div>
+
+    <!-- DIAGNOSIS FIRST -->
+    <div class="sales-section">
+        <h3><i class="fas fa-stethoscope"></i> Step 1: Diagnose the Aircraft Exposure</h3>
+        <ul>
+            <li>"What aircraft are stored/maintained here?" (General aviation = Professional. Business jets = Premium. Commercial = Premium or FluxCore.)</li>
+            <li>"How much Skydrol and jet fuel exposure do you expect?" (Occasional spills = Professional. Regular maintenance = Premium. Heavy = FluxCore.)</li>
+            <li>"Do you work with deicing fluids on the floor?" (Yes = Premium minimum. Glycol-based deicers attack standard coatings.)</li>
+            <li>"What's the aircraft tire load?" (Cessna = Professional. Business jets = Premium. Commercial aircraft = FluxCore.)</li>
+            <li>"How much does it cost to relocate an aircraft for floor work?" (If it's more than the floor cost, FluxCore 2-day install pays for itself.)</li>
+        </ul>
+    </div>
+
+    <div class="flux-tip">
+        <div class="flux-tip-header"><i class="fas fa-lightbulb"></i> FLUX TIP</div>
+        <div class="flux-tip-content">
+            Hangar floors don't just "get coated" - they get certified. FAA and military specs require Skydrol resistance. Standard epoxy doesn't meet spec. Novolac does. If you're coating a hangar with anything less than Novolac, you're not just risking failure - you're risking non-compliance.
+        </div>
+    </div>
+
+    <!-- TALKING POINTS BY TIER -->
+    <div class="sales-section">
+        <h3><i class="fas fa-comments"></i> Step 2: Tier-Specific Pitch</h3>
+        <ul>
+            <li><strong>ESSENTIAL:</strong> "Basic protection for general aviation storage. No aircraft chemicals. If you're not dealing with Skydrol or jet fuel on the floor, this works. 5-year warranty."</li>
+            <li><strong>PROFESSIONAL:</strong> "For light aircraft maintenance. Good chemical resistance, occasional Skydrol exposure. Most GA hangars choose this tier. 10-year warranty."</li>
+            <li><strong>PREMIUM:</strong> "For business jets and commercial aircraft. Novolac formulation is chemically impermeable to Skydrol and jet fuel. 15-year warranty. FAA compliant."</li>
+            <li><strong>FLUX-CORE:</strong> "For military and commercial fleet hangars. 2-day installation, 20-year warranty, maximum chemical resistance. When aircraft downtime costs more than the floor, this is the choice."</li>
+        </ul>
+    </div>
+
+    <!-- OBJECTION HANDLING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-shield-alt"></i> Step 3: Objection Protocol</h3>
+    </div>
+
+    <div class="objection">
+        <h4>"We just mop up spills immediately"</h4>
+        <p>That doesn't stop Skydrol. Skydrol penetrates in minutes, not hours. By the time you grab the mop, it's already attacking the epoxy. Premium tier with Novolac resists Skydrol completely - it sits on the surface until you wipe it up. No penetration, no damage.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"That's more than standard epoxy"</h4>
+        <p>Standard epoxy costs less, but it also dissolves on contact with Skydrol. One Skydrol spill = $10-50K floor replacement. Our Premium tier costs $11-15/sq ft. For a 5,000 sq ft hangar, that's $55-75K. One Skydrol spill costs more than the entire floor. That's not pricing - that's insurance.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"How long until we can bring aircraft back?"</h4>
+        <p>Professional: 72 hours full cure. Light aircraft at 24, but heavy aircraft need 72. Premium: 72 hours. FluxCore: 24 hours. If you absolutely cannot have aircraft out for 3 days, FluxCore is the only option.</p>
+    </div>
+
+    <div class="objection">
+        <h4>"What about the expansion joints?"</h4>
+        <p>Hangar floors have structural expansion joints every 20-30 feet. We leave these open but fill them with flexible epoxy. The floor moves with the concrete without cracking. FAA requires we don't seal structural joints. We comply.</p>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="sales-section">
+        <h3><i class="fas fa-handshake"></i> Step 4: Close</h3>
+        <ul>
+            <li>"Most GA hangars go with Professional - it's the right balance for light aircraft work. Want me to write that up?"</li>
+            <li>"If you're dealing with business jets or commercial aircraft, I'd strongly recommend Premium. Skydrol resistance isn't optional in that environment."</li>
+            <li>"Either way, get the moisture test done. Even if you don't use us, you need to know what's coming through your slab."</li>
+        </ul>
+    </div>
+
+    <div class="flux-footer">
+        <span>FLUX PROTOCOL</span> | Sales Guide | <span>INTERNAL</span>
+        <span>KMJK Group</span> | 772-323-3776 | kmjk.pro
+    </div>
+</div>
+
+</body>
+</html>
