@@ -431,7 +431,7 @@ export function createTreasureCoastLandingPage(config) {
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      name: 'KMJK Home Improvement',
+      name: 'KMJK Group',
       image: hero.backgroundImage,
       url: pageUrl,
       telephone: KMJK_PHONE_DIGITS,
@@ -483,7 +483,7 @@ export function createTreasureCoastLandingPage(config) {
       areaServed: serviceArea?.items,
       provider: {
         '@type': 'LocalBusiness',
-        name: 'KMJK Home Improvement',
+        name: 'KMJK Group',
         telephone: KMJK_PHONE_DIGITS,
       },
       hasOfferCatalog: pricingOptions?.length
@@ -773,7 +773,7 @@ export function createTreasureCoastLandingPage(config) {
         )}
 
         <LocalPresenceSection
-          businessName="KMJK Home Improvement"
+          businessName="KMJK Group"
           addressLines={["Jensen Beach Operations Hub", '1301 SE Francis Street', 'Jensen Beach, FL 34957']}
           serviceAreas={serviceArea?.items || ['Palm City', "Sewall's Point", 'Sailfish Point', 'Hutchinson Island']}
         />

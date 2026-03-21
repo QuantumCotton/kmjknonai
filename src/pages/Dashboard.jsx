@@ -281,7 +281,7 @@ export default function Dashboard() {
     loadInitialData()
     setupRealtimeSubscription()
     
-    document.title = 'KMJK Job Dashboard'
+    document.title = 'KMJK Group Job Dashboard'
   }, [])
 
   const loadInitialData = async () => {
@@ -805,7 +805,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-3">
               <FileText className="text-[var(--brushed-gold)]" size={24} />
               <div>
-                <h1 className="text-xl md:text-2xl font-bold tracking-tight">KMJK Job Dashboard</h1>
+                <h1 className="text-xl md:text-2xl font-bold tracking-tight">KMJK Group Job Dashboard</h1>
                 <p className="text-xs md:text-sm text-gray-300">Manage work orders & estimates</p>
                 <p className="text-[10px] text-gray-400">Build: {import.meta.env.VITE_KMJK_BUILD_REF}</p>
                 <p className="text-[10px] text-gray-500">Supabase: {getSupabaseHost()}</p>

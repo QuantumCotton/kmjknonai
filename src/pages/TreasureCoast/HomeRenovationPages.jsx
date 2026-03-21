@@ -118,7 +118,7 @@ const buildHomeRenovationPage = ({
     componentName: `HomeRenovation${cityName.replace(/\s/g, '')}`,
     cityName,
     serviceType: 'Home Renovation',
-    metaTitle: `${cityName}, FL Home Renovation | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL Home Renovation | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • Complete Home Renovations`,
       heading: `${cityName}'s Luxury Home Renovation Team`,

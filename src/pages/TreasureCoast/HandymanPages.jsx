@@ -104,7 +104,7 @@ const buildHandymanPage = ({
 }) =>
   createTreasureCoastLandingPage({
     componentName: `HandymanServices${cityName.replace(/\s/g, '')}`,
-    metaTitle: `${cityName}, FL Handyman & Home Services | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL Handyman & Home Services | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • Handyman Services`,
       heading: `${cityName}'s Trusted Handyman & Small Projects Team`,

@@ -1,11 +1,11 @@
 {
-  "name": "KMJK Home Improvement",
-  "short_name": "KMJK",
+  "name": "KMJK Group - Property Management & Facilities",
+  "short_name": "KMJK Group",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1f1f1f",
-  "description": "Premium kitchen, bathroom, and custom renovations in Stuart, FL.",
+  "background_color": "#F8FAFC",
+  "theme_color": "#1E3A5F",
+  "description": "Professional property management, facilities maintenance, and renovation services across South Florida.",
   "icons": [
     {
       "src": "/kmjk-logo.png",

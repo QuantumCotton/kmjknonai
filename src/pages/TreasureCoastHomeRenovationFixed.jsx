@@ -27,7 +27,7 @@ export default function TreasureCoastHomeRenovationFixed(){
   })
 
   useEffect(() => {
-    document.title = 'Home Renovation in Treasure Coast, FL | KMJK Home Improvement'
+    document.title = 'Home Renovation in Treasure Coast, FL | KMJK Group'
     const faq = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: [

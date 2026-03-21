@@ -27,7 +27,7 @@ export default function TreasureCoastBathroomRenovationClean(){
   })
 
   useEffect(() => {
-    document.title = 'Bathroom Renovation in Treasure Coast, FL | KMJK Home Improvement'
+    document.title = 'Bathroom Renovation in Treasure Coast, FL | KMJK Group'
     const faq = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: [

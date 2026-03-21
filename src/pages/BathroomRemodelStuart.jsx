@@ -4,7 +4,7 @@ const BathroomRemodelStuart = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelStuart',
   cityName: 'Stuart',
   serviceType: 'Bathroom Renovation',
-  metaTitle: 'Stuart, FL Bathroom Renovation | KMJK Home Improvement',
+  metaTitle: 'Stuart, FL Bathroom Renovation | KMJK Group',
   hero: {
     badge: 'Stuart, FL • Luxury Bathrooms',
     heading: 'Stuart Bathroom Renovations With Resort-Level Calm',

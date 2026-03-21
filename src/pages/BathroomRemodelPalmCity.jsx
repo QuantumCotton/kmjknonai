@@ -4,7 +4,7 @@ const BathroomRemodelPalmCity = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelPalmCity',
   cityName: 'Palm City',
   serviceType: 'Bathroom Renovation',
-  metaTitle: 'Palm City, FL Bathroom Renovation | KMJK Home Improvement',
+  metaTitle: 'Palm City, FL Bathroom Renovation | KMJK Group',
   hero: {
     badge: 'Palm City, FL • Luxury Bathrooms',
     heading: 'Palm City Bathroom Renovations With Resort-Level Calm',

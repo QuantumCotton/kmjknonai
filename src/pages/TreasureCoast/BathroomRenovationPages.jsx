@@ -117,7 +117,7 @@ const buildBathroomPage = ({
     componentName: `BathroomRenovation${cityName.replace(/\s/g, '')}`,
     cityName,
     serviceType: 'Bathroom Renovation',
-    metaTitle: `${cityName}, FL Bathroom Renovation | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL Bathroom Renovation | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • Luxury Bathrooms`,
       heading: `${cityName} Bathroom Renovations With Resort-Level Calm`,

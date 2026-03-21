@@ -4,7 +4,7 @@ const BathroomRemodelHutchinsonIsland = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelHutchinsonIsland',
   cityName: 'Hutchinson Island',
   serviceType: 'Bathroom Renovation',
-  metaTitle: 'Hutchinson Island, FL Bathroom Renovation | KMJK Home Improvement',
+  metaTitle: 'Hutchinson Island, FL Bathroom Renovation | KMJK Group',
   hero: {
     badge: 'Hutchinson Island, FL • Luxury Bathrooms',
     heading: 'Hutchinson Island Bathroom Renovations With Resort-Level Calm',

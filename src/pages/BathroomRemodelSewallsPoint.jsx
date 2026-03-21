@@ -4,7 +4,7 @@ const BathroomRemodelSewallsPoint = createTreasureCoastLandingPage({
   componentName: 'BathroomRemodelSewallsPoint',
   cityName: "Sewall's Point",
   serviceType: 'Bathroom Renovation',
-  metaTitle: "Sewall's Point, FL Bathroom Renovation | KMJK Home Improvement",
+  metaTitle: "Sewall's Point, FL Bathroom Renovation | KMJK Group",
   hero: {
     badge: "Sewall's Point, FL • Luxury Bathrooms",
     heading: "Sewall's Point Bathroom Renovations With Resort-Level Calm",

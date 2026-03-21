@@ -199,7 +199,7 @@ const LinkGrid = ({ items }) => (
 
 export default function InternalDashboard() {
   useEffect(() => {
-    document.title = 'KMJK Internal Dashboard'
+    document.title = 'KMJK Group Internal Dashboard'
   }, [])
 
   const treasureCoastCount = useMemo(
@@ -220,7 +220,7 @@ export default function InternalDashboard() {
           <div className="flex items-center gap-3 text-[var(--deep-charcoal)]">
             <LayoutDashboard size={28} className="text-[var(--brushed-gold)]" />
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">KMJK Internal Dashboard</h1>
+              <h1 className="text-3xl font-bold tracking-tight">KMJK Group Internal Dashboard</h1>
               <p className="text-gray-600">Reference hub for work orders, landing pages, and resources.</p>
             </div>
           </div>

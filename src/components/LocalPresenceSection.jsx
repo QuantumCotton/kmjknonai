@@ -9,10 +9,10 @@ import {
 } from '@/constants/contact.js'
 
 export function LocalPresenceSection({
-  businessName = 'KMJK Home Improvement',
-  addressLines = ['1301 SE Francis Street', 'Jensen Beach, FL 34957'],
-  hours = ['Mon-Fri: 8am - 6pm', 'Sat: By appointment', 'Sun: Closed'],
-  serviceAreas = ['Palm City', 'Sewall\'s Point', 'Sailfish Point', 'Hutchinson Island'],
+  businessName = 'KMJK Group',
+  addressLines = ['South Florida Operations', 'Coral Springs • Delray Beach • Lake Worth'],
+  hours = ['Mon-Fri: 7am - 6pm', 'Sat: By appointment', 'Emergency: 24/7'],
+  serviceAreas = ['Coral Springs', 'Delray Beach', 'Lake Worth', 'Stuart', 'Palm City', 'Jensen Beach'],
   mapEmbedUrl = 'https://www.google.com/maps?q=1301%20SE%20Francis%20Street%2C%20Jensen%20Beach%2C%20FL%2034957&output=embed',
 }) {
   return (
@@ -20,10 +20,10 @@ export function LocalPresenceSection({
       <div className="max-w-6xl mx-auto px-4 grid gap-10 lg:grid-cols-[1.15fr_1fr] items-start">
         <div className="space-y-6">
           <div className="space-y-3">
-            <h2 className="text-3xl font-bold text-[var(--deep-charcoal)]">Local Treasure Coast Presence</h2>
+            <h2 className="text-3xl font-bold text-[var(--deep-charcoal)]">South Florida Property Services</h2>
             <p className="text-gray-600">
-              {businessName} is a Treasure Coast design-build firm delivering concierge remodeling and AV services for waterfront estates,
-              gated clubs, and luxury residences across Martin and St. Lucie County.
+              {businessName} provides comprehensive property management, facilities maintenance, and renovation services
+              for multi-unit properties, commercial buildings, and HOAs across South Florida.
             </p>
           </div>
 
@@ -32,7 +32,7 @@ export function LocalPresenceSection({
               <div className="flex items-start gap-3">
                 <MapPin className="text-[var(--brushed-gold)]" size={22} />
                 <div>
-                  <p className="font-semibold text-[var(--deep-charcoal)]">Showroom & Mailing</p>
+                  <p className="font-semibold text-[var(--deep-charcoal)]">Service Headquarters</p>
                   <address className="not-italic text-gray-600 leading-relaxed">
                     {addressLines.map((line, index) => (
                       <span key={index} className="block">
@@ -46,7 +46,7 @@ export function LocalPresenceSection({
               <div className="flex items-start gap-3">
                 <Phone className="text-[var(--brushed-gold)]" size={22} />
                 <div>
-                  <p className="font-semibold text-[var(--deep-charcoal)]">Call Concierge</p>
+                  <p className="font-semibold text-[var(--deep-charcoal)]">Operations Contact</p>
                   <div className="flex flex-col text-gray-600">
                     <a
                       href={KMJK_PHONE_CALL_LINK}
@@ -85,7 +85,7 @@ export function LocalPresenceSection({
                 ))}
               </ul>
               <p className="text-sm text-gray-500 mt-4">
-                We coordinate HOA approvals, condo schedules, and coastal permitting so your project stays on track.
+                We coordinate with property owners, HOAs, and management companies to deliver seamless facility services.
               </p>
             </div>
           </div>

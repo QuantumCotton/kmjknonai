@@ -102,7 +102,7 @@ const buildTvPage = ({
     componentName: `TvMounting${cityName.replace(/\s/g, '')}`,
     cityName,
     serviceType: 'TV Mounting',
-    metaTitle: `${cityName}, FL TV Mounting & Media Walls | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL TV Mounting & Media Walls | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • TV Mounting`,
       heading: `Elevated TV Mounting & Media Walls in ${cityName}`,

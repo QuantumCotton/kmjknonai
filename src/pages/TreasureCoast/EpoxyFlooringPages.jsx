@@ -68,7 +68,7 @@ const epoxyPricing = [
 const buildEpoxyPage = ({ cityName, heroImage, neighborhoods, testimonial, heroNote }) =>
   createTreasureCoastLandingPage({
     componentName: `EpoxyFlooring${cityName.replace(/\s/g, '')}`,
-    metaTitle: `${cityName}, FL Epoxy Flooring & Concrete Coatings | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL Epoxy Flooring & Concrete Coatings | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • Epoxy Flooring`,
       heading: `${cityName}'s Premium Epoxy Floor Coatings`,

@@ -27,7 +27,7 @@ export default function BathroomRemodelSailfishPoint(){
   })
 
   useEffect(() => {
-    document.title = 'Bathroom Remodel in Sailfish Point, FL | KMJK Home Improvement'
+    document.title = 'Bathroom Remodel in Sailfish Point, FL | KMJK Group'
     const faq = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: [

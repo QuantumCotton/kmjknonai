@@ -123,7 +123,7 @@ const buildKitchenPage = ({
     componentName: `KitchenRenovation${cityName.replace(/\s/g, '')}`,
     cityName,
     serviceType: 'Kitchen Renovation',
-    metaTitle: `${cityName}, FL Kitchen Renovation | KMJK Home Improvement`,
+    metaTitle: `${cityName}, FL Kitchen Renovation | KMJK Group`,
     hero: {
       badge: `${cityName}, FL • Custom Kitchens`,
       heading: `${cityName}'s Luxury Kitchen Renovation Team`,

@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button.jsx'
 
 export default function ContactForm({
   title = "Start Your Project",
-  subtitle = "Share your project details and we'll prepare a personalized consultation plan.",
-  serviceType = "Home Improvement",
-  subject = "New Project Inquiry - KMJK",
+  subtitle = "Share your facility needs and we'll prepare a customized service proposal.",
+  serviceType = "Property Services",
+  subject = "New Inquiry - KMJK Group",
   showAddress = true,
   showTimeline = true,
   showBudget = true,
@@ -242,7 +242,7 @@ export default function ContactForm({
             id="projectDetails"
             name="projectDetails"
             rows="4"
-            placeholder="Tell us about your project goals, spaces you want to transform, must-have features, design inspiration, etc."
+            placeholder="Tell us about your facility needs, property details, service requirements, timeline, etc."
             value={formData.projectDetails}
             onChange={handleInputChange}
             className="w-full rounded-md border border-gray-300 px-4 py-2 focus:border-[var(--brushed-gold)] focus:outline-none focus:ring-2 focus:ring-[var(--brushed-gold)]/40"
@@ -260,7 +260,7 @@ export default function ContactForm({
               className="w-full rounded-md border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-600 file:mr-4 file:rounded-md file:border-0 file:bg-[var(--deep-charcoal)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-black"
             />
             <p className="mt-2 text-xs text-gray-500">
-              We accept photos, inspiration boards, or existing floor plans to prep your consultation.
+              We accept photos, floor plans, or property documentation to prep your consultation.
             </p>
             {formData.files.length > 0 && (
               <p className="mt-2 text-sm text-green-600">
