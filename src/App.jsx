@@ -22,7 +22,6 @@ import {
   CheckCircle2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button.jsx'
-import './App.css'
 import {
   KMJK_CONTACT_NAME,
   KMJK_PHONE_DISPLAY,

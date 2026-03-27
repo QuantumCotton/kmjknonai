@@ -1,39 +1,54 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Get environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const rawUrl = typeof import.meta.env.VITE_SUPABASE_URL === 'string'
+  ? import.meta.env.VITE_SUPABASE_URL.trim()
+  : ''
+const rawKey = typeof import.meta.env.VITE_SUPABASE_ANON_KEY === 'string'
+  ? import.meta.env.VITE_SUPABASE_ANON_KEY.trim()
+  : ''
 
-// Validate required environment variables
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables. Please check your .env file.')
-  console.error('Required: VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY')
+// createClient throws at import time if the URL is missing protocol, etc. — treat invalid values as "not configured".
+function isValidHttpUrl(value) {
+  if (!value) return false
+  try {
+    const u = new URL(value)
+    return u.protocol === 'http:' || u.protocol === 'https:'
+  } catch {
+    return false
+  }
 }
 
-// Create Supabase client
+const supabaseConfigured = isValidHttpUrl(rawUrl) && rawKey.length > 0
+
+if (!supabaseConfigured) {
+  console.warn(
+    'Supabase env not set or invalid. Dashboard features need VITE_SUPABASE_URL (https://…) and VITE_SUPABASE_ANON_KEY in .env'
+  )
+}
+
 const createSupabaseNotConfiguredError = () => new Error(
   'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables.'
 )
 
-export const supabase = (!supabaseUrl || !supabaseAnonKey)
-  ? {
-      from() {
-        throw createSupabaseNotConfiguredError()
-      },
-      channel() {
-        throw createSupabaseNotConfiguredError()
-      },
-      removeChannel() {
-        throw createSupabaseNotConfiguredError()
-      },
-      rpc() {
-        throw createSupabaseNotConfiguredError()
-      },
-      raw() {
-        throw createSupabaseNotConfiguredError()
-      }
+export const supabase = supabaseConfigured
+  ? createClient(rawUrl, rawKey)
+  : {
+    from() {
+      throw createSupabaseNotConfiguredError()
+    },
+    channel() {
+      throw createSupabaseNotConfiguredError()
+    },
+    removeChannel() {
+      throw createSupabaseNotConfiguredError()
+    },
+    rpc() {
+      throw createSupabaseNotConfiguredError()
+    },
+    raw() {
+      throw createSupabaseNotConfiguredError()
     }
-  : createClient(supabaseUrl, supabaseAnonKey)
+  }
 
 // Database table names
 export const TABLES = {
